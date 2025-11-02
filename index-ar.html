@@ -4,147 +4,281 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>الرئيسية · طاقَثون</title>
-  <!-- Bootstrap RTL -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css">
-  <!-- Bootstrap Icons -->
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap 5 + Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
   <style>
-    :root{
-      --brand-green:#20c997;
-      --brand-blue:#1d91c0;
-      --band-grad: linear-gradient(90deg, var(--brand-green), var(--brand-blue));
-    }
-    body{ background:#f8fafb; }
-    .rounded-2xl{ border-radius: 1rem; }
-    .shadow-soft{ box-shadow: 0 10px 30px rgba(0,0,0,.12); }
-    .badge-soft{ background:rgba(32,201,151,.15); color:#187a5b; border:1px solid rgba(32,201,151,.25); }
-    .gb-band{ background: var(--band-grad); }
-    /* High-contrast countdown tiles for gradient band */
-    .count-tile{
-      background: rgba(255,255,255,.15);
-      border:1px solid rgba(255,255,255,.35);
-      color:#fff;
-      border-radius:.75rem; width:56px; height:56px;
-      display:flex; align-items:center; justify-content:center; font-weight:700;
-      box-shadow:0 6px 18px rgba(0,0,0,.06);
-    }
-    .count-label{ font-size:.8rem; color: rgba(255,255,255,.9); }
-    .announce-pill{
-      background:#fff; border:1px solid #cde7da; color:#2a7a5b; border-radius:.75rem; padding:.75rem 1rem;
-    }
-    .about-list .bi{ color: var(--brand-green); margin-left:.5rem; } /* RTL: icon margin-left */
-    .cta-band{ background: var(--band-grad); color:#062a36; }
-    .cta-band .btn{ background:#fff; border:0; color:#062a36; font-weight:600; }
-    footer{ background: linear-gradient(180deg,#0f1720,#0b1219); color:#cfd6df; }
-    footer a{ color:#cfd6df; text-decoration:none; }
-    .hero-img{ border-radius: 1rem; box-shadow: 0 18px 40px rgba(0,0,0,.18); }
-    .navbar .nav-link.active{ font-weight:600; }
+  :root{
+    --brand-blue:#007DFD;
+    --brand-green:#09C899;
+    --brand-dark:#00284C;
+    --brand-grad: linear-gradient(90deg, var(--brand-green), var(--brand-blue));
+    --text:#1d2733;
+    --muted:#66768a;
+  }
+
+  html,body{
+    font-family: Cairo, Poppins, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    color:var(--text);
+    background:#f8fbfd;
+  }
+
+  .rounded-2xl{ border-radius: 1rem; }
+  .shadow-soft{ box-shadow: 0 10px 30px rgba(0,0,0,.12); }
+  .badge-soft{ background:rgba(9,200,153,.15); color:#0a7b60; border:1px solid rgba(9,200,153,.3); }
+
+  /* CTA band */
+  .cta-band{ background: var(--brand-grad); color:#042233; }
+  .cta-band .btn{ background:#fff; border:0; color:#042233; font-weight:600; }
+
+  /* Countdown tiles */
+  .count-tile{
+    background: rgba(255,255,255,.15);
+    border:1px solid rgba(255,255,255,.35);
+    color:#fff; border-radius:.75rem; width:56px; height:56px;
+    display:flex; align-items:center; justify-content:center; font-weight:700;
+    box-shadow:0 6px 18px rgba(0,0,0,.06);
+  }
+  .count-label{ font-size:.8rem; color: rgba(255,255,255,.9); }
+
+  /* Announcements — clean cards */
+  .ann-list{
+    max-width:900px;
+    margin:0 auto;
+    display:grid;
+    gap:12px;
+  }
+  .ann-card{
+    position:relative;
+    background:#fff;
+    border:1px solid #e7eef7;
+    border-radius:12px;
+    padding:16px 56px 16px 16px; /* RTL: icon on right */
+    box-shadow:0 6px 18px rgba(0,0,0,.06);
+  }
+  .ann-icon{
+    position:absolute; right:16px; top:16px; /* RTL */
+    width:28px; height:28px; border-radius:8px;
+    display:grid; place-items:center; font-size:16px;
+  }
+  .ann-date{ font-size:.8rem; color:#6c7a8a; }
+  .ann-text{ color:#1d2733; }
+
+  /* Type colors */
+  .type-deadline .ann-icon{ background:#FFE8E8; color:#BB2D3B; }
+  .type-update  .ann-icon{ background:#FFF3D6; color:#8A5A14; }
+  .type-schedule .ann-icon{ background:#E7F0FF; color:#0D6EFD; }
+  .type-general .ann-icon{ background:#E6FAF3; color:#0A7B60; }
+
+  /* About list icons (RTL spacing: left margin) */
+  .about-list .bi{ color: var(--brand-green); margin-left:.5rem; }
+
+  /* Footer */
+  footer{ background: var(--brand-dark); color:#cfd6df; }
+  footer a{ color:#cfd6df; text-decoration:none; }
+
+  /* General */
+  .hero-img{ border-radius: 1rem; box-shadow: 0 18px 40px rgba(0,0,0,.18); }
+  .text-secondary{ color:var(--muted)!important; }
+
+  /* Navbar */
+  .navbar{
+    background:#fff;
+    box-shadow:0 2px 10px rgba(0,0,0,.04);
+    padding-top:.4rem;
+    padding-bottom:.4rem;
+  }
+  .logo-mark{ height:60px; width:auto; object-fit:contain; }
+  .assoc-logo{ height:48px; width:auto; object-fit:contain; }
+  .navbar-brand img{ vertical-align:middle; }
+  .navbar .container {
+  gap: 1rem;
+}
+@media (max-width: 991.98px) {
+  .logo-mark { height: 44px; }
+  .assoc-logo { height: 32px; }
+}
+
+.navbar-nav .nav-link{
+    font-weight:500;
+    color:var(--brand-dark);
+    transition:.2s;
+  }
+  .navbar-nav .nav-link:hover,
+  .navbar-nav .nav-link.active{
+    color:var(--brand-blue);
+  }
+/* Keep navbar on one line and keep edge clusters visible */
+.navbar .container{ flex-wrap: nowrap; }
+.navbar .navbar-brand,
+.navbar .assoc-fixed{ flex-shrink: 0; }  /* don’t let logos compress into the collapse */
+
+  /* EN language button (independent) */
+  .btn-lang{
+    background:var(--brand-blue);
+    color:#ffffff !important;
+    border:none;
+    border-radius:.4rem;
+    padding:.35rem .9rem;
+    font-weight:500;
+    transition:.2s;
+  }
+  .btn-lang:hover{
+    background:var(--brand-green);
+    color:#fff !important;
+  }
+
+  /* Hero image */
+  .hero-img{
+    display:block;
+    width:100%;
+    height:clamp(260px, 35vw, 520px);
+    object-fit:cover;
+    object-position:center;
+  }
+
+  /* Countdown section: neutral background; centered rounded box */
+  .gb-band{ background:transparent; }
+
+  /* Animated gradient countdown box */
+  .count-box{
+    background:linear-gradient(135deg, #09C899, #007DFD, #09C899);
+    background-size:300% 300%;
+    border-radius:1rem;
+    max-width:650px;
+    box-shadow:0 10px 25px rgba(0,0,0,.15);
+    animation:gradientMove 15s ease infinite;
+  }
+  .count-box .count-tile{
+    background:rgba(255,255,255,.15);
+    border:1px solid rgba(255,255,255,.25);
+  }
+  .count-box .count-label{
+    color:rgba(255,255,255,.9);
+  }
+  @keyframes gradientMove {
+    0%   { background-position:0% 50%; }
+    50%  { background-position:100% 50%; }
+    100% { background-position:0% 50%; }
+  }
+
+  /* About icon colors */
+  .about-list .bi-lightbulb { color:#FFD43B; }
+  .about-list .bi-person-lines-fill { color:#007DFD; }
+  .about-list .bi-trophy-fill { color:#E67E22; }
+  .about-list .bi-building-check { color:#09C899; }
   </style>
 </head>
+
 <body>
-  <!-- NAV -->
-  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
-    <div class="container">
-      <a class="navbar-brand fw-bold" href="index-ar.html">
-        <img src="https://dummyimage.com/28x28/20c997/ffffff.png&text=T" class="rounded-circle ms-2" width="28" height="28" alt="">طاقَثون
+  <!-- Navbar -->
+ <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+  <div class="container d-flex align-items-center justify-content-between">
+    <!-- Right: Taqathon logo (never collapses) -->
+    <a class="navbar-brand d-flex align-items-center" href="index-ar.html">
+      <img src="assets/taqathon-logo.png" alt="طاقثون" class="logo-mark">
+    </a>
+
+    <!-- Center: nav links (collapsible) -->
+    <div class="collapse navbar-collapse justify-content-center" id="mainNav">
+      <ul class="navbar-nav mb-2 mb-lg-0 align-items-lg-center">
+        <li class="nav-item"><a class="nav-link active" href="index-ar.html">الرئيسية</a></li>
+        <li class="nav-item"><a class="nav-link" href="contract-ar.html">العقد</a></li>
+        <li class="nav-item"><a class="nav-link" href="schedule-ar.html">الجدول وورش العمل</a></li>
+        <li class="nav-item"><a class="nav-link" href="submissions-ar.html">التسليمات</a></li>
+        <li class="nav-item"><a class="nav-link" href="rules-ar.html">القواعد والموارد</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact-ar.html">تواصل معنا</a></li>
+        <li class="nav-item me-3">
+          <a class="btn btn-sm btn-lang" href="index.html">EN</a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Left: Association logo + burger (never collapses) -->
+    <div class="assoc-fixed d-flex align-items-center gap-2">
+      <a href="https://taqa.org.sa" target="_blank" rel="noopener" class="d-block">
+        <img src="assets/association-logo.png" alt="جمعية الطاقة للتنمية المستدامة" class="assoc-logo">
       </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav" aria-controls="nav" aria-expanded="false" aria-label="تبديل القائمة">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+              aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="nav">
-        <!-- Center the nav links -->
-        <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-          <li class="nav-item"><a class="nav-link active" href="index-ar.html">الرئيسية</a></li>
-          <li class="nav-item"><a class="nav-link" href="contract-ar.html">العقد</a></li>
-          <li class="nav-item"><a class="nav-link" href="schedule-ar.html">الجدول وورش العمل</a></li>
-          <li class="nav-item"><a class="nav-link" href="submissions-ar.html">التسليمات</a></li>
-          <li class="nav-item"><a class="nav-link" href="rules-ar.html">القواعد والموارد</a></li>
-          <li class="nav-item"><a class="nav-link" href="contact-ar.html">تواصل معنا</a></li>
-        </ul>
-        <!-- Language toggle on the (visual) right -->
-        <div class="d-flex lang-toggle">
-          <a class="btn btn-sm btn-outline-secondary" href="index.html">EN</a>
-        </div>
-      </div>
     </div>
-  </nav>
+  </div>
+</nav>
+
+
 
   <!-- HERO -->
   <section class="py-5">
     <div class="container">
       <div class="row g-4 align-items-center">
-        <div class="col-lg-6 order-lg-2">
-          <img class="w-100 hero-img" src="https://images.unsplash.com/photo-1516116216624-53e697fedbe9?q=80&w=1200&auto=format&fit=crop" alt="توربينات الرياح">
-        </div>
-        <div class="col-lg-6 order-lg-1">
-          <span class="badge badge-soft">التسجيل مفتوح</span>
-          <h1 class="mt-3 mb-2">طاقَثون</h1>
-          <h6 class="text-secondary mb-3">هاكاثون الطاقة</h6>
+        <div class="col-lg-6">
+          <span class="badge badge-soft">بوابة المشاركين</span>
+          <h1 class="mt-3 mb-2">طاقَثون 2025</h1>
+          <h6 class="text-secondary mb-3">هاكاثون الطاقة الوطني في المملكة العربية السعودية</h6>
           <p class="text-secondary">
-            يشّكل هاكاثون الطاقة (طاقَثون) منصة وطنية رائدة تجمع الباحثين،
-ورّواد األعمال، والمبتكرين لتطوير حلول مستدامة تعالج تحديات
-الطاقة في المملكة، وتواكب مستهدفات رؤية السعودية 2030 نحو
-اقتصاد مزدهر ومستدام.
-يهدف الهاكاثون إلى تمكين العقول الشابة من تحويل أفكارهم إلى
-مشاريع قابلة للتطبيق في مجاالت الطاقة المتجددة، وكفاءة
-االستهالك، وتقنيات الذكاء االصطناعي في إدارة الطاقة، ضمن بيئة
-تنافسية محفزة تجمع بين االبتكار، والبحث العلمي، واالستثمار.
-من خالل ورش عمل متخصصة، وإشراف نخبة من الخبراء، وتحكيم من
-جهات أكاديمية واستثمارية، يسعى طاقثون إلى إطالق مشاريع
-وطنية نوعية تمّهد لتأسيس جيل جديد من المبدعين في قطاع
+            هذه البوابة مخصصة للمشاركين المقبولين. هنا تجد روابط الورش والجدول، وتطّلع على القواعد والموارد،
+            وتسلّم مشروعك في الوقت المحدد. ينظم الحدث جمعية الطاقة للتنمية المستدامة ويدعم توجهات رؤية 2030.
           </p>
           <div class="d-flex flex-wrap gap-2 mt-3">
             <a class="btn btn-success" href="contract-ar.html"><i class="bi bi-file-earmark-text ms-1"></i> توقيع العقد</a>
             <a class="btn btn-outline-secondary" href="rules-ar.html"><i class="bi bi-journal-text ms-1"></i> عرض القواعد</a>
-            <a class="btn btn-primary" href="submissions-ar.html"><i class="bi bi-rocket-takeoff ms-1"></i> تسليم المشروع</a>
+            <a class="btn btn-warning text-white" href="submissions-ar.html"><i class="bi bi-rocket-takeoff ms-1"></i> تسليم المشروع</a>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <img class="w-100 hero-img"
+               src="assets/hero-wind.jpg"
+               alt="توربينات رياح لتوليد طاقة نظيفة"
+               loading="eager"
+               decoding="async"
+               width="1600" height="1000">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COUNTDOWN (centered rounded card) -->
+  <section class="gb-band py-5">
+    <div class="container text-center">
+      <div class="count-box mx-auto p-4 text-white">
+        <div class="mb-2 fw-semibold">الموعد النهائي للتسليم</div>
+        <div id="deadline" class="d-flex justify-content-center align-items-center gap-3"
+             data-deadline="2025-11-29T23:59:59+03:00">
+          <div class="text-center">
+            <div class="count-tile"><span id="ddays">00</span></div>
+            <div class="count-label">أيام</div>
+          </div>
+          <div class="text-center">
+            <div class="count-tile"><span id="dhours">00</span></div>
+            <div class="count-label">ساعات</div>
+          </div>
+          <div class="text-center">
+            <div class="count-tile"><span id="dmins">00</span></div>
+            <div class="count-label">دقائق</div>
+          </div>
+          <div class="text-center">
+            <div class="count-tile"><span id="dsecs">00</span></div>
+            <div class="count-label">ثوانٍ</div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- GRADIENT BAND + COUNTDOWN (high contrast) -->
-  
-  <section class="gb-band py-5">
-    <div class="container text-center text-white">
-      <div class="mb-2 fw-semibold">الموعد النهائي للتسليم</div>
-      <div id="deadline" class="d-flex justify-content-center align-items-center gap-3" data-deadline="2025-12-15T23:59:59+03:00">
-        <div class="text-center">
-          <div class="count-tile">٠٠</div>
-          <div class="count-label">يوم</div>
-        </div>
-        <div class="text-center">
-          <div class="count-tile">٠٠</div>
-          <div class="count-label">ساعة</div>
-        </div>
-        <div class="text-center">
-          <div class="count-tile">٠٠</div>
-          <div class="count-label">دقيقة</div>
-        </div>
-        <div class="text-center">
-          <div class="count-tile">٠٠</div>
-          <div class="count-label">ثانية</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-
   <!-- ANNOUNCEMENTS -->
-  <section class="py-4">
+  <section class="py-5" id="announcements">
     <div class="container">
-      <div class="text-center text-secondary mb-3">إعلانات</div>
-      <div class="row g-3">
-        <div class="col-md-4">
-          <div class="announce-pill">مرحبًا بكم في طاقَثون 2025! التسجيل متاح الآن.</div>
-        </div>
-        <div class="col-md-4">
-          <div class="announce-pill">تم تحديث جدول ورش العمل. راجع صفحة الجدول.</div>
-        </div>
-        <div class="col-md-4">
-          <div class="announce-pill">بوابة التسليم فعالة الآن. سلِّم مشاريعك قبل الموعد النهائي.</div>
-        </div>
-      </div>
+      <div class="text-center text-secondary mb-3">الإعلانات</div>
+      <div id="ann-wrap" class="ann-list"><!-- injected by JS --></div>
     </div>
   </section>
 
@@ -153,22 +287,26 @@
     <div class="container">
       <div class="row g-4 align-items-center">
         <div class="col-lg-6">
-          <img class="w-100 rounded-2xl shadow-soft" src="https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=1200&auto=format&fit=crop" alt="فعالية طاقَثون">
+          <img class="w-100 rounded-4 shadow-sm"
+               src="assets/about-solar.jpg"
+               alt="منظومة ألواح شمسية في المملكة"
+               loading="lazy" decoding="async"
+               width="1400" height="500">
         </div>
         <div class="col-lg-6">
-          <h5>عن طاقَثون</h5>
+          <h5>ماذا ستفعل في طاقَثون؟</h5>
           <p class="text-secondary">
-            طاقَثون فعالية رائدة تركِّز على الابتكار والاستدامة في مجال الطاقة.
-            يعمل المشاركون على حلول متقدمة لمعالجة تحديات الطاقة والمساهمة في تحقيق مستهدفات رؤية 2030.
+            ستعمل ضمن فرق لتطوير حلول عملية في الطاقة المتجددة وكفاءة الاستهلاك وذكاء الطاقة،
+            بإرشاد خبراء وبهدف التبني الواقعي المتوافق مع رؤية 2030.
           </p>
           <div class="row">
             <div class="col-6 about-list">
-              <div class="mb-2"><i class="bi bi-check-circle"></i> تعاون مع خبراء الصناعة</div>
-              <div class="mb-2"><i class="bi bi-check-circle"></i> جوائز وتقدير</div>
+              <div class="mb-2"><i class="bi bi-lightbulb"></i> ورش يقودها خبراء (مثل: كاوست، أرامكو، سابك)</div>
+              <div class="mb-2"><i class="bi bi-person-lines-fill"></i> إرشاد ومرافقة تقنية</div>
             </div>
             <div class="col-6 about-list">
-              <div class="mb-2"><i class="bi bi-check-circle"></i> وصول إلى موارد متقدمة</div>
-              <div class="mb-2"><i class="bi bi-check-circle"></i> شبكة علاقات مع مبتكرين</div>
+              <div class="mb-2"><i class="bi bi-trophy-fill"></i> جوائز: 18 ألف / 12 ألف / 9 آلاف ريال</div>
+              <div class="mb-2"><i class="bi bi-building-check"></i> فرص تبنّي من شركات كبرى</div>
             </div>
           </div>
         </div>
@@ -179,8 +317,8 @@
   <!-- CTA BAND -->
   <section class="cta-band py-5">
     <div class="container text-center">
-      <h6 class="fw-semibold mb-1">جاهز للانضمام لثورة الطاقة؟</h6>
-      <p class="mb-3">سجِّل الآن وكن جزءًا من مستقبل المملكة المستدام.</p>
+      <h6 class="fw-semibold mb-1">ابقَ على المسار</h6>
+      <p class="mb-3">أكمل توقيع العقد، واطّلع على القواعد، وتابع الجدول والإعلانات أولًا بأول.</p>
       <a class="btn btn-lg" href="contract-ar.html">ابدأ الآن</a>
     </div>
   </section>
@@ -191,15 +329,7 @@
       <div class="row g-4">
         <div class="col-md-4">
           <h6 class="mb-3">طاقَثون</h6>
-          <p class="mb-1 small">تنظيم: جمعية الطاقة للتنمية المستدامة.</p>
-          <p class="small">شروط الخدمة</p>
-        </div>
-        <div class="col-md-4">
-          <h6 class="mb-3">روابط سريعة</h6>
-          <ul class="list-unstyled small">
-            <li><a href="rules-ar.html">سياسة الخصوصية</a></li>
-            <li><a href="rules-ar.html">شروط الخدمة</a></li>
-          </ul>
+          <p class="mb-1 small">ينظمها جمعية الطاقة للتنمية المستدامة.</p>
         </div>
         <div class="col-md-4">
           <h6 class="mb-3">تابعنا</h6>
@@ -216,19 +346,15 @@
     </div>
   </footer>
 
+  <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
   <script>
     // === Countdown ===
-    // Change this if needed (ISO 8601). If null, reads from #deadline[data-deadline].
-    const DEADLINE_ISO = null; // e.g., "2025-12-15T23:59:59+03:00"
     const $wrap = document.getElementById('deadline');
-    const deadline = new Date(DEADLINE_ISO || ($wrap && $wrap.getAttribute('data-deadline')) || '').getTime();
-    const isRTL = document.documentElement.dir === 'rtl';
-    const toEastern = s => s.replace(/[0-9]/g, d => String.fromCharCode('٠'.charCodeAt(0) + (+d)));
+    const deadline = new Date($wrap.getAttribute('data-deadline')).getTime();
     function pad(n){ return (n<10?'0':'') + n; }
     function tick(){
-      if (!deadline || !document.getElementById('ddays')) return;
       const now = new Date().getTime();
       let diff = Math.max(0, deadline - now);
       const days = Math.floor(diff / (1000*60*60*24));
@@ -238,15 +364,46 @@
       const mins = Math.floor(diff / (1000*60));
       diff -= mins*60*1000;
       const secs = Math.floor(diff / 1000);
-      const fmt = v => pad(v).toString();
-      const D = fmt(days), H = fmt(hours), M = fmt(mins), S = fmt(secs);
-      const fmtDir = v => isRTL ? toEastern(v) : v;
-      document.getElementById('ddays').textContent = fmtDir(D);
-      document.getElementById('dhours').textContent = fmtDir(H);
-      document.getElementById('dmins').textContent = fmtDir(M);
-      document.getElementById('dsecs').textContent = fmtDir(S);
+      document.getElementById('ddays').textContent = pad(days);
+      document.getElementById('dhours').textContent = pad(hours);
+      document.getElementById('dmins').textContent = pad(mins);
+      document.getElementById('dsecs').textContent = pad(secs);
     }
     tick(); setInterval(tick, 1000);
+  </script>
+
+  <script>
+    // === Announcements loader (Arabic; clean cards) ===
+    const annWrap = document.getElementById('ann-wrap');
+    fetch('announcements-ar.json', { cache: 'no-store' })
+      .then(r => r.ok ? r.json() : [])
+      .then(items => {
+        if (!Array.isArray(items)) return;
+
+        items.sort((a,b) => new Date(b.date) - new Date(a.date));
+
+        const iconByType = {
+          deadline: 'bi-alarm',
+          update:   'bi-megaphone',
+          schedule: 'bi-calendar-event',
+          general:  'bi-info-circle'
+        };
+
+        annWrap.innerHTML = items.slice(0, 8).map(it => {
+          const t = (it.type || 'general').toLowerCase();
+          const cls = ['deadline','update','schedule'].includes(t) ? t : 'general';
+          const icon = iconByType[cls] || iconByType.general;
+          const dateStr = it.date ? new Date(it.date).toLocaleDateString('ar-SA') : '';
+
+          return `
+            <div class="ann-card type-${cls}">
+              <div class="ann-icon"><i class="bi ${icon}"></i></div>
+              ${it.date ? `<div class="ann-date mb-1">${dateStr}</div>` : ''}
+              <div class="ann-text">${it.text}</div>
+            </div>
+          `;
+        }).join('');
+      });
   </script>
 </body>
 </html>
