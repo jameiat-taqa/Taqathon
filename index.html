@@ -138,6 +138,21 @@
     object-fit:cover;
     object-position:center;
   }
+.about-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 1rem;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* keep it from stretching vertically on very narrow phones */
+@media (max-width: 767.98px) {
+  .about-img {
+    height: 240px; /* sets a clean proportional height */
+  }
+}
 
   /* Countdown section: neutral background; centered rounded box */
   .gb-band{ background:transparent; }
@@ -171,6 +186,36 @@
 .about-list .bi-trophy-fill { color:#E67E22; }       /* orange = prizes */
 .about-list .bi-building-check { color:#09C899; }    /* green = adoption */
 
+/* make the mobile menu drop full-width under the bar */
+.navbar .container{ position: relative; }  /* anchor for absolute panel */
+
+@media (max-width: 991.98px){
+  .navbar .navbar-collapse{
+    position: absolute;
+    inset-inline: 0;          /* left/right = 0 (RTL/LTR safe) */
+    top: 100%;                /* sits right under navbar */
+    background: #fff;
+    padding: .75rem 1rem;
+    border-top: 1px solid #e9eef5;
+    box-shadow: 0 10px 24px rgba(0,0,0,.08);
+    z-index: 1000;
+  }
+  .navbar .navbar-nav{ align-items: stretch; }
+  .navbar .nav-link{ padding: .5rem 0; }
+}
+/* MOBILE: compact AR/EN button inside burger */
+@media (max-width: 991.98px){
+  .navbar .btn-lang{
+    width: auto !important;      /* undo full-width */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: .35rem .75rem;       /* smaller height */
+    font-size: .9rem;             /* slightly smaller text */
+    border-radius: .35rem;
+    margin-top: .5rem;            /* keep a little gap above */
+  }
+}
 
   </style>
 </head>
@@ -185,7 +230,7 @@
     </a>
 
     <!-- Center: nav links (collapsible) -->
-    <div class="collapse navbar-collapse justify-content-center" id="mainNav">
+    <div class="collapse navbar-collapse justify-content-lg-center" id="mainNav">
       <ul class="navbar-nav mb-2 mb-lg-0 align-items-lg-center">
         <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
         <li class="nav-item"><a class="nav-link" href="contract.html">Contract</a></li>
@@ -289,9 +334,9 @@
     <div class="container">
       <div class="row g-4 align-items-center">
         <div class="col-lg-6">
-          <img class="w-100 rounded-4 shadow-sm"
-               src="assets/about-solar.jpg"
-               alt="Aerial view of solar panels in Saudi Arabia"
+          <img class="about-img shadow-sm"
+     src="assets/about-solar.jpg"
+     alt="Aerial view of solar panels in Saudi Arabia"
                loading="lazy" decoding="async"
                width="1400" height="500">
         </div>
