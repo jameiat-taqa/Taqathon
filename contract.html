@@ -274,49 +274,51 @@
   updateState();
 
   form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    clearStatus();
+  e.preventDefault();
+  clearStatus();
 
-    if (!isPdfSelected()) {
-      showStatus('warning', 'Please choose a PDF file to upload.');
+  if (!isPdfSelected()) {
+    showStatus('warning', 'Please choose a PDF file to upload.');
+    return;
+  }
+
+  const oldText = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = 'Submitting...';
+
+  try {
+    const fd = new FormData(form);
+    fd.set('mode', 'pdf');
+    fd.set('locale', LOCALE);
+    fd.set('source', 'taqathon-portal');
+
+    const res = await fetch(SCRIPT_URL, { method: 'POST', body: fd, redirect: 'follow' });
+
+    // Only accept real, readable success
+    if (!res.ok) {
+      const maybe = await res.json().catch(() => ({}));
+      const msg = maybe && maybe.error ? maybe.error : `Request failed (${res.status})`;
+      showStatus('danger', msg);
       return;
     }
 
-    try{
-      btn.disabled = true;
-      const oldText = btn.textContent;
-      btn.textContent = 'Submitting...';
-
-      const fd = new FormData(form);
-      // PDF-only mode for backend
-      fd.set('mode', 'pdf');
-      fd.set('locale', LOCALE);
-      fd.set('source', 'taqathon-portal');
-
-      const res = await fetch(SCRIPT_URL, { method: 'POST', body: fd, redirect: 'follow' });
-      let ok = res.ok || res.type === 'opaque';
-      let data = {};
-      if (!ok) {
-        data = await res.json().catch(() => ({}));
-        ok = !!data.ok;
-      }
-
-      if (ok) {
-        showStatus('success', 'Submitted successfully.');
-        form.reset();
-        updateState();
-      } else {
-        showStatus('danger', data.error || 'Submission failed. Please try again.');
-      }
-
-      btn.textContent = oldText;
-      btn.disabled = !isPdfSelected();
-    } catch (err) {
-      showStatus('danger', 'Could not contact the server. Please try again.');
-      console.error(err);
-      btn.disabled = !isPdfSelected();
+    const data = await res.json().catch(() => ({}));
+    if (data && data.ok) {
+      showStatus('success', 'Submitted successfully.');
+      form.reset();
+      updateState();
+    } else {
+      showStatus('danger', (data && data.error) || 'Submission failed. Please try again.');
     }
-  });
+  } catch (err) {
+    showStatus('danger', 'Could not contact the server. Please check the SCRIPT_URL (/exec) and try again.');
+    console.error(err);
+  } finally {
+    btn.textContent = oldText;
+    btn.disabled = !isPdfSelected();
+  }
+});
+
   </script>
 </body>
 </html>
