@@ -94,6 +94,8 @@
   .btn-gradient{ background:var(--brand-grad); border:0; color:#fff; }
   footer{ background:#00284C; color:#cfd6df; }
   footer a{ color:#cfd6df; text-decoration:none; }
+
+  .form-check-label.required::after{content:" *"; color:#dc3545; font-weight:700;}
   </style>
 </head>
 
@@ -141,7 +143,7 @@
         <p class="text-secondary mb-0">Please upload your signed PDF to complete your participation.</p>
       </div>
 
-      <!-- Numbered summary (kept) -->
+      <!-- Numbered summary -->
       <div class="card card-lite rounded-2xl shadow-soft mb-4">
         <div class="card-body">
           <h6 class="mb-3">Agreement Terms</h6>
@@ -186,18 +188,28 @@
               <div class="col-md-6">
                 <label class="form-label">Signed PDF (required)</label>
                 <input type="file" accept="application/pdf" class="form-control" name="file" id="file">
-                <div class="form-text">Choose a .pdf file to enable submit.</div>
+                <div class="form-text">Choose a .pdf file to enable submit (recommended &lt; 20MB).</div>
+              </div>
+              <div class="col-12">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="yes" id="agree">
+                  <label class="form-check-label required" for="agree">
+                    I have read and agree to the Participation Agreement and Hackathon Rules.
+                  </label>
+                </div>
               </div>
             </div>
 
-            <!-- Optional metadata -->
+            <!-- Metadata expected by your script -->
             <input type="hidden" name="locale" value="en">
-            <input type="hidden" name="source" value="taqathon-portal">
+            <input type="hidden" name="source" value="contract.html">
 
             <div id="status" class="mt-3 d-none"></div>
 
             <div class="d-flex flex-wrap gap-2 align-items-center mt-2">
-              <button id="submitBtn" class="btn btn-gradient px-4 py-2 rounded-2xl" type="submit" disabled>Submit Agreement</button>
+              <button id="submitBtn" class="btn btn-gradient px-4 py-2 rounded-2xl" type="submit" disabled>
+                Submit Agreement
+              </button>
               <a href="assets/Taqathon-Contract-EN.pdf" class="btn btn-outline-secondary rounded-2xl" download>
                 <i class="bi bi-download me-1"></i> Download PDF
               </a>
@@ -234,91 +246,130 @@
           </div>
         </div>
       </div>
-      <div class="border-top border-secondary mt-4 pt-3 pb-4 small text-center">© 2025 Taqathon. All rights reserved.</div>
+      <div class="border-top border-secondary mt-4 pt-3 pb-4 small text-center">© <span id="year"></span> Taqathon. All rights reserved.</div>
     </div>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-  <!-- JS -->
-  <script>
+  <!-- JS (fixed: no optional chaining, balanced brackets) -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
   // ===== CONFIG: your Apps Script Web App URL =====
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwFmRebr7kz99-QooRxyvtxqxOlaQ11mHnk_J3MmOL0sI0X37x0QLkmA1IJhi_PgFI/exec";
-  const LOCALE = 'en';
+  var SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwFmRebr7kz99-QooRxyvtxqxOlaQ11mHnk_J3MmOL0sI0X37x0QLkmA1IJhi_PgFI/exec";
 
-  const form   = document.getElementById('agreementForm');
-  const status = document.getElementById('status');
-  const btn    = document.getElementById('submitBtn');
-  const file   = document.getElementById('file');
+  var form   = document.getElementById('agreementForm');
+  var status = document.getElementById('status');
+  var btn    = document.getElementById('submitBtn');
+  var file   = document.getElementById('file');
+  var agree  = document.getElementById('agree');
 
-  function showStatus(kind, msg){
-    status.className = `alert alert-${kind} mt-3`;
-    status.textContent = msg;
+  function showStatus(kind, html){
+    if (!status) return;
+    status.className = 'alert alert-' + kind + ' mt-3';
+    status.innerHTML = html;
     status.classList.remove('d-none');
   }
-  function clearStatus(){ status.classList.add('d-none'); }
+  function clearStatus(){ if (status) status.classList.add('d-none'); }
 
   function isPdfSelected(){
     if (!(file && file.files && file.files.length > 0)) return false;
-    const f = file.files[0];
+    var f = file.files[0];
     return /\.pdf$/i.test(f.name);
   }
 
   function updateState() {
-    // Enable submit ONLY when a .pdf is selected
-    btn.disabled = !isPdfSelected();
+    if (!btn) return;
+    var ok = isPdfSelected() && agree && agree.checked === true;
+    btn.disabled = !ok;
   }
 
-  file.addEventListener('input', updateState);
+  if (file)  file.addEventListener('input', updateState);
+  if (agree) agree.addEventListener('change', updateState);
   document.addEventListener('change', updateState);
   updateState();
 
-  form.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  clearStatus();
+  var yearEl = document.getElementById('year');
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  if (!isPdfSelected()) {
-    showStatus('warning', 'Please choose a PDF file to upload.');
-    return;
-  }
+  if (!form) return;
 
-  const oldText = btn.textContent;
-  btn.disabled = true;
-  btn.textContent = 'Submitting...';
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    clearStatus();
 
-  try {
-    const fd = new FormData(form);
-    fd.set('mode', 'pdf');
-    fd.set('locale', LOCALE);
-    fd.set('source', 'taqathon-portal');
+    if (!isPdfSelected()) { showStatus('warning', 'Please choose a PDF file to upload.'); return; }
+    if (!(agree && agree.checked)) { showStatus('warning', 'You must agree to the terms to proceed.'); return; }
 
-    const res = await fetch(SCRIPT_URL, { method: 'POST', body: fd, redirect: 'follow' });
+    var oldText = btn ? btn.textContent : '';
+    if (btn) { btn.disabled = true; btn.textContent = 'Submitting...'; }
 
-    // Only accept real, readable success
-    if (!res.ok) {
-      const maybe = await res.json().catch(() => ({}));
-      const msg = maybe && maybe.error ? maybe.error : `Request failed (${res.status})`;
+    // Build FormData with names your Apps Script expects
+    var fd = new FormData();
+    var fullNameEl = document.getElementById('full_name');
+    var teamNameEl = document.getElementById('team_name');
+    var emailEl    = document.getElementById('email');
+
+    var fullName = fullNameEl && fullNameEl.value ? fullNameEl.value.trim() : '';
+    var teamName = teamNameEl && teamNameEl.value ? teamNameEl.value.trim() : '';
+    var email    = emailEl    && emailEl.value    ? emailEl.value.trim()    : '';
+
+    if (fullName) fd.append('full_name', fullName);
+    if (teamName) fd.append('team_name', teamName);
+    if (email)    fd.append('email', email);
+
+    fd.append('file', file.files[0]);  // multipart/form-data
+    fd.append('agree', 'yes');         // your script accepts "agree" or "agreed"
+    fd.append('locale', 'en');
+    fd.append('source', 'contract.html');
+
+    fetch(SCRIPT_URL, { method: 'POST', body: fd, redirect: 'follow' })
+  .then(function(res){
+    return res.text().then(function(t){
+      var data = {};
+      try { data = JSON.parse(t); } catch(e){}
+      return { ok: res.ok, status: res.status, data: data, raw: t };
+    });
+  })
+  .then(function(resp){
+    // If we got HTML back, it's usually a Google login/permission page
+    var looksLikeHtml = typeof resp.raw === 'string' && /<html/i.test(resp.raw);
+    if (!resp.ok || looksLikeHtml) {
+      var hint = looksLikeHtml ? ' (login/permission page detected — fix Web App access to "Anyone")' : '';
+      var msg = (resp.data && resp.data.error) ? resp.data.error : ('Request failed (' + resp.status + ')' + hint);
       showStatus('danger', msg);
       return;
     }
 
-    const data = await res.json().catch(() => ({}));
-    if (data && data.ok) {
-      showStatus('success', 'Submitted successfully.');
+    if (resp.data && resp.data.ok) {
+      var url = resp.data.fileUrl || '';
+      var urlPart = url ? '<br><small>Drive URL: <a href="' + url + '" target="_blank" rel="noopener">' + url + '</a></small>' : '';
+      showStatus('success', 'Submitted successfully.' + urlPart);
       form.reset();
       updateState();
     } else {
-      showStatus('danger', (data && data.error) || 'Submission failed. Please try again.');
+      var err = (resp.data && resp.data.error) ? resp.data.error : 'Submission failed. Please try again.';
+      showStatus('danger', err);
     }
-  } catch (err) {
-    showStatus('danger', 'Could not contact the server. Please check the SCRIPT_URL (/exec) and try again.');
+  })
+  .catch(function(err){
     console.error(err);
-  } finally {
-    btn.textContent = oldText;
-    btn.disabled = !isPdfSelected();
-  }
-});
+    // Fallback: try no-cors to at least deliver the file, but we can't read the response
+    fetch(SCRIPT_URL, { method: 'POST', body: fd, mode: 'no-cors' })
+      .then(function(){
+        showStatus('warning', 'Request sent with no-cors fallback. If you don’t see a row/file in Drive/Sheets, fix Web App permissions.');
+      })
+      .catch(function(){
+        showStatus('danger', 'Network/CORS blocked. Double-check the /exec URL and Web App access.');
+      });
+  })
+  .finally(function(){
+    if (btn) { btn.textContent = oldText; updateState(); }
+  });
 
-  </script>
+  });
+});
+</script>
+
 </body>
 </html>
