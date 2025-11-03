@@ -256,7 +256,7 @@
 <script>
 document.addEventListener('DOMContentLoaded', function () {
   // ===== CONFIG: your Apps Script Web App URL =====
-  var SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwFmRebr7kz99-QooRxyvtxqxOlaQ11mHnk_J3MmOL0sI0X37x0QLkmA1IJhi_PgFI/exec";
+  var SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyFKOWj5Ol_5wD1G1DssSlPBN63YsxOfYOlzd_URzkQT-N_HySGcogfjs1-vhQvlGs/exec";
 
   var form   = document.getElementById('agreementForm');
   var status = document.getElementById('status');
@@ -304,33 +304,58 @@ document.addEventListener('DOMContentLoaded', function () {
     var oldText = btn ? btn.textContent : '';
     if (btn) { btn.disabled = true; btn.textContent = 'Submitting...'; }
 
-    // Build FormData with names your Apps Script expects
-    var fd = new FormData();
-    var fullNameEl = document.getElementById('full_name');
-    var teamNameEl = document.getElementById('team_name');
-    var emailEl    = document.getElementById('email');
+   // Helper: file -> base64 (no prefix)
+function fileToBase64(f){
+  return new Promise(function(resolve, reject){
+    var r = new FileReader();
+    r.onload = function(){ 
+      var s = String(r.result || '');
+      resolve(s.replace(/^data:.*;base64,/, '')); 
+    };
+    r.onerror = reject;
+    r.readAsDataURL(f);
+  });
+}
 
-    var fullName = fullNameEl && fullNameEl.value ? fullNameEl.value.trim() : '';
-    var teamName = teamNameEl && teamNameEl.value ? teamNameEl.value.trim() : '';
-    var email    = emailEl    && emailEl.value    ? emailEl.value.trim()    : '';
+// Build FormData with names your Apps Script expects
+var fd = new FormData();
+var fullNameEl = document.getElementById('full_name');
+var teamNameEl = document.getElementById('team_name');
+var emailEl    = document.getElementById('email');
 
-    if (fullName) fd.append('full_name', fullName);
-    if (teamName) fd.append('team_name', teamName);
-    if (email)    fd.append('email', email);
+var fullName = fullNameEl && fullNameEl.value ? fullNameEl.value.trim() : '';
+var teamName = teamNameEl && teamNameEl.value ? teamNameEl.value.trim() : '';
+var email    = emailEl    && emailEl.value    ? emailEl.value.trim()    : '';
 
-    fd.append('file', file.files[0]);  // multipart/form-data
-    fd.append('agree', 'yes');         // your script accepts "agree" or "agreed"
-    fd.append('locale', 'en');
-    fd.append('source', 'contract.html');
+if (fullName) fd.append('full_name', fullName);
+if (teamName) fd.append('team_name', teamName);
+if (email)    fd.append('email', email);
 
-    fetch(SCRIPT_URL, { method: 'POST', body: fd, redirect: 'follow' })
-  .then(function(res){
-    return res.text().then(function(t){
-      var data = {};
-      try { data = JSON.parse(t); } catch(e){}
-      return { ok: res.ok, status: res.status, data: data, raw: t };
-    });
-  })
+// Always append the real file (for browsers that populate e.files)
+var f = file.files[0];
+fd.append('file', f);
+
+// Also append a base64 copy + metadata (backend fallback)
+fileToBase64(f).then(function(b64){
+  fd.append('file_b64', b64);
+  fd.append('filename', f && f.name ? f.name : 'upload.pdf');
+  fd.append('mimeType', f && f.type ? f.type : 'application/pdf');
+
+  fd.append('agree', 'yes');  // your script accepts "agree"/"agreed"
+  fd.append('locale', 'en');
+  fd.append('source', 'contract.html');
+
+  return fetch(SCRIPT_URL, { method: 'POST', body: fd, redirect: 'follow' });
+})
+.then(function(res){
+  return res.text().then(function(t){
+    var data = {};
+    try { data = JSON.parse(t); } catch(e){}
+    return { ok: res.ok, status: res.status, data: data, raw: t };
+  });
+})
+
+
   .then(function(resp){
     // If we got HTML back, it's usually a Google login/permission page
     var looksLikeHtml = typeof resp.raw === 'string' && /<html/i.test(resp.raw);
