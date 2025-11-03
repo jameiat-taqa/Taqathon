@@ -244,88 +244,95 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
   <!-- JS -->
-  <script>
-  const GAS_URL = 'https://script.google.com/macros/s/AKfycbxFeOCqy49JSyrQ-RLf167JDjulVsdbn1Ivq5ECwgVVsS6-Hg6_TwWmt6Zl4p8OK7s/exec';
-  const LOCALE  = document.documentElement.dir === 'rtl' ? 'ar' : 'en';
-  const nameInput = document.getElementById('fullName');
-  const fileInput = document.getElementById('pdfInput');
-  const agree     = document.getElementById('agree');
-  const btn       = document.getElementById('submitBtn');
-  const notice    = document.getElementById('submitNotice');
-  let pdfPayload = null;
+  <!-- JS -->
+<script>
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbyF3CNN8hm3kdwxVT4oUyxW4BlaQvWpf4irBMHcagrIqvdoYrcSzyQ43tJrXL_S6L8/exec';
+const LOCALE  = document.documentElement.dir === 'rtl' ? 'ar' : 'en';
 
-  function updateState() {
-    const hasName = nameInput && nameInput.value.trim().length > 1;
-    const hasFile = !!pdfPayload;
-    btn.disabled = !(agree && agree.checked && (hasName || hasFile));
-  }
+const nameInput = document.getElementById('fullName');
+const fileInput = document.getElementById('pdfInput');
+const agree     = document.getElementById('agree');
+const btn       = document.getElementById('submitBtn');
+const notice    = document.getElementById('submitNotice');
 
-  async function readFileAsBase64(file) {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onerror = () => reject('read_error');
-      reader.onload = () => {
-        const res = String(reader.result || '');
-        const base64 = res.includes('base64,') ? res.split('base64,')[1] : '';
-        resolve({ name: file.name, type: file.type || 'application/pdf', base64 });
-      };
-      reader.readAsDataURL(file);
-    });
-  }
+let pdfPayload = null; // { name, type, base64 }
 
-  fileInput && fileInput.addEventListener('change', async (e) => {
-    pdfPayload = null;
-    const f = e.target.files && e.target.files[0];
-    if (f) {
-      try {
-        if (!/\.pdf$/i.test(f.name)) {
-          notice.textContent = LOCALE === 'ar' ? 'يُرجى اختيار ملف PDF فقط.' : 'Please select a PDF file only.';
-          e.target.value = '';
-        } else {
-          notice.textContent = '';
-          pdfPayload = await readFileAsBase64(f);
-        }
-      } catch (err) {
-        notice.textContent = LOCALE === 'ar' ? 'تعذّر قراءة الملف.' : 'Could not read file.';
-      }
-    }
-    updateState();
-  });
+function updateState(){
+  const hasName = nameInput && nameInput.value.trim().length > 1;
+  const hasFile = !!pdfPayload;
+  btn.disabled = !(agree && agree.checked && (hasName || hasFile));
+}
 
-  [nameInput, agree].forEach(el => el && el.addEventListener('input', updateState));
-  document.addEventListener('change', updateState);
-  updateState();
-
-  async function submitAgreement() {
-    if (btn.disabled) return;
-    const payload = {
-      name: nameInput.value.trim(),
-      agree: !!agree.checked,
-      locale: LOCALE,
-      source: 'taqathon-portal',
-      file: pdfPayload
+function readFileAsBase64(file){
+  return new Promise((resolve, reject) => {
+    const r = new FileReader();
+    r.onerror = () => reject('read_error');
+    r.onload  = () => {
+      const res = String(r.result || '');
+      const base64 = res.includes('base64,') ? res.split('base64,')[1] : '';
+      resolve({ name:file.name, type:file.type || 'application/pdf', base64 });
     };
-    btn.disabled = true;
-    const oldText = btn.textContent;
-    btn.textContent = 'Submitting...';
-    try {
-      await fetch(GAS_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-      notice.classList.add('text-success');
-      notice.textContent = 'Submitted successfully. Thank you!';
-    } catch {
-      notice.classList.add('text-danger');
-      notice.textContent = 'There was an error submitting. Please try again.';
-    } finally {
-      btn.textContent = oldText;
-      updateState();
+    r.readAsDataURL(file);
+  });
+}
+
+fileInput?.addEventListener('change', async (e) => {
+  pdfPayload = null;
+  const f = e.target.files?.[0];
+  if (f) {
+    if (!/\.pdf$/i.test(f.name) || (f.type && !/pdf/i.test(f.type))) {
+      notice.textContent = LOCALE === 'ar' ? 'يُرجى اختيار ملف PDF فقط.' : 'Please select a PDF file only.';
+      e.target.value = '';
+    } else {
+      notice.textContent = '';
+      pdfPayload = await readFileAsBase64(f);
     }
   }
-  btn.addEventListener('click', submitAgreement);
-  </script>
+  updateState();
+});
+
+[nameInput, agree].forEach(el => el?.addEventListener('input', updateState));
+document.addEventListener('change', updateState);
+updateState();
+
+async function submitAgreement(){
+  if (btn.disabled) return;
+
+  const fd = new FormData();
+  fd.append('name', (nameInput?.value || '').trim());
+  fd.append('agree', String(!!agree?.checked));
+  fd.append('locale', LOCALE);
+  fd.append('source', 'taqathon-portal');
+
+  if (pdfPayload) {
+    fd.append('file_name', pdfPayload.name || 'agreement.pdf');
+    fd.append('file_type', pdfPayload.type || 'application/pdf');
+    fd.append('file_base64', pdfPayload.base64 || '');
+  }
+
+  const oldText = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = LOCALE === 'ar' ? 'جارٍ الإرسال...' : 'Submitting...';
+  notice.textContent = '';
+
+  try{
+    await fetch(GAS_URL, { method:'POST', mode:'no-cors', body: fd });
+    notice.classList.remove('text-danger');
+    notice.classList.add('text-success');
+    notice.textContent = LOCALE === 'ar' ? 'تم الإرسال بنجاح. شكرًا لك!' : 'Submitted successfully. Thank you!';
+  }catch(err){
+    console.error(err);
+    notice.classList.remove('text-success');
+    notice.classList.add('text-danger');
+    notice.textContent = LOCALE === 'ar' ? 'حدث خطأ أثناء الإرسال. حاول مرة أخرى.' : 'There was an error submitting. Please try again.';
+  }finally{
+    btn.textContent = oldText;
+    updateState();
+  }
+}
+
+btn?.addEventListener('click', submitAgreement);
+</script>
+
 </body>
 </html>
