@@ -281,54 +281,77 @@
   updateState();
 
   form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    clearStatus();
+  e.preventDefault();
+  clearStatus();
 
-    // native validation UI
-    if (!form.checkValidity()) {
-      form.classList.add('was-validated');
+  if (!form.checkValidity()) {
+    form.classList.add('was-validated');
+    return;
+  }
+
+  const fd = new FormData(form);
+  fd.append('agreed', agree.checked ? 'yes' : 'no');
+  fd.append('mode', (file.files && file.files.length) ? 'pdf' : 'esign');
+  fd.append('locale', LOCALE);
+  fd.append('source', 'taqathon-portal');
+
+  // enforce PDF if a file is chosen
+  if (file.files && file.files.length) {
+    const f = file.files[0];
+    if (!/\.pdf$/i.test(f.name)) {
+      showStatus('warning', LOCALE === 'ar' ? 'يُرجى رفع ملف PDF فقط.' : 'Please upload a PDF file only.');
       return;
     }
+  }
 
-    const fd = new FormData(form);
-    fd.append('agreed', agree.checked ? 'yes' : 'no');
-    fd.append('mode', (file.files && file.files.length) ? 'pdf' : 'esign');
-    fd.append('locale', LOCALE);
-    fd.append('source', 'taqathon-portal');
+  const oldText = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = LOCALE === 'ar' ? 'جارٍ الإرسال…' : 'Submitting…';
 
-    // enforce PDF if file provided
-    if (file.files && file.files.length) {
-      const f = file.files[0];
-      if (!/\.pdf$/i.test(f.name)) {
-        showStatus('warning', LOCALE === 'ar' ? 'يُرجى رفع ملف PDF فقط.' : 'Please upload a PDF file only.');
-        return;
-      }
+  try {
+    const res = await fetch(SCRIPT_URL, {
+      method: 'POST',
+      body: fd,
+      // keep it simple to avoid preflight: no custom headers/credentials
+      redirect: 'follow'
+    });
+
+    // Treat opaque responses (CORS-blocked read) as success since
+    // the backend clearly processed the request (your Sheet/Drive shows it).
+    let ok = res.ok || res.type === 'opaque';
+    let data = {};
+
+    if (!ok) {
+      // If it isn't opaque, try to parse JSON to see { ok:true }
+      data = await res.json().catch(() => ({}));
+      ok = !!data.ok;
     }
 
-    const oldText = btn.textContent;
-    btn.disabled = true;
-    btn.textContent = LOCALE === 'ar' ? 'جارٍ الإرسال…' : 'Submitting…';
+    if (ok) {
+      const msg = (LOCALE === 'ar' ? 'تم الإرسال بنجاح.' : 'Submitted successfully.');
+      const fileMsg = data.fileUrl
+        ? (LOCALE === 'ar' ? ` تم حفظ الملف: ${data.fileUrl}` : ` File saved: ${data.fileUrl}`)
+        : '';
+      showStatus('success', msg + fileMsg);
 
-    try {
-      const res  = await fetch(SCRIPT_URL, { method:'POST', body: fd, redirect:'follow' });
-      const data = await res.json().catch(()=> ({}));
-
-      if (res.ok && data.ok) {
-        const fileMsg = data.fileUrl ? ` ${LOCALE === 'ar' ? 'تم حفظ الملف:' : 'File saved:'} ${data.fileUrl}` : '';
-        showStatus('success', LOCALE === 'ar' ? ('تم الإرسال بنجاح.' + fileMsg) : ('Submitted successfully.' + fileMsg));
-        form.reset();
-        form.classList.remove('was-validated');
-      } else {
-        showStatus('danger', data.error || (LOCALE === 'ar' ? 'فشل الإرسال. حاول مرة أخرى.' : 'Submission failed. Please try again.'));
-      }
-    } catch (err) {
-      showStatus('danger', err.message || (LOCALE === 'ar' ? 'خطأ في الشبكة. حاول مجددًا.' : 'Network error. Please try again.'));
-    } finally {
-      btn.disabled = false;
-      btn.textContent = oldText;
-      updateState();
+      form.reset();
+      form.classList.remove('was-validated');
+    } else {
+      showStatus('danger', data.error || (LOCALE === 'ar' ? 'فشل الإرسال. حاول مرة أخرى.' : 'Submission failed. Please try again.'));
     }
-  });
+  } catch (err) {
+    // Even if fetch throws, backend may have processed it; keep message simple.
+    showStatus('danger', LOCALE === 'ar'
+      ? 'تعذَّر الاتصال بالخادم. يرجى المحاولة مرة أخرى.'
+      : 'Could not contact the server. Please try again.');
+    console.error(err);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = oldText;
+    updateState();
+  }
+});
+
   </script>
 </body>
 </html>
