@@ -4,196 +4,258 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Schedule & Workshops · Taqathon</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap 5 + Icons -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
   <style>
-:root{
-  --brand-green:#20c997;
-  --brand-blue:#1d91c0;
-  --band-grad:linear-gradient(90deg, var(--brand-green), var(--brand-blue));
-  --pill-ceremony:#b388ff;
-  --pill-workshop:#6ede8a;
-  --pill-mentoring:#87cefa;
-  --pill-network:#ffb870;
-}
-body{ background:#f6f9fb; }
-.rounded-2xl{ border-radius:1rem; }
-.card-lite{ background:#fff; border:1px solid #e9eef3; }
-.icon-circle{
-  width:56px; height:56px; border-radius:999px; display:inline-flex; align-items:center; justify-content:center;
-  background:linear-gradient(180deg, #e9fbf6, #dff7ff); border:1px solid #e7f3f8; color:#15a27b;
-  box-shadow:0 10px 30px rgba(0,0,0,.06);
-}
-.pill{ padding:.25rem .55rem; border-radius:999px; font-size:.775rem; border:1px solid rgba(0,0,0,.08); background:#f8f9fa; }
-.pill.workshop{ background:var(--pill-workshop); color:#0b3d27; border-color:rgba(0,0,0,.08); }
-.pill.mentoring{ background:var(--pill-mentoring); color:#083b55; }
-.pill.network{ background:var(--pill-network); color:#5b2e02;}
-.pill.ceremony{ background:var(--pill-ceremony); color:#2f175b;}
-.btn-join{ border-color:#20c997; color:#198754; }
-.btn-join i{ margin-inline-start:.25rem; }
-.table thead th{ color:#6b7785; font-weight:600; }
-.legend .pill{ margin:.25rem .35rem; }
-.navbar .nav-link.active{ font-weight:600; }
-</style>
+  :root{
+    --brand-blue:#007DFD;
+    --brand-green:#09C899;
+    --brand-dark:#00284C;
+    --brand-grad: linear-gradient(90deg, #09C899, #007DFD);
+    --text:#1d2733;
+    --muted:#66768a;
+  }
+
+  html,body{
+    height:100%;
+    font-family:Poppins, Cairo, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    color:var(--text);
+    background:#f8fbfd;
+  }
+  body{ display:flex; flex-direction:column; }
+  main{ flex:1 0 auto; }
+  footer{ flex-shrink:0; }
+
+  .rounded-2xl{ border-radius:1rem; }
+  .card-lite{ background:#fff; border:1px solid #e9eef3; }
+  .shadow-soft{ box-shadow:0 10px 30px rgba(0,0,0,.1); }
+
+  /* Icon circle (same as contract) */
+  .icon-circle{
+    width:64px; height:64px; border-radius:999px;
+    display:inline-flex; align-items:center; justify-content:center;
+    background:linear-gradient(180deg,#eef6ff,#f3fbff);
+    border:1px solid #c9ddff;
+    color:var(--brand-blue);
+    box-shadow:0 4px 16px rgba(0,125,253,.25);
+  }
+  .icon-circle i{ font-size:1.6rem; }
+
+  .table thead th{ color:#6b7785; font-weight:600; }
+
+  /* === Color-coded rows === */
+  .table tbody tr.workshop-row td {
+    background:#ecfdf5; /* light green for workshops */
+  }
+  .table tbody tr.keydate-row td {
+    background:#eef6ff; /* light blue for key dates */
+  }
+
+  .btn-join{
+    border-color:var(--brand-green);
+    color:#0a7b60;
+    background:#f4fffb;
+  }
+  .btn-join:hover{
+    background:var(--brand-green);
+    color:#fff;
+    border-color:var(--brand-green);
+  }
+
+  /* Navbar (synced with contract/index) */
+  .navbar{
+    background:#fff;
+    box-shadow:0 2px 10px rgba(0,0,0,.04);
+    padding-top:.4rem; padding-bottom:.4rem;
+  }
+  .logo-mark{ height:60px; width:auto; object-fit:contain; }
+  .assoc-logo{ height:48px; width:auto; object-fit:contain; }
+  .navbar-nav .nav-link{ font-weight:500; color:var(--brand-dark); transition:.2s; }
+  .navbar-nav .nav-link:hover,
+  .navbar-nav .nav-link.active{ color:var(--brand-blue); }
+  .btn-lang{
+    background:var(--brand-blue); color:#fff !important;
+    border:none; border-radius:.4rem;
+    padding:.35rem .9rem;
+    font-weight:500;
+    transition:.2s;
+  }
+  .btn-lang:hover{ background:var(--brand-green); color:#fff !important; }
+
+  @media (max-width:991.98px){
+    .navbar .navbar-collapse{
+      position:absolute; inset-inline:0; top:100%;
+      background:#fff; padding:.75rem 1rem;
+      border-top:1px solid #e9eef5;
+      box-shadow:0 10px 24px rgba(0,0,0,.08);
+      z-index:1000;
+    }
+  }
+
+  /* Footer */
+  footer{ background:#00284C; color:#cfd6df; }
+  footer a{ color:#cfd6df; text-decoration:none; }
+  </style>
 </head>
+
 <body>
-  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
-    <div class="container">
-      <a class="navbar-brand fw-bold" href="index.html">
-        <img src="https://dummyimage.com/28x28/20c997/ffffff.png&text=T" width="28" height="28" alt=""> Taqathon
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+    <div class="container d-flex align-items-center justify-content-between">
+      <a class="navbar-brand d-flex align-items-center" href="index.html">
+        <img src="assets/taqathon-logo.png" alt="Taqathon logo" class="logo-mark">
       </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav"><span class="navbar-toggler-icon"></span></button>
-      <div class="collapse navbar-collapse" id="nav">
-        <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-          <li class="nav-item"><a class="nav-link " href="index.html">Home</a></li>
-<li class="nav-item"><a class="nav-link " href="contract.html">Contract</a></li>
-<li class="nav-item"><a class="nav-link active" href="schedule.html">Schedule & Workshops</a></li>
-<li class="nav-item"><a class="nav-link " href="submissions.html">Submissions</a></li>
-<li class="nav-item"><a class="nav-link " href="rules.html">Rules & Resources</a></li>
-<li class="nav-item"><a class="nav-link " href="contact.html">Contact Us</a></li>
+
+      <div class="collapse navbar-collapse justify-content-lg-center" id="mainNav">
+        <ul class="navbar-nav mb-2 mb-lg-0 align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="contract.html">Contract</a></li>
+          <li class="nav-item"><a class="nav-link active" href="schedule.html">Schedule & Workshops</a></li>
+          <li class="nav-item"><a class="nav-link" href="submissions.html">Submissions</a></li>
+          <li class="nav-item"><a class="nav-link" href="rules.html">Rules & Resources</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
+          <li class="nav-item ms-3">
+            <a class="btn btn-sm btn-lang" href="schedule-ar.html">AR</a>
+          </li>
         </ul>
-        <div class="d-flex">
-          <a class="btn btn-sm btn-outline-secondary" href="schedule-ar.html">AR</a>
-        </div>
+      </div>
+
+      <div class="assoc-fixed d-flex align-items-center gap-2">
+        <a href="https://taqa.org.sa" target="_blank" rel="noopener">
+          <img src="assets/association-logo.png" alt="Energy Association for Sustainable Development" class="assoc-logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
       </div>
     </div>
   </nav>
 
+  <!-- Main -->
   <main class="py-5">
     <div class="container" style="max-width:980px;">
       <div class="text-center mb-4">
         <div class="icon-circle mx-auto mb-3"><i class="bi bi-calendar-event"></i></div>
-        <h5 class="mb-1">Schedule & Workshops</h5>
-        <p class="text-secondary mb-0">View the complete schedule of events, workshops, and mentoring sessions.</p>
+        <h5 class="mb-1 fw-semibold">Schedule & Workshops</h5>
+        <p class="text-secondary mb-0">Join links will be added once each session is live.</p>
       </div>
 
-      <div class="card card-lite rounded-2xl">
+      <div class="card card-lite rounded-2xl shadow-soft">
         <div class="table-responsive">
           <table class="table align-middle mb-0">
             <thead>
               <tr>
-                <th>Event</th>
+                <th>Item</th>
                 <th>Date</th>
                 <th>Time</th>
-                <th>Type</th>
-                <th>Meeting Link</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
-              
-        <tr>
-          <td>Opening Ceremony</td>
-          <td><i class="bi bi-calendar-week me-1 ms-1"></i> Nov 15, 2025</td>
-          <td><i class="bi bi-clock me-1 ms-1"></i> 08:00 AM – 10:00 AM</td>
-          <td><span class="pill ceremony">ceremony</span></td>
-          <td>
-            <a class="btn btn-sm btn-outline-success btn-join" href="#">Join <i class="bi bi-box-arrow-up-right"></i></a>
-          </td>
-        </tr>
-        
 
-        <tr>
-          <td>Workshop: Energy Innovation Basics</td>
-          <td><i class="bi bi-calendar-week me-1 ms-1"></i> Nov 25, 2025</td>
-          <td><i class="bi bi-clock me-1 ms-1"></i> 10:30 AM – 12:00 PM</td>
-          <td><span class="pill workshop">workshop</span></td>
-          <td>
-            <a class="btn btn-sm btn-outline-success btn-join" href="#">Join <i class="bi bi-box-arrow-up-right"></i></a>
-          </td>
-        </tr>
-        
+              <!-- Workshops -->
+              <tr class="section-row">
+                <td colspan="4"><span class="section-kicker"><span class="k-dot"></span> Workshops</span></td>
+              </tr>
 
-        <tr>
-          <td>Mentoring Session: Renewable Energy</td>
-          <td><i class="bi bi-calendar-week me-1 ms-1"></i> Nov 28, 2025</td>
-          <td><i class="bi bi-clock me-1 ms-1"></i> 02:00 PM – 03:00 PM</td>
-          <td><span class="pill mentoring">mentoring</span></td>
-          <td>
-            <a class="btn btn-sm btn-outline-success btn-join" href="#">Join <i class="bi bi-box-arrow-up-right"></i></a>
-          </td>
-        </tr>
-        
+              <tr class="workshop-row">
+                <td>
+                  <div class="fw-semibold">Energy Workshop</div>
+                  <div class="small text-secondary">Prof. Ali Foda</div>
+                </td>
+                <td>Nov 12, 2025</td>
+                <td>TBA</td>
+                <td><a class="btn btn-sm btn-outline-success btn-join" href="#"><i class="bi bi-box-arrow-up-right me-1"></i> Join Live</a></td>
+              </tr>
 
-        <tr>
-          <td>Workshop: Sustainable Technology Solutions</td>
-          <td><i class="bi bi-calendar-week me-1 ms-1"></i> Nov 27, 2025</td>
-          <td><i class="bi bi-clock me-1 ms-1"></i> 10:00 AM – 11:30 AM</td>
-          <td><span class="pill workshop">workshop</span></td>
-          <td>
-            <a class="btn btn-sm btn-outline-success btn-join" href="#">Join <i class="bi bi-box-arrow-up-right"></i></a>
-          </td>
-        </tr>
-        
+              <tr class="workshop-row">
+                <td>
+                  <div class="fw-semibold">Building & Developing Projects</div>
+                  <div class="small text-secondary">Dr. Sami Ghazali</div>
+                </td>
+                <td>Nov 12, 2025</td>
+                <td>TBA</td>
+                <td><a class="btn btn-sm btn-outline-success btn-join" href="#"><i class="bi bi-box-arrow-up-right me-1"></i> Join Live</a></td>
+              </tr>
 
-        <tr>
-          <td>Networking Session</td>
-          <td><i class="bi bi-calendar-week me-1 ms-1"></i> Nov 28, 2025</td>
-          <td><i class="bi bi-clock me-1 ms-1"></i> 04:00 PM – 05:00 PM</td>
-          <td><span class="pill network">network</span></td>
-          <td>
-            <a class="btn btn-sm btn-outline-success btn-join" href="#">Join <i class="bi bi-box-arrow-up-right"></i></a>
-          </td>
-        </tr>
-        
+              <tr class="workshop-row">
+                <td>
+                  <div class="fw-semibold">Professional Project Pitching</div>
+                  <div class="small text-secondary">Dr. Mohannad Bahashwan</div>
+                </td>
+                <td>Nov 12, 2025</td>
+                <td>TBA</td>
+                <td><a class="btn btn-sm btn-outline-success btn-join" href="#"><i class="bi bi-box-arrow-up-right me-1"></i> Join Live</a></td>
+              </tr>
 
-        <tr>
-          <td>Workshop: Pitch Preparation</td>
-          <td><i class="bi bi-calendar-week me-1 ms-1"></i> Dec 10, 2025</td>
-          <td><i class="bi bi-clock me-1 ms-1"></i> 01:00 PM – 02:30 PM</td>
-          <td><span class="pill workshop">workshop</span></td>
-          <td>
-            <a class="btn btn-sm btn-outline-success btn-join" href="#">Join <i class="bi bi-box-arrow-up-right"></i></a>
-          </td>
-        </tr>
-        
+              <!-- Key Dates -->
+              <tr class="section-row">
+                <td colspan="4"><span class="section-kicker"><span class="k-dot"></span> Key Dates</span></td>
+              </tr>
 
-        <tr>
-          <td>Mentoring Session: Business Model</td>
-          <td><i class="bi bi-calendar-week me-1 ms-1"></i> Dec 15, 2025</td>
-          <td><i class="bi bi-clock me-1 ms-1"></i> 03:00 PM – 04:30 PM</td>
-          <td><span class="pill mentoring">mentoring</span></td>
-          <td>
-            <a class="btn btn-sm btn-outline-success btn-join" href="#">Join <i class="bi bi-box-arrow-up-right"></i></a>
-          </td>
-        </tr>
-        
+              <tr class="keydate-row">
+                <td><div class="fw-semibold">Mentoring Sessions</div></td>
+                <td>Nov 15, 2025</td>
+                <td>TBA</td>
+                <td><a class="btn btn-sm btn-outline-success btn-join" href="#"><i class="bi bi-box-arrow-up-right me-1"></i> Join Live</a></td>
+              </tr>
 
-        <tr>
-          <td>Final Presentations & Awards</td>
-          <td><i class="bi bi-calendar-week me-1 ms-1"></i> Dec 26, 2025</td>
-          <td><i class="bi bi-clock me-1 ms-1"></i> 10:00 AM – 04:00 PM</td>
-          <td><span class="pill ceremony">ceremony</span></td>
-          <td>
-            <a class="btn btn-sm btn-outline-success btn-join" href="#">Join <i class="bi bi-box-arrow-up-right"></i></a>
-          </td>
-        </tr>
-        
+              <tr class="keydate-row">
+                <td><div class="fw-semibold">Final Project Submission</div></td>
+                <td>Nov 22, 2025</td>
+                <td>TBA</td>
+                <td><a class="btn btn-sm btn-outline-success btn-join" href="submissions.html"><i class="bi bi-upload me-1"></i> Submit Project</a></td>
+              </tr>
+
+              <tr class="keydate-row">
+                <td><div class="fw-semibold">Closing Ceremony</div></td>
+                <td>Nov 30, 2025</td>
+                <td>TBA</td>
+                <td><a class="btn btn-sm btn-outline-success btn-join" href="#"><i class="bi bi-box-arrow-up-right me-1"></i> Join Live</a></td>
+              </tr>
+
             </tbody>
           </table>
         </div>
       </div>
-      
-      <div class="legend text-center mt-3">
-        <span class="pill ceremony">ceremony</span>
-        <span class="pill workshop">workshop</span>
-        <span class="pill mentoring">mentoring</span>
-        <span class="pill network">networking</span>
-      </div>
-    
     </div>
   </main>
 
+  <!-- Footer -->
   <footer class="pt-5">
     <div class="container">
       <div class="row g-4">
-        <div class="col-md-4"><h6 class="mb-3">Taqathon</h6><p class="mb-1 small">Organized by Energy Association for Sustainable Development.</p><p class="small">Terms of Service</p></div>
-        <div class="col-md-4"><h6 class="mb-3">Quick Links</h6><ul class="list-unstyled small"><li><a href="rules.html">Privacy Policy</a></li><li><a href="rules.html">Terms of Service</a></li></ul></div>
-        <div class="col-md-4"><h6 class="mb-3">Follow Us</h6><div class="d-flex gap-2"><a href="#"><i class="bi bi-facebook fs-5"></i></a><a href="#"><i class="bi bi-instagram fs-5"></i></a><a href="#"><i class="bi bi-linkedin fs-5"></i></a><a href="#"><i class="bi bi-twitter-x fs-5"></i></a><a href="#"><i class="bi bi-youtube fs-5"></i></a></div></div>
+        <div class="col-md-6">
+          <h6 class="mb-3 text-white">Taqathon</h6>
+          <p class="small mb-1">Organized by Energy Association for Sustainable Development.</p>
+        </div>
+        <div class="col-md-6">
+          <h6 class="mb-3 text-white">Follow Us</h6>
+          <div class="d-flex gap-3">
+            <a href="https://x.com/jameiat_taqa" target="_blank" class="text-light"><i class="bi bi-twitter-x fs-5"></i></a>
+            <a href="https://instagram.com/jameiat_taqa" target="_blank" class="text-light"><i class="bi bi-instagram fs-5"></i></a>
+            <a href="https://www.linkedin.com/company/جمعية-الطاقة-للتنمية-المستدامة" target="_blank" class="text-light"><i class="bi bi-linkedin fs-5"></i></a>
+            <a href="https://tiktok.com/@jameiat_taqa" target="_blank" class="text-light"><i class="bi bi-tiktok fs-5"></i></a>
+          </div>
+        </div>
       </div>
-      <div class="border-top border-secondary mt-4 pt-3 pb-4 small text-center">© 2025 Taqathon. All rights reserved.</div>
+      <div class="border-top border-secondary mt-4 pt-3 pb-4 small text-center">
+        © <span id="year"></span> Taqathon. All rights reserved.
+      </div>
     </div>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>

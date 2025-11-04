@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>العقد · طاقَثون</title>
+  <title>اتفاقية المشاركة · طاقَثون</title>
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,23 +19,22 @@
     --brand-blue:#007DFD;
     --brand-green:#09C899;
     --brand-dark:#00284C;
-    --brand-grad: linear-gradient(90deg, var(--brand-green), var(--brand-blue));
+    --brand-grad: linear-gradient(90deg, #09C899, #007DFD);
     --text:#1d2733;
     --muted:#66768a;
   }
 
   html,body{
-    font-family: Cairo, Poppins, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    font-family: Cairo, Poppins, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
     color:var(--text);
     background:#f8fbfd;
   }
 
   .rounded-2xl{ border-radius: 1rem; }
   .shadow-soft{ box-shadow: 0 10px 30px rgba(0,0,0,.10); }
-  .badge-soft{ background:rgba(9,200,153,.15); color:#0a7b60; border:1px solid rgba(9,200,153,.3); }
   .text-secondary{ color:var(--muted)!important; }
 
-  /* Navbar (mirrored to match index-ar) */
+  /* Navbar */
   .navbar{
     background:#fff;
     box-shadow:0 2px 10px rgba(0,0,0,.04);
@@ -44,9 +43,6 @@
   }
   .logo-mark{ height:60px; width:auto; object-fit:contain; }
   .assoc-logo{ height:48px; width:auto; object-fit:contain; }
-  .navbar .container{ gap:1rem; flex-wrap:nowrap; position:relative; }
-  .navbar .navbar-brand,
-  .navbar .assoc-fixed{ flex-shrink:0; }
   .navbar-nav .nav-link{ font-weight:500; color:var(--brand-dark); transition:.2s; }
   .navbar-nav .nav-link:hover,
   .navbar-nav .nav-link.active{ color:var(--brand-blue); }
@@ -55,11 +51,12 @@
     background:var(--brand-blue);
     color:#ffffff !important;
     border:none; border-radius:.4rem;
-    padding:.35rem .9rem; font-weight:500; transition:.2s;
+    padding:.35rem .9rem;
+    font-weight:500; transition:.2s;
   }
   .btn-lang:hover{ background:var(--brand-green); color:#fff !important; }
 
-  /* Full-width dropdown under the bar (RTL safe) */
+  /* Mobile menu */
   @media (max-width: 991.98px){
     .navbar .navbar-collapse{
       position:absolute; inset-inline:0; top:100%;
@@ -68,43 +65,32 @@
       box-shadow:0 10px 24px rgba(0,0,0,.08);
       z-index:1000;
     }
-    .navbar .nav-link{ padding:.5rem 0; }
-    .navbar .btn-lang{
-      width:auto; display:inline-flex; align-items:center; justify-content:center;
-      padding:.35rem .75rem; font-size:.9rem; border-radius:.35rem; margin-top:.5rem;
-    }
   }
 
-  /* Page components */
+  /* Section styles */
   .icon-circle{
-    width:64px; height:64px; /* tighter balance */
-    border-radius:999px; display:inline-flex; align-items:center; justify-content:center;
+    width:64px; height:64px;
+    border-radius:999px;
+    display:inline-flex; align-items:center; justify-content:center;
     background:linear-gradient(180deg,#eef6ff,#f3fbff);
     border:1px solid #c9ddff;
     color:var(--brand-blue);
-    box-shadow:0 4px 16px rgba(0,125,253,.25); /* soft blue glow */
+    box-shadow:0 4px 16px rgba(0,125,253,.25);
   }
-  .icon-circle i{ font-size:1.6rem; line-height:1; } /* bigger glyph */
+  .icon-circle i{ font-size:1.6rem; line-height:1; }
 
   .badge-step{
     display:inline-flex; align-items:center; justify-content:center;
     width:26px; height:26px; border-radius:999px; font-size:.9rem;
-    background:rgba(32,201,151,.15); color:#1b7f61; border:1px solid rgba(32,201,151,.25);
+    background:rgba(32,201,151,.15); color:#1b7f61;
+    border:1px solid rgba(32,201,151,.25);
   }
   .card-lite{ background:#fff; border:1px solid #e9eef3; }
-
-  .upload-box{
-    border:2px dashed #d6dee6; border-radius:1rem; padding:2rem; text-align:center; color:#6c757d;
-    background:#fafcff; transition:.2s ease;
-  }
-  .upload-box:hover{ border-color:#b6c4d1; background:#ffffff; }
-
   .btn-gradient{ background:var(--brand-grad); border:0; color:#fff; }
-  .btn-gradient:disabled{ opacity:.5; }
-
-  /* Footer */
   footer{ background:#00284C; color:#cfd6df; }
   footer a{ color:#cfd6df; text-decoration:none; }
+
+  .form-check-label.required::after{content:" *"; color:#dc3545; font-weight:700;}
   </style>
 </head>
 
@@ -112,33 +98,29 @@
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-light sticky-top">
     <div class="container d-flex align-items-center justify-content-between">
-      <!-- Right: Taqathon logo -->
       <a class="navbar-brand d-flex align-items-center" href="index-ar.html">
-        <img src="assets/taqathon-logo.png" alt="طاقَثون" class="logo-mark">
+        <img src="assets/taqathon-logo.png" alt="شعار طاقثون" class="logo-mark">
       </a>
 
-      <!-- Center: links -->
       <div class="collapse navbar-collapse justify-content-lg-center" id="mainNav">
         <ul class="navbar-nav mb-2 mb-lg-0 align-items-lg-center">
           <li class="nav-item"><a class="nav-link" href="index-ar.html">الرئيسية</a></li>
-          <li class="nav-item"><a class="nav-link active" href="contract-ar.html">العقد</a></li>
-          <li class="nav-item"><a class="nav-link" href="schedule-ar.html">الجدول وورش العمل</a></li>
+          <li class="nav-item"><a class="nav-link active" href="contract-ar.html">الاتفاقية</a></li>
+          <li class="nav-item"><a class="nav-link" href="schedule-ar.html">الجدول والورش</a></li>
           <li class="nav-item"><a class="nav-link" href="submissions-ar.html">التسليمات</a></li>
           <li class="nav-item"><a class="nav-link" href="rules-ar.html">القواعد والموارد</a></li>
           <li class="nav-item"><a class="nav-link" href="contact-ar.html">تواصل معنا</a></li>
-          <li class="nav-item me-3">
-            <a class="btn btn-sm btn-lang" href="contract.html">EN</a>
+          <li class="nav-item ms-3">
+            <a class="btn btn-sm btn-lang" href="contract.html" hreflang="en" dir="ltr">EN</a>
           </li>
         </ul>
       </div>
 
-      <!-- Left: association logo + burger -->
       <div class="assoc-fixed d-flex align-items-center gap-2">
-        <a href="https://taqa.org.sa" target="_blank" rel="noopener" class="d-block">
+        <a href="https://taqa.org.sa" target="_blank" rel="noopener">
           <img src="assets/association-logo.png" alt="جمعية الطاقة للتنمية المستدامة" class="assoc-logo">
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
-                aria-controls="mainNav" aria-expanded="false" aria-label="تبديل القائمة">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-label="قائمة">
           <span class="navbar-toggler-icon"></span>
         </button>
       </div>
@@ -153,239 +135,258 @@
           <i class="bi bi-pencil-square"></i>
         </div>
         <h5 class="mb-1">اتفاقية المشاركة</h5>
-        <p class="text-secondary mb-0">يرجى مراجعة الاتفاقية وتوقيعها لتأكيد التزامك بطاقَثون.</p>
+        <p class="text-secondary mb-0">فضلاً ارفع ملف الـ PDF الموقّع لإكمال مشاركتك.</p>
       </div>
 
-      <!-- بنود الاتفاق (مرقمة بأسلوب البادجات) -->
+      <!-- Numbered summary -->
       <div class="card card-lite rounded-2xl shadow-soft mb-4">
         <div class="card-body">
-          <h6 class="mb-3">بنود الاتفاق</h6>
-          <div class="d-flex align-items-start gap-2 mb-2">
-            <span class="badge-step">1</span>
-            <div>تنظّم هذه الاتفاقية العلاقة القانونية بين جمعية الطاقة للتنمية المستدامة والفرق المشاركة في «طاقَثون».</div>
+          <h6 class="mb-3">أبرز البنود</h6>
+          <div class="d-flex align-items-start gap-2 mb-2"><span class="badge-step">1</span>
+            <div>تحدد هذه الاتفاقية العلاقة القانونية بين جمعية الطاقة للتنمية المستدامة والفرق المشاركة في طاقَثون.</div>
           </div>
-          <div class="d-flex align-items-start gap-2 mb-2">
-            <span class="badge-step">2</span>
-            <div>تحكم المشاركة خلال الهاكاثون وتمنح الجمعية حقوقًا حصرية لتسويق المشروع لمدة عام من تاريخ التوقيع.</div>
+          <div class="d-flex align-items-start gap-2 mb-2"><span class="badge-step">2</span>
+            <div>تنظم المشاركة أثناء الهاكاثون، وتمنح الجمعية حقوق التسويق الحصرية لمدة سنة واحدة من تاريخ التوقيع.</div>
           </div>
-          <div class="d-flex align-items-start gap-2 mb-2">
-            <span class="badge-step">3</span>
-            <div>يلتزم الفريق بتقديم عمل أصيل، وحضور الورش والجلسات المطلوبة، والسماح للجمعية بالترويج للمشروع.</div>
+          <div class="d-flex align-items-start gap-2 mb-2"><span class="badge-step">3</span>
+            <div>يقرّ الفريق بالأعمال الأصلية، والالتزام بالورش والجلسات المطلوبة، والسماح للجمعية بالترويج للمشروعات.</div>
           </div>
-          <div class="d-flex align-items-start gap-2 mb-2">
-            <span class="badge-step">4</span>
-            <div>إذا تم تبنّي المشروع أو الاستثمار فيه خلال مدة الاتفاقية فتُستحق رسوم تسويق بنسبة <strong>10%</strong>.</div>
+          <div class="d-flex align-items-start gap-2 mb-2"><span class="badge-step">4</span>
+            <div>في حال تبنّي المشروع أو الاستثمار فيه خلال مدة الاتفاقية، تُستحق عمولة تسويق بنسبة 10%.</div>
           </div>
-          <div class="d-flex align-items-start gap-2">
-            <span class="badge-step">5</span>
-            <div>تسري الاتفاقية لمدة سنة واحدة، ويُعتدّ بالتوقيع الإلكتروني.</div>
+          <div class="d-flex align-items-start gap-2"><span class="badge-step">5</span>
+            <div>مدة الاتفاقية سنة واحدة (1).</div>
           </div>
         </div>
       </div>
 
-      <!-- Signature -->
+      <!-- PDF Upload Only -->
       <div class="card card-lite rounded-2xl shadow-soft">
         <div class="card-body">
-          <h6 class="mb-1">التوقيع الإلكتروني</h6>
-          <div class="text-secondary mb-3">وقّع باسمك الكامل أو ارفع ملف PDF موقعًا.</div>
+          <h6 class="mb-1">رفع ملف PDF الموقّع</h6>
+          <div class="text-secondary mb-3">يُقبل PDF فقط. الحقول الأخرى اختيارية.</div>
 
-          <div class="mb-3">
-            <label class="form-label">الاسم الكامل</label>
-            <input class="form-control" placeholder="اكتب اسمك الكامل" id="fullName">
-            <div class="form-text">كتابة الاسم الكامل تُعد توقيعًا إلكترونيًا.</div>
-          </div>
-
-          <div class="text-secondary small mb-2">أو ارفع مستندًا موقعًا</div>
-
-          <div class="upload-box mb-3">
-            <i class="bi bi-upload fs-3 d-block mb-2"></i>
-            <div>رفع PDF</div>
-            <input id="pdfInput" type="file" accept="application/pdf" class="form-control mt-3" style="max-width:360px; margin-inline:auto;">
-          </div>
-
-          <div class="form-check mb-3">
-            <input class="form-check-input" type="checkbox" id="agree">
-            <label class="form-check-label" for="agree">أوافق على البنود أعلاه</label>
-          </div>
-
-          <div class="d-flex flex-wrap gap-2">
-            <button id="submitBtn" class="btn btn-gradient px-4 py-2 rounded-2xl" disabled>إرسال الاتفاقية</button>
-            <a href="assets/Taqathon-Contract-AR.pdf" class="btn btn-outline-secondary rounded-2xl" download>
-              <i class="bi bi-download ms-1"></i> تحميل PDF
-            </a>
-          </div>
-          <div id="submitNotice" class="small mt-2 text-secondary"></div>
-
-          <!-- ملاحظة الإرسال للصفحات الثابتة -->
-          <div class="alert alert-info mt-3 rounded-2xl" role="alert">
-            <div class="fw-semibold mb-1">طريقة التسليم</div>
-            <ol class="mb-2">
-              <li class="mb-1"><strong>الخيار أ — توقيع إلكتروني:</strong> اكتب اسمك الكامل، ثم ضع علامة الموافقة واضغط «إرسال الاتفاقية».</li>
-              <li class="mb-1"><strong>الخيار ب — رفع PDF موقّع:</strong> حمّل نموذج الاتفاقية، وقّعه، ثم ارفع ملف الـPDF عبر الصندوق أعلاه.</li>
-            </ol>
-            <div class="small text-secondary">
-              إذا كانت الصفحة مستضافة على GitHub Pages ولم يظهر إشعار نجاح، الرجاء إرسال الملف الموقّع إلى
-              <a href="mailto:support@taqathon.sa">support@taqathon.sa</a>
-              أو الرفع عبر النموذج:
-              <a href="https://forms.gle/your-form-id" target="_blank" rel="noopener">نموذج Google</a>.
-              <!-- TODO: استبدال رابط النموذج بالرابط الفعلي -->
+          <form id="agreementForm" class="needs-validation" novalidate>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">الاسم الكامل (اختياري)</label>
+                <input class="form-control" name="full_name" id="full_name" placeholder="مثال: سارة محمود">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">اسم الفريق (اختياري)</label>
+                <input class="form-control" name="team_name" id="team_name" placeholder="اسم الفريق">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">البريد الإلكتروني (اختياري)</label>
+                <input type="email" class="form-control" name="email" id="email" placeholder="you@email.com">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">ملف PDF موقّع (إلزامي)</label>
+                <input type="file" accept="application/pdf" class="form-control" name="file" id="file">
+                <div class="form-text">اختر ملف .pdf لتفعيل الإرسال (يفضّل أقل من 20MB).</div>
+              </div>
+              <div class="col-12">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="yes" id="agree">
+                  <label class="form-check-label required" for="agree">
+                    قرأتُ وأوافق على اتفاقية المشاركة وقواعد الهاكاثون.
+                  </label>
+                </div>
+              </div>
             </div>
+
+            <!-- Metadata expected by your script -->
+            <input type="hidden" name="locale" value="ar">
+            <input type="hidden" name="source" value="contract-ar.html">
+
+            <div id="status" class="mt-3 d-none"></div>
+
+            <div class="d-flex flex-wrap gap-2 align-items-center mt-2">
+              <button id="submitBtn" class="btn btn-gradient px-4 py-2 rounded-2xl" type="submit" disabled>
+                إرسال الاتفاقية
+              </button>
+              <a href="assets/Taqathon-Contract-AR.pdf" class="btn btn-outline-secondary rounded-2xl" download>
+                <i class="bi bi-download ms-1"></i> تحميل PDF
+              </a>
+            </div>
+          </form>
+
+          <div class="alert alert-info mt-3 rounded-2xl" role="alert">
+            <div class="fw-semibold mb-1">ملاحظات</div>
+            <ul class="mb-0">
+              <li class="mb-1">ارفع <strong>PDF فقط</strong>، وسيتم رفض الأنواع الأخرى.</li>
+              <li class="mb-1">عند وجود مشكلة، راسلنا على <a href="mailto:support@taqathon.sa">support@taqathon.sa</a>.</li>
+            </ul>
           </div>
         </div>
       </div>
     </div>
   </main>
 
-  <!-- Footer (match index-ar) -->
-  <footer class="pt-5" dir="rtl">
+  <!-- Footer -->
+  <footer class="pt-5">
     <div class="container">
-      <div class="row justify-content-center align-items-center gy-4 gx-4" style="max-width:850px;margin-inline:auto;">
-        <div class="col-12 col-md-6 col-lg-5 text-center text-md-end">
-          <h6 class="mb-1 text-white">طاقَثون</h6>
-          <p class="mb-0 small">تنظيم: جمعية الطاقة للتنمية المستدامة.</p>
+      <div class="row g-4">
+        <div class="col-md-6">
+          <h6 class="mb-3 text-white">طاقَثون</h6>
+          <p class="small mb-1">تنظيم: جمعية الطاقة للتنمية المستدامة.</p>
         </div>
-        <div class="col-12 col-md-6 col-lg-5 d-flex flex-column align-items-center align-items-md-start text-center text-md-start">
-          <h6 class="mb-2 text-white">تابعنا</h6>
-          <div class="d-flex gap-3 align-self-center align-self-md-start">
-            <a href="https://x.com/jameiat_taqa" target="_blank" rel="noopener" class="text-light"><i class="bi bi-twitter-x fs-5"></i></a>
-            <a href="https://instagram.com/jameiat_taqa" target="_blank" rel="noopener" class="text-light"><i class="bi bi-instagram fs-5"></i></a>
-            <a href="https://www.linkedin.com/company/جمعية-الطاقة-للتنمية-المستدامة" target="_blank" rel="noopener" class="text-light"><i class="bi bi-linkedin fs-5"></i></a>
-            <a href="https://tiktok.com/@jameiat_taqa" target="_blank" rel="noopener" class="text-light"><i class="bi bi-tiktok fs-5"></i></a>
+        <div class="col-md-6">
+          <h6 class="mb-3 text-white">تابعنا</h6>
+          <div class="d-flex gap-3">
+            <a href="https://x.com/jameiat_taqa" target="_blank" class="text-light"><i class="bi bi-twitter-x fs-5"></i></a>
+            <a href="https://instagram.com/jameiat_taqa" target="_blank" class="text-light"><i class="bi bi-instagram fs-5"></i></a>
+            <a href="https://www.linkedin.com/company/جمعية-الطاقة-للتنمية-المستدامة" target="_blank" class="text-light"><i class="bi bi-linkedin fs-5"></i></a>
+            <a href="https://tiktok.com/@jameiat_taqa" target="_blank" class="text-light"><i class="bi bi-tiktok fs-5"></i></a>
           </div>
         </div>
       </div>
-      <div class="border-top border-secondary mt-4 pt-3 pb-4 small text-center">
-        © 2025 طاقَثون. جميع الحقوق محفوظة.
-      </div>
+      <div class="border-top border-secondary mt-4 pt-3 pb-4 small text-center">© <span id="year"></span> طاقَثون. جميع الحقوق محفوظة.</div>
     </div>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-  <!-- JS -->
+  <!-- JS (DOM-ready, multipart + base64 fallback, Arabic labels) -->
   <script>
-  // ====== CONFIG: paste your Web App URL here ======
-  const GAS_URL = 'https://script.google.com/macros/s/AKfycbxFeOCqy49JSyrQ-RLf167JDjulVsdbn1Ivq5ECwgVVsS6-Hg6_TwWmt6Zl4p8OK7s/exec';
-  const LOCALE  = document.documentElement.dir === 'rtl' ? 'ar' : 'en';
+  document.addEventListener('DOMContentLoaded', function () {
+    // ===== CONFIG: Web App URL (use your current working deployment) =====
+    var SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyFKOWj5Ol_5wD1G1DssSlPBN63YsxOfYOlzd_URzkQT-N_HySGcogfjs1-vhQvlGs/exec";
 
-  // Elements
-  const nameInput = document.getElementById('fullName');
-  const fileInput = document.getElementById('pdfInput');
-  const agree     = document.getElementById('agree');
-  const btn       = document.getElementById('submitBtn');
-  const notice    = document.getElementById('submitNotice');
+    var form   = document.getElementById('agreementForm');
+    var status = document.getElementById('status');
+    var btn    = document.getElementById('submitBtn');
+    var file   = document.getElementById('file');
+    var agree  = document.getElementById('agree');
 
-  // State for the PDF (Base64 payload)
-  let pdfPayload = null;
-
-  // Enable/disable button
-  function updateState() {
-    const hasName = nameInput && nameInput.value.trim().length > 1;
-    const hasFile = !!pdfPayload;
-    btn.disabled = !(agree && agree.checked && (hasName || hasFile));
-  }
-
-  // Read selected PDF as Base64
-  async function readFileAsBase64(file) {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onerror = () => reject('read_error');
-      reader.onload = () => {
-        // reader.result = "data:application/pdf;base64,AAAA..."
-        const res = String(reader.result || '');
-        const base64 = res.includes('base64,') ? res.split('base64,')[1] : '';
-        resolve({ name: file.name, type: file.type || 'application/pdf', base64 });
-      };
-      reader.readAsDataURL(file);
-    });
-  }
-
-  // Handle file selection
-  fileInput && fileInput.addEventListener('change', async (e) => {
-    pdfPayload = null;
-    const f = e.target.files && e.target.files[0];
-    if (f) {
-      try {
-        if (!/pdf$/i.test(f.name) || (f.type && !/pdf/i.test(f.type))) {
-          notice.textContent = LOCALE === 'ar'
-            ? 'يُرجى اختيار ملف PDF فقط.'
-            : 'Please select a PDF file only.';
-          e.target.value = '';
-        } else {
-          notice.textContent = '';
-          pdfPayload = await readFileAsBase64(f);
-        }
-      } catch (err) {
-        console.error(err);
-        notice.textContent = LOCALE === 'ar'
-          ? 'تعذّر قراءة الملف.'
-          : 'Could not read file.';
-      }
+    function showStatus(kind, html){
+      if (!status) return;
+      status.className = 'alert alert-' + kind + ' mt-3';
+      status.innerHTML = html;
+      status.classList.remove('d-none');
     }
+    function clearStatus(){ if (status) status.classList.add('d-none'); }
+
+    function isPdfSelected(){
+      if (!(file && file.files && file.files.length > 0)) return false;
+      var f = file.files[0];
+      return /\.pdf$/i.test(f.name);
+    }
+
+    function updateState() {
+      if (!btn) return;
+      var ok = isPdfSelected() && agree && agree.checked === true;
+      btn.disabled = !ok;
+    }
+
+    if (file)  file.addEventListener('input', updateState);
+    if (agree) agree.addEventListener('change', updateState);
+    document.addEventListener('change', updateState);
     updateState();
-  });
 
-  // Validate on input/checkbox
-  [nameInput, agree].forEach(el => el && el.addEventListener('input', updateState));
-  document.addEventListener('change', updateState);
-  updateState();
+    var yearEl = document.getElementById('year');
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  // Submit agreement
-  async function submitAgreement() {
-    if (btn.disabled) return;
+    if (!form) return;
 
-    const nameVal = (nameInput?.value || '').trim();
-    const payload = {
-      name: nameVal,
-      agree: !!agree?.checked,
-      locale: LOCALE,
-      source: 'taqathon-portal',
-      file: pdfPayload // may be null if they only typed a name
-    };
-
-    // UX: lock button
-    btn.disabled = true;
-    const oldText = btn.textContent;
-    btn.textContent = LOCALE === 'ar' ? 'جارٍ الإرسال...' : 'Submitting...';
-    notice.textContent = '';
-
-    try {
-      // Apps Script: use no-cors (static site, avoids CORS errors)
-      await fetch(GAS_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+    // Helper: file -> base64 (no prefix)
+    function fileToBase64(f){
+      return new Promise(function(resolve, reject){
+        var r = new FileReader();
+        r.onload = function(){
+          var s = String(r.result || '');
+          resolve(s.replace(/^data:.*;base64,/, ''));
+        };
+        r.onerror = reject;
+        r.readAsDataURL(f);
       });
-
-      // We can’t read response in no-cors mode, so assume success if no exception:
-      notice.classList.remove('text-danger');
-      notice.classList.add('text-success');
-      notice.textContent = LOCALE === 'ar'
-        ? 'تم الإرسال بنجاح. شكرًا لك!'
-        : 'Submitted successfully. Thank you!';
-
-      // Optional: clear inputs
-      // nameInput.value = '';
-      // fileInput.value = '';
-      // pdfPayload = null;
-      // agree.checked = false;
-      // updateState();
-    } catch (err) {
-      console.error(err);
-      notice.classList.remove('text-success');
-      notice.classList.add('text-danger');
-      notice.textContent = LOCALE === 'ar'
-        ? 'حدث خطأ أثناء الإرسال. حاول مرة أخرى.'
-        : 'There was an error submitting. Please try again.';
-    } finally {
-      btn.textContent = oldText;
-      updateState();
     }
-  }
 
-  btn && btn.addEventListener('click', submitAgreement);
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      clearStatus();
+
+      if (!isPdfSelected()) { showStatus('warning', 'فضلاً اختر ملف PDF للرفع.'); return; }
+      if (!(agree && agree.checked)) { showStatus('warning', 'يجب الموافقة على الشروط للمتابعة.'); return; }
+
+      var oldText = btn ? btn.textContent : '';
+      if (btn) { btn.disabled = true; btn.textContent = 'جاري الإرسال...'; }
+
+      // Build FormData with GAS-expected names
+      var fd = new FormData();
+      var fullNameEl = document.getElementById('full_name');
+      var teamNameEl = document.getElementById('team_name');
+      var emailEl    = document.getElementById('email');
+
+      var fullName = fullNameEl && fullNameEl.value ? fullNameEl.value.trim() : '';
+      var teamName = teamNameEl && teamNameEl.value ? teamNameEl.value.trim() : '';
+      var email    = emailEl    && emailEl.value    ? emailEl.value.trim()    : '';
+
+      if (fullName) fd.append('full_name', fullName);
+      if (teamName) fd.append('team_name', teamName);
+      if (email)    fd.append('email', email);
+
+      var f = file.files[0];
+      fd.append('file', f);              // multipart/form-data (primary)
+      var MAX_B64_BYTES = 10 * 1024 * 1024; // send base64 only for small files to avoid bloat
+      var addBase64 = f && f.size <= MAX_B64_BYTES;
+
+      function proceed(){
+        fd.append('agree', 'yes');
+        fd.append('locale', 'ar');
+        fd.append('source', 'contract-ar.html');
+        return fetch(SCRIPT_URL, { method: 'POST', body: fd, redirect: 'follow' });
+      }
+
+      (addBase64 ? fileToBase64(f).then(function(b64){
+        fd.append('file_b64', b64);
+        fd.append('filename', f && f.name ? f.name : 'upload.pdf');
+        fd.append('mimeType', f && f.type ? f.type : 'application/pdf');
+        return proceed();
+      }) : proceed())
+      .then(function(res){
+        return res.text().then(function(t){
+          var data = {};
+          try { data = JSON.parse(t); } catch(e){}
+          return { ok: res.ok, status: res.status, data: data, raw: t };
+        });
+      })
+      .then(function(resp){
+        var looksLikeHtml = typeof resp.raw === 'string' && /<html/i.test(resp.raw);
+        if (!resp.ok || looksLikeHtml) {
+          var hint = looksLikeHtml ? ' (يبدو أنها صفحة تسجيل دخول/صلاحيات — عدّل إعدادات الويب آب إلى "أي شخص")' : '';
+          var msg = (resp.data && resp.data.error) ? resp.data.error : ('فشل الطلب (' + resp.status + ')' + hint);
+          showStatus('danger', msg);
+          return;
+        }
+
+        if (resp.data && resp.data.ok) {
+          var url = resp.data.fileUrl || '';
+          var urlPart = url ? '<br><small>رابط الملف: <a href="' + url + '" target="_blank" rel="noopener">' + url + '</a></small>' : '';
+          showStatus('success', 'تم الإرسال بنجاح.' + urlPart);
+          form.reset();
+          updateState();
+        } else {
+          var err = (resp.data && resp.data.error) ? resp.data.error : 'فشل الإرسال. فضلاً حاول مرة أخرى.';
+          showStatus('danger', err);
+        }
+      })
+      .catch(function(err){
+        console.error(err);
+        // Fallback attempt
+        fetch(SCRIPT_URL, { method: 'POST', body: fd, mode: 'no-cors' })
+          .then(function(){
+            showStatus('warning', 'تم الإرسال بطريقة no-cors. إذا لم يظهر الملف/السطر في Google Drive/Sheets، عدّل صلاحيات الويب آب.');
+          })
+          .catch(function(){
+            showStatus('danger', 'تم حظر الطلب عبر الشبكة/CORS. تحقق من رابط /exec وصلاحيات الويب آب.');
+          });
+      })
+      .finally(function(){
+        if (btn) { btn.textContent = oldText; updateState(); }
+      });
+    });
+  });
   </script>
-
 </body>
 </html>
