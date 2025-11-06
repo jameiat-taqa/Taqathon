@@ -3,224 +3,194 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>القواعد والموارد · طاقاثون</title>
+  <title>معايير التحكيم · طاقَثون</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap 5 + Icons -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
   <style>
-:root{
-  --brand-green:#20c997;
-  --brand-blue:#1d91c0;
-  --pill-purple:#8b5cf6;
-  --pill-green:#22c55e;
-  --pill-blue:#3b82f6;
-  --pill-orange:#f97316;
-  --pill-cyan:#06b6d4;
-  --pill-red:#ef4444;
-}
-body{ background:#f6f9fb; }
-.rounded-2xl{ border-radius:1rem; }
-.card-lite{ background:#fff; border:1px solid #e9eef3; }
-.icon-circle{
-  width:56px; height:56px; border-radius:999px; display:inline-flex; align-items:center; justify-content:center;
-  background:linear-gradient(180deg, #e9fbf6, #dff7ff); border:1px solid #e7f3f8; color:#0ea5a5;
-  box-shadow:0 10px 30px rgba(0,0,0,.06);
-}
-/* Resource item */
-.resource{ border:1px solid #e9eef3; border-radius:1rem; background:#fff; }
-.res-icon{ width:40px; height:40px; border-radius:8px; display:inline-flex; align-items:center; justify-content:center; color:#fff; }
-.badge-soft{ background:rgba(32,201,151,.15); color:#187a5b; border:1px solid rgba(32,201,151,.25); }
-.btn-download{ display:inline-flex; align-items:center; gap:.4rem; border:0; color:#fff; padding:.45rem .75rem; border-radius:.6rem; }
-.btn-green{ background: linear-gradient(90deg,#22c55e,#16a34a); }
-.btn-blue{ background: linear-gradient(90deg,#3b82f6,#2563eb); }
-.btn-purple{ background: linear-gradient(90deg,#8b5cf6,#7c3aed); }
-.btn-orange{ background: linear-gradient(90deg,#f97316,#ea580c); }
-.btn-cyan{ background: linear-gradient(90deg,#06b6d4,#0891b2); }
-.btn-red{ background: linear-gradient(90deg,#ef4444,#dc2626); }
-.list-dot li{ margin:.35rem 0; }
-.list-dot li::marker{ color:#16a34a; }
-.stat{ display:flex; align-items:center; justify-content:space-between; padding:.4rem .7rem; border-radius:.6rem; background:linear-gradient(90deg,rgba(139,92,246,.08), rgba(59,130,246,.06)); border:1px solid #e7e9f2; }
-.stat .pct{ font-weight:700; color:#4f46e5; }
-.navbar .nav-link.active{ font-weight:600; }
-</style>
+  :root{
+    --brand-blue:#007DFD;
+    --brand-green:#09C899;
+    --brand-dark:#00284C;
+    --brand-grad: linear-gradient(90deg, #09C899, #007DFD);
+    --text:#1d2733;
+    --muted:#66768a;
+  }
+
+  html,body{
+    height:100%;
+    font-family:Cairo, Poppins, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    color:var(--text);
+    background:#f8fbfd;
+  }
+  body{ display:flex; flex-direction:column; }
+  main{ flex:1 0 auto; }
+  footer{ flex-shrink:0; }
+
+  .rounded-2xl{ border-radius:1rem; }
+  .card-lite{ background:#fff; border:1px solid #e9eef3; }
+  .shadow-soft{ box-shadow:0 10px 30px rgba(0,0,0,.1); }
+
+  /* دائرة الأيقونة (مطابقة لصفحة الجدول) */
+  .icon-circle{
+    width:64px; height:64px; border-radius:999px;
+    display:inline-flex; align-items:center; justify-content:center;
+    background:linear-gradient(180deg,#eef6ff,#f3fbff);
+    border:1px solid #c9ddff;
+    color:var(--brand-blue);
+    box-shadow:0 4px 16px rgba(0,125,253,.25);
+  }
+  .icon-circle i{ font-size:1.6rem; }
+
+  /* صفوف المعايير (إحساس جدول الجدول والورش) */
+  .criteria-row{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:.9rem 1rem; border-top:1px solid #e9eef3; background:#fff;
+  }
+  .criteria-row:first-child{ border-top:0; border-radius:12px 12px 0 0; }
+  .criteria-row:last-child{ border-radius:0 0 12px 12px; }
+  .criteria-label{ font-weight:700; color:var(--text); }
+  .criteria-badge{
+    background: linear-gradient(90deg, var(--brand-green), var(--brand-blue));
+    color:#fff; border:0; padding:.25rem .6rem; border-radius:.5rem; font-weight:700;
+  }
+
+  /* شريط التنقل (مطابق للجدول) */
+  .navbar{
+    background:#fff; box-shadow:0 2px 10px rgba(0,0,0,.04);
+    padding-top:.4rem; padding-bottom:.4rem;
+  }
+  .logo-mark{ height:60px; width:auto; object-fit:contain; }
+  .assoc-logo{ height:48px; width:auto; object-fit:contain; }
+  .navbar-nav .nav-link{ font-weight:600; color:var(--brand-dark); transition:.2s; }
+  .navbar-nav .nav-link:hover,
+  .navbar-nav .nav-link.active{ color:var(--brand-blue); }
+  .btn-lang{
+    background:var(--brand-blue); color:#fff !important;
+    border:none; border-radius:.4rem;
+    padding:.35rem .9rem; font-weight:600; transition:.2s;
+  }
+  .btn-lang:hover{ background:var(--brand-green); color:#fff !important; }
+
+  @media (max-width:991.98px){
+    .navbar .navbar-collapse{
+      position:absolute; inset-inline:0; top:100%;
+      background:#fff; padding:.75rem 1rem;
+      border-top:1px solid #e9eef5; box-shadow:0 10px 24px rgba(0,0,0,.08);
+      z-index:1000;
+    }
+  }
+
+  /* تذييل (مطابق للجدول) */
+  footer{ background:#00284C; color:#cfd6df; }
+  footer a{ color:#cfd6df; text-decoration:none; }
+  </style>
 </head>
+
 <body>
-  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
-    <div class="container">
-      <a class="navbar-brand fw-bold" href="index-ar.html">
-        <img src="https://dummyimage.com/28x28/20c997/ffffff.png&text=T" width="28" height="28" alt=""> طاقاثون
+  <!-- شريط التنقل -->
+  <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+    <div class="container d-flex align-items-center justify-content-between">
+      <a class="navbar-brand d-flex align-items-center" href="index-ar.html">
+        <img src="assets/taqathon-logo.png" alt="شعار طاقثون" class="logo-mark">
       </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav"><span class="navbar-toggler-icon"></span></button>
-      <div class="collapse navbar-collapse" id="nav">
-        <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-          <li class="nav-item"><a class="nav-link " href="index-ar.html">الرئيسية</a></li>
-<li class="nav-item"><a class="nav-link " href="contract-ar.html">العقد</a></li>
-<li class="nav-item"><a class="nav-link " href="schedule-ar.html">الجدول وورش العمل</a></li>
-<li class="nav-item"><a class="nav-link " href="submissions-ar.html">التسليمات</a></li>
-<li class="nav-item"><a class="nav-link active" href="rules-ar.html">القواعد والموارد</a></li>
-<li class="nav-item"><a class="nav-link " href="contact-ar.html">تواصل</a></li>
+
+      <div class="collapse navbar-collapse justify-content-lg-center" id="mainNav">
+        <ul class="navbar-nav mb-2 mb-lg-0 align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="index-ar.html">الرئيسية</a></li>
+          <li class="nav-item"><a class="nav-link" href="contract-ar.html">العقد</a></li>
+          <li class="nav-item"><a class="nav-link" href="schedule-ar.html">الجدول والورش</a></li>
+          <li class="nav-item"><a class="nav-link" href="submissions-ar.html">التسليمات</a></li>
+          <li class="nav-item"><a class="nav-link active" href="rules-ar.html">القواعد واللوائح</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact-ar.html">تواصل معنا</a></li>
+          <li class="nav-item ms-3">
+            <a class="btn btn-sm btn-lang" href="rules.html">EN</a>
+          </li>
         </ul>
-        <div class="d-flex">
-          <a class="btn btn-sm btn-outline-secondary" href="rules.html">EN</a>
-        </div>
+      </div>
+
+      <div class="assoc-fixed d-flex align-items-center gap-2">
+        <a href="https://taqa.org.sa" target="_blank" rel="noopener">
+          <img src="assets/association-logo.png" alt="جمعية الطاقة للتنمية المستدامة" class="assoc-logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="القائمة">
+          <span class="navbar-toggler-icon"></span>
+        </button>
       </div>
     </div>
   </nav>
 
+  <!-- المحتوى الرئيسي -->
   <main class="py-5">
-    <div class="container" style="max-width:1100px;">
+    <div class="container" style="max-width:980px;">
       <div class="text-center mb-4">
-        <div class="icon-circle mx-auto mb-3"><i class="bi bi-journal-bookmark"></i></div>
-        <h5 class="mb-1">القواعد والموارد</h5>
-        <p class="text-secondary mb-0">تحميل الإرشادات والموارد الهامة للمشاركين.</p>
+        <div class="icon-circle mx-auto mb-3"><i class="bi bi-journal-text"></i></div>
+        <h5 class="mb-1 fw-semibold">معايير التحكيم</h5>
+        <p class="text-secondary mb-0">الفئات والأوزان المستخدمة من قِبل لجنة التحكيم.</p>
       </div>
 
-      <!-- Resources grid -->
-      <div class="row g-3 mb-4">
-        
-        <div class="col-md-6 col-lg-4">
-          <div class="resource p-3 h-100">
-            <div class="d-flex align-items-start gap-3">
-              <div class="res-icon bg-success d-inline-flex align-items-center justify-content-center">
-                <i class="bi bi-filetype-pdf"></i>
-              </div>
-              <div>
-                <h6 class="mb-1">قواعد الهاكاثون</h6>
-                <div class="text-secondary small mb-3">إرشادات كاملة للمشاركة</div>
-                <a class="btn btn-sm btn-green" href="#"><i class="bi bi-download"></i> تحميل PDF</a>
-              </div>
-            </div>
+      <div class="card card-lite rounded-2xl shadow-soft">
+        <div class="card-body p-0">
+          <div class="criteria-row">
+            <span class="criteria-label">الابتكار والجِدّة</span>
+            <span class="criteria-badge">30%</span>
+          </div>
+          <div class="criteria-row">
+            <span class="criteria-label">الجدوى الاقتصادية</span>
+            <span class="criteria-badge">25%</span>
+          </div>
+          <div class="criteria-row">
+            <span class="criteria-label">الأثر البيئي والاجتماعي</span>
+            <span class="criteria-badge">20%</span>
+          </div>
+          <div class="criteria-row">
+            <span class="criteria-label">إمكانية التنفيذ</span>
+            <span class="criteria-badge">15%</span>
+          </div>
+          <div class="criteria-row">
+            <span class="criteria-label">العرض التقديمي</span>
+            <span class="criteria-badge">10%</span>
           </div>
         </div>
-        
-
-        <div class="col-md-6 col-lg-4">
-          <div class="resource p-3 h-100">
-            <div class="d-flex align-items-start gap-3">
-              <div class="res-icon bg-primary d-inline-flex align-items-center justify-content-center">
-                <i class="bi bi-filetype-pdf"></i>
-              </div>
-              <div>
-                <h6 class="mb-1">إرشادات التسليم</h6>
-                <div class="text-secondary small mb-3">كيفية تجهيز وتسليم المشروع</div>
-                <a class="btn btn-sm btn-blue" href="#"><i class="bi bi-download"></i> تحميل PDF</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-
-        <div class="col-md-6 col-lg-4">
-          <div class="resource p-3 h-100">
-            <div class="d-flex align-items-start gap-3">
-              <div class="res-icon bg-purple d-inline-flex align-items-center justify-content-center">
-                <i class="bi bi-filetype-pdf"></i>
-              </div>
-              <div>
-                <h6 class="mb-1">معايير التحكيم</h6>
-                <div class="text-secondary small mb-3">تعرف كيف سيتم تقييم المشاريع</div>
-                <a class="btn btn-sm btn-purple" href="#"><i class="bi bi-download"></i> تحميل PDF</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-
-        <div class="col-md-6 col-lg-4">
-          <div class="resource p-3 h-100">
-            <div class="d-flex align-items-start gap-3">
-              <div class="res-icon bg-warning d-inline-flex align-items-center justify-content-center">
-                <i class="bi bi-code-slash"></i>
-              </div>
-              <div>
-                <h6 class="mb-1">الموارد التقنية</h6>
-                <div class="text-secondary small mb-3">واجهات برمجية وبيانات وأدوات تطوير</div>
-                <a class="btn btn-sm btn-orange" href="#"><i class="bi bi-download"></i> تحميل PDF</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-
-        <div class="col-md-6 col-lg-4">
-          <div class="resource p-3 h-100">
-            <div class="d-flex align-items-start gap-3">
-              <div class="res-icon bg-teal d-inline-flex align-items-center justify-content-center">
-                <i class="bi bi-question-circle"></i>
-              </div>
-              <div>
-                <h6 class="mb-1">الأسئلة الشائعة</h6>
-                <div class="text-secondary small mb-3">أسئلة وأجوبة متكررة</div>
-                <a class="btn btn-sm btn-cyan" href="#"><i class="bi bi-download"></i> تحميل PDF</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-
-        <div class="col-md-6 col-lg-4">
-          <div class="resource p-3 h-100">
-            <div class="d-flex align-items-start gap-3">
-              <div class="res-icon bg-danger d-inline-flex align-items-center justify-content-center">
-                <i class="bi bi-shield-exclamation"></i>
-              </div>
-              <div>
-                <h6 class="mb-1">مدونة السلوك</h6>
-                <div class="text-secondary small mb-3">السلوك المتوقع والأخلاقيات</div>
-                <a class="btn btn-sm btn-red" href="#"><i class="bi bi-download"></i> تحميل PDF</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-      </div>
-
-      <!-- Important + Judging -->
-      <div class="row g-3 mb-4">
-        <div class="col-lg-6">
-          <div class="card-lite rounded-2xl p-3 h-100">
-            <h6 class="mb-2">إرشادات مهمة</h6>
-            <ul class="list-dot text-secondary mb-0">
-              <li>يجب أن تتماشى جميع المشاريع مع مستهدفات رؤية السعودية 2030</li>
-<li>يجب أن تتكون الفرق من 2-5 أعضاء</li>
-<li>يجب أن تكون التسليمات عملاً أصيلاً أُنجز خلال فترة الهاكاثون</li>
-<li>يجب أن تركز المشاريع على الابتكار والاستدامة في الطاقة</li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-lg-6">
-          <div class="card-lite rounded-2xl p-3 h-100">
-            <h6 class="mb-2">معايير التحكيم</h6>
-            <div class="stat mb-2"><div class="text-secondary">Innovation & Creativity</div><div class="pct">25%</div></div>
-<div class="stat mb-2"><div class="text-secondary">Technical Implementation</div><div class="pct">25%</div></div>
-<div class="stat mb-2"><div class="text-secondary">Impact & Sustainability</div><div class="pct">25%</div></div>
-<div class="stat mb-2"><div class="text-secondary">Presentation & Pitch</div><div class="pct">15%</div></div>
-<div class="stat mb-2"><div class="text-secondary">Alignment with Vision 2030</div><div class="pct">10%</div></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- FAQ -->
-      <div class="card-lite rounded-2xl p-3">
-        <h6 class="mb-2">الأسئلة الشائعة</h6>
-        <p class='mb-1 fw-semibold'>Can I participate individually?</p><p class='text-secondary'>While we encourage team participation (2–5 members), individual participants are also welcome to join.</p>
-<p class='mb-1 fw-semibold'>What are the submission requirements?</p><p class='text-secondary'>Teams must submit a working prototype/demo, presentation deck, and documentation explaining the project's impact and technical approach.</p>
-<p class='mb-1 fw-semibold'>Is there a registration fee?</p><p class='text-secondary'>No, participation in Taqathon is completely free for all registered participants.</p>
-<p class='mb-1 fw-semibold'>What resources will be provided?</p><p class='text-secondary'>Participants will have access to mentors, APIs, datasets, cloud credits, and development tools throughout the hackathon.</p>
       </div>
     </div>
   </main>
 
+  <!-- التذييل -->
   <footer class="pt-5">
     <div class="container">
       <div class="row g-4">
-        <div class="col-md-4"><h6 class="mb-3">طاقاثون</h6><p class="mb-1 small">تنظيم: جمعية الطاقة للتنمية المستدامة.</p><p class="small">شروط الخدمة</p></div>
-        <div class="col-md-4"><h6 class="mb-3">روابط سريعة</h6><ul class="list-unstyled small"><li><a href="rules-ar.html">سياسة الخصوصية</a></li><li><a href="rules-ar.html">شروط الخدمة</a></li></ul></div>
-        <div class="col-md-4"><h6 class="mb-3">تابعنا</h6><div class="d-flex gap-2"><a href="#"><i class="bi bi-facebook fs-5"></i></a><a href="#"><i class="bi bi-instagram fs-5"></i></a><a href="#"><i class="bi bi-linkedin fs-5"></i></a><a href="#"><i class="bi bi-twitter-x fs-5"></i></a><a href="#"><i class="bi bi-youtube fs-5"></i></a></div></div>
+        <div class="col-md-6">
+          <h6 class="mb-3 text-white">طاقَثون</h6>
+          <p class="small mb-1">تنظيم جمعية الطاقة للتنمية المستدامة.</p>
+        </div>
+        <div class="col-md-6">
+          <h6 class="mb-3 text-white">تابعنا</h6>
+          <div class="d-flex gap-3">
+            <a href="https://x.com/jameiat_taqa" target="_blank" class="text-light"><i class="bi bi-twitter-x fs-5"></i></a>
+            <a href="https://instagram.com/jameiat_taqa" target="_blank" class="text-light"><i class="bi bi-instagram fs-5"></i></a>
+            <a href="https://www.linkedin.com/company/جمعية-الطاقة-للتنمية-المستدامة" target="_blank" class="text-light"><i class="bi bi-linkedin fs-5"></i></a>
+            <a href="https://tiktok.com/@jameiat_taqa" target="_blank" class="text-light"><i class="bi bi-tiktok fs-5"></i></a>
+          </div>
+        </div>
       </div>
-      <div class="border-top border-secondary mt-4 pt-3 pb-4 small text-center">© 2025 طاقاثون. جميع الحقوق محفوظة.</div>
+      <div class="border-top border-secondary mt-4 pt-3 pb-4 small text-center">
+        © <span id="year"></span> طاقَثون. جميع الحقوق محفوظة.
+      </div>
     </div>
   </footer>
 
+  <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>

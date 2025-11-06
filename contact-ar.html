@@ -3,134 +3,269 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>تواصل معنا · طاقاثون</title>
+  <title>تواصل معنا · طاقَثون</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap 5 (RTL) + Icons -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
   <style>
-:root{
-  --brand-green:#20c997;
-  --brand-blue:#1d91c0;
-  --band-grad:linear-gradient(90deg, var(--brand-green), var(--brand-blue));
-}
-body{ background:#f6f9fb; }
-.rounded-2xl{ border-radius:1rem; }
-.card-lite{ background:#fff; border:1px solid #e9eef3; }
-.icon-circle{
-  width:56px; height:56px; border-radius:999px; display:inline-flex; align-items:center; justify-content:center;
-  background:linear-gradient(180deg, #e9fbf6, #dff7ff); border:1px solid #e7f3f8; color:#0ea5a5;
-  box-shadow:0 10px 30px rgba(0,0,0,.06);
-}
-.badge-soft{ background:rgba(32,201,151,.15); color:#187a5b; border:1px solid rgba(32,201,151,.25); }
-.btn-gradient{ background:var(--band-grad); border:0; color:#fff; }
-.info-line i{ color:#20c997; }
-.office-card{ background:var(--band-grad); color:#e9f6fb; border:0; }
-.office-card .small{ color:#eaf7ff; }
-.help-card{ border:1px solid #cfe7dc; }
-.navbar .nav-link.active{ font-weight:600; }
-</style>
+  :root{
+    --brand-blue:#007DFD;
+    --brand-green:#09C899;
+    --brand-dark:#00284C;
+    --brand-grad: linear-gradient(90deg, #09C899, #007DFD);
+    --text:#1d2733;
+    --muted:#66768a;
+    --panel-border:#e9eef3;
+  }
+
+  html,body{
+    height:100%;
+    font-family:Cairo, Poppins, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    color:var(--text);
+    background:#f8fbfd;
+  }
+  body{ display:flex; flex-direction:column; }
+  main{ flex:1 0 auto; }
+  footer{ flex-shrink:0; }
+
+  /* Navbar */
+  .navbar{
+    background:#fff; box-shadow:0 2px 10px rgba(0,0,0,.04);
+    padding-top:.4rem; padding-bottom:.4rem;
+  }
+  .logo-mark{ height:60px; width:auto; object-fit:contain; }
+  .assoc-logo{ height:48px; width:auto; object-fit:contain; }
+  .navbar-nav .nav-link{ font-weight:700; color:var(--brand-dark); transition:.2s; }
+  .navbar-nav .nav-link:hover, .navbar-nav .nav-link.active{ color:var(--brand-blue); }
+  .btn-lang{
+    background:var(--brand-blue); color:#fff !important; border:none; border-radius:.4rem;
+    padding:.35rem .9rem; font-weight:700; transition:.2s;
+  }
+  .btn-lang:hover{ background:var(--brand-green); color:#fff !important; }
+
+  @media (max-width:991.98px){
+    .navbar .navbar-collapse{
+      position:absolute; inset-inline:0; top:100%;
+      background:#fff; padding:.75rem 1rem;
+      border-top:1px solid #e9eef5; box-shadow:0 10px 24px rgba(0,0,0,.08);
+      z-index:1000;
+    }
+  }
+
+  /* Panels */
+  .panel{ background:#fff; border:1px solid var(--panel-border); border-radius:12px; }
+  .shadow-soft{ box-shadow:0 10px 30px rgba(0,0,0,.08); }
+  .panel-header{ font-weight:700; }
+  .text-secondary{ color:var(--muted)!important; }
+
+  /* Buttons */
+  .btn-gradient{
+    background: var(--brand-grad);
+    color:#fff; border:0; font-weight:700;
+    padding:.65rem 1rem; border-radius:.6rem;
+  }
+  .btn-gradient:hover{ filter:brightness(.98); color:#fff; }
+
+  /* Info list */
+  .info-list{ list-style:none; padding:0; margin:0; }
+  .info-item{ display:flex; gap:.6rem; align-items:flex-start; padding:.25rem 0; }
+  .info-item i{ color:var(--brand-blue); font-size:1.05rem; line-height:1.6; }
+
+  /* Footer */
+  footer{ background:#00284C; color:#cfd6df; }
+  footer a{ color:#cfd6df; text-decoration:none; }
+  </style>
 </head>
+
 <body>
-  <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
-    <div class="container">
-      <a class="navbar-brand fw-bold" href="index-ar.html">
-        <img src="https://dummyimage.com/28x28/20c997/ffffff.png&text=T" width="28" height="28" alt=""> طاقاثون
+  <!-- شريط التنقل -->
+  <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+    <div class="container d-flex align-items-center justify-content-between">
+      <a class="navbar-brand d-flex align-items-center" href="index-ar.html">
+        <img src="assets/taqathon-logo.png" alt="شعار طاقَثون" class="logo-mark">
       </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav"><span class="navbar-toggler-icon"></span></button>
-      <div class="collapse navbar-collapse" id="nav">
-        <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-          <li class="nav-item"><a class="nav-link " href="index-ar.html">الرئيسية</a></li>
-<li class="nav-item"><a class="nav-link " href="contract-ar.html">العقد</a></li>
-<li class="nav-item"><a class="nav-link " href="schedule-ar.html">الجدول وورش العمل</a></li>
-<li class="nav-item"><a class="nav-link " href="submissions-ar.html">التسليمات</a></li>
-<li class="nav-item"><a class="nav-link " href="rules-ar.html">القواعد والموارد</a></li>
-<li class="nav-item"><a class="nav-link active" href="contact-ar.html">تواصل معنا</a></li>
+
+      <div class="collapse navbar-collapse justify-content-lg-center" id="mainNav">
+        <ul class="navbar-nav mb-2 mb-lg-0 align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="index-ar.html">الرئيسية</a></li>
+          <li class="nav-item"><a class="nav-link" href="contract-ar.html">العقد</a></li>
+          <li class="nav-item"><a class="nav-link" href="schedule-ar.html">الجدول والورش</a></li>
+          <li class="nav-item"><a class="nav-link" href="submissions-ar.html">التسليمات</a></li>
+          <li class="nav-item"><a class="nav-link" href="rules-ar.html">القواعد واللوائح</a></li>
+          <li class="nav-item"><a class="nav-link active" href="contact-ar.html">تواصل معنا</a></li>
+          <li class="nav-item ms-3">
+            <a class="btn btn-sm btn-lang" href="contact.html">EN</a>
+          </li>
         </ul>
-        <div class="d-flex">
-          <a class="btn btn-sm btn-outline-secondary" href="contact.html">EN</a>
-        </div>
+      </div>
+
+      <div class="assoc-fixed d-flex align-items-center gap-2">
+        <a href="https://jameiat-taqa.sa" target="_blank" rel="noopener">
+          <img src="assets/association-logo.png" alt="جمعية الطاقة للتنمية المستدامة" class="assoc-logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="القائمة">
+          <span class="navbar-toggler-icon"></span>
+        </button>
       </div>
     </div>
   </nav>
 
+  <!-- المحتوى -->
   <main class="py-5">
-    <div class="container" style="max-width:1100px;">
-      <div class="text-center mb-4">
-        <div class="icon-circle mx-auto mb-3"><i class="bi bi-envelope"></i></div>
-        <h5 class="mb-1">تواصل معنا</h5>
-        <p class="text-secondary mb-0">هل لديك أسئلة؟ تواصل مع فريق طاقاثون.</p>
-      </div>
+    <div class="container">
+      <div class="row g-4">
+        <!-- اليسار: نموذج الرسالة -->
+        <div class="col-lg-7">
+          <div class="panel shadow-soft p-3 p-md-4">
+            <h6 class="panel-header mb-1">أرسل لنا رسالة</h6>
+            <p class="text-secondary small mb-3">عبّئ النموذج وسنعاود التواصل في أقرب وقت ممكن</p>
 
-      <div class="row g-3">
-        <!-- Info (EN right / AR left) -->
-        <div class='col-lg-6 order-lg-1'> 
-          <div class="card-lite rounded-2xl p-3 mb-3">
-            <h6 class="mb-3">معلومات الاتصال</h6>
-            <div class="vstack gap-2">
-              <div class="info-line"><i class="bi bi-envelope me-2 ms-2"></i><strong>البريد الإلكتروني:</strong> info@taqathon.sa — support@taqathon.sa</div>
-              <div class="info-line"><i class="bi bi-telephone me-2 ms-2"></i><strong>الهاتف:</strong> +966 11 234 5678 — +966 50 123 4567</div>
-              <div class="info-line"><i class="bi bi-geo-alt me-2 ms-2"></i><strong>العنوان:</strong> Riyadh, Saudi Arabia — Energy Association for Sustainable Development</div>
-            </div>
-          </div>
-
-          <div class="rounded-2xl p-3 office-card mb-3">
-            <div class="d-flex justify-content-between">
-              <div class="fw-semibold">ساعات العمل</div>
-              <div class="small">8:00 AM – 5:00</div>
-            </div>
-            <div class="row mt-2">
-              <div class="col-6 small">الأحد – الخميس</div>
-              <div class="col-6 small text-end">الجمعة – السبت <span class="ms-2 badge bg-light text-dark">مغلق</span></div>
-            </div>
-          </div>
-
-          <div class="card-lite rounded-2xl p-3 help-card">
-            <h6 class="mb-1">تحتاج مساعدة فورية؟</h6>
-            <p class="text-secondary small mb-2">للاستفسارات العاجلة خلال الهاكاثون، يُرجى التواصل عبر قنوات التواصل الاجتماعي أو البريد مباشرة.</p>
-            <a class="btn btn-sm btn-outline-success" href="mailto:support@taqathon.sa"><i class="bi bi-envelope"></i> راسل الدعم</a>
-          </div>
-        </div>
-
-        <!-- Form (EN left / AR right) -->
-        <div class='col-lg-6 order-lg-2'> 
-          <div class="card-lite rounded-2xl p-3">
-            <h6 class="mb-1">أرسل لنا رسالة</h6>
-            <div class="text-secondary small mb-3">املأ النموذج وسنعاود الرد في أقرب وقت ممكن</div>
-            <form>
-              <div class="mb-2">
+            <form id="contactForm" novalidate>
+              <div class="mb-3">
                 <label class="form-label">الاسم</label>
-                <input class="form-control" placeholder="اسمك الكامل">
+                <input type="text" class="form-control" name="name" placeholder="الاسم الكامل" required>
               </div>
-              <div class="mb-2">
+              <div class="mb-3">
                 <label class="form-label">البريد الإلكتروني</label>
-                <input type="email" class="form-control" placeholder="you@email.com">
+                <input type="email" class="form-control" name="email" placeholder="you@example.com" required>
               </div>
-              <div class="mb-2">
+              <div class="mb-3">
                 <label class="form-label">الموضوع</label>
-                <input class="form-control" placeholder="ما هو موضوع استفسارك؟">
+                <input type="text" class="form-control" name="subject" placeholder="موضوع الاستفسار" required>
               </div>
               <div class="mb-3">
                 <label class="form-label">الرسالة</label>
-                <textarea class="form-control" rows="5" placeholder="رسالتك..."></textarea>
+                <textarea class="form-control" name="message" rows="6" placeholder="اكتب رسالتك هنا..." required></textarea>
               </div>
-              <button type="button" class="btn btn-gradient w-100">إرسال البريد <i class="bi bi-send"></i></button>
+              <button type="submit" class="btn btn-gradient w-100">
+                إرسال الرسالة <i class="bi bi-send ms-1"></i>
+              </button>
+              <div id="contactAlert" class="alert mt-3 d-none" role="alert"></div>
             </form>
           </div>
         </div>
+
+        <!-- اليمين: معلومات الاتصال + منظّم من + موقعنا -->
+        <div class="col-lg-5">
+          <div class="panel shadow-soft p-3 p-md-4 mb-3">
+            <h6 class="panel-header mb-3">معلومات الاتصال</h6>
+            <ul class="info-list">
+              <li class="info-item">
+                <i class="bi bi-envelope"></i>
+                <div><strong>البريد الإلكتروني</strong> — <a class="link-secondary" href="mailto:info@jameiat-taqa.sa">info@jameiat-taqa.sa</a></div>
+              </li>
+              <li class="info-item">
+                <i class="bi bi-telephone"></i>
+                <div><strong>الهاتف</strong> — <a class="link-secondary" href="tel:+966539336648">0539336648</a></div>
+              </li>
+              <li class="info-item">
+                <i class="bi bi-globe"></i>
+                <div><strong>الموقع الإلكتروني</strong> — <a class="link-secondary" href="https://jameiat-taqa.sa" target="_blank" rel="noopener">jameiat-taqa.sa</a></div>
+              </li>
+            </ul>
+          </div>
+
+          <!-- منظّم من -->
+          <div class="panel shadow-soft p-3 p-md-4 mb-3 text-center">
+            <h6 class="panel-header mb-2">منظّم من</h6>
+            <p class="text-secondary mb-0">
+              جمعية الطاقة للتنمية المستدامة<br>
+              <small>وبالتعاون مع وزارة الطاقة</small>
+            </p>
+          </div>
+
+          <!-- موقعنا -->
+          <div class="panel shadow-soft p-3 p-md-4">
+            <h6 class="panel-header mb-2">موقعنا</h6>
+            <p class="text-secondary mb-2">
+              الرياض، المملكة العربية السعودية<br>
+              جمعية الطاقة للتنمية المستدامة
+            </p>
+            <div style="height:160px; background:#eef3f9; border-radius:8px; display:flex; align-items:center; justify-content:center; color:#6b7785;">
+              سيتم إضافة الخريطة قريبًا
+            </div>
+          </div>
+        </div>
       </div>
+
+      <!-- مكان الخريطة لاحقًا (خارج اللوحة إن رغبتِ) -->
+      <!--
+      <div class="row g-4 mt-1">
+        <div class="col-12">
+          <div class="panel shadow-soft p-0" style="overflow:hidden;">
+            <div style="height:360px; background:#eef3f9;"></div>
+          </div>
+        </div>
+      </div>
+      -->
     </div>
   </main>
 
+  <!-- التذييل -->
   <footer class="pt-5">
     <div class="container">
       <div class="row g-4">
-        <div class="col-md-4"><h6 class="mb-3">طاقاثون</h6><p class="mb-1 small">تنظيم: جمعية الطاقة للتنمية المستدامة.</p><p class="small">شروط الخدمة</p></div>
-        <div class="col-md-4"><h6 class="mb-3">روابط سريعة</h6><ul class="list-unstyled small"><li><a href="rules-ar.html">سياسة الخصوصية</a></li><li><a href="rules-ar.html">شروط الخدمة</a></li></ul></div>
-        <div class="col-md-4"><h6 class="mb-3">تابعنا</h6><div class="d-flex gap-2"><a href="#"><i class="bi bi-facebook fs-5"></i></a><a href="#"><i class="bi bi-instagram fs-5"></i></a><a href="#"><i class="bi bi-linkedin fs-5"></i></a><a href="#"><i class="bi bi-twitter-x fs-5"></i></a><a href="#"><i class="bi bi-youtube fs-5"></i></a></div></div>
+        <div class="col-md-6">
+          <h6 class="mb-3 text-white">طاقَثون</h6>
+          <p class="small mb-1">تنظيم جمعية الطاقة للتنمية المستدامة.</p>
+        </div>
+        <div class="col-md-6">
+          <h6 class="mb-3 text-white">تابعنا</h6>
+          <div class="d-flex gap-3">
+            <a href="https://x.com/jameiat_taqa" target="_blank" class="text-light"><i class="bi bi-twitter-x fs-5"></i></a>
+            <a href="https://instagram.com/jameiat_taqa" target="_blank" class="text-light"><i class="bi bi-instagram fs-5"></i></a>
+            <a href="https://www.linkedin.com/company/جمعية-الطاقة-للتنمية-المستدامة" target="_blank" class="text-light"><i class="bi bi-linkedin fs-5"></i></a>
+            <a href="https://tiktok.com/@jameiat_taqa" target="_blank" class="text-light"><i class="bi bi-tiktok fs-5"></i></a>
+          </div>
+        </div>
       </div>
-      <div class="border-top border-secondary mt-4 pt-3 pb-4 small text-center">© 2025 طاقاثون. جميع الحقوق محفوظة.</div>
+      <div class="border-top border-secondary mt-4 pt-3 pb-4 small text-center">
+        © <span id="year"></span> طاقَثون. جميع الحقوق محفوظة.
+      </div>
     </div>
   </footer>
 
+  <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // إرسال عبر mailto فقط (بدون باك-إند)
+    const form = document.getElementById('contactForm');
+    const alertBox = document.getElementById('contactAlert');
+    function showAlert(type, msg){
+      alertBox.className = 'alert mt-3 alert-' + type;
+      alertBox.textContent = msg;
+      alertBox.classList.remove('d-none');
+    }
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      alertBox.classList.add('d-none');
+
+      const fd = new FormData(form);
+      const name = (fd.get('name')||'').trim();
+      const email = (fd.get('email')||'').trim();
+      const subject = (fd.get('subject')||'').trim();
+      const message = (fd.get('message')||'').trim();
+
+      if(!name || !email || !subject || !message){
+        showAlert('warning','فضلاً املئي جميع الحقول.');
+        return;
+      }
+
+      const body = `الاسم: ${name}\nالبريد: ${email}\n\n${message}`;
+      const mailto = `mailto:info@jameiat-taqa.sa?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      window.location.href = mailto;
+      showAlert('info','سيتم فتح تطبيق البريد لديك. إن لم يُفتح، أرسلي إلى info@jameiat-taqa.sa مباشرة.');
+      form.reset();
+    });
+  </script>
 </body>
 </html>
