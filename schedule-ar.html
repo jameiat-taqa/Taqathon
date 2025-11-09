@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>الجدول والورش · طاقَثون</title>
 
-  <!-- Google Fonts (load heavier Cairo weights explicitly) -->
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -22,7 +22,6 @@
     --brand-grad: linear-gradient(90deg, #09C899, #007DFD);
     --text:#1d2733;
     --muted:#66768a;
-    --row-bg:#f9fbff;
     --row-border:#e9eef5;
     --section-bg:#eef6ff;
   }
@@ -42,7 +41,7 @@
   .text-secondary{ color:var(--muted)!important; }
   .card-lite{ background:#fff; border:1px solid #e9eef3; }
 
-  /* أيقونة العنوان (مطابقة لصفحة العقد) */
+  /* أيقونة العنوان */
   .icon-circle{
     width:64px; height:64px; border-radius:999px;
     display:inline-flex; align-items:center; justify-content:center;
@@ -53,26 +52,50 @@
   }
   .icon-circle i{ font-size:1.6rem; line-height:1; }
 
-  /* تنسيق الجدول */
-  .table thead th{ color:#6b7785; font-weight:600; }
-  .table tbody tr:not(.section-row){ background:#fff; }
-  .table tbody tr + tr td{ border-top:1px solid var(--row-border); }
-  .section-row td{
-    background:var(--section-bg);
-    color:var(--brand-dark);
-    font-weight:600;
-    border-top:1px solid var(--row-border);
+ /* Table + content */
+  .icon-circle{
+    width:64px;
+    height:64px;
+    border-radius:999px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(180deg,#eef6ff,#f3fbff);
+    border:1px solid #c9ddff;
+    color:var(--brand-blue);
+    box-shadow:0 4px 16px rgba(0,125,253,.25);
   }
+  .icon-circle i{ font-size:1.6rem; }
+
+  .table thead th{
+    color:#6b7785;
+    font-weight:600;
+  }
+  .section-row td{
+    background:#f2f6fb;
+    font-weight:600;
+    color:#17324a;
+  }
+  .table tbody tr.workshop-row td{ background:#ecfdf5; }
+  .table tbody tr.keydate-row td{ background:#eef6ff; }
+
+  /* NEW blue dots and section kicker */
   .section-kicker{
-    display:inline-flex; align-items:center; gap:.5rem;
-    font-size:.9rem; color:#3664a3;
+    display:inline-flex;
+    align-items:center;
+    gap:.5rem;
+    font-size:.9rem;
+    color:#3664a3;
+    text-transform:uppercase;
   }
   .k-dot{
-    width:8px; height:8px; border-radius:999px; background:var(--brand-blue);
+    width:8px;
+    height:8px;
+    border-radius:999px;
+    background:var(--brand-blue);
     box-shadow:0 0 0 4px rgba(0,125,253,.12);
   }
 
-  /* الأزرار */
   .btn-join{
     border-color:var(--brand-green);
     color:#0a7b60;
@@ -84,28 +107,31 @@
     border-color:var(--brand-green);
   }
 
-  /* شريط التصفّح */
+  /* ===== NAVBAR (match other Arabic pages) ===== */
   .navbar{
     background:#fff;
     box-shadow:0 2px 10px rgba(0,0,0,.04);
-    padding-top:.4rem;
-    padding-bottom:.4rem;
+    padding-top:.4rem; padding-bottom:.4rem;
   }
+  .navbar .container{ position:relative; flex-wrap:nowrap; }
+  .navbar .navbar-brand, .navbar .assoc-fixed{ flex-shrink:0; }
+
   .logo-mark{ height:60px; width:auto; object-fit:contain; }
   .assoc-logo{ height:48px; width:auto; object-fit:contain; }
+
   .navbar-nav .nav-link{ font-weight:500; color:var(--brand-dark); transition:.2s; }
   .navbar-nav .nav-link:hover,
   .navbar-nav .nav-link.active{ color:var(--brand-blue); }
+
   .btn-lang{
-    background:var(--brand-blue);
-    color:#fff !important;
+    background:var(--brand-blue); color:#fff !important;
     border:none; border-radius:.4rem;
-    padding:.35rem .9rem;
-    font-weight:500;
-    transition:.2s;
+    padding:.35rem .9rem; font-weight:500; transition:.2s;
+    margin-inline-start:1.25rem; /* same gap as other AR pages */
   }
   .btn-lang:hover{ background:var(--brand-green); color:#fff !important; }
 
+  /* قائمة الجوال كاملة العرض تحت الشريط */
   @media (max-width: 991.98px){
     .navbar .navbar-collapse{
       position:absolute; inset-inline:0; top:100%;
@@ -114,17 +140,17 @@
       box-shadow:0 10px 24px rgba(0,0,0,.08);
       z-index:1000;
     }
+    .logo-mark{ height:44px; } .assoc-logo{ height:32px; }
   }
 
   /* التذييل */
   footer{ background:#00284C; color:#cfd6df; }
   footer a{ color:#cfd6df; text-decoration:none; }
 
-  /* عناوين الورش: وزن أثقل وبمستوى خصوصية أعلى */
+  /* عناوين الورش أثقل */
   .table td .work-title{
     font-family:'Cairo', sans-serif !important;
-    font-weight:700 !important;                 /* أقوى من 700 لظهور واضح */
-    /* لو كانت نسخة Cairo متغيرة الوزن، نحدد المتغيّر أيضًا */
+    font-weight:700 !important;
     font-variation-settings:'wght' 700;
   }
   </style>
@@ -134,29 +160,33 @@
   <!-- شريط التصفّح -->
   <nav class="navbar navbar-expand-lg navbar-light sticky-top">
     <div class="container d-flex align-items-center justify-content-between">
-      <a class="navbar-brand d-flex align-items-center" href="index-ar.html">
+      <!-- العلامة (يمين في RTL) -->
+      <a class="navbar-brand d-flex align-items-center" href="index-ar.html" aria-label="الصفحة الرئيسية لطاقثون">
         <img src="assets/taqathon-logo.png" alt="شعار طاقثون" class="logo-mark">
       </a>
 
+      <!-- الروابط (وسط) -->
       <div class="collapse navbar-collapse justify-content-lg-center" id="mainNav">
         <ul class="navbar-nav mb-2 mb-lg-0 align-items-lg-center">
           <li class="nav-item"><a class="nav-link" href="index-ar.html">الرئيسية</a></li>
           <li class="nav-item"><a class="nav-link" href="contract-ar.html">العقد</a></li>
-          <li class="nav-item"><a class="nav-link active" href="schedule-ar.html">الجدول والورش</a></li>
+          <li class="nav-item"><a class="nav-link active" href="schedule-ar.html" aria-current="page">الجدول وورش العمل</a></li>
           <li class="nav-item"><a class="nav-link" href="submissions-ar.html">التسليمات</a></li>
-          <li class="nav-item"><a class="nav-link" href="rules-ar.html">القواعد والمراجع</a></li>
+          <li class="nav-item"><a class="nav-link" href="rules-ar.html">القواعد والموارد</a></li>
           <li class="nav-item"><a class="nav-link" href="contact-ar.html">تواصل معنا</a></li>
-          <li class="nav-item ms-3">
+          <li class="nav-item">
             <a class="btn btn-sm btn-lang" href="schedule.html">EN</a>
           </li>
         </ul>
       </div>
 
+      <!-- شعار الجهة + زر القائمة (يسار في RTL) -->
       <div class="assoc-fixed d-flex align-items-center gap-2">
-        <a href="https://taqa.org.sa" target="_blank" rel="noopener">
+        <a href="https://taqa.org.sa" target="_blank" rel="noopener" class="d-block" aria-label="جمعية الطاقة للتنمية المستدامة">
           <img src="assets/association-logo.png" alt="جمعية الطاقة للتنمية المستدامة" class="assoc-logo">
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+                aria-controls="mainNav" aria-expanded="false" aria-label="فتح/إغلاق القائمة">
           <span class="navbar-toggler-icon"></span>
         </button>
       </div>
@@ -192,7 +222,7 @@
                 </td>
               </tr>
 
-              <tr>
+              <tr class="workshop-row">
                 <td>
                   <div class="work-title">ورشة في مجال الطاقة</div>
                   <div class="small text-secondary">أ.د/ علي فودة</div>
@@ -201,12 +231,12 @@
                 <td>يُحدَّد لاحقًا</td>
                 <td>
                   <a class="btn btn-sm btn-outline-success btn-join" href="#">
-                    <i class="bi bi-box-arrow-up-right ms-1"></i> انضم الآن
+                    <i class="bi bi-box-arrow-up-right me-1"></i> انضم الآن
                   </a>
                 </td>
               </tr>
 
-              <tr>
+              <tr class="workshop-row">
                 <td>
                   <div class="work-title">ورشة بناء وتطوير المشاريع</div>
                   <div class="small text-secondary">د. سامي غزالي</div>
@@ -215,12 +245,12 @@
                 <td>يُحدَّد لاحقًا</td>
                 <td>
                   <a class="btn btn-sm btn-outline-success btn-join" href="#">
-                    <i class="bi bi-box-arrow-up-right ms-1"></i> انضم الآن
+                    <i class="bi bi-box-arrow-up-right me-1"></i> انضم الآن
                   </a>
                 </td>
               </tr>
 
-              <tr>
+              <tr class="workshop-row">
                 <td>
                   <div class="work-title">ورشة العرض الاحترافي للمشاريع</div>
                   <div class="small text-secondary">د. مهند باحشوان</div>
@@ -229,7 +259,7 @@
                 <td>يُحدَّد لاحقًا</td>
                 <td>
                   <a class="btn btn-sm btn-outline-success btn-join" href="#">
-                    <i class="bi bi-box-arrow-up-right ms-1"></i> انضم الآن
+                    <i class="bi bi-box-arrow-up-right me-1"></i> انضم الآن
                   </a>
                 </td>
               </tr>
@@ -241,35 +271,35 @@
                 </td>
               </tr>
 
-              <tr>
+              <tr class="keydate-row">
                 <td><div class="work-title">جلسات إرشادية</div></td>
                 <td>15 نوفمبر 2025</td>
                 <td>يُحدَّد لاحقًا</td>
                 <td>
                   <a class="btn btn-sm btn-outline-success btn-join" href="#">
-                    <i class="bi bi-box-arrow-up-right ms-1"></i> انضم الآن
+                    <i class="bi bi-box-arrow-up-right me-1"></i> انضم الآن
                   </a>
                 </td>
               </tr>
 
-              <tr>
+              <tr class="keydate-row">
                 <td><div class="work-title">تسليم المشروع النهائي</div></td>
                 <td>22 نوفمبر 2025</td>
                 <td>يُحدَّد لاحقًا</td>
                 <td>
                   <a class="btn btn-sm btn-outline-success btn-join" href="submissions-ar.html">
-                    <i class="bi bi-upload ms-1"></i> تسليم المشروع
+                    <i class="bi bi-upload me-1"></i> تسليم المشروع
                   </a>
                 </td>
               </tr>
 
-              <tr>
+              <tr class="keydate-row">
                 <td><div class="work-title">الحفل الختامي</div></td>
                 <td>30 نوفمبر 2025</td>
                 <td>يُحدَّد لاحقًا</td>
                 <td>
                   <a class="btn btn-sm btn-outline-success btn-join" href="#">
-                    <i class="bi bi-box-arrow-up-right ms-1"></i> انضم الآن
+                    <i class="bi bi-box-arrow-up-right me-1"></i> انضم الآن
                   </a>
                 </td>
               </tr>
@@ -292,10 +322,10 @@
         <div class="col-md-6">
           <h6 class="mb-3 text-white">تابعنا</h6>
           <div class="d-flex gap-3">
-            <a href="https://x.com/jameiat_taqa" target="_blank" class="text-light"><i class="bi bi-twitter-x fs-5"></i></a>
-            <a href="https://instagram.com/jameiat_taqa" target="_blank" class="text-light"><i class="bi bi-instagram fs-5"></i></a>
-            <a href="https://www.linkedin.com/company/جمعية-الطاقة-للتنمية-المستدامة" target="_blank" class="text-light"><i class="bi bi-linkedin fs-5"></i></a>
-            <a href="https://tiktok.com/@jameiat_taqa" target="_blank" class="text-light"><i class="bi bi-tiktok fs-5"></i></a>
+            <a href="https://x.com/jameiat_taqa" target="_blank" rel="noopener" class="text-light"><i class="bi bi-twitter-x fs-5"></i></a>
+            <a href="https://instagram.com/jameiat_taqa" target="_blank" rel="noopener" class="text-light"><i class="bi bi-instagram fs-5"></i></a>
+            <a href="https://www.linkedin.com/company/جمعية-الطاقة-للتنمية-المستدامة" target="_blank" rel="noopener" class="text-light"><i class="bi bi-linkedin fs-5"></i></a>
+            <a href="https://tiktok.com/@jameiat_taqa" target="_blank" rel="noopener" class="text-light"><i class="bi bi-tiktok fs-5"></i></a>
           </div>
         </div>
       </div>

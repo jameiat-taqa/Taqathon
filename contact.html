@@ -11,31 +11,28 @@
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
   <!-- Bootstrap 5 + Icons -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 
   <style>
   :root{
-    --brand-blue:#007DFD;
-    --brand-green:#09C899;
-    --brand-dark:#00284C;
+    --brand-blue:#007DFD; --brand-green:#09C899; --brand-dark:#00284C;
     --brand-grad: linear-gradient(90deg, #09C899, #007DFD);
-    --text:#1d2733;
-    --muted:#66768a;
-    --panel-border:#e9eef3;
+    --text:#1d2733; --muted:#66768a; --panel-border:#e9eef3;
   }
 
+  /* === MATCH rules.html base layout exactly === */
+  html,body{ height:100%; }
   html,body{
-    height:100%;
     font-family:Poppins, Cairo, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
     color:var(--text);
     background:#f8fbfd;
   }
-  body{ display:flex; flex-direction:column; }
+  body{ display:flex; flex-direction:column; min-height:100vh; }
   main{ flex:1 0 auto; }
   footer{ flex-shrink:0; }
 
-  /* Navbar */
+  /* Navbar (submissions style) */
   .navbar{
     background:#fff; box-shadow:0 2px 10px rgba(0,0,0,.04);
     padding-top:.4rem; padding-bottom:.4rem;
@@ -49,14 +46,14 @@
     padding:.35rem .9rem; font-weight:500; transition:.2s;
   }
   .btn-lang:hover{ background:var(--brand-green); color:#fff !important; }
-
+  .navbar .container{ position:relative; flex-wrap:nowrap; }
+  .navbar .navbar-brand, .navbar .assoc-fixed{ flex-shrink:0; }
   @media (max-width:991.98px){
     .navbar .navbar-collapse{
       position:absolute; inset-inline:0; top:100%;
-      background:#fff; padding:.75rem 1rem;
-      border-top:1px solid #e9eef5; box-shadow:0 10px 24px rgba(0,0,0,.08);
-      z-index:1000;
+      background:#fff; padding:.75rem 1rem; border-top:1px solid #e9eef5; box-shadow:0 10px 24px rgba(0,0,0,.08); z-index:1000;
     }
+    .logo-mark{ height:44px; } .assoc-logo{ height:32px; }
   }
 
   /* Panels */
@@ -66,12 +63,9 @@
   .text-secondary{ color:var(--muted)!important; }
 
   /* Form */
-  .btn-gradient{
-    background: var(--brand-grad);
-    color:#fff; border:0; font-weight:600;
-    padding:.65rem 1rem; border-radius:.6rem;
-  }
+  .btn-gradient{ background: var(--brand-grad); color:#fff; border:0; font-weight:600; padding:.65rem 1rem; border-radius:.6rem; }
   .btn-gradient:hover{ filter:brightness(.98); color:#fff; }
+  .form-text.small-muted{ color:#6c757d; font-size:.85rem; }
 
   /* Info list */
   .info-list{ list-style:none; padding:0; margin:0; }
@@ -85,7 +79,7 @@
 </head>
 
 <body>
-  <!-- Navbar -->
+  <!-- NAVBAR -->
   <nav class="navbar navbar-expand-lg navbar-light sticky-top">
     <div class="container d-flex align-items-center justify-content-between">
       <a class="navbar-brand d-flex align-items-center" href="index.html">
@@ -96,28 +90,26 @@
         <ul class="navbar-nav mb-2 mb-lg-0 align-items-lg-center">
           <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
           <li class="nav-item"><a class="nav-link" href="contract.html">Contract</a></li>
-          <li class="nav-item"><a class="nav-link" href="schedule.html">Schedule & Workshops</a></li>
+          <li class="nav-item"><a class="nav-link" href="schedule.html">Schedule &amp; Workshops</a></li>
           <li class="nav-item"><a class="nav-link" href="submissions.html">Submissions</a></li>
-          <li class="nav-item"><a class="nav-link" href="rules.html">Rules & Resources</a></li>
+          <li class="nav-item"><a class="nav-link" href="rules.html">Rules &amp; Resources</a></li>
           <li class="nav-item"><a class="nav-link active" href="contact.html">Contact Us</a></li>
-          <li class="nav-item ms-3">
-            <a class="btn btn-sm btn-lang" href="contact-ar.html">AR</a>
-          </li>
+          <li class="nav-item ms-3"><a class="btn btn-sm btn-lang" href="contact-ar.html">AR</a></li>
         </ul>
       </div>
 
       <div class="assoc-fixed d-flex align-items-center gap-2">
-        <a href="https://jameiat-taqa.sa" target="_blank" rel="noopener">
+        <a href="https://jameiat-taqa.sa" target="_blank" rel="noopener" class="d-block" aria-label="Energy Association for Sustainable Development">
           <img src="assets/association-logo.png" alt="Energy Association for Sustainable Development" class="assoc-logo">
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
       </div>
     </div>
   </nav>
 
-  <!-- Main -->
+  <!-- MAIN -->
   <main class="py-5">
     <div class="container">
       <div class="row g-4">
@@ -125,9 +117,12 @@
         <div class="col-lg-7">
           <div class="panel shadow-soft p-3 p-md-4">
             <h6 class="panel-header mb-1">Send us a message</h6>
-            <p class="text-secondary small mb-3">Fill out the form below and we’ll respond as soon as possible</p>
+            <p class="text-secondary small mb-3">Fill out the form below and we’ll respond as soon as possible.</p>
 
             <form id="contactForm" novalidate>
+              <!-- honeypot (anti-bot) -->
+              <input type="text" name="hp" id="hp" class="d-none" tabindex="-1" autocomplete="off" aria-hidden="true">
+
               <div class="mb-3">
                 <label class="form-label">Name</label>
                 <input type="text" class="form-control" name="name" placeholder="Your full name" required>
@@ -135,6 +130,7 @@
               <div class="mb-3">
                 <label class="form-label">Email</label>
                 <input type="email" class="form-control" name="email" placeholder="your@email.com" required>
+                <div class="form-text small-muted">We use this only to reply to your message.</div>
               </div>
               <div class="mb-3">
                 <label class="form-label">Subject</label>
@@ -144,10 +140,20 @@
                 <label class="form-label">Message</label>
                 <textarea class="form-control" name="message" rows="6" placeholder="Your message..." required></textarea>
               </div>
-              <button type="submit" class="btn btn-gradient w-100">
+
+              <!-- metadata -->
+              <input type="hidden" name="locale" value="en">
+              <input type="hidden" name="source" value="contact.html">
+
+              <button id="submitBtn" type="submit" class="btn btn-gradient w-100">
                 Send Message <i class="bi bi-send ms-1"></i>
               </button>
               <div id="contactAlert" class="alert mt-3 d-none" role="alert"></div>
+
+              <div class="form-text small-muted mt-2">
+                Having trouble? Email us directly at
+                <a href="mailto:info@jameiat-taqa.sa">info@jameiat-taqa.sa</a>.
+              </div>
             </form>
           </div>
         </div>
@@ -173,14 +179,13 @@
           </div>
 
           <!-- Organized by -->
-<div class="panel shadow-soft p-3 p-md-4 mb-3 text-center">
-  <h6 class="panel-header mb-2">Organized By</h6>
-  <p class="text-secondary mb-0">
-    Energy Association for Sustainable Development<br>
-    <small>In collaboration with the Ministry of Energy</small>
-  </p>
-</div>
-
+          <div class="panel shadow-soft p-3 p-md-4 mb-3 text-center">
+            <h6 class="panel-header mb-2">Organized By</h6>
+            <p class="text-secondary mb-0">
+              Energy Association for Sustainable Development<br>
+              <small>In collaboration with the Ministry of Energy</small>
+            </p>
+          </div>
 
           <!-- Our Location -->
           <div class="panel shadow-soft p-3 p-md-4">
@@ -198,21 +203,21 @@
     </div>
   </main>
 
-  <!-- Footer -->
+  <!-- FOOTER -->
   <footer class="pt-5">
     <div class="container">
       <div class="row g-4">
         <div class="col-md-6">
           <h6 class="mb-3 text-white">Taqathon</h6>
-          <p class="small mb-1">Organized by Energy Association for Sustainable Development.</p>
+          <p class="small mb-1">Organized by Energy Association for Sustainable Development</p>
         </div>
         <div class="col-md-6">
           <h6 class="mb-3 text-white">Follow Us</h6>
           <div class="d-flex gap-3">
-            <a href="https://x.com/jameiat_taqa" target="_blank" class="text-light"><i class="bi bi-twitter-x fs-5"></i></a>
-            <a href="https://instagram.com/jameiat_taqa" target="_blank" class="text-light"><i class="bi bi-instagram fs-5"></i></a>
-            <a href="https://www.linkedin.com/company/جمعية-الطاقة-للتنمية-المستدامة" target="_blank" class="text-light"><i class="bi bi-linkedin fs-5"></i></a>
-            <a href="https://tiktok.com/@jameiat_taqa" target="_blank" class="text-light"><i class="bi bi-tiktok fs-5"></i></a>
+            <a href="https://x.com/jameiat_taqa" target="_blank" class="text-light" rel="noopener"><i class="bi bi-twitter-x fs-5"></i></a>
+            <a href="https://instagram.com/jameiat_taqa" target="_blank" class="text-light" rel="noopener"><i class="bi bi-instagram fs-5"></i></a>
+            <a href="https://www.linkedin.com/company/جمعية-الطاقة-للتنمية-المستدامة" target="_blank" class="text-light" rel="noopener"><i class="bi bi-linkedin fs-5"></i></a>
+            <a href="https://tiktok.com/@jameiat_taqa" target="_blank" class="text-light" rel="noopener"><i class="bi bi-tiktok fs-5"></i></a>
           </div>
         </div>
       </div>
@@ -222,37 +227,88 @@
     </div>
   </footer>
 
-  <!-- Bootstrap JS -->
+  <!-- JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // mailto-only submit
+    // ====== CONFIG your deployed Google Apps Script Web App URL ======
+    const CONTACT_SCRIPT_URL = "https://script.google.com/a/macros/jameiat-taqa.sa/s/AKfycbyiOYec7tTrR5ZZuAoR59c6xmHSS5AxnslkiAzrfaFnd-pTGZb6PiKHEXe_uVSGsjUA/exec";
+
     const form = document.getElementById('contactForm');
     const alertBox = document.getElementById('contactAlert');
-    function showAlert(type, msg){
-      alertBox.className = 'alert mt-3 alert-' + type;
-      alertBox.textContent = msg;
+    const submitBtn = document.getElementById('submitBtn');
+
+    function showAlert(kind, html){
+      alertBox.className = 'alert mt-3 alert-' + kind;
+      alertBox.innerHTML = html;
       alertBox.classList.remove('d-none');
     }
-    form.addEventListener('submit', (e) => {
+    function hideAlert(){ alertBox.classList.add('d-none'); }
+    function isValidEmail(s){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(s||'').trim()); }
+
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      alertBox.classList.add('d-none');
+      hideAlert();
+
       const fd = new FormData(form);
-      const name = fd.get('name').trim();
-      const email = fd.get('email').trim();
-      const subject = fd.get('subject').trim();
-      const message = fd.get('message').trim();
-      if(!name || !email || !subject || !message){
+      if (fd.get('hp')) { return; } // honeypot
+
+      const name = (fd.get('name')||'').trim();
+      const email = (fd.get('email')||'').trim();
+      const subject = (fd.get('subject')||'').trim();
+      const message = (fd.get('message')||'').trim();
+
+      if (!name || !email || !subject || !message){
         showAlert('warning','Please fill out all fields.');
         return;
       }
-      const mailto = `mailto:info@jameiat-taqa.sa?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(
-        `Name: ${name}\nEmail: ${email}\n\n${message}`
-      )}`;
-      window.location.href = mailto;
-      showAlert('info','Your email app should open. If not, please email info@jameiat-taqa.sa directly.');
-      form.reset();
+      if (!isValidEmail(email)){
+        showAlert('warning','Please enter a valid email address.');
+        return;
+      }
+
+      // helpful metadata
+      fd.append('pageUrl', location.href);
+      fd.append('userAgent', navigator.userAgent);
+      fd.append('ts', new Date().toISOString());
+
+      const oldText = submitBtn.textContent;
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+
+      try{
+        const res = await fetch(CONTACT_SCRIPT_URL, { method:'POST', body: fd, redirect:'follow' });
+        const text = await res.text();
+        let data = {};
+        try { data = JSON.parse(text); } catch(e){ /* non-JSON (possibly login page) */ }
+
+        const looksLikeHtml = /<html/i.test(text);
+        if (!res.ok || looksLikeHtml){
+          const hint = looksLikeHtml ? ' (It looks like a permissions/login page—set the Web App access to “Anyone”.)' : '';
+          const msg = (data && data.error) ? data.error : `Request failed (${res.status})` + hint;
+          showAlert('danger', msg);
+          return;
+        }
+
+        if (data && data.ok){
+          const ticket = data.ticketId ? `<br><small>Ticket ID: <code>${data.ticketId}</code></small>` : '';
+          showAlert('success', 'Thanks! Your message was received.' + ticket);
+          form.reset();
+        } else {
+          showAlert('danger', (data && data.error) ) ? data.error : 'Submission failed. Please try again.';
+        }
+      } catch(err){
+        console.error(err);
+        const mailto = `mailto:info@jameiat-taqa.sa?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(
+          `Name: ${name}\nEmail: ${email}\n\n${message}`
+        )}`;
+        try { window.location.href = mailto; } catch(_) {}
+        showAlert('warning','Network/CORS blocked. We opened your email app as a fallback. If nothing opened, email <b>info@jameiat-taqa.sa</b> directly.');
+      } finally {
+        submitBtn.textContent = oldText;
+        submitBtn.disabled = false;
+      }
     });
   </script>
 </body>

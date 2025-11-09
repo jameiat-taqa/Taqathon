@@ -3,93 +3,220 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Submissions-ar · Taqathon</title>
+  <title>التسليمات · طاقَثون</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap RTL + Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
   <style>
-:root{
-  --brand-green:#20c997; /* close to bootstrap teal/green */
-  --brand-blue:#1d91c0;
-  --brand-gold:#E7C57C;
-}
-.bg-gb-gradient{
-  background: linear-gradient(90deg, var(--brand-green), var(--brand-blue)) !important;
-}
-.rounded-2xl{ border-radius: 1rem !important; }
-.shadow-soft{ box-shadow: 0 10px 30px rgba(0,0,0,.12) !important; }
-.badge-soft{ background-color: rgba(32,201,151,.15); color:#0f5132; border:1px solid rgba(32,201,151,.25); }
-.section{ padding: 2rem 0; }
-.hero-title{ font-weight: 700; letter-spacing: .2px; }
-.hero-sub{ color:#495057; }
-.navbar-brand{ font-weight:800; }
-footer{ font-size:.9rem; color:#6c757d; padding:2rem 0; }
-.card-title{ font-weight:600; }
-a.nav-link.active{ font-weight:600; }
-.btn-brand{ background: linear-gradient(90deg, var(--brand-green), var(--brand-blue)); border:0; color:#fff; }
-.btn-brand:hover{ filter: brightness(0.95); color:#fff; }
-</style>
+  :root{
+    --brand-blue:#007DFD;
+    --brand-green:#09C899;
+    --brand-dark:#00284C;
+    --brand-grad: linear-gradient(90deg, var(--brand-green), var(--brand-blue));
+    --text:#1d2733;
+    --muted:#66768a;
+  }
+
+  /* Sticky footer layout */
+  html, body { height: 100%; }
+  body{
+    font-family: Cairo, Poppins, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    color: var(--text);
+    background:#f8fbfd;
+    display:flex; flex-direction:column; min-height:100vh;
+  }
+  main{ flex:1 0 auto; }
+  footer{ flex-shrink:0; }
+
+  .rounded-2xl{ border-radius:1rem; }
+  .shadow-soft{ box-shadow:0 10px 30px rgba(0,0,0,.12); }
+  .card-lite{ background:#fff; border:1px solid #e9eef3; }
+  .text-secondary{ color:var(--muted)!important; }
+  .divider-grad{ height:10px; background:var(--brand-grad); border-radius:.75rem; }
+
+  /* ===== NAVBAR (exact copy of index-ar) ===== */
+  .navbar{
+    background:#fff;
+    box-shadow:0 2px 10px rgba(0,0,0,.04);
+    padding-top:.4rem; padding-bottom:.4rem;
+  }
+  .navbar .container{ position:relative; flex-wrap:nowrap; }
+  .navbar .navbar-brand, .navbar .assoc-fixed{ flex-shrink:0; }
+  .logo-mark{ height:60px; width:auto; object-fit:contain; }
+  .assoc-logo{ height:48px; width:auto; object-fit:contain; }
+  .navbar-nav .nav-link{ font-weight:500; color:var(--brand-dark); transition:.2s; }
+  .navbar-nav .nav-link:hover,
+  .navbar-nav .nav-link.active{ color:var(--brand-blue); }
+
+  .btn-lang{
+    background:var(--brand-blue); color:#ffffff !important;
+    border:none; border-radius:.4rem;
+    padding:.35rem .9rem; font-weight:500; transition:.2s;
+    margin-inline-start:1.25rem;   /* adds extra gap before EN in RTL */
+  }
+  .btn-lang:hover{ background:var(--brand-green); color:#fff !important; }
+
+  /* collapse panel full-width under bar on mobile */
+  @media (max-width: 991.98px){
+    .navbar .navbar-collapse{
+      position:absolute; inset-inline:0; top:100%;
+      background:#fff; padding:.75rem 1rem;
+      border-top:1px solid #e9eef5;
+      box-shadow:0 10px 24px rgba(0,0,0,.08);
+      z-index:1000;
+    }
+    .logo-mark{ height:44px; } .assoc-logo{ height:32px; }
+  }
+
+  /* Icon circle */
+  .icon-circle{
+    width:64px; height:64px; border-radius:999px;
+    display:inline-flex; align-items:center; justify-content:center;
+    background:linear-gradient(180deg,#eef6ff,#f3fbff);
+    border:1px solid #c9ddff;
+    color:var(--brand-blue);
+    box-shadow:0 4px 16px rgba(0,125,253,.25);
+    font-size:1.6rem;
+  }
+
+  .btn-brand{ background:var(--brand-grad); border:0; color:#fff; }
+  .btn-brand:hover{ filter:brightness(.95); color:#fff; }
+
+  /* Footer */
+  footer{ background:var(--brand-dark); color:#cfd6df; }
+  footer a{ color:#cfd6df; text-decoration:none; }
+  </style>
 </head>
+
 <body class="bg-light text-dark">
-  <nav class="navbar navbar-expand-lg bg-white sticky-top border-bottom">
-    <div class="container">
-      <a class="navbar-brand" href="index.html">Taqathon</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav" aria-controls="nav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="nav">
-        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-          <li class="nav-item"><a class="nav-link " href="index-ar.html">الرئيسية</a></li>
-<li class="nav-item"><a class="nav-link " href="contract-ar.html">العقد</a></li>
-<li class="nav-item"><a class="nav-link " href="schedule-ar.html">الجدول وورش العمل</a></li>
-<li class="nav-item"><a class="nav-link active" href="submissions-ar.html">التسليمات</a></li>
-<li class="nav-item"><a class="nav-link " href="rules-ar.html">القواعد والموارد</a></li>
-<li class="nav-item"><a class="nav-link " href="contact-ar.html">تواصل</a></li>
-          <li class="nav-item ms-lg-3">
-            <a class="btn btn-sm btn-outline-secondary" href="submissions.html">EN</a>
-          </li>
+  <!-- ===== NAVBAR (identical to index-ar; only active link + EN href changed) ===== -->
+  <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+    <div class="container d-flex align-items-center justify-content-between">
+      <!-- العلامة (يمين في RTL) -->
+      <a class="navbar-brand d-flex align-items-center" href="index-ar.html" aria-label="الصفحة الرئيسية لطاقثون">
+        <img src="assets/taqathon-logo.png" alt="شعار طاقثون" class="logo-mark">
+      </a>
+
+      <!-- الروابط (وسط) -->
+      <div class="collapse navbar-collapse justify-content-lg-center" id="mainNav">
+        <ul class="navbar-nav mb-2 mb-lg-0 align-items-lg-center">
+          <li class="nav-item"><a class="nav-link" href="index-ar.html">الرئيسية</a></li>
+          <li class="nav-item"><a class="nav-link" href="contract-ar.html">العقد</a></li>
+          <li class="nav-item"><a class="nav-link" href="schedule-ar.html">الجدول وورش العمل</a></li>
+          <li class="nav-item"><a class="nav-link active" href="submissions-ar.html">التسليمات</a></li>
+          <li class="nav-item"><a class="nav-link" href="rules-ar.html">القواعد والموارد</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact-ar.html">تواصل معنا</a></li>
+          <li class="nav-item"><a class="btn btn-sm btn-lang" href="submissions.html">EN</a></li>
         </ul>
+      </div>
+
+      <!-- شعار الجهة + زر القائمة (يسار في RTL) -->
+      <div class="assoc-fixed d-flex align-items-center gap-2">
+        <a href="https://taqa.org.sa" target="_blank" rel="noopener" class="d-block" aria-label="جمعية الطاقة للتنمية المستدامة">
+          <img src="assets/association-logo.png" alt="جمعية الطاقة للتنمية المستدامة" class="assoc-logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+                aria-controls="mainNav" aria-expanded="false" aria-label="تبديل القائمة">
+          <span class="navbar-toggler-icon"></span>
+        </button>
       </div>
     </div>
   </nav>
 
-  
-<section class="section">
-  <div class="container">
-    <h1 class="hero-title display-6">التسليمات</h1>
-    <p class="hero-sub">سلّم نقاط التحقق والنهائيات. يُفضّل مستودع GitHub وفيديو عرض.</p>
-    <div class="rounded-2xl bg-gb-gradient mb-4" style="height:10px;"></div>
-    <div class="card shadow-soft">
-      <div class="card-body">
-        <h6>المتطلبات</h6>
-        <ul>
-          <li>README with problem, solution, architecture, and impact.</li>
-          <li>Link to repo; include license and install steps.</li>
-          <li>3–5 minute demo video and slides.</li>
-        </ul>
-        <hr>
-        <form>
-          <div class="row g-3">
-            <div class="col-md-4"><label class="form-label">اسم الفريق</label><input class="form-control" placeholder="Team Rocket Watts"></div>
-            <div class="col-md-4"><label class="form-label">رابط GitHub</label><input class="form-control" placeholder="https://github.com/..."></div>
-            <div class="col-md-4"><label class="form-label">فيديو العرض</label><input class="form-control" placeholder="https://youtu.be/..."></div>
-            <div class="col-md-12"><label class="form-label">الشرائح</label><input class="form-control" placeholder="https://..."></div>
-          </div>
-          <button class="btn btn-brand mt-3" type="button">رفع / تسليم</button>
-        </form>
+  <!-- ===== MAIN ===== -->
+  <main class="py-5">
+    <div class="container" style="max-width:980px;">
+      <div class="text-center mb-4">
+        <div class="icon-circle mx-auto mb-3"><i class="bi bi-upload"></i></div>
+        <h5 class="mb-1 fw-semibold">التسليمات</h5>
+        <p class="text-secondary mb-0">سلِّم نقاط التحقق والنسخة النهائية. يُفضَّل إرفاق مستودع GitHub وفيديو عرض.</p>
+      </div>
+
+      <div class="divider-grad mb-4"></div>
+
+      <div class="card card-lite rounded-2xl shadow-soft">
+        <div class="card-body">
+         <!-- نموذج التسليم (بحجم أوضح) -->
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-3">
+  <h5 class="mb-0 fw-semibold">نموذج التسليم</h5>
+  <div class="d-flex gap-2">
+    <a class="btn btn-brand btn-lg" target="_blank" rel="noopener"
+       href="https://forms.gle/7AR3KYnWTJ6tABtn9" aria-label="فتح نموذج التسليم في تبويب جديد">
+      <i class="bi bi-box-arrow-up-right ms-2"></i> فتح النموذج
+    </a>
+    <button type="button" class="btn btn-outline-secondary btn-lg" id="copyLinkBtn" aria-label="نسخ رابط نموذج التسليم">
+      نسخ الرابط
+    </button>
+  </div>
+</div>
+
+<div class="alert alert-info fs-6 p-3 mb-0">
+  تتطلّب عملية رفع الملفات تسجيل الدخول إلى Google. إذا لم يعمل الزر، استخدم الرابط المباشر:
+  <span class="text-break" dir="ltr">https://forms.gle/7AR3KYnWTJ6tABtn9</span>
+</div>
+
+          <noscript>
+            <p class="mt-2">تم تعطيل جافاسكريبت. استخدم هذا الرابط للتسليم:
+              <a href="https://forms.gle/7AR3KYnWTJ6tABtn9" target="_blank" rel="noopener" dir="ltr">https://forms.gle/7AR3KYnWTJ6tABtn9</a>
+            </p>
+          </noscript>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </main>
 
-
-  <footer class="border-top">
+  <!-- ===== FOOTER ===== -->
+  <footer class="pt-5">
     <div class="container">
-      <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
-        <div class="py-2">© Taqathon — Built with Bootstrap 5</div>
-        <div class="py-2"><span class="badge bg-warning-subtle text-dark border">Vision 2030</span></div>
+      <div class="row g-4">
+        <div class="col-md-6">
+          <h6 class="mb-3 text-white">طاقَثون</h6>
+          <p class="small mb-1">برعاية جمعية الطاقة للتنمية المستدامة.</p>
+        </div>
+        <div class="col-md-6">
+          <h6 class="mb-3 text-white">تابعنا</h6>
+          <div class="d-flex gap-3">
+            <a href="https://x.com/jameiat_taqa" target="_blank" rel="noopener" class="text-light"><i class="bi bi-twitter-x fs-5"></i></a>
+            <a href="https://instagram.com/jameiat_taqa" target="_blank" rel="noopener" class="text-light"><i class="bi bi-instagram fs-5"></i></a>
+            <a href="https://www.linkedin.com/company/جمعية-الطاقة-للتنمية-المستدامة" target="_blank" rel="noopener" class="text-light"><i class="bi bi-linkedin fs-5"></i></a>
+            <a href="https://tiktok.com/@jameiat_taqa" target="_blank" rel="noopener" class="text-light"><i class="bi bi-tiktok fs-5"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="border-top border-secondary mt-4 pt-3 pb-4 small text-center">
+        © <span id="year"></span> طاقَثون. جميع الحقوق محفوظة.
       </div>
     </div>
   </footer>
 
+  <!-- JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // السنة الحالية
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // نسخ رابط النموذج
+    (function () {
+      var btn = document.getElementById('copyLinkBtn');
+      if (!btn) return;
+      btn.addEventListener('click', async function () {
+        try {
+          await navigator.clipboard.writeText('https://forms.gle/7AR3KYnWTJ6tABtn9');
+          var original = btn.textContent;
+          btn.textContent = 'تم النسخ!';
+          setTimeout(function(){ btn.textContent = original; }, 1200);
+        } catch (e) {
+          alert('تعذّر النسخ. استخدم الضغط المطوّل أو النقر بالزر الأيمن لنسخ الرابط.');
+        }
+      });
+    })();
+  </script>
 </body>
 </html>

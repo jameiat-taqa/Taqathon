@@ -15,254 +15,196 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 
   <style>
-  :root{
-    --brand-blue:#007DFD;
-    --brand-green:#09C899;
-    --brand-dark:#00284C;
-    --brand-grad: linear-gradient(90deg, var(--brand-green), var(--brand-blue));
-    --text:#1d2733;
-    --muted:#66768a;
-  }
+    :root{
+      --brand-blue:#007DFD;
+      --brand-green:#09C899;
+      --brand-dark:#00284C;
+      --brand-grad: linear-gradient(90deg, var(--brand-green), var(--brand-blue));
+      --text:#1d2733;
+      --muted:#66768a;
+    }
 
-  html,body{
-    font-family: Poppins, Cairo, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    color:var(--text);
-    background:#f8fbfd;
-  }
+    /* ===== Global / Edge + Scrollbar fix (non-destructive) ===== */
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: Poppins, Cairo, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+      background: #f8fbfd;
+      overflow-x: clip;               /* stop tiny right-edge line */
+    }
+    html { overflow: hidden; }        /* hide OS scrollbar track */
+    body {
+      height: 100vh;                  /* body becomes scroller */
+      overflow: auto;                 /* keep scrolling */
+      scrollbar-width: none;          /* Firefox: hide bar */
+    }
+    body::-webkit-scrollbar {         /* Chrome/Edge/Safari: hide bar */
+      width: 0;
+      height: 0;
+    }
+    /* Media safety so nothing forces horizontal overflow */
+    *, *::before, *::after { box-sizing: border-box; }
+    img, svg, canvas, video, iframe { max-width: 100%; height: auto; display: block; }
 
-  .rounded-2xl{ border-radius: 1rem; }
-  .shadow-soft{ box-shadow: 0 10px 30px rgba(0,0,0,.12); }
-  .badge-soft{ background:rgba(9,200,153,.15); color:#0a7b60; border:1px solid rgba(9,200,153,.3); }
+    .rounded-2xl{ border-radius: 1rem; }
+    .shadow-soft{ box-shadow: 0 10px 30px rgba(0,0,0,.12); }
+    .badge-soft{ background:rgba(9,200,153,.15); color:#0a7b60; border:1px solid rgba(9,200,153,.3); }
 
-  /* CTA band */
-  .cta-band{ background: var(--brand-grad); color:#042233; }
-  .cta-band .btn{ background:#fff; border:0; color:#042233; font-weight:600; }
+    /* ===== NAVBAR (exact match to submissions/rules) ===== */
+    .navbar{
+      background:#fff;
+      box-shadow:0 2px 10px rgba(0,0,0,.04);
+      padding-top:.4rem; padding-bottom:.4rem;
+    }
+    .logo-mark{ height:60px; width:auto; object-fit:contain; }
+    .assoc-logo{ height:48px; width:auto; object-fit:contain; }
+    .navbar-nav .nav-link{ font-weight:500; color:var(--brand-dark); transition:.2s; }
+    .navbar-nav .nav-link:hover,
+    .navbar-nav .nav-link.active{ color:var(--brand-blue); }
 
-  /* Countdown tiles */
-  .count-tile{
-    background: rgba(255,255,255,.15);
-    border:1px solid rgba(255,255,255,.35);
-    color:#fff; border-radius:.75rem; width:56px; height:56px;
-    display:flex; align-items:center; justify-content:center; font-weight:700;
-    box-shadow:0 6px 18px rgba(0,0,0,.06);
-  }
-  .count-label{ font-size:.8rem; color: rgba(255,255,255,.9); }
+    .btn-lang{
+      background:var(--brand-blue); color:#ffffff !important;
+      border:none; border-radius:.4rem;
+      padding:.35rem .9rem; font-weight:500; transition:.2s;
+    }
+    .btn-lang:hover{ background:var(--brand-green); color:#fff !important; }
 
-  /* Announcements — clean cards */
-.ann-list{
-  max-width:900px;
-  margin:0 auto;
-  display:grid;
-  gap:12px;
-}
-.ann-card{
-  position:relative;
-  background:#fff;
-  border:1px solid #e7eef7;
-  border-radius:12px;
-  padding:16px 16px 16px 56px;
-  box-shadow:0 6px 18px rgba(0,0,0,.06);
-}
-.ann-icon{
-  position:absolute; left:16px; top:16px;
-  width:28px; height:28px; border-radius:8px;
-  display:grid; place-items:center; font-size:16px;
-}
-.ann-date{ font-size:.8rem; color:#6c7a8a; }
-.ann-text{ color:#1d2733; }
+    .navbar .container{ position:relative; flex-wrap:nowrap; }
+    .navbar .navbar-brand,
+    .navbar .assoc-fixed{ flex-shrink:0; }
+    @media (max-width:991.98px){
+      .navbar .navbar-collapse{
+        position:absolute; inset-inline:0; top:100%;
+        background:#fff; padding:.75rem 1rem;
+        border-top:1px solid #e9eef5;
+        box-shadow:0 10px 24px rgba(0,0,0,.08);
+        z-index:1000;
+      }
+      .logo-mark{ height:44px; } .assoc-logo{ height:32px; }
+    }
 
-/* Type colors */
-.type-deadline .ann-icon{ background:#FFE8E8; color:#BB2D3B; }
-.type-update  .ann-icon{ background:#FFF3D6; color:#8A5A14; }
-.type-schedule .ann-icon{ background:#E7F0FF; color:#0D6EFD; }
-.type-general .ann-icon{ background:#E6FAF3; color:#0A7B60; }
+    /* ===== HERO ===== */
+    .hero-img{
+      display:block; width:100%;
+      height:clamp(260px, 35vw, 520px);
+      object-fit:cover; object-position:center;
+      border-radius: 1rem; box-shadow: 0 18px 40px rgba(0,0,0,.18);
+    }
+    .text-secondary{ color:var(--muted)!important; }
 
-  /* About list icons */
-  .about-list .bi{ color: var(--brand-green); margin-right:.5rem; }
+    /* ===== CTA band ===== */
+    .cta-band{ background: var(--brand-grad); color:#042233; }
+    .cta-band .btn{ background:#fff; border:0; color:#042233; font-weight:700; }
 
-  /* Footer */
-  footer{ background: var(--brand-dark); color:#cfd6df; }
-  footer a{ color:#cfd6df; text-decoration:none; }
+    /* ===== Countdown ===== */
+    .gb-band{ background:transparent; }
+    .count-box{
+      background:linear-gradient(135deg, #09C899, #007DFD, #09C899);
+      background-size:300% 300%;
+      border-radius:1rem; max-width:650px; margin-inline:auto;
+      box-shadow:0 10px 25px rgba(0,0,0,.15);
+      animation:gradientMove 15s ease infinite;
+    }
+    .count-tile{
+      background: rgba(255,255,255,.15);
+      border:1px solid rgba(255,255,255,.25);
+      color:#fff; border-radius:.75rem; width:56px; height:56px;
+      display:flex; align-items:center; justify-content:center; font-weight:700;
+      box-shadow:0 6px 18px rgba(0,0,0,.06);
+    }
+    .count-label{ font-size:.8rem; color: rgba(255,255,255,.9); }
+    @keyframes gradientMove {
+      0% { background-position:0% 50%; }
+      50% { background-position:100% 50%; }
+      100% { background-position:0% 50%; }
+    }
 
-  /* General */
-  .hero-img{ border-radius: 1rem; box-shadow: 0 18px 40px rgba(0,0,0,.18); }
-  .text-secondary{ color:var(--muted)!important; }
+    /* ===== Announcements ===== */
+    .ann-list{ max-width:900px; margin:0 auto; display:grid; gap:12px; }
+    .ann-card{
+      position:relative; background:#fff; border:1px solid #e7eef7;
+      border-radius:12px; padding:16px 16px 16px 56px; box-shadow:0 6px 18px rgba(0,0,0,.06);
+    }
+    .ann-icon{
+      position:absolute; left:16px; top:16px; width:28px; height:28px; border-radius:8px;
+      display:grid; place-items:center; font-size:16px;
+    }
+    .ann-date{ font-size:.8rem; color:#6c7a8a; }
+    .ann-text{ color:#1d2733; }
+    .type-deadline .ann-icon{ background:#FFE8E8; color:#BB2D3B; }
+    .type-update  .ann-icon{ background:#FFF3D6; color:#8A5A14; }
+    .type-schedule .ann-icon{ background:#E7F0FF; color:#0D6EFD; }
+    .type-general .ann-icon{ background:#E6FAF3; color:#0A7B60; }
 
-  /* Navbar */
-  .navbar{
-    background:#fff;
-    box-shadow:0 2px 10px rgba(0,0,0,.04);
-    padding-top:.4rem;
-    padding-bottom:.4rem;
-  }
-  .logo-mark{ height:60px; width:auto; object-fit:contain; }
-  .assoc-logo{ height:48px; width:auto; object-fit:contain; }
-  .navbar-brand img{ vertical-align:middle; }
-  .navbar-nav .nav-link{
-    font-weight:500;
-    color:var(--brand-dark);
-    transition:.2s;
-  }
-  .navbar-nav .nav-link:hover,
-  .navbar-nav .nav-link.active{
-    color:var(--brand-blue);
-  }
+    /* ===== About ===== */
+    .about-img{
+      display:block; width:100%; height:auto; border-radius:1rem;
+      object-fit:cover; object-position:center;
+    }
+    @media (max-width: 767.98px){ .about-img{ height:240px; } }
+    .about-list .bi{ margin-right:.5rem; }
+    .about-list .bi-lightbulb{ color:#FFD43B; }
+    .about-list .bi-person-lines-fill{ color:#007DFD; }
+    .about-list .bi-trophy-fill{ color:#E67E22; }
+    .about-list .bi-building-check{ color:#09C899; }
 
-  /* Keep navbar on one line and keep edge clusters visible */
-.navbar .container{ flex-wrap: nowrap; }
-.navbar .navbar-brand,
-.navbar .assoc-fixed{ flex-shrink: 0; }  /* don’t let logos compress into the collapse */
+    /* ===== Footer ===== */
+    footer{ background:var(--brand-dark); color:#cfd6df; }
+    footer a{ color:#cfd6df; text-decoration:none; }
 
-
-
-  /* === AR language button (independent) === */
-  .btn-lang{
-    background:var(--brand-blue);
-    color:#ffffff !important;
-    border:none;
-    border-radius:.4rem;
-    padding:.35rem .9rem;
-    font-weight:500;
-    transition:.2s;
-  }
-  .btn-lang:hover{
-    background:var(--brand-green);
-    color:#fff !important;
-  }
-
-  /* Hero image (one place) */
-  .hero-img{
-    display:block;
-    width:100%;
-    height:clamp(260px, 35vw, 520px);
-    object-fit:cover;
-    object-position:center;
-  }
-.about-img {
-  display: block;
-  width: 100%;
-  height: auto;
-  border-radius: 1rem;
-  object-fit: cover;
-  object-position: center;
-}
-
-/* keep it from stretching vertically on very narrow phones */
-@media (max-width: 767.98px) {
-  .about-img {
-    height: 240px; /* sets a clean proportional height */
-  }
-}
-
-  /* Countdown section: neutral background; centered rounded box */
-  .gb-band{ background:transparent; }
- /* Animated gradient countdown box */
-.count-box{
-  background:linear-gradient(135deg, #09C899, #007DFD, #09C899);
-  background-size:300% 300%;           /* makes animation smooth */
-  border-radius:1rem;
-  max-width:650px;
-  box-shadow:0 10px 25px rgba(0,0,0,.15);
-  animation:gradientMove 15s ease infinite; /* duration + looping */
-}
-
-/* Smooth white overlays for contrast */
-.count-box .count-tile{
-  background:rgba(255,255,255,.15);
-  border:1px solid rgba(255,255,255,.25);
-}
-.count-box .count-label{
-  color:rgba(255,255,255,.9);
-}
-
-/* Keyframes for gradient motion */
-@keyframes gradientMove {
-  0%   { background-position:0% 50%; }
-  50%  { background-position:100% 50%; }
-  100% { background-position:0% 50%; }
-}
-.about-list .bi-lightbulb { color:#FFD43B; }        /* yellow = ideas */
-.about-list .bi-person-lines-fill { color:#007DFD; } /* blue = mentorship */
-.about-list .bi-trophy-fill { color:#E67E22; }       /* orange = prizes */
-.about-list .bi-building-check { color:#09C899; }    /* green = adoption */
-
-/* make the mobile menu drop full-width under the bar */
-.navbar .container{ position: relative; }  /* anchor for absolute panel */
-
-@media (max-width: 991.98px){
-  .navbar .navbar-collapse{
-    position: absolute;
-    inset-inline: 0;          /* left/right = 0 (RTL/LTR safe) */
-    top: 100%;                /* sits right under navbar */
-    background: #fff;
-    padding: .75rem 1rem;
-    border-top: 1px solid #e9eef5;
-    box-shadow: 0 10px 24px rgba(0,0,0,.08);
-    z-index: 1000;
-  }
-  .navbar .navbar-nav{ align-items: stretch; }
-  .navbar .nav-link{ padding: .5rem 0; }
-}
-/* MOBILE: compact AR/EN button inside burger */
-@media (max-width: 991.98px){
-  .navbar .btn-lang{
-    width: auto !important;      /* undo full-width */
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: .35rem .75rem;       /* smaller height */
-    font-size: .9rem;             /* slightly smaller text */
-    border-radius: .35rem;
-    margin-top: .5rem;            /* keep a little gap above */
-  }
-}
-
+    /* ===== Reveal ===== */
+    .reveal{ opacity:0; transform:translateY(12px); transition:opacity .6s ease, transform .6s ease; }
+    .reveal.in{ opacity:1; transform:none; }
+    @media (prefers-reduced-motion: reduce){
+      .count-box{ animation:none !important; }
+      .reveal{ transition:none !important; opacity:1 !important; transform:none !important; }
+    }
   </style>
 </head>
 
 <body>
-  <!-- Navbar -->
+  <!-- ===== NAVBAR ===== -->
   <nav class="navbar navbar-expand-lg navbar-light sticky-top">
-  <div class="container d-flex align-items-center justify-content-between">
-    <!-- Left: Taqathon logo (never collapses) -->
-    <a class="navbar-brand d-flex align-items-center" href="index.html">
-      <img src="assets/taqathon-logo.png" alt="Taqathon logo" class="logo-mark">
-    </a>
-
-    <!-- Center: nav links (collapsible) -->
-    <div class="collapse navbar-collapse justify-content-lg-center" id="mainNav">
-      <ul class="navbar-nav mb-2 mb-lg-0 align-items-lg-center">
-        <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="contract.html">Contract</a></li>
-        <li class="nav-item"><a class="nav-link" href="schedule.html">Schedule & Workshops</a></li>
-        <li class="nav-item"><a class="nav-link" href="submissions.html">Submissions</a></li>
-        <li class="nav-item"><a class="nav-link" href="rules.html">Rules & Resources</a></li>
-        <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
-        <li class="nav-item ms-3">
-          <a class="btn btn-sm btn-lang" href="index-ar.html">AR</a>
-        </li>
-      </ul>
-    </div>
-
-    <!-- Right: Association logo + burger (never collapses) -->
-    <div class="assoc-fixed d-flex align-items-center gap-2">
-      <a href="https://taqa.org.sa" target="_blank" rel="noopener" class="d-block">
-        <img src="assets/association-logo.png" alt="Energy Association for Sustainable Development" class="assoc-logo">
+    <div class="container d-flex align-items-center justify-content-between">
+      <!-- Left: Taqathon logo -->
+      <a class="navbar-brand d-flex align-items-center" href="index.html" aria-label="Taqathon home">
+        <img src="assets/taqathon-logo.png" alt="Taqathon logo" class="logo-mark">
       </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
-              aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+
+      <!-- Center: links -->
+      <div class="collapse navbar-collapse justify-content-lg-center" id="mainNav">
+        <ul class="navbar-nav mb-2 mb-lg-0 align-items-lg-center">
+          <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="contract.html">Contract</a></li>
+          <li class="nav-item"><a class="nav-link" href="schedule.html">Schedule &amp; Workshops</a></li>
+          <li class="nav-item"><a class="nav-link" href="submissions.html">Submissions</a></li>
+          <li class="nav-item"><a class="nav-link" href="rules.html">Rules &amp; Resources</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact Us</a></li>
+          <li class="nav-item ms-3">
+            <a class="btn btn-sm btn-lang" href="index-ar.html">AR</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Right: Association logo + burger -->
+      <div class="assoc-fixed d-flex align-items-center gap-2">
+        <a href="https://taqa.org.sa" target="_blank" rel="noopener" class="d-block" aria-label="Energy Association for Sustainable Development">
+          <img src="assets/association-logo.png" alt="Energy Association for Sustainable Development" class="assoc-logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+                aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
 
-
-  <!-- HERO -->
+  <!-- ===== HERO ===== -->
   <section class="py-5">
     <div class="container">
       <div class="row g-4 align-items-center">
-        <div class="col-lg-6">
+        <div class="col-lg-6 reveal">
           <span class="badge badge-soft">Participant Portal</span>
           <h1 class="mt-3 mb-2">Taqathon 2025</h1>
           <h6 class="text-secondary mb-3">Saudi Arabia’s National Energy Hackathon</h6>
@@ -272,30 +214,31 @@
             and aligned with Saudi Vision 2030.
           </p>
           <div class="d-flex flex-wrap gap-2 mt-3">
-            <a class="btn btn-success" href="contract.html"><i class="bi bi-file-earmark-text me-1"></i> Sign Contract</a>
-            <a class="btn btn-outline-secondary" href="rules.html"><i class="bi bi-journal-text me-1"></i> View Rules</a>
+            <a class="btn btn-success" href="contract.html">
+              <i class="bi bi-file-earmark-text me-1"></i> Sign Contract
+            </a>
+            <a class="btn btn-outline-secondary" href="rules.html">
+              <i class="bi bi-journal-text me-1"></i> View Rules
+            </a>
             <a class="btn btn-warning text-white" href="submissions.html">
-  <i class="bi bi-rocket-takeoff me-1"></i> Submit Project
-</a>
-
+              <i class="bi bi-rocket-takeoff me-1"></i> Submit Project
+            </a>
           </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-6 reveal">
           <img class="w-100 hero-img"
                src="assets/hero-wind.jpg"
                alt="Wind turbines in Saudi Arabia generating clean energy"
-               loading="eager"
-               decoding="async"
-               width="1600" height="1000">
+               loading="eager" decoding="async" width="1600" height="1000">
         </div>
       </div>
     </div>
   </section>
 
-  <!-- COUNTDOWN (centered rounded card) -->
+  <!-- ===== COUNTDOWN ===== -->
   <section class="gb-band py-5">
     <div class="container text-center">
-      <div class="count-box mx-auto p-4 text-white">
+      <div class="count-box p-4 text-white reveal">
         <div class="mb-2 fw-semibold">Final Submission Deadline</div>
         <div id="deadline" class="d-flex justify-content-center align-items-center gap-3"
              data-deadline="2025-11-29T23:59:59+03:00">
@@ -320,154 +263,171 @@
     </div>
   </section>
 
-  <!-- ANNOUNCEMENTS -->
-<section class="py-5" id="announcements">
-  <div class="container">
-    <div class="text-center text-secondary mb-3">Announcements</div>
-    <div id="ann-wrap" class="ann-list"><!-- injected by JS --></div>
-  </div>
-</section>
+  <!-- ===== ANNOUNCEMENTS ===== -->
+  <section class="py-5" id="announcements">
+    <div class="container">
+      <div class="text-center text-secondary mb-3">Announcements</div>
+      <div id="ann-wrap" class="ann-list"><!-- injected by JS --></div>
+    </div>
+  </section>
 
-
-  <!-- ABOUT -->
+  <!-- ===== ABOUT ===== -->
   <section class="py-5">
     <div class="container">
       <div class="row g-4 align-items-center">
-        <div class="col-lg-6">
+        <div class="col-lg-6 reveal">
           <img class="about-img shadow-sm"
-     src="assets/about-solar.jpg"
-     alt="Aerial view of solar panels in Saudi Arabia"
-               loading="lazy" decoding="async"
-               width="1400" height="500">
+               src="assets/about-solar.jpg"
+               alt="Aerial view of solar panels in Saudi Arabia"
+               loading="lazy" decoding="async" width="1400" height="500">
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-6 reveal">
           <h5>What You’ll Do in Taqathon</h5>
           <p class="text-secondary">
             Work in teams to build practical solutions in renewable energy, energy efficiency, and AI for energy—guided by experts
             and geared toward real-world adoption in line with Vision 2030.
           </p>
           <div class="row">
-  <div class="col-6 about-list">
-    <div class="mb-2"><i class="bi bi-lightbulb"></i> Expert-led workshops (e.g., KAUST, ARAMCO, SABIC)</div>
-    <div class="mb-2"><i class="bi bi-person-lines-fill"></i> Mentorship and technical guidance</div>
-  </div>
-  <div class="col-6 about-list">
-    <div class="mb-2"><i class="bi bi-trophy-fill"></i> Compete for SAR 18k / 12k / 9k prizes</div>
-    <div class="mb-2"><i class="bi bi-building-check"></i> Potential adoption by major companies</div>
-  </div>
-</div>
-
+            <div class="col-6 about-list">
+              <div class="mb-2"><i class="bi bi-lightbulb"></i> Expert-led workshops (e.g., KAUST, ARAMCO, SABIC)</div>
+              <div class="mb-2"><i class="bi bi-person-lines-fill"></i> Mentorship and technical guidance</div>
+            </div>
+            <div class="col-6 about-list">
+              <div class="mb-2"><i class="bi bi-trophy-fill"></i> Compete for SAR 18k / 12k / 9k prizes</div>
+              <div class="mb-2"><i class="bi bi-building-check"></i> Potential adoption by major companies</div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
- <!-- CTA BAND -->
-<section class="cta-band py-5 text-center">
-  <div class="container">
-    <h3 class="fw-bold mb-2" style="font-size:1.7rem;">Stay on track</h3>
-    <p class="mb-4" style="font-size:1.05rem;">
-      Complete your contract, review the rules, and keep an eye on the schedule and announcements.
-    </p>
-    <a class="btn btn-md px-4 py-2" href="contract.html" style="background:#fff; color:#00284C; font-weight:600;">
-      Get Started Now
-    </a>
-  </div>
-</section>
+  <!-- ===== CTA BAND ===== -->
+  <section class="cta-band py-5 text-center">
+    <div class="container reveal">
+      <h3 class="fw-bold mb-2" style="font-size:1.7rem;">Stay on track</h3>
+      <p class="mb-4" style="font-size:1.05rem;">
+        Complete your contract, review the rules, and keep an eye on the schedule and announcements.
+      </p>
+      <a class="btn btn-md px-4 py-2" href="contract.html" style="background:#fff; color:#00284C; font-weight:700;">
+        Get Started Now
+      </a>
+    </div>
+  </section>
 
-
-
-
-  <!-- FOOTER -->
-<footer class="pt-5" style="background:#00284C; color:#cfd6df;">
-  <div class="container">
-    <div class="row g-4 align-items-start">
-      <div class="col-md-6">
-        <h6 class="mb-3 text-white">Taqathon</h6>
-        <p class="mb-1 small">Organized by Energy Association for Sustainable Development.</p>
-      </div>
-      <div class="col-md-6">
-        <h6 class="mb-3 text-white">Follow Us</h6>
-        <div class="d-flex gap-3">
-          <a href="https://x.com/jameiat_taqa" target="_blank" rel="noopener" class="text-light"><i class="bi bi-twitter-x fs-5"></i></a>
-          <a href="https://instagram.com/jameiat_taqa" target="_blank" rel="noopener" class="text-light"><i class="bi bi-instagram fs-5"></i></a>
-          <a href="https://www.linkedin.com/company/جمعية-الطاقة-للتنمية-المستدامة" target="_blank" rel="noopener" class="text-light"><i class="bi bi-linkedin fs-5"></i></a>
-          <a href="https://tiktok.com/@jameiat_taqa" target="_blank" rel="noopener" class="text-light"><i class="bi bi-tiktok fs-5"></i></a>
+  <!-- ===== FOOTER ===== -->
+  <footer class="pt-5">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-md-6">
+          <h6 class="mb-3 text-white">Taqathon</h6>
+          <p class="small mb-1">Organized by Energy Association for Sustainable Development</p>
+        </div>
+        <div class="col-md-6">
+          <h6 class="mb-3 text-white">Follow Us</h6>
+          <div class="d-flex gap-3">
+            <a href="https://x.com/jameiat_taqa" target="_blank" rel="noopener" class="text-light"><i class="bi bi-twitter-x fs-5"></i></a>
+            <a href="https://instagram.com/jameiat_taqa" target="_blank" rel="noopener" class="text-light"><i class="bi bi-instagram fs-5"></i></a>
+            <a href="https://www.linkedin.com/company/جمعية-الطاقة-للتنمية-المستدامة" target="_blank" rel="noopener" class="text-light"><i class="bi bi-linkedin fs-5"></i></a>
+            <a href="https://tiktok.com/@jameiat_taqa" target="_blank" rel="noopener" class="text-light"><i class="bi bi-tiktok fs-5"></i></a>
+          </div>
         </div>
       </div>
+      <div class="border-top border-secondary mt-4 pt-3 pb-4 small text-center">
+        © <span id="year"></span> Taqathon. All rights reserved.
+      </div>
     </div>
-    <div class="border-top border-secondary mt-4 pt-3 pb-4 small text-center">
-      © 2025 Taqathon. All rights reserved.
-    </div>
-  </div>
-</footer>
-
-
-
-
-
+  </footer>
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
   <script>
-    // === Countdown ===
-    const $wrap = document.getElementById('deadline');
-    const deadline = new Date($wrap.getAttribute('data-deadline')).getTime();
-    function pad(n){ return (n<10?'0':'') + n; }
-    function tick(){
-      const now = new Date().getTime();
-      let diff = Math.max(0, deadline - now);
-      const days = Math.floor(diff / (1000*60*60*24));
-      diff -= days*24*60*60*1000;
-      const hours = Math.floor(diff / (1000*60*60));
-      diff -= hours*60*60*1000;
-      const mins = Math.floor(diff / (1000*60));
-      diff -= mins*60*1000;
-      const secs = Math.floor(diff / 1000);
-      document.getElementById('ddays').textContent = pad(days);
-      document.getElementById('dhours').textContent = pad(hours);
-      document.getElementById('dmins').textContent = pad(mins);
-      document.getElementById('dsecs').textContent = pad(secs);
-    }
-    tick(); setInterval(tick, 1000);
+    // Countdown
+    (function(){
+      const wrap = document.getElementById('deadline');
+      if(!wrap) return;
+      const deadline = new Date(wrap.getAttribute('data-deadline')).getTime();
+      function pad(n){ return (n<10?'0':'') + n; }
+      function tick(){
+        const now = Date.now();
+        let diff = Math.max(0, deadline - now);
+        const days = Math.floor(diff / 86400000); diff -= days*86400000;
+        const hours = Math.floor(diff / 3600000); diff -= hours*3600000;
+        const mins = Math.floor(diff / 60000); diff -= mins*60000;
+        const secs = Math.floor(diff / 1000);
+        document.getElementById('ddays').textContent = pad(days);
+        document.getElementById('dhours').textContent = pad(hours);
+        document.getElementById('dmins').textContent = pad(mins);
+        document.getElementById('dsecs').textContent = pad(secs);
+      }
+      tick(); setInterval(tick, 1000);
+    })();
+
+    // Announcements loader
+    (function(){
+      const annWrap = document.getElementById('ann-wrap');
+      if(!annWrap) return;
+      fetch('announcements.json', { cache: 'no-store' })
+        .then(r => r.ok ? r.json() : [])
+        .then(items => {
+          if (!Array.isArray(items) || items.length === 0){
+            annWrap.innerHTML = `
+              <div class="ann-card type-general">
+                <div class="ann-icon"><i class="bi bi-info-circle"></i></div>
+                <div class="ann-text">No announcements yet. Check back soon.</div>
+              </div>`;
+            return;
+          }
+          items.sort((a,b) => new Date(b.date) - new Date(a.date));
+          const iconByType = {
+            deadline: 'bi-alarm',
+            update:   'bi-megaphone',
+            schedule: 'bi-calendar-event',
+            general:  'bi-info-circle'
+          };
+          annWrap.innerHTML = items.slice(0, 8).map(it => {
+            const t = (it.type || 'general').toLowerCase();
+            const cls = ['deadline','update','schedule'].includes(t) ? t : 'general';
+            const icon = iconByType[cls] || iconByType.general;
+            const dateStr = it.date ? new Date(it.date).toLocaleDateString() : '';
+            return `
+              <div class="ann-card type-${cls}">
+                <div class="ann-icon"><i class="bi ${icon}"></i></div>
+                ${dateStr ? `<div class="ann-date mb-1">${dateStr}</div>` : ''}
+                <div class="ann-text">${it.text || ''}</div>
+              </div>`;
+          }).join('');
+        })
+        .catch(() => {
+          annWrap.innerHTML = `
+            <div class="ann-card type-general">
+              <div class="ann-icon"><i class="bi bi-info-circle"></i></div>
+              <div class="ann-text">Unable to load announcements right now.</div>
+            </div>`;
+        });
+    })();
+
+    // Tiny reveal-on-scroll
+    (function(){
+      const els = document.querySelectorAll('.reveal');
+      if(!('IntersectionObserver' in window) || els.length===0){
+        els.forEach(e => e.classList.add('in'));
+        return;
+      }
+      const io = new IntersectionObserver(entries=>{
+        entries.forEach(en=>{
+          if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+        });
+      }, { rootMargin:'0px 0px -60px 0px' });
+      els.forEach(e => io.observe(e));
+    })();
+
+    // Footer year
+    (function(){
+      const y = document.getElementById('year');
+      if (y) y.textContent = new Date().getFullYear();
+    })();
   </script>
-
- <script>
-  // === Announcements loader (clean cards) ===
-  const annWrap = document.getElementById('ann-wrap');
-  fetch('announcements.json', { cache: 'no-store' })
-    .then(r => r.ok ? r.json() : [])
-    .then(items => {
-      if (!Array.isArray(items)) return;
-
-      // newest first
-      items.sort((a,b) => new Date(b.date) - new Date(a.date));
-
-      const iconByType = {
-        deadline: 'bi-alarm',
-        update:   'bi-megaphone',
-        schedule: 'bi-calendar-event',
-        general:  'bi-info-circle'
-      };
-
-      annWrap.innerHTML = items.slice(0, 8).map(it => {
-        const t = (it.type || 'general').toLowerCase();
-        const cls = ['deadline','update','schedule'].includes(t) ? t : 'general';
-        const icon = iconByType[cls] || iconByType.general;
-        const dateStr = new Date(it.date).toLocaleDateString();
-
-        return `
-          <div class="ann-card type-${cls}">
-            <div class="ann-icon"><i class="bi ${icon}"></i></div>
-            ${it.date ? `<div class="ann-date mb-1">${dateStr}</div>` : ''}
-            <div class="ann-text">${it.text}</div>
-          </div>
-        `;
-      }).join('');
-    });
-</script>
-
 </body>
 </html>
