@@ -41,7 +41,6 @@
   .text-secondary{ color:var(--muted)!important; }
   .card-lite{ background:#fff; border:1px solid #e9eef3; }
 
-  /* أيقونة العنوان */
   .icon-circle{
     width:64px; height:64px; border-radius:999px;
     display:inline-flex; align-items:center; justify-content:center;
@@ -51,21 +50,6 @@
     box-shadow:0 4px 16px rgba(0,125,253,.25);
   }
   .icon-circle i{ font-size:1.6rem; line-height:1; }
-
- /* Table + content */
-  .icon-circle{
-    width:64px;
-    height:64px;
-    border-radius:999px;
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    background:linear-gradient(180deg,#eef6ff,#f3fbff);
-    border:1px solid #c9ddff;
-    color:var(--brand-blue);
-    box-shadow:0 4px 16px rgba(0,125,253,.25);
-  }
-  .icon-circle i{ font-size:1.6rem; }
 
   .table thead th{
     color:#6b7785;
@@ -79,7 +63,6 @@
   .table tbody tr.workshop-row td{ background:#ecfdf5; }
   .table tbody tr.keydate-row td{ background:#eef6ff; }
 
-  /* NEW blue dots and section kicker */
   .section-kicker{
     display:inline-flex;
     align-items:center;
@@ -107,7 +90,6 @@
     border-color:var(--brand-green);
   }
 
-  /* ===== NAVBAR (match other Arabic pages) ===== */
   .navbar{
     background:#fff;
     box-shadow:0 2px 10px rgba(0,0,0,.04);
@@ -127,11 +109,10 @@
     background:var(--brand-blue); color:#fff !important;
     border:none; border-radius:.4rem;
     padding:.35rem .9rem; font-weight:500; transition:.2s;
-    margin-inline-start:1.25rem; /* same gap as other AR pages */
+    margin-inline-start:1.25rem;
   }
   .btn-lang:hover{ background:var(--brand-green); color:#fff !important; }
 
-  /* قائمة الجوال كاملة العرض تحت الشريط */
   @media (max-width: 991.98px){
     .navbar .navbar-collapse{
       position:absolute; inset-inline:0; top:100%;
@@ -140,32 +121,28 @@
       box-shadow:0 10px 24px rgba(0,0,0,.08);
       z-index:1000;
     }
-    .logo-mark{ height:44px; } .assoc-logo{ height:32px; }
+    .logo-mark{ height:44px; } 
+    .assoc-logo{ height:32px; }
   }
 
-  /* التذييل */
   footer{ background:#00284C; color:#cfd6df; }
   footer a{ color:#cfd6df; text-decoration:none; }
 
-  /* عناوين الورش أثقل */
   .table td .work-title{
     font-family:'Cairo', sans-serif !important;
     font-weight:700 !important;
-    font-variation-settings:'wght' 700;
   }
   </style>
 </head>
 
 <body>
-  <!-- شريط التصفّح -->
   <nav class="navbar navbar-expand-lg navbar-light sticky-top">
     <div class="container d-flex align-items-center justify-content-between">
-      <!-- العلامة (يمين في RTL) -->
-      <a class="navbar-brand d-flex align-items-center" href="index-ar.html" aria-label="الصفحة الرئيسية لطاقثون">
+      
+      <a class="navbar-brand d-flex align-items-center" href="index.html" aria-label="الصفحة الرئيسية لطاقثون">
         <img src="assets/taqathon-logo.png" alt="شعار طاقثون" class="logo-mark">
       </a>
 
-      <!-- الروابط (وسط) -->
       <div class="collapse navbar-collapse justify-content-lg-center" id="mainNav">
         <ul class="navbar-nav mb-2 mb-lg-0 align-items-lg-center">
           <li class="nav-item"><a class="nav-link" href="index.html">الرئيسية</a></li>
@@ -180,25 +157,24 @@
         </ul>
       </div>
 
-      <!-- شعار الجهة + زر القائمة (يسار في RTL) -->
       <div class="assoc-fixed d-flex align-items-center gap-2">
-        <a href="https://taqa.org.sa" target="_blank" rel="noopener" class="d-block" aria-label="جمعية الطاقة للتنمية المستدامة">
-          <img src="assets/association-logo.png" alt="جمعية الطاقة للتنمية المستدامة" class="assoc-logo">
+        <a href="https://taqa.org.sa" target="_blank" rel="noopener" aria-label="جمعية الطاقة للتنمية المستدامة">
+          <img src="assets/association-logo.png" class="assoc-logo" alt="جمعية الطاقة للتنمية المستدامة">
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
-                aria-controls="mainNav" aria-expanded="false" aria-label="فتح/إغلاق القائمة">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
           <span class="navbar-toggler-icon"></span>
         </button>
       </div>
+
     </div>
   </nav>
 
-  <!-- المحتوى -->
   <main class="py-5">
     <div class="container" style="max-width:980px;">
+
       <div class="text-center mb-4">
         <div class="icon-circle mx-auto mb-3"><i class="bi bi-calendar-event"></i></div>
-        <h5 class="mb-1 fw-semibold">الجدول والورش</h5>
+        <h5 class="mb-1 fw-bold">الجدول والورش</h5>
         <p class="text-secondary mb-0">سيتم إضافة روابط الانضمام حين تفعيل كل جلسة.</p>
       </div>
 
@@ -218,19 +194,21 @@
               <!-- ورش العمل -->
               <tr class="section-row">
                 <td colspan="4">
-                  <span class="section-kicker"><span class="k-dot"></span> ورش العمل</span>
+                  <span class="section-kicker">
+                    <span class="k-dot"></span> جلسات ارشادية وتثقيفية
+                  </span>
                 </td>
               </tr>
 
               <tr class="workshop-row">
                 <td>
-                  <div class="work-title">ورشة في مجال الطاقة</div>
+                  <div class="work-title">جلسة في مجال الطاقة</div>
                   <div class="small text-secondary">أ.د/ علي فودة</div>
                 </td>
-                <td>15 نوفمبر 2025</td>
-                <td>يُحدَّد لاحقًا</td>
+                <td>16 نوفمبر 2025</td>
+                <td>6:30 - 7:15 مساءً</td>
                 <td>
-                  <a class="btn btn-sm btn-outline-success btn-join" href="#">
+                  <a class="btn btn-sm btn-outline-success btn-join" href="https://meet.google.com/wsa-asty-ctp">
                     <i class="bi bi-box-arrow-up-right me-1"></i> انضم الآن
                   </a>
                 </td>
@@ -238,13 +216,13 @@
 
               <tr class="workshop-row">
                 <td>
-                  <div class="work-title">ورشة بناء وتطوير المشاريع</div>
+                  <div class="work-title">جلسة بناء وتطوير المشاريع</div>
                   <div class="small text-secondary">د. سامي غزالي</div>
                 </td>
-                <td>15 نوفمبر 2025</td>
-                <td>يُحدَّد لاحقًا</td>
+                <td>16 نوفمبر 2025</td>
+                <td>7:30 - 8:15 مساءً</td>
                 <td>
-                  <a class="btn btn-sm btn-outline-success btn-join" href="#">
+                  <a class="btn btn-sm btn-outline-success btn-join" href="https://meet.google.com/pmq-pmvw-dqp">
                     <i class="bi bi-box-arrow-up-right me-1"></i> انضم الآن
                   </a>
                 </td>
@@ -252,13 +230,13 @@
 
               <tr class="workshop-row">
                 <td>
-                  <div class="work-title">ورشة العرض الاحترافي للمشاريع</div>
+                  <div class="work-title">جلسة العرض الاحترافي للمشاريع</div>
                   <div class="small text-secondary">د. مهند باحشوان</div>
                 </td>
-                <td>15 نوفمبر 2025</td>
-                <td>يُحدَّد لاحقًا</td>
+                <td>16 نوفمبر 2025</td>
+                <td>8:30 - 9:15 مساءً</td>
                 <td>
-                  <a class="btn btn-sm btn-outline-success btn-join" href="#">
+                  <a class="btn btn-sm btn-outline-success btn-join" href="https://meet.google.com/aka-ibmg-qup">
                     <i class="bi bi-box-arrow-up-right me-1"></i> انضم الآن
                   </a>
                 </td>
@@ -267,36 +245,26 @@
               <!-- التواريخ المهمة -->
               <tr class="section-row">
                 <td colspan="4">
-                  <span class="section-kicker"><span class="k-dot"></span> التواريخ المهمة</span>
-                </td>
-              </tr>
-
-              <tr class="keydate-row">
-                <td><div class="work-title">جلسات إرشادية</div></td>
-                <td>15 نوفمبر 2025</td>
-                <td>يُحدَّد لاحقًا</td>
-                <td>
-                  <a class="btn btn-sm btn-outline-success btn-join" href="#">
-                    <i class="bi bi-box-arrow-up-right me-1"></i> انضم الآن
-                  </a>
+                  <span class="section-kicker">
+                    <span class="k-dot"></span> التواريخ المهمة
+                  </span>
                 </td>
               </tr>
 
               <tr class="keydate-row">
                 <td><div class="work-title">تسليم المشروع النهائي</div></td>
                 <td>22 نوفمبر 2025</td>
-                <td>يُحدَّد لاحقًا</td>
+                <td>2:00 مساءً</td>
                 <td>
                   <a class="btn btn-sm btn-outline-success btn-join" href="submissions-ar.html">
                     <i class="bi bi-upload me-1"></i> تسليم المشروع
                   </a>
                 </td>
               </tr>
-
               <tr class="keydate-row">
-                <td><div class="work-title">الحفل الختامي</div></td>
-                <td>٢ ديسمبر 2025</td>
-                <td>يُحدَّد لاحقًا</td>
+                <td><div class="work-title">عرض المشروع النهائي</div></td>
+                <td>22 نوفمبر 2025</td>
+                <td>8:00 مساءً</td>
                 <td>
                   <a class="btn btn-sm btn-outline-success btn-join" href="#">
                     <i class="bi bi-box-arrow-up-right me-1"></i> انضم الآن
@@ -304,6 +272,21 @@
                 </td>
               </tr>
 
+              <!-- الحفل الختامي — UPDATED -->
+              <tr class="keydate-row">
+                <td><div class="work-title">الحفل الختامي</div></td>
+                <td>٢ ديسمبر 2025</td>
+                <td>
+                  6:30 - 8:30 مساءً<br>
+                  
+                </td>
+                <td>
+                  <a class="btn btn-sm btn-outline-success btn-join" href="https://maps.app.goo.gl/3ucTAEBiY8wEivXK7" target="_blank">
+                    <i class="bi bi-geo-alt-fill ms-1"></i>
+                    قاعة الجوهرة – جامعة جدة
+                  </a>
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -311,7 +294,6 @@
     </div>
   </main>
 
-  <!-- التذييل -->
   <footer class="pt-5">
     <div class="container">
       <div class="row g-4">
@@ -339,5 +321,6 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
+
 </body>
 </html>

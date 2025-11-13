@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>معايير التحكيم · طاقَثون</title>
+  <title>القواعد والموارد · طاقَثون</title>
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -39,40 +39,38 @@
   .text-secondary{color:var(--muted)!important;}
   .divider-grad{height:10px;background:var(--brand-grad);border-radius:.75rem;}
 
-  /* ===== NAVBAR (mirrors EN) ===== */
-    .navbar{
-      background:#fff;
-      box-shadow:0 2px 10px rgba(0,0,0,.04);
-      padding-top:.4rem; padding-bottom:.4rem;
+  /* ===== NAVBAR ===== */
+  .navbar{
+    background:#fff;
+    box-shadow:0 2px 10px rgba(0,0,0,.04);
+    padding-top:.4rem; padding-bottom:.4rem;
+  }
+  .navbar .container{ position:relative; flex-wrap:nowrap; }
+  .navbar .navbar-brand, .navbar .assoc-fixed{ flex-shrink:0; }
+  .logo-mark{ height:60px; width:auto; object-fit:contain; }
+  .assoc-logo{ height:48px; width:auto; object-fit:contain; }
+  .navbar-nav .nav-link{ font-weight:500; color:var(--brand-dark); transition:.2s; }
+  .navbar-nav .nav-link:hover,
+  .navbar-nav .nav-link.active{ color:var(--brand-blue); }
+
+  .btn-lang{
+    background:var(--brand-blue); color:#ffffff !important;
+    border:none; border-radius:.4rem;
+    padding:.35rem .9rem; font-weight:500; transition:.2s;
+    margin-inline-start:1.25rem;
+  }
+  .btn-lang:hover{ background:var(--brand-green); color:#fff !important; }
+
+  @media (max-width:991.98px){
+    .navbar .navbar-collapse{
+      position:absolute; inset-inline:0; top:100%;
+      background:#fff; padding:.75rem 1rem;
+      border-top:1px solid #e9eef5;
+      box-shadow:0 10px 24px rgba(0,0,0,.08);
+      z-index:1000;
     }
-    .navbar .container{ position:relative; flex-wrap:nowrap; }
-    .navbar .navbar-brand, .navbar .assoc-fixed{ flex-shrink:0; }
-    .logo-mark{ height:60px; width:auto; object-fit:contain; }
-    .assoc-logo{ height:48px; width:auto; object-fit:contain; }
-    .navbar-nav .nav-link{ font-weight:500; color:var(--brand-dark); transition:.2s; }
-    .navbar-nav .nav-link:hover,
-    .navbar-nav .nav-link.active{ color:var(--brand-blue); }
-    .btn-lang{
-  background:var(--brand-blue); color:#ffffff !important;
-  border:none; border-radius:.4rem;
-  padding:.35rem .9rem; font-weight:500; transition:.2s;
-  margin-inline-start:1.25rem;   /* adds extra gap before EN in RTL */
-}
-
-    .btn-lang:hover{ background:var(--brand-green); color:#fff !important; }
-
-    /* Mobile collapse full-width under the bar */
-    @media (max-width:991.98px){
-      .navbar .navbar-collapse{
-        position:absolute; inset-inline:0; top:100%;
-        background:#fff; padding:.75rem 1rem;
-        border-top:1px solid #e9eef5;
-        box-shadow:0 10px 24px rgba(0,0,0,.08);
-        z-index:1000;
-      }
-      .logo-mark{ height:44px; } .assoc-logo{ height:32px; }
-    }
-
+    .logo-mark{ height:44px; } .assoc-logo{ height:32px; }
+  }
 
   /* Icon circle */
   .icon-circle{
@@ -108,12 +106,11 @@
   <!-- NAVBAR -->
   <nav class="navbar navbar-expand-lg navbar-light sticky-top">
     <div class="container d-flex align-items-center justify-content-between">
-      <!-- العلامة (يمين في RTL) -->
-      <a class="navbar-brand d-flex align-items-center" href="index-ar.html" aria-label="الصفحة الرئيسية لطاقثون">
+
+      <a class="navbar-brand d-flex align-items-center" href="index.html">
         <img src="assets/taqathon-logo.png" alt="شعار طاقثون" class="logo-mark">
       </a>
 
-      <!-- الروابط (وسط) -->
       <div class="collapse navbar-collapse justify-content-lg-center" id="mainNav">
         <ul class="navbar-nav mb-2 mb-lg-0 align-items-lg-center">
           <li class="nav-item"><a class="nav-link" href="index.html">الرئيسية</a></li>
@@ -126,30 +123,29 @@
         </ul>
       </div>
 
-      <!-- شعار الجهة + زر القائمة (يسار في RTL) -->
       <div class="assoc-fixed d-flex align-items-center gap-2">
-        <a href="https://taqa.org.sa" target="_blank" rel="noopener" class="d-block" aria-label="جمعية الطاقة للتنمية المستدامة">
-          <img src="assets/association-logo.png" alt="جمعية الطاقة للتنمية المستدامة" class="assoc-logo">
+        <a href="https://taqa.org.sa" target="_blank" rel="noopener">
+          <img src="assets/association-logo.png" class="assoc-logo" alt="جمعية الطاقة للتنمية المستدامة">
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
-                aria-controls="mainNav" aria-expanded="false" aria-label="تبديل القائمة">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
           <span class="navbar-toggler-icon"></span>
         </button>
       </div>
+
     </div>
   </nav>
 
 
-  <!-- ===== MAIN ===== -->
+  <!-- MAIN -->
   <main class="py-5">
     <div class="container" style="max-width:980px;">
       <div class="text-center mb-4">
         <div class="icon-circle mx-auto mb-3"><i class="bi bi-clipboard-check"></i></div>
-        <h5 class="mb-1 fw-semibold">معايير التحكيم</h5>
+        <h5 class="mb-1 fw-bold">معايير التحكيم</h5>
         <p class="text-secondary mb-0">الفئات والأوزان الرسمية المعتمدة من لجنة التحكيم (المجموع 100٪).</p>
       </div>
 
-      <div class="divider-grad mb-4"></div>
+      
 
       <div class="card card-lite rounded-2xl shadow-soft">
         <div class="card-body p-0">
@@ -176,9 +172,98 @@
         </div>
       </div>
     </div>
+
+    <!-- ===== آلية تسليم وعرض المشاريع (نسخة رسمية) ===== -->
+    <section class="mt-5">
+      <div class="container" style="max-width:980px;">
+
+        <h5 class="mb-2 fw-bold text-center">نموذج آلية تسليم وعرض المشاريع</h5>
+        <p class="text-secondary text-center mb-4">
+          حرصًا على تنظيم إجراءات التقييم وضمان تكافؤ الفرص بين جميع الفرق المشاركة، تلتزم الفرق بما ورد في هذه الآلية باعتبارها جزءًا من الضوابط المنظمة لمشاركة الفرق في طاقثون.
+        </p>
+
+        <div class="card card-lite rounded-2xl shadow-soft">
+          <div class="card-body p-4">
+
+            <!-- 1. تسليم المشاريع -->
+          
+            <p class="fw-bold mb-2">1. تسليم المشاريع</p>
+            <ul class="mb-4">
+              <li>الموعد النهائي للتسليم: الساعة 2:00 مساءً بتاريخ 22 نوفمبر.</li>
+              <li>يتم رفع جميع الملفات حصريًا عبر منصة طاقثون، مع إرسال نسخة إلى البريد الإلكتروني الرسمي المخصص للتسليمات.</li>
+              <li>
+                يتعين على الفريق التأكد من:
+                <ul class="mt-2">
+                  <li>اكتمال جميع الملفات المطلوبة وصحتها،</li>
+                  <li>سلامة الروابط وقابليتها للوصول،</li>
+                  <li>تطابق ملف العرض التقديمي مع النسخة المسلّمة عبر المنصة.</li>
+                </ul>
+              </li>
+              <li>يُعد عدم الالتزام بموعد التسليم انسحابًا تلقائيًا من المنافسة دون الحاجة لإشعار إضافي.</li>
+            </ul>
+
+            <!-- 2. عرض المشاريع -->
+            <div class="divider-grad my-3"></div>
+            <p class="fw-bold mb-2">2. عرض المشاريع (عن بُعد)</p>
+            <ul class="mb-4">
+              <li>موعد العرض: الساعة 8:00 مساءً بتاريخ 22 نوفمبر.</li>
+              <li>يجب على الفريق تسجيل الدخول قبل الموعد بـ 10 دقائق لضمان الجاهزية الفنية.</li>
+              <li>
+                مدة العرض خمس دقائق موزعة على النحو الآتي:
+                <ul class="mt-2">
+                  <li>دقيقتان للتعريف بالفريق والفكرة،</li>
+                  <li>ثلاث دقائق لعرض المحتوى التقديمي.</li>
+                </ul>
+              </li>
+              <li>يُعد عدم استجابة الفريق خلال مدة لا تتجاوز 60 ثانية من النداء انسحابًا من العرض.</li>
+              <li>لا يجوز إدخال أي تعديلات على ملف العرض، ويجب استخدام النسخة المسلّمة رسميًا دون تغيير.</li>
+            </ul>
+
+            <!-- 3. الجاهزية التقنية -->
+            <div class="divider-grad my-3"></div>
+            <p class="fw-bold mb-2">3. الجاهزية التقنية</p>
+            <ul class="mb-4">
+              <li>
+                يتحمل الفريق كامل المسؤولية عن توفير:
+                <ul class="mt-2">
+                  <li>اتصال إنترنت مستقر،</li>
+                  <li>جودة صوت وصورة مناسبة،</li>
+                  <li>بيئة مناسبة لعرض المشروع.</li>
+                </ul>
+              </li>
+              <li>لا تتم إعادة جدولة العرض في حال وقوع خلل تقني يعود للفريق.</li>
+              <li>في حال حدوث خلل تقني عام، تحتفظ الجمعية بحق اتخاذ ما تراه مناسبًا من إعادة الجدولة وفق إعلان رسمي.</li>
+            </ul>
+
+            <!-- 4. ضوابط السلوك والالتزام -->
+            <div class="divider-grad my-3"></div>
+            <p class="fw-bold mb-2">4. ضوابط السلوك والالتزام</p>
+            <ul class="mb-4">
+              <li>الالتزام بالأنظمة والتعليمات أثناء الجلسات الافتراضية.</li>
+              <li>يُمنع تسجيل الجلسات أو مشاركتها أو نشر أي جزء منها دون تصريح كتابي مسبق من الجمعية.</li>
+              <li>يُمنع تقديم أي محتوى مخالف للأنظمة أو منتهك لحقوق الملكية الفكرية.</li>
+            </ul>
+
+            <!-- 5. أحكام عامة -->
+            <div class="divider-grad my-3"></div>
+            <p class="fw-bold mb-2">5. أحكام عامة</p>
+            <ul class="mb-0">
+              <li>تُعدّ الملفات المرفوعة عبر منصة طاقثون هي النسخة الرسمية المعتمدة لأغراض التقييم.</li>
+              <li>يُعدّ الالتزام بهذه الآلية شرطًا أساسيًا لاستمرار المشاركة في طاقثون.</li>
+              <li>تحتفظ الجمعية بحق تعديل أي من بنود هذه الآلية إذا اقتضت المصلحة ذلك، مع إشعار المشاركين عند الضرورة.</li>
+            </ul>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+
   </main>
 
-  <!-- ===== FOOTER ===== -->
+  <!-- FOOTER -->
   <footer class="pt-5">
     <div class="container">
       <div class="row g-4">
@@ -189,13 +274,14 @@
         <div class="col-md-6">
           <h6 class="mb-3 text-white">تابعنا</h6>
           <div class="d-flex gap-3">
-            <a href="https://x.com/jameiat_taqa" target="_blank" rel="noopener" class="text-light"><i class="bi bi-twitter-x fs-5"></i></a>
-            <a href="https://instagram.com/jameiat_taqa" target="_blank" rel="noopener" class="text-light"><i class="bi bi-instagram fs-5"></i></a>
-            <a href="https://www.linkedin.com/company/جمعية-الطاقة-للتنمية-المستدامة" target="_blank" rel="noopener" class="text-light"><i class="bi bi-linkedin fs-5"></i></a>
-            <a href="https://tiktok.com/@jameiat_taqa" target="_blank" rel="noopener" class="text-light"><i class="bi bi-tiktok fs-5"></i></a>
+            <a href="https://x.com/jameiat_taqa" target="_blank" class="text-light"><i class="bi bi-twitter-x fs-5"></i></a>
+            <a href="https://instagram.com/jameiat_taqa" target="_blank" class="text-light"><i class="bi bi-instagram fs-5"></i></a>
+            <a href="https://www.linkedin.com/company/جمعية-الطاقة-للتنمية-المستدامة" target="_blank" class="text-light"><i class="bi bi-linkedin fs-5"></i></a>
+            <a href="https://tiktok.com/@jameiat_taqa" target="_blank" class="text-light"><i class="bi bi-tiktok fs-5"></i></a>
           </div>
         </div>
       </div>
+
       <div class="border-top border-secondary mt-4 pt-3 pb-4 small text-center">
         © <span id="year"></span> طاقَثون. جميع الحقوق محفوظة.
       </div>
@@ -205,5 +291,6 @@
   <!-- JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+
 </body>
 </html>
