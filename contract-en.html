@@ -113,7 +113,7 @@
 
       <div class="collapse navbar-collapse justify-content-lg-center" id="mainNav">
         <ul class="navbar-nav mb-2 mb-lg-0 align-items-lg-center">
-          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="index-en.html">Home</a></li>
           <li class="nav-item"><a class="nav-link active" href="contract-en.html">Contract</a></li>
           <li class="nav-item"><a class="nav-link" href="schedule-en.html">Schedule &amp; Workshops</a></li>
           <li class="nav-item"><a class="nav-link" href="submissions-en.html">Submissions</a></li>
@@ -138,12 +138,14 @@
   <main class="py-5">
     <div class="container" style="max-width:980px;">
       <div class="text-center mb-4">
-        <div class="icon-circle mx-auto mb-3" aria-hidden="true"><i class="bi bi-pencil-square"></i></div>
+        <div class="icon-circle mx-auto mb-3" aria-hidden="true">
+          <i class="bi bi-pencil-square"></i>
+        </div>
         <h5 class="mb-1 fw-semibold">Participation Agreement</h5>
-        <p class="text-secondary mb-0">Please upload your signed PDF to complete your participation.</p>
+        <div style="height: 20px;"></div>
       </div>
 
-      <!-- Terms -->
+      <!-- Terms (numbered) -->
       <div class="card card-lite rounded-2xl shadow-soft mb-4">
         <div class="card-body">
           <h6 class="mb-3">Agreement Terms</h6>
@@ -168,61 +170,41 @@
       <!-- Upload Form -->
       <div class="card card-lite rounded-2xl shadow-soft">
         <div class="card-body">
-          <h6 class="mb-4">Upload Signed PDF</h6>
+          <h6 class="mb-1">Upload Signed PDF</h6>
+          <div class="text-secondary mb-3">Only PDF is accepted. Other fields are optional.</div>
 
-          <form
-  id="agreementForm"
-  class="needs-validation"
-  novalidate
-  method="POST"
-  action="YOUR_WEB_APP_URL_HERE"
-  enctype="multipart/form-data"
->
-
+          <form id="agreementForm" class="needs-validation" novalidate>
             <div class="row g-3">
               <div class="col-md-6">
                 <label for="full_name" class="form-label required">Full name</label>
-                <input class="form-control" name="full_name" id="full_name" placeholder="Your full name" required>
-                <div class="invalid-feedback">Please enter your full name.</div>
+                <input class="form-control" name="full_name" id="full_name" placeholder="Your full name">
               </div>
               <div class="col-md-6">
                 <label for="team_name" class="form-label required">Team name</label>
-                <input class="form-control" name="team_name" id="team_name" placeholder="Team name" required>
-                <div class="invalid-feedback">Please enter your team name.</div>
+                <input class="form-control" name="team_name" id="team_name" placeholder="Team name">
               </div>
               <div class="col-md-6">
                 <label for="email" class="form-label required">Email</label>
-                <input type="email" class="form-control" name="email" id="email" placeholder="you@email.com" required>
-                <div class="invalid-feedback">Please enter a valid email address.</div>
+                <input type="email" class="form-control" name="email" id="email" placeholder="you@email.com">
               </div>
               <div class="col-md-6">
                 <label for="file" class="form-label required">Signed PDF</label>
-                <input type="file" accept="application/pdf" class="form-control" name="file" id="file" aria-describedby="fileHelp" required>
+                <input type="file" accept="application/pdf" class="form-control" name="file" id="file" aria-describedby="fileHelp">
                 
-                <div class="invalid-feedback">Please select a PDF file.</div>
               </div>
               <div class="col-12">
                 <div class="form-check">
-                  <input
-  class="form-check-input"
-  type="checkbox"
-  value="yes"
-  id="agree"
-  name="agreed"
-  required
->
-
+                  <input class="form-check-input" type="checkbox" value="yes" id="agree" required>
                   <label class="form-check-label required" for="agree">
                     I have read and agree to the Participation Agreement and Hackathon Rules.
                   </label>
-                  <div class="invalid-feedback">You must agree before submitting.</div>
                 </div>
               </div>
             </div>
 
             <!-- Metadata -->
             <input type="hidden" name="locale" value="en">
-            <input type="hidden" name="source" value="contract-EN.html">
+            <input type="hidden" name="source" value="Taqathon-Contract-EN.html">
 
             <div id="status" class="mt-3 d-none" role="alert"></div>
 
@@ -230,16 +212,17 @@
               <button id="submitBtn" class="btn btn-gradient px-4 py-2 rounded-2xl" type="submit" disabled>
                 Submit Agreement
               </button>
-              <a href="assets/Taqathon-Contract.pdf" class="btn btn-outline-secondary rounded-2xl">
+              <a href="assets/Taqathon-Contract-EN.pdf" class="btn btn-outline-secondary rounded-2xl" download>
                 <i class="bi bi-download me-1" aria-hidden="true"></i> Download PDF
               </a>
             </div>
           </form>
 
           <div class="alert alert-info mt-3 rounded-2xl" role="alert">
-            <div class="fw-semibold mb-1">Upload notes</div>
+            <div class="fw-semibold mb-1">Submission notes</div>
             <ul class="mb-0">
               <li class="mb-1">Upload a <strong>PDF only</strong>. Other file types will be blocked.</li>
+              <li class="mb-1">If you face issues, email your PDF to <a href="mailto:info@jameiat-taqa.sa">info@jameiat-taqa.sa</a>.</li>
             </ul>
           </div>
         </div>
@@ -271,26 +254,140 @@
     </div>
   </footer>
 
-  <!-- JS -->
+  <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
-  <script>
-(function(){
-  const form=document.getElementById('agreementForm');
-  const btn=document.getElementById('submitBtn');
-  if(!form||!btn)return;
-  function update(){ btn.disabled=!form.checkValidity(); }
-  form.addEventListener('input',update);
-  form.addEventListener('change',update);
-  update();
-  form.addEventListener('submit',function(e){
-    if(!form.checkValidity()){ e.preventDefault(); e.stopPropagation(); }
-    form.classList.add('was-validated');
-  },false);
-})();
-</script>
 
+  <!-- Upload JS (unchanged core, aligned with Home conventions) -->
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // ===== CONFIG: Apps Script Web App URL =====
+    var SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyFKOWj5Ol_5wD1G1DssSlPBN63YsxOfYOlzd_URzkQT-N_HySGcogfjs1-vhQvlGs/exec";
+
+    var form   = document.getElementById('agreementForm');
+    var status = document.getElementById('status');
+    var btn    = document.getElementById('submitBtn');
+    var file   = document.getElementById('file');
+    var agree  = document.getElementById('agree');
+
+    var yearEl = document.getElementById('year');
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+    function showStatus(kind, html){
+      if (!status) return;
+      status.className = 'alert alert-' + kind + ' mt-3';
+      status.innerHTML = html;
+      status.classList.remove('d-none');
+    }
+    function clearStatus(){ if (status) status.classList.add('d-none'); }
+
+    function isPdfSelected(){
+      if (!(file && file.files && file.files.length > 0)) return false;
+      var f = file.files[0];
+      return /\.pdf$/i.test(f.name);
+    }
+
+    function updateState() {
+      if (!btn) return;
+      var ok = isPdfSelected() && agree && agree.checked === true;
+      btn.disabled = !ok;
+    }
+
+    if (file)  file.addEventListener('input', updateState);
+    if (agree) agree.addEventListener('change', updateState);
+    document.addEventListener('change', updateState);
+    updateState();
+
+    if (!form) return;
+
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      clearStatus();
+
+      if (!isPdfSelected()) { showStatus('warning', 'Please choose a PDF file to upload.'); return; }
+      if (!(agree && agree.checked)) { showStatus('warning', 'You must agree to the terms to proceed.'); return; }
+
+      var oldText = btn ? btn.textContent : '';
+      if (btn) { btn.disabled = true; btn.textContent = 'Submitting...'; }
+
+      function fileToBase64(f){
+        return new Promise(function(resolve, reject){
+          var r = new FileReader();
+          r.onload = function(){
+            var s = String(r.result || '');
+            resolve(s.replace(/^data:.*;base64,/, ''));
+          };
+          r.onerror = reject;
+          r.readAsDataURL(f);
+        });
+      }
+
+      var fd = new FormData();
+      var fullNameEl = document.getElementById('full_name');
+      var teamNameEl = document.getElementById('team_name');
+      var emailEl    = document.getElementById('email');
+
+      var fullName = fullNameEl && fullNameEl.value ? fullNameEl.value.trim() : '';
+      var teamName = teamNameEl && teamNameEl.value ? teamNameEl.value.trim() : '';
+      var email    = emailEl    && emailEl.value    ? emailEl.value.trim()    : '';
+
+      if (fullName) fd.append('full_name', fullName);
+      if (teamName) fd.append('team_name', teamName);
+      if (email)    fd.append('email', email);
+
+      var f = file.files[0];
+      fd.append('file', f);
+
+      fileToBase64(f).then(function(b64){
+        fd.append('file_b64', b64);
+        fd.append('filename', f && f.name ? f.name : 'upload.pdf');
+        fd.append('mimeType', f && f.type ? f.type : 'application/pdf');
+
+        fd.append('agree', 'yes');
+        fd.append('locale', 'en');
+        fd.append('source', 'contract-en.html');
+
+        return fetch(SCRIPT_URL, { method: 'POST', body: fd, redirect: 'follow' });
+      })
+      .then(function(res){
+        return res.text().then(function(t){
+          var data = {};
+          try { data = JSON.parse(t); } catch(e){}
+          return { ok: res.ok, status: res.status, data: data, raw: t };
+        });
+      })
+      .then(function(resp){
+        var looksLikeHtml = typeof resp.raw === 'string' && /<html/i.test(resp.raw);
+        if (!resp.ok || looksLikeHtml) {
+          var hint = looksLikeHtml ? ' (login/permission page detected — set Web App access to "Anyone")' : '';
+          var msg = (resp.data && resp.data.error) ? resp.data.error : ('Request failed (' + resp.status + ')' + hint);
+          showStatus('danger', msg);
+          return;
+        }
+
+        if (resp.data && resp.data.ok) {
+          showStatus('success', 'Submitted successfully.');
+          form.reset();
+          updateState();
+        } else {
+          var err = (resp.data && resp.data.error) ? resp.data.error : 'Submission failed. Please try again.';
+          showStatus('danger', err);
+        }
+      })
+      .catch(function(err){
+        console.error(err);
+        fetch(SCRIPT_URL, { method: 'POST', body: fd, mode: 'no-cors' })
+          .then(function(){
+            showStatus('warning', 'Request sent with no-cors fallback. If you don’t see the file/row, fix Web App permissions.');
+          })
+          .catch(function(){
+            showStatus('danger', 'Network/CORS blocked. Double-check the /exec URL and Web App access.');
+          });
+      })
+      .finally(function(){
+        if (btn) { btn.textContent = oldText; updateState(); }
+      });
+    });
+  });
+  </script>
 </body>
 </html>

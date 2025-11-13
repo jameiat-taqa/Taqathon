@@ -24,27 +24,24 @@
     --muted:#66768a;
   }
 
-  /* ===== Global (aligned with index-ar + sticky footer) ===== */
+  /* ===== Global / Scrollbar behavior (match EN) ===== */
   html, body{
     margin:0; padding:0;
     font-family:Cairo, Poppins, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
     color:var(--text); background:#f8fbfd;
-    overflow-x:clip;
-    height:100%;
+    overflow-x: clip;
   }
   html{ overflow:hidden; }
-
   body{
-    min-height:100svh;
+    height:100vh;
     overflow:auto;
     scrollbar-width:none;
-    display:flex;
-    flex-direction:column;
+    display:flex; flex-direction:column; min-height:100vh;
   }
-  main{ flex:1 0 auto; }
-  footer{ margin-top:auto; }
-
   body::-webkit-scrollbar{ width:0; height:0; }
+  main{ flex:1 0 auto; }
+  footer{ flex-shrink:0; }
+
   *, *::before, *::after{ box-sizing:border-box; }
   img, svg, canvas, video, iframe{ max-width:100%; height:auto; display:block; }
 
@@ -54,7 +51,7 @@
   .card-lite{ background:#fff; border:1px solid #e9eef3; }
   .btn-gradient{ background:var(--brand-grad); border:0; color:#fff; }
 
-  /* ===== NAVBAR ===== */
+  /* ===== NAVBAR (match other AR pages) ===== */
   .navbar{
     background:#fff;
     box-shadow:0 2px 10px rgba(0,0,0,.04);
@@ -99,10 +96,18 @@
     background:rgba(32,201,151,.15); color:#1b7f61; border:1px solid rgba(32,201,151,.25);
   }
 
+  /* Red asterisk for required fields (same as EN) */
+  .form-label.required::after,
+  label.required::after{
+    content:" *";
+    color:#dc3545;
+    font-weight:700;
+    margin-inline-start:.15rem;
+  }
+
   /* ===== FOOTER ===== */
   footer{ background:var(--brand-dark); color:#cfd6df; }
   footer a{ color:#cfd6df; text-decoration:none; }
-  .form-label.required::after{ content:" *"; color:#dc3545; font-weight:700; margin-inline-start:.15rem; }
   </style>
 </head>
 
@@ -110,9 +115,9 @@
   <!-- NAVBAR -->
   <nav class="navbar navbar-expand-lg navbar-light sticky-top">
     <div class="container d-flex align-items-center justify-content-between">
-      <!-- العلامة (يمين في RTL) -->
-      <a class="navbar-brand d-flex align-items-center" href="index.html" aria-label="الصفحة الرئيسية لطاقثون">
-        <img src="assets/taqathon-logo.png" alt="شعار طاقثون" class="logo-mark">
+      <!-- شعار طاقثون -->
+      <a class="navbar-brand d-flex align-items-center" href="index.html" aria-label="الصفحة الرئيسية لطاقَثون">
+        <img src="assets/taqathon-logo.png" alt="شعار طاقَثون" class="logo-mark">
       </a>
 
       <!-- الروابط -->
@@ -128,7 +133,7 @@
         </ul>
       </div>
 
-      <!-- شعار الجهة -->
+      <!-- شعار الجمعية -->
       <div class="assoc-fixed d-flex align-items-center gap-2">
         <a href="https://taqa.org.sa" target="_blank" rel="noopener" aria-label="جمعية الطاقة للتنمية المستدامة">
           <img src="assets/association-logo.png" alt="جمعية الطاقة للتنمية المستدامة" class="assoc-logo">
@@ -147,7 +152,7 @@
       <div class="text-center mb-4">
         <div class="icon-circle mx-auto mb-3"><i class="bi bi-pencil-square"></i></div>
         <h5 class="mb-1 fw-bold">اتفاقية المشاركة</h5>
-        <p class="text-secondary mb-0">يرجى رفع ملف الـ PDF الموقّع لإكمال مشاركتك.</p>
+        <div style="height: 20px;"></div>
       </div>
 
       <!-- Terms -->
@@ -175,55 +180,59 @@
       <!-- Upload Form -->
       <div class="card card-lite rounded-2xl shadow-soft">
         <div class="card-body">
-          <h6 class="mb-4">رفع ملف PDF الموقّع</h6>
-          <form id="agreementForm" class="needs-validation"novalidate method="POST"action="https://script.google.com/macros/s/AKfycbyFKOWj5Ol_5wD1G1DssSlPBN63YsxOfYOlzd_URzkQT-N_HySGcogfjs1-vhQvlGs/exec"enctype="multipart/form-data">
+          <h6 class="mb-1">رفع ملف PDF الموقّع</h6>
+          <div class="text-secondary mb-3">يُقبل فقط ملف PDF. الحقول التالية مطلوبة.</div>
 
+          <form id="agreementForm" class="needs-validation" novalidate>
             <div class="row g-3">
               <div class="col-md-6">
                 <label for="full_name" class="form-label required">الاسم الكامل</label>
-                <input class="form-control" id="full_name" name="full_name" placeholder="اسمك الكامل" required>
-                <div class="invalid-feedback">فضلاً أدخل الاسم الكامل.</div>
+                <input class="form-control" id="full_name" name="full_name" placeholder="اسمك الكامل">
               </div>
               <div class="col-md-6">
                 <label for="team_name" class="form-label required">اسم الفريق</label>
-                <input class="form-control" id="team_name" name="team_name" placeholder="اسم الفريق" required>
-                <div class="invalid-feedback">فضلاً أدخل اسم الفريق.</div>
+                <input class="form-control" id="team_name" name="team_name" placeholder="اسم الفريق">
               </div>
               <div class="col-md-6">
                 <label for="email" class="form-label required">البريد الإلكتروني</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="you@email.com" required>
-                <div class="invalid-feedback">فضلاً أدخل بريدًا إلكترونيًا صحيحًا.</div>
+                <input type="email" class="form-control" id="email" name="email" placeholder="you@email.com">
               </div>
               <div class="col-md-6">
                 <label for="file" class="form-label required">ملف PDF الموقّع</label>
-                <input type="file" accept="application/pdf" class="form-control" id="file" name="file" required>
-                <div class="invalid-feedback">فضلاً اختر ملف PDF.</div>
+                <input type="file" accept="application/pdf" class="form-control" id="file" name="file" aria-describedby="fileHelp">
               </div>
               <div class="col-12">
                 <div class="form-check">
-                  <inputclass="form-check-input" type="checkbox"value="yes"id="agree" name="agreed"required>
-
-                  <label class="form-check-label required" for="agree">قرأتُ وأوافق على اتفاقية المشاركة وقواعد الهاكاثون.</label>
-                  <div class="invalid-feedback">يجب الموافقة قبل الإرسال.</div>
+                  <input class="form-check-input" type="checkbox" value="yes" id="agree" required>
+                  <label class="form-check-label required" for="agree">
+                    قرأتُ وأوافق على اتفاقية المشاركة وقواعد الهاكاثون.
+                  </label>
                 </div>
               </div>
             </div>
 
+            <!-- Metadata -->
             <input type="hidden" name="locale" value="ar">
             <input type="hidden" name="source" value="contract.html">
+
             <div id="status" class="mt-3 d-none" role="alert"></div>
 
             <div class="d-flex flex-wrap gap-2 align-items-center mt-2">
-              <button id="submitBtn" class="btn btn-gradient px-4 py-2 rounded-2xl" type="submit" disabled>إرسال الاتفاقية</button>
+              <button id="submitBtn" class="btn btn-gradient px-4 py-2 rounded-2xl" type="submit" disabled>
+                إرسال الاتفاقية
+              </button>
               <a href="assets/Taqathon-Contract.pdf" class="btn btn-outline-secondary rounded-2xl" download>
-                <i class="bi bi-download ms-1"></i> تحميل PDF
+                <i class="bi bi-download ms-1" aria-hidden="true"></i> تحميل PDF
               </a>
             </div>
           </form>
 
           <div class="alert alert-info mt-3 rounded-2xl" role="alert">
             <div class="fw-semibold mb-1">ملاحظات الرفع</div>
-            <ul class="mb-0"><li>ارفع <strong>PDF فقط</strong>. سيتم حظر الأنواع الأخرى.</li></ul>
+            <ul class="mb-0">
+              <li class="mb-1">ارفع <strong>ملف PDF فقط</strong>. سيتم حظر أي نوع آخر.</li>
+              <li class="mb-1">في حال واجهت مشكلة، يمكنك إرسال الملف إلى البريد: <a href="mailto:info@jameiat-taqa.sa">info@jameiat-taqa.sa</a>.</li>
+            </ul>
           </div>
         </div>
       </div>
@@ -241,10 +250,10 @@
         <div class="col-md-6">
           <h6 class="mb-3 text-white">تابعنا</h6>
           <div class="d-flex gap-3">
-            <a href="https://x.com/jameiat_taqa" target="_blank" class="text-light"><i class="bi bi-twitter-x fs-5"></i></a>
-            <a href="https://instagram.com/jameiat_taqa" target="_blank" class="text-light"><i class="bi bi-instagram fs-5"></i></a>
-            <a href="https://www.linkedin.com/company/جمعية-الطاقة-للتنمية-المستدامة" target="_blank" class="text-light"><i class="bi bi-linkedin fs-5"></i></a>
-            <a href="https://tiktok.com/@jameiat_taqa" target="_blank" class="text-light"><i class="bi bi-tiktok fs-5"></i></a>
+            <a href="https://x.com/jameiat_taqa" target="_blank" class="text-light" rel="noopener"><i class="bi bi-twitter-x fs-5"></i></a>
+            <a href="https://instagram.com/jameiat_taqa" target="_blank" class="text-light" rel="noopener"><i class="bi bi-instagram fs-5"></i></a>
+            <a href="https://www.linkedin.com/company/جمعية-الطاقة-للتنمية-المستدامة" target="_blank" class="text-light" rel="noopener"><i class="bi bi-linkedin fs-5"></i></a>
+            <a href="https://tiktok.com/@jameiat_taqa" target="_blank" class="text-light" rel="noopener"><i class="bi bi-tiktok fs-5"></i></a>
           </div>
         </div>
       </div>
@@ -256,22 +265,138 @@
 
   <!-- JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Upload JS (mirrors EN, but Arabic messages and no Drive URL line) -->
   <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-    (function(){
-      const form=document.getElementById('agreementForm');
-      const btn=document.getElementById('submitBtn');
-      if(!form||!btn)return;
-      function update(){ btn.disabled=!form.checkValidity(); }
-      form.addEventListener('input',update);
-      form.addEventListener('change',update);
-      update();
-      form.addEventListener('submit',function(e){
-        if(!form.checkValidity()){ e.preventDefault(); e.stopPropagation(); }
-        form.classList.add('was-validated');
-      },false);
-    })();
+  document.addEventListener('DOMContentLoaded', function () {
+    // ===== CONFIG: Apps Script Web App URL =====
+    var SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyFKOWj5Ol_5wD1G1DssSlPBN63YsxOfYOlzd_URzkQT-N_HySGcogfjs1-vhQvlGs/exec";
+
+    var form   = document.getElementById('agreementForm');
+    var status = document.getElementById('status');
+    var btn    = document.getElementById('submitBtn');
+    var file   = document.getElementById('file');
+    var agree  = document.getElementById('agree');
+
+    var yearEl = document.getElementById('year');
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+    function showStatus(kind, html){
+      if (!status) return;
+      status.className = 'alert alert-' + kind + ' mt-3';
+      status.innerHTML = html;
+      status.classList.remove('d-none');
+    }
+    function clearStatus(){ if (status) status.classList.add('d-none'); }
+
+    function isPdfSelected(){
+      if (!(file && file.files && file.files.length > 0)) return false;
+      var f = file.files[0];
+      return /\.pdf$/i.test(f.name);
+    }
+
+    function updateState() {
+      if (!btn) return;
+      var ok = isPdfSelected() && agree && agree.checked === true;
+      btn.disabled = !ok;
+    }
+
+    if (file)  file.addEventListener('input', updateState);
+    if (agree) agree.addEventListener('change', updateState);
+    document.addEventListener('change', updateState);
+    updateState();
+
+    if (!form) return;
+
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      clearStatus();
+
+      if (!isPdfSelected()) { showStatus('warning', 'فضلاً اختر ملف PDF للرفع.'); return; }
+      if (!(agree && agree.checked)) { showStatus('warning', 'يجب الموافقة على الشروط قبل الإرسال.'); return; }
+
+      var oldText = btn ? btn.textContent : '';
+      if (btn) { btn.disabled = true; btn.textContent = 'جارٍ الإرسال...'; }
+
+      function fileToBase64(f){
+        return new Promise(function(resolve, reject){
+          var r = new FileReader();
+          r.onload = function(){
+            var s = String(r.result || '');
+            resolve(s.replace(/^data:.*;base64,/, ''));
+          };
+          r.onerror = reject;
+          r.readAsDataURL(f);
+        });
+      }
+
+      var fd = new FormData();
+      var fullNameEl = document.getElementById('full_name');
+      var teamNameEl = document.getElementById('team_name');
+      var emailEl    = document.getElementById('email');
+
+      var fullName = fullNameEl && fullNameEl.value ? fullNameEl.value.trim() : '';
+      var teamName = teamNameEl && teamNameEl.value ? teamNameEl.value.trim() : '';
+      var email    = emailEl    && emailEl.value    ? emailEl.value.trim()    : '';
+
+      if (fullName) fd.append('full_name', fullName);
+      if (teamName) fd.append('team_name', teamName);
+      if (email)    fd.append('email', email);
+
+      var f = file.files[0];
+      fd.append('file', f);
+
+      fileToBase64(f).then(function(b64){
+        fd.append('file_b64', b64);
+        fd.append('filename', f && f.name ? f.name : 'upload.pdf');
+        fd.append('mimeType', f && f.type ? f.type : 'application/pdf');
+
+        fd.append('agree', 'yes');
+        fd.append('locale', 'ar');
+        fd.append('source', 'contract.html');
+
+        return fetch(SCRIPT_URL, { method: 'POST', body: fd, redirect: 'follow' });
+      })
+      .then(function(res){
+        return res.text().then(function(t){
+          var data = {};
+          try { data = JSON.parse(t); } catch(e){}
+          return { ok: res.ok, status: res.status, data: data, raw: t };
+        });
+      })
+      .then(function(resp){
+        var looksLikeHtml = typeof resp.raw === 'string' && /<html/i.test(resp.raw);
+        if (!resp.ok || looksLikeHtml) {
+          var hint = looksLikeHtml ? ' (تم اكتشاف صفحة دخول/صلاحيات — تأكد من ضبط صلاحيات Web App على "Anyone")' : '';
+          var msg = (resp.data && resp.data.error) ? resp.data.error : ('فشل الطلب (' + resp.status + ')' + hint);
+          showStatus('danger', msg);
+          return;
+        }
+
+        if (resp.data && resp.data.ok) {
+          showStatus('success', 'تم الإرسال بنجاح.');
+          form.reset();
+          updateState();
+        } else {
+          var err = (resp.data && resp.data.error) ? resp.data.error : 'فشل الإرسال، فضلاً حاول مرة أخرى.';
+          showStatus('danger', err);
+        }
+      })
+      .catch(function(err){
+        console.error(err);
+        fetch(SCRIPT_URL, { method: 'POST', body: fd, mode: 'no-cors' })
+          .then(function(){
+            showStatus('warning', 'تم إرسال الطلب بوضع no-cors. إذا لم يظهر الملف/الصف في Drive، تأكد من صلاحيات Web App.');
+          })
+          .catch(function(){
+            showStatus('danger', 'خطأ في الشبكة أو CORS. تأكد من رابط /exec وصلاحيات الوصول.');
+          });
+      })
+      .finally(function(){
+        if (btn) { btn.textContent = oldText; updateState(); }
+      });
+    });
+  });
   </script>
-  
 </body>
 </html>
