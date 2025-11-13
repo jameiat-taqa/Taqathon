@@ -82,14 +82,24 @@
   }
   .icon-circle i{ font-size:1.6rem; line-height:1; }
 
-  .badge-step{
+    .badge-step{
     display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px; border-radius:999px; font-size:.9rem;
     background:rgba(32,201,151,.15); color:#1b7f61; border:1px solid rgba(32,201,151,.25);
+  }
+
+  /* Red asterisk for required fields (same as AR page) */
+  .form-label.required::after,
+  label.required::after{
+    content: " *";
+    color: #dc3545;
+    margin-left: 0.15rem;
+    font-weight: 600;
   }
 
   /* Footer (same as submissions/rules) */
   footer{ background:var(--brand-dark); color:#cfd6df; }
   footer a{ color:#cfd6df; text-decoration:none; }
+
   </style>
 </head>
 
@@ -180,7 +190,7 @@
               <div class="col-md-6">
                 <label for="file" class="form-label required">Signed PDF</label>
                 <input type="file" accept="application/pdf" class="form-control" name="file" id="file" aria-describedby="fileHelp" required>
-                <div id="fileHelp" class="form-text">Choose a .pdf file (recommended &lt; 20MB).</div>
+                
                 <div class="invalid-feedback">Please select a PDF file.</div>
               </div>
               <div class="col-12">
@@ -250,5 +260,21 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
+  <script>
+(function(){
+  const form=document.getElementById('agreementForm');
+  const btn=document.getElementById('submitBtn');
+  if(!form||!btn)return;
+  function update(){ btn.disabled=!form.checkValidity(); }
+  form.addEventListener('input',update);
+  form.addEventListener('change',update);
+  update();
+  form.addEventListener('submit',function(e){
+    if(!form.checkValidity()){ e.preventDefault(); e.stopPropagation(); }
+    form.classList.add('was-validated');
+  },false);
+})();
+</script>
+
 </body>
 </html>
