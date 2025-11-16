@@ -136,130 +136,242 @@
 
   <!-- Main -->
   <main class="py-5">
-
-    <!-- Judging criteria -->
     <div class="container" style="max-width:980px;">
+
+      <!-- Page header -->
       <div class="text-center mb-4">
-        <div class="icon-circle mx-auto mb-3"><i class="bi bi-clipboard-check"></i></div>
-        <h5 class="mb-1 fw-semibold">Judging Criteria</h5>
-        <p class="text-secondary mb-0">Official evaluation categories and weights (total 100%).</p>
-      </div>
-
-   
-
-      <div class="card card-lite rounded-2xl shadow-soft">
-        <div class="card-body p-0">
-          <div class="criteria-row">
-            <span class="criteria-label">Innovation & Novelty</span>
-            <span class="criteria-badge">30%</span>
-          </div>
-          <div class="criteria-row">
-            <span class="criteria-label">Economic Feasibility</span>
-            <span class="criteria-badge">25%</span>
-          </div>
-          <div class="criteria-row">
-            <span class="criteria-label">Environmental & Social Impact</span>
-            <span class="criteria-badge">20%</span>
-          </div>
-          <div class="criteria-row">
-            <span class="criteria-label">Implementation Potential</span>
-            <span class="criteria-badge">15%</span>
-          </div>
-          <div class="criteria-row">
-            <span class="criteria-label">Presentation Clarity</span>
-            <span class="criteria-badge">10%</span>
-          </div>
+        <div class="icon-circle mx-auto mb-3">
+          <i class="bi bi-clipboard-check"></i>
         </div>
-      </div>
-    </div>
-
-    <!-- ===== Project Submission & Presentation Procedure ===== -->
-    <section class="mt-5">
-      <div class="container" style="max-width:980px;">
-
-        <h5 class="mb-2 fw-semibold text-center">Project Submission & Presentation Procedure</h5>
-        <p class="text-secondary text-center mb-4">
-          To ensure fairness, transparency, and proper evaluation, all participating teams are required to adhere to the following procedures for project submission and remote presentation.
+        <h5 class="mb-1 fw-semibold">Rules & Resources</h5>
+        <p class="text-secondary mb-0">
+          Browse the official criteria, procedures, and resources for Taqathon. Click each section to expand the details.
         </p>
+      </div>
 
-        <div class="card card-lite rounded-2xl shadow-soft">
-          <div class="card-body p-4">
+      <!-- Accordion -->
+      <div class="accordion" id="rulesAccordion">
 
-            <!-- 1 -->
-           
-            <p class="fw-bold mb-2">1. Project Submission</p>
-            <ul class="mb-4">
-              <li>The final submission deadline is <strong>2:00 PM on November 22</strong>.</li>
-              <li>All files must be submitted exclusively through the Taqathon platform, with a copy sent to the official submission email.</li>
-              <li>
-                Teams must ensure:
-                <ul class="mt-2">
-                  <li>All required files are complete and accurate.</li>
-                  <li>All links are functional and accessible.</li>
-                  <li>The presentation file matches the version submitted on the platform.</li>
-                </ul>
-              </li>
-              <li>Failure to submit by the deadline constitutes automatic withdrawal from the competition.</li>
-            </ul>
-
-            <!-- 2 -->
-            <div class="divider-grad my-3"></div>
-            <p class="fw-bold mb-2">2. Project Presentation (Remote)</p>
-            <ul class="mb-4">
-              <li>The presentation session will take place at <strong>8:00 PM on November 22</strong>.</li>
-              <li>Teams must join the session at least 10 minutes early to ensure technical readiness.</li>
-              <li>
-                The presentation duration is five minutes, distributed as follows:
-                <ul class="mt-2">
-                  <li>2 minutes: Team introduction and concept overview.</li>
-                  <li>3 minutes: Presentation of the project content.</li>
-                </ul>
-              </li>
-              <li>Failure to respond within 60 seconds of being called upon will be considered withdrawal.</li>
-              <li>The presentation must use the exact file previously submitted. No modifications are permitted.</li>
-            </ul>
-
-            <!-- 3 -->
-            <div class="divider-grad my-3"></div>
-            <p class="fw-bold mb-2">3. Technical Readiness</p>
-            <ul class="mb-4">
-              <li>
-                Each team is responsible for providing:
-                <ul class="mt-2">
-                  <li>A stable internet connection,</li>
-                  <li>Clear audio and video quality,</li>
-                  <li>An appropriate presentation environment.</li>
-                </ul>
-              </li>
-              <li>Rescheduling will not be permitted for technical issues originating from the team.</li>
-              <li>If a widespread technical issue occurs, the Association may reschedule and will issue an official announcement.</li>
-            </ul>
-
-            <!-- 4 -->
-            <div class="divider-grad my-3"></div>
-            <p class="fw-bold mb-2">4. Conduct & Compliance</p>
-            <ul class="mb-4">
-              <li>Participants must maintain professional conduct at all times.</li>
-              <li>Recording, sharing, or publishing any part of the session is prohibited without written permission from the Association.</li>
-              <li>No content may violate intellectual property rights or applicable laws.</li>
-            </ul>
-
-            <!-- 5 -->
-            <div class="divider-grad my-3"></div>
-            <p class="fw-bold mb-2">5. General Provisions</p>
-            <ul class="mb-0">
-              <li>Files submitted through the platform are considered the official versions for evaluation.</li>
-              <li>Compliance with these procedures is mandatory for continued participation.</li>
-              <li>The Association may amend these procedures if necessary and will notify participating teams.</li>
-            </ul>
-
+        <!-- 1. Judging Criteria -->
+        <div class="accordion-item card-lite rounded-2xl mb-3 overflow-hidden">
+          <h2 class="accordion-header" id="headingCriteria">
+            <button class="accordion-button fw-semibold" type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseCriteria"
+                    aria-expanded="true"
+                    aria-controls="collapseCriteria">
+              Judging Criteria (Total 100%)
+            </button>
+          </h2>
+          <div id="collapseCriteria" class="accordion-collapse collapse show"
+               aria-labelledby="headingCriteria" data-bs-parent="#rulesAccordion">
+            <div class="accordion-body">
+              <p class="text-secondary">
+                Projects will be evaluated based on the following official criteria and percentage weights:
+              </p>
+              <ul class="list-unstyled mb-0">
+                <li class="mb-2 d-flex justify-content-between align-items-center">
+                  <span class="fw-semibold">Innovation &amp; Novelty</span>
+                  <span class="badge criteria-badge">30%</span>
+                </li>
+                <li class="mb-2 d-flex justify-content-between align-items-center">
+                  <span class="fw-semibold">Economic Feasibility</span>
+                  <span class="badge criteria-badge">25%</span>
+                </li>
+                <li class="mb-2 d-flex justify-content-between align-items-center">
+                  <span class="fw-semibold">Environmental &amp; Social Impact</span>
+                  <span class="badge criteria-badge">20%</span>
+                </li>
+                <li class="mb-2 d-flex justify-content-between align-items-center">
+                  <span class="fw-semibold">Implementation Potential</span>
+                  <span class="badge criteria-badge">15%</span>
+                </li>
+                <li class="d-flex justify-content-between align-items-center">
+                  <span class="fw-semibold">Presentation Clarity</span>
+                  <span class="badge criteria-badge">10%</span>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
 
-      </div>
-    </section>
+        <!-- 2. Project Submission -->
+        <div class="accordion-item card-lite rounded-2xl mb-3 overflow-hidden">
+          <h2 class="accordion-header" id="headingSubmission">
+            <button class="accordion-button collapsed fw-semibold" type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseSubmission"
+                    aria-expanded="false"
+                    aria-controls="collapseSubmission">
+              Project Submission
+            </button>
+          </h2>
+          <div id="collapseSubmission" class="accordion-collapse collapse"
+               aria-labelledby="headingSubmission" data-bs-parent="#rulesAccordion">
+            <div class="accordion-body">
+              <p class="text-secondary">
+                To ensure fairness and proper evaluation, all teams must follow the official project submission rules:
+              </p>
+              <ul>
+                <li>The final submission deadline is <strong>2:00 PM on November 22</strong>.</li>
+                <li>All files must be submitted exclusively through the Taqathon platform, with a copy sent to the official submission email.</li>
+                <li>
+                  Teams must ensure:
+                  <ul class="mt-2">
+                    <li>All required files are complete and accurate.</li>
+                    <li>All links are functional and accessible.</li>
+                    <li>The presentation file matches the version submitted on the platform.</li>
+                  </ul>
+                </li>
+                <li>Failure to submit by the deadline constitutes automatic withdrawal from the competition.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
 
+        <!-- 3. Project Presentation (Remote) -->
+        <div class="accordion-item card-lite rounded-2xl mb-3 overflow-hidden">
+          <h2 class="accordion-header" id="headingPresentation">
+            <button class="accordion-button collapsed fw-semibold" type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapsePresentation"
+                    aria-expanded="false"
+                    aria-controls="collapsePresentation">
+              Project Presentation (Remote)
+            </button>
+          </h2>
+          <div id="collapsePresentation" class="accordion-collapse collapse"
+               aria-labelledby="headingPresentation" data-bs-parent="#rulesAccordion">
+            <div class="accordion-body">
+              <ul>
+                <li>The presentation session will take place at <strong>8:00 PM on November 22</strong>.</li>
+                <li>Teams must join the session at least 10 minutes early to ensure technical readiness.</li>
+                <li>
+                  The presentation duration is five minutes, distributed as follows:
+                  <ul class="mt-2">
+                    <li>2 minutes: Team introduction and concept overview.</li>
+                    <li>3 minutes: Presentation of the project content.</li>
+                  </ul>
+                </li>
+                <li>Failure to respond within 60 seconds of being called upon will be considered withdrawal.</li>
+                <li>The presentation must use the exact file previously submitted. No modifications are permitted.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Technical Readiness -->
+        <div class="accordion-item card-lite rounded-2xl mb-3 overflow-hidden">
+          <h2 class="accordion-header" id="headingTechnical">
+            <button class="accordion-button collapsed fw-semibold" type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseTechnical"
+                    aria-expanded="false"
+                    aria-controls="collapseTechnical">
+              Technical Readiness
+            </button>
+          </h2>
+          <div id="collapseTechnical" class="accordion-collapse collapse"
+               aria-labelledby="headingTechnical" data-bs-parent="#rulesAccordion">
+            <div class="accordion-body">
+              <ul>
+                <li>
+                  Each team is responsible for providing:
+                  <ul class="mt-2">
+                    <li>A stable internet connection,</li>
+                    <li>Clear audio and video quality,</li>
+                    <li>An appropriate presentation environment.</li>
+                  </ul>
+                </li>
+                <li>Rescheduling will not be permitted for technical issues originating from the team.</li>
+                <li>If a widespread technical issue occurs, the Association may reschedule and will issue an official announcement.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. Conduct & Compliance -->
+        <div class="accordion-item card-lite rounded-2xl mb-3 overflow-hidden">
+          <h2 class="accordion-header" id="headingConduct">
+            <button class="accordion-button collapsed fw-semibold" type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseConduct"
+                    aria-expanded="false"
+                    aria-controls="collapseConduct">
+              Conduct &amp; Compliance
+            </button>
+          </h2>
+          <div id="collapseConduct" class="accordion-collapse collapse"
+               aria-labelledby="headingConduct" data-bs-parent="#rulesAccordion">
+            <div class="accordion-body">
+              <ul>
+                <li>Participants must maintain professional conduct at all times.</li>
+                <li>Recording, sharing, or publishing any part of the session is prohibited without written permission from the Association.</li>
+                <li>No content may violate intellectual property rights or applicable laws.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. General Provisions -->
+        <div class="accordion-item card-lite rounded-2xl mb-3 overflow-hidden">
+          <h2 class="accordion-header" id="headingGeneral">
+            <button class="accordion-button collapsed fw-semibold" type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseGeneral"
+                    aria-expanded="false"
+                    aria-controls="collapseGeneral">
+              General Provisions
+            </button>
+          </h2>
+          <div id="collapseGeneral" class="accordion-collapse collapse"
+               aria-labelledby="headingGeneral" data-bs-parent="#rulesAccordion">
+            <div class="accordion-body">
+              <ul>
+                <li>Files submitted through the platform are considered the official versions for evaluation.</li>
+                <li>Compliance with these procedures is mandatory for continued participation.</li>
+                <li>The Association may amend these procedures if necessary and will notify participating teams.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- 7. Professional Project Presentation Guide (PDF) -->
+        <div class="accordion-item card-lite rounded-2xl mb-3 overflow-hidden">
+          <h2 class="accordion-header" id="headingGuide">
+            <button class="accordion-button collapsed fw-semibold" type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseGuide"
+                    aria-expanded="false"
+                    aria-controls="collapseGuide">
+              Professional Project Presentation Guide (PDF)
+            </button>
+          </h2>
+          <div id="collapseGuide" class="accordion-collapse collapse"
+               aria-labelledby="headingGuide" data-bs-parent="#rulesAccordion">
+            <div class="accordion-body">
+              <p class="text-secondary mb-2">
+                This is the official guide presented by <strong>Dr. Mohannad Bahashwan</strong> during the
+                <em>“Professional Project Presentation”</em> session.
+              </p>
+              <p class="text-secondary mb-3">
+                You can download the PDF to review the key principles and recommendations for preparing an effective Taqathon project presentation.
+              </p>
+              <a href="assets/professional-project-presentation.pdf"
+                 class="btn btn-outline-secondary rounded-2xl"
+                 download>
+                <i class="bi bi-download me-1" aria-hidden="true"></i>
+                Download PDF
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div> <!-- /accordion -->
+
+    </div> <!-- /container -->
   </main>
+
 
   <!-- Footer -->
   <footer class="pt-5">
