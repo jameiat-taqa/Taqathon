@@ -71,7 +71,12 @@
   .info-list{ list-style:none; padding:0; margin:0; }
   .info-item{ display:flex; gap:.6rem; align-items:flex-start; padding:.25rem 0; }
   .info-item i{ color:var(--brand-blue); font-size:1.05rem; line-height:1.6; }
-
+  /* Sponsor logos */
+  .sponsor-logo{
+    max-height:70px;
+    width:auto;
+    object-fit:contain;
+  }
   /* Footer */
   footer{ background:#00284C; color:#cfd6df; }
   footer a{ color:#cfd6df; text-decoration:none; }
@@ -173,19 +178,62 @@
               </li>
               <li class="info-item">
                 <i class="bi bi-globe"></i>
-                <div><strong>Website</strong> — <a class="link-secondary" href="https://jameiat-taqa.sa" target="_blank" rel="noopener">jameiat-taqa.sa</a></div>
+                <div><strong>Website</strong> — <a class="link-secondary" href="https://taqa.org.sa/" target="_blank" rel="noopener">https://taqa.org.sa/</a></div>
               </li>
             </ul>
           </div>
 
-          <!-- Organized by -->
-          <div class="panel shadow-soft p-3 p-md-4 mb-3 text-center">
-            <h6 class="panel-header mb-2">Organized By</h6>
-            <p class="text-secondary mb-0">
-              Energy Association for Sustainable Development<br>
-              <small>In collaboration with the Ministry of Energy</small>
-            </p>
-          </div>
+<!-- Sponsors & Partners -->
+<div class="panel shadow-soft p-3 p-md-4 mb-3">
+  <h6 class="panel-header mb-3 text-center">Sponsors &amp; Partners</h6>
+
+  <div class="row g-3 justify-content-center align-items-center text-center">
+
+    <div class="col-6 col-md-4">
+      <img src="assets/Associations-Support-Fund-Logo.png"
+           alt="Associations Support Fund"
+           class="img-fluid sponsor-logo mb-2">
+      <div class="small text-secondary">Associations Support Fund</div>
+    </div>
+
+    <div class="col-6 col-md-4">
+      <img src="assets/ministry-of-energy-logo.png"
+           alt="Ministry of Energy"
+           class="img-fluid sponsor-logo mb-2">
+      <div class="small text-secondary">Ministry of Energy</div>
+    </div>
+
+    <div class="col-6 col-md-4">
+      <img src="assets/NCNP-Sector-Logo.png"
+           alt="National Center for Non-Profit Sector"
+           class="img-fluid sponsor-logo mb-2">
+      <div class="small text-secondary">National Center for Non-Profit Sector</div>
+    </div>
+
+    <div class="col-6 col-md-4">
+      <img src="assets/university-of-jeddah-logo.png"
+           alt="University of Jeddah"
+           class="img-fluid sponsor-logo mb-2">
+      <div class="small text-secondary">University of Jeddah</div>
+    </div>
+
+    <div class="col-6 col-md-4">
+      <img src="assets/york-logo.png"
+           alt="York"
+           class="img-fluid sponsor-logo mb-2">
+      <div class="small text-secondary">York</div>
+    </div>
+
+    <div class="col-6 col-md-4">
+      <img src="assets/Tanmia-logo.png"
+           alt="Tanmia Al-Qura Charity"
+           class="img-fluid sponsor-logo mb-2">
+      <div class="small text-secondary">Tanmia Al-Qura Charity</div>
+    </div>
+
+  </div>
+</div>
+
 
           <!-- Our Location -->
           <div class="panel shadow-soft p-3 p-md-4">

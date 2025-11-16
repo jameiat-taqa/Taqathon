@@ -84,6 +84,12 @@
   .info-list{ list-style:none; padding:0; margin:0; }
   .info-item{ display:flex; gap:.6rem; align-items:flex-start; padding:.25rem 0; }
   .info-item i{ color:var(--brand-blue); font-size:1.05rem; line-height:1.6; }
+/* Sponsor logos */
+.sponsor-logo{
+  max-height:70px;
+  width:auto;
+  object-fit:contain;
+}
 
   /* Footer */
   footer{ background:#00284C; color:#cfd6df; }
@@ -178,18 +184,62 @@
               </li>
               <li class="info-item">
                 <i class="bi bi-globe"></i>
-                <div><strong>الموقع الإلكتروني</strong> — <a class="link-secondary" href="https://jameiat-taqa.sa" target="_blank" rel="noopener">jameiat-taqa.sa</a></div>
+                <div><strong>الموقع الإلكتروني</strong> — <a class="link-secondary" href="https://taqa.org.sa/" target="_blank" rel="noopener">https://taqa.org.sa</a></div>
               </li>
             </ul>
           </div>
 
-          <div class="panel shadow-soft p-3 p-md-4 mb-3 text-center">
-            <h6 class="panel-header mb-2">منظَّم من</h6>
-            <p class="text-secondary mb-0">
-              جمعية الطاقة للتنمية المستدامة<br>
-              <small>بالتعاون مع وزارة الطاقة</small>
-            </p>
-          </div>
+          <!-- الداعمون والشركاء -->
+<div class="panel shadow-soft p-3 p-md-4 mb-3">
+  <h6 class="panel-header mb-3 text-center">الداعمون والشركاء</h6>
+
+  <div class="row g-3 justify-content-center align-items-center text-center">
+
+    <div class="col-6 col-md-4">
+      <img src="assets/Associations-Support-Fund-Logo.png"
+           alt="صندوق دعم الجمعيات"
+           class="img-fluid sponsor-logo mb-2">
+      <div class="small text-secondary">صندوق دعم الجمعيات</div>
+    </div>
+
+    <div class="col-6 col-md-4">
+      <img src="assets/ministry-of-energy-logo.png"
+           alt="وزارة الطاقة"
+           class="img-fluid sponsor-logo mb-2">
+      <div class="small text-secondary">وزارة الطاقة</div>
+    </div>
+
+    <div class="col-6 col-md-4">
+      <img src="assets/NCNP-Sector-Logo.png"
+           alt="المركز الوطني لتنمية القطاع غير الربحي"
+           class="img-fluid sponsor-logo mb-2">
+      <div class="small text-secondary">المركز الوطني لتنمية القطاع غير الربحي</div>
+    </div>
+
+    <div class="col-6 col-md-4">
+      <img src="assets/university-of-jeddah-logo.png"
+           alt="جامعة جدة"
+           class="img-fluid sponsor-logo mb-2">
+      <div class="small text-secondary">جامعة جدة</div>
+    </div>
+
+    <div class="col-6 col-md-4">
+      <img src="assets/york-logo.png"
+           alt="شركة يورك"
+           class="img-fluid sponsor-logo mb-2">
+      <div class="small text-secondary">شركة يورك</div>
+    </div>
+
+    <div class="col-6 col-md-4">
+      <img src="assets/tanmia-logo.png"
+           alt="جمعية تنمية القرى الخيرية"
+           class="img-fluid sponsor-logo mb-2">
+      <div class="small text-secondary">جمعية تنمية القرى الخيرية</div>
+    </div>
+
+  </div>
+</div>
+
 
           <div class="panel shadow-soft p-3 p-md-4">
             <h6 class="panel-header mb-2">موقع الحفل</h6>
