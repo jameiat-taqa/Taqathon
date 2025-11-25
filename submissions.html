@@ -169,7 +169,61 @@
           </noscript>
         </div>
       </div>
+      <!-- قسم برومو الفيديو (نسخة مطابقة 100%) -->
+<div class="card card-lite rounded-2xl shadow-soft mt-4">
+  <div class="card-body">
+
+    <!-- نفس صف العنوان + زرين -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-3">
+      <h5 class="mb-0 fw-semibold">برومو الفيديو</h5>
+
+      <div class="d-flex gap-2">
+        <!-- زر النموذج -->
+        <a class="btn btn-brand btn-lg" target="_blank" rel="noopener"
+           href="https://forms.gle/ReGU4xrLCxD2Ygvm6"
+           aria-label="فتح نموذج برومو الفيديو">
+          <i class="bi bi-camera-video ms-2"></i> فتح نموذج البرومو فيديو
+        </a>
+
+        <!-- زر نسخ الرابط -->
+        <button type="button" class="btn btn-outline-secondary btn-lg" id="copyPromoLinkBtnAr"
+                aria-label="نسخ رابط نموذج برومو الفيديو">
+          نسخ الرابط
+        </button>
+      </div>
     </div>
+
+    <!-- نفس مربع التنبيه الأزرق -->
+    <div class="alert alert-info fs-6 p-3 mb-0">
+      تتطلّب عملية رفع الملفات تسجيل الدخول إلى Google. إذا لم يعمل الزر، استخدم الرابط المباشر:
+      <span class="text-break" dir="ltr">https://forms.gle/ReGU4xrLCxD2Ygvm6</span>
+    </div>
+
+    <noscript>
+      <p class="mt-2">تم تعطيل جافاسكريبت. استخدم هذا الرابط:
+        <a href="https://forms.gle/ReGU4xrLCxD2Ygvm6" target="_blank" dir="ltr">https://forms.gle/ReGU4xrLCxD2Ygvm6</a>
+      </p>
+    </noscript>
+
+  </div>
+</div>
+
+<!-- نسخة نصّ الرابط -->
+<script>
+document.getElementById('copyPromoLinkBtnAr')?.addEventListener('click', async function () {
+  try {
+    await navigator.clipboard.writeText('https://forms.gle/ReGU4xrLCxD2Ygvm6');
+    var original = this.textContent;
+    this.textContent = 'تم النسخ!';
+    setTimeout(() => { this.textContent = original; }, 1200);
+  } catch {
+    alert('تعذّر النسخ. استخدم الضغط المطوّل أو النقر بالزر الأيمن.');
+  }
+});
+</script>
+
+    </div>
+    
   </main>
 
   <!-- ===== FOOTER ===== -->
