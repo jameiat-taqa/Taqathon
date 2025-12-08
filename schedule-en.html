@@ -41,60 +41,38 @@
   .shadow-soft{ box-shadow:0 10px 30px rgba(0,0,0,.1); }
   .text-secondary{ color:var(--muted)!important; }
 
-  /* Navbar */
-  .navbar{
-    background:#fff;
-    box-shadow:0 2px 10px rgba(0,0,0,.04);
-    padding-top:.4rem;
-    padding-bottom:.4rem;
-  }
-  .logo-mark{ height:60px; width:auto; object-fit:contain; }
-  .assoc-logo{ height:48px; width:auto; object-fit:contain; }
-  .navbar-nav .nav-link{
-    font-weight:500;
-    color:var(--brand-dark);
-    transition:.2s;
-  }
-  .navbar-nav .nav-link:hover,
-  .navbar-nav .nav-link.active{
-    color:var(--brand-blue);
-  }
-  .btn-lang{
-    background:var(--brand-blue);
-    color:#fff !important;
-    border:none;
-    border-radius:.4rem;
-    padding:.35rem .9rem;
-    font-weight:500;
-    transition:.2s;
-    margin-left:1.25rem;
-  }
-  .btn-lang:hover{
-    background:var(--brand-green);
-    color:#fff !important;
-  }
-  .navbar .container{
-    position:relative;
-    flex-wrap:nowrap;
-  }
-  .navbar .navbar-brand,
-  .navbar .assoc-fixed{
-    flex-shrink:0;
-  }
-  @media (max-width:991.98px){
-    .navbar .navbar-collapse{
-      position:absolute;
-      inset-inline:0;
-      top:100%;
+ /* ===== NAVBAR (exact match to submissions/rules) ===== */
+    .navbar{
       background:#fff;
-      padding:.75rem 1rem;
-      border-top:1px solid #e9eef5;
-      box-shadow:0 10px 24px rgba(0,0,0,.08);
-      z-index:1000;
+      box-shadow:0 2px 10px rgba(0,0,0,.04);
+      padding-top:.4rem; padding-bottom:.4rem;
     }
-    .logo-mark{ height:44px; }
-    .assoc-logo{ height:32px; }
-  }
+    .logo-mark{ height:60px; width:auto; object-fit:contain; }
+    .assoc-logo{ height:48px; width:auto; object-fit:contain; }
+    .navbar-nav .nav-link{ font-weight:500; color:var(--brand-dark); transition:.2s; }
+    .navbar-nav .nav-link:hover,
+    .navbar-nav .nav-link.active{ color:var(--brand-blue); }
+
+    .btn-lang{
+      background:var(--brand-blue); color:#ffffff !important;
+      border:none; border-radius:.4rem;
+      padding:.35rem .9rem; font-weight:500; transition:.2s;
+    }
+    .btn-lang:hover{ background:var(--brand-green); color:#fff !important; }
+
+    .navbar .container{ position:relative; flex-wrap:nowrap; }
+    .navbar .navbar-brand,
+    .navbar .assoc-fixed{ flex-shrink:0; }
+    @media (max-width:991.98px){
+      .navbar .navbar-collapse{
+        position:absolute; inset-inline:0; top:100%;
+        background:#fff; padding:.75rem 1rem;
+        border-top:1px solid #e9eef5;
+        box-shadow:0 10px 24px rgba(0,0,0,.08);
+        z-index:1000;
+      }
+      .logo-mark{ height:44px; } .assoc-logo{ height:32px; }
+    }
 
   /* Icon + table styling */
   .icon-circle{
@@ -164,6 +142,25 @@
     color:#cfd6df;
     text-decoration:none;
   }
+  /* ===== Global / Edge + Scrollbar fix (non-destructive) ===== */
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: Poppins, Cairo, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+      background: #f8fbfd;
+      overflow-x: clip;               /* stop tiny right-edge line */
+    }
+    html { overflow: hidden; }        /* hide OS scrollbar track */
+    body {
+      height: 100vh;                  /* body becomes scroller */
+      overflow: auto;                 /* keep scrolling */
+      scrollbar-width: none;          /* Firefox: hide bar */
+    }
+    body::-webkit-scrollbar {         /* Chrome/Edge/Safari: hide bar */
+      width: 0;
+      height: 0;
+    }
   </style>
 </head>
 
@@ -182,19 +179,19 @@
           <li class="nav-item"><a class="nav-link active" href="schedule-en.html" aria-current="page">Schedule &amp; Workshops</a></li>
           <li class="nav-item"><a class="nav-link" href="submissions-en.html">Submissions</a></li>
           <li class="nav-item"><a class="nav-link" href="rules-en.html">Rules &amp; Resources</a></li>
+          <li class="nav-item"><a class="nav-link" href="gallery-en.html">Gallery</a></li>
           <li class="nav-item"><a class="nav-link" href="contact-en.html">Contact Us</a></li>
-          <li class="nav-item">
+          <li class="nav-item ms-3">
             <a class="btn btn-sm btn-lang" href="schedule.html">AR</a>
           </li>
         </ul>
       </div>
 
       <div class="assoc-fixed d-flex align-items-center gap-2">
-        <a href="https://taqa.org.sa" target="_blank" rel="noopener" class="d-block" aria-label="Energy Association for Sustainable Development website">
+        <a href="https://taqa.org.sa" target="_blank" rel="noopener" class="d-block" aria-label="Energy Association for Sustainable Development">
           <img src="assets/association-logo.png" alt="Energy Association for Sustainable Development" class="assoc-logo">
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
-          aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
       </div>

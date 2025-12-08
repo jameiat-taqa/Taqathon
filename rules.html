@@ -99,6 +99,29 @@
   /* Footer */
   footer{background:var(--brand-dark);color:#cfd6df;}
   footer a{color:#cfd6df;text-decoration:none;}
+  /* ===== Global / match EN (scrollbar + white sliver fix) ===== */
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: Cairo, Poppins, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+      background: #f8fbfd;
+      overflow-x: clip;
+    }
+    html { overflow: hidden; }        /* hide OS track to avoid “white bar” */
+    body {
+      height: 100vh;                  /* body = scroller (like EN) */
+      overflow: auto;
+      scrollbar-width: none;
+    }
+    body::-webkit-scrollbar { width:0; height:0; }
+    *, *::before, *::after { box-sizing: border-box; }
+    img, svg, canvas, video, iframe { max-width: 100%; height: auto; display: block; }
+
+    .rounded-2xl{ border-radius: 1rem; }
+    .shadow-soft{ box-shadow: 0 10px 30px rgba(0,0,0,.12); }
+    .badge-soft{ background:rgba(9,200,153,.15); color:#0a7b60; border:1px solid rgba(9,200,153,.3); }
+    .text-secondary{ color:var(--muted)!important; }
   </style>
 </head>
 
@@ -118,6 +141,7 @@
           <li class="nav-item"><a class="nav-link" href="schedule.html">الجدول وورش العمل</a></li>
           <li class="nav-item"><a class="nav-link" href="submissions.html">التسليمات</a></li>
           <li class="nav-item"><a class="nav-link active" href="rules.html">القواعد والموارد</a></li>
+          <li class="nav-item"><a class="nav-link" href="gallery.html">المرئيات</a></li>
           <li class="nav-item"><a class="nav-link" href="contact.html">تواصل معنا</a></li>
           <li class="nav-item"><a class="btn btn-sm btn-lang" href="rules-en.html">EN</a></li>
         </ul>

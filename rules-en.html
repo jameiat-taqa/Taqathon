@@ -97,6 +97,25 @@
   /* Footer */
   footer{ background:#00284C; color:#cfd6df; }
   footer a{ color:#cfd6df; text-decoration:none; }
+  /* ===== Global / Edge + Scrollbar fix (non-destructive) ===== */
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: Poppins, Cairo, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+      background: #f8fbfd;
+      overflow-x: clip;               /* stop tiny right-edge line */
+    }
+    html { overflow: hidden; }        /* hide OS scrollbar track */
+    body {
+      height: 100vh;                  /* body becomes scroller */
+      overflow: auto;                 /* keep scrolling */
+      scrollbar-width: none;          /* Firefox: hide bar */
+    }
+    body::-webkit-scrollbar {         /* Chrome/Edge/Safari: hide bar */
+      width: 0;
+      height: 0;
+    }
   </style>
 </head>
 
@@ -116,6 +135,7 @@
           <li class="nav-item"><a class="nav-link" href="schedule-en.html">Schedule & Workshops</a></li>
           <li class="nav-item"><a class="nav-link" href="submissions-en.html">Submissions</a></li>
           <li class="nav-item"><a class="nav-link active" href="rules-en.html">Rules & Resources</a></li>
+          <li class="nav-item"><a class="nav-link" href="gallery-en.html">Gallery</a></li>
           <li class="nav-item"><a class="nav-link" href="contact-en.html">Contact Us</a></li>
           <li class="nav-item ms-3">
             <a class="btn btn-sm btn-lang" href="rules.html">AR</a>
@@ -124,10 +144,10 @@
       </div>
 
       <div class="assoc-fixed d-flex align-items-center gap-2">
-        <a href="https://taqa.org.sa" target="_blank" rel="noopener">
-          <img src="assets/association-logo.png" alt="Energy Association Logo" class="assoc-logo">
+        <a href="https://taqa.org.sa" target="_blank" rel="noopener" class="d-block" aria-label="Energy Association for Sustainable Development">
+          <img src="assets/association-logo.png" alt="Energy Association for Sustainable Development" class="assoc-logo">
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
       </div>

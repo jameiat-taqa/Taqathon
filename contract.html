@@ -51,7 +51,7 @@
   .card-lite{ background:#fff; border:1px solid #e9eef3; }
   .btn-gradient{ background:var(--brand-grad); border:0; color:#fff; }
 
-  /* ===== NAVBAR (match other AR pages) ===== */
+  /* ===== NAVBAR ===== */
   .navbar{
     background:#fff;
     box-shadow:0 2px 10px rgba(0,0,0,.04);
@@ -64,6 +64,7 @@
   .navbar-nav .nav-link{ font-weight:500; color:var(--brand-dark); transition:.2s; }
   .navbar-nav .nav-link:hover,
   .navbar-nav .nav-link.active{ color:var(--brand-blue); }
+
   .btn-lang{
     background:var(--brand-blue); color:#ffffff !important;
     border:none; border-radius:.4rem;
@@ -82,6 +83,7 @@
     }
     .logo-mark{ height:44px; } .assoc-logo{ height:32px; }
   }
+
 
   /* ===== ICONS + BADGES ===== */
   .icon-circle{
@@ -115,12 +117,11 @@
   <!-- NAVBAR -->
   <nav class="navbar navbar-expand-lg navbar-light sticky-top">
     <div class="container d-flex align-items-center justify-content-between">
-      <!-- شعار طاقثون -->
-      <a class="navbar-brand d-flex align-items-center" href="index.html" aria-label="الصفحة الرئيسية لطاقَثون">
-        <img src="assets/taqathon-logo.png" alt="شعار طاقَثون" class="logo-mark">
+
+      <a class="navbar-brand d-flex align-items-center" href="index.html">
+        <img src="assets/taqathon-logo.png" alt="شعار طاقثون" class="logo-mark">
       </a>
 
-      <!-- الروابط -->
       <div class="collapse navbar-collapse justify-content-lg-center" id="mainNav">
         <ul class="navbar-nav mb-2 mb-lg-0 align-items-lg-center">
           <li class="nav-item"><a class="nav-link" href="index.html">الرئيسية</a></li>
@@ -128,21 +129,21 @@
           <li class="nav-item"><a class="nav-link" href="schedule.html">الجدول وورش العمل</a></li>
           <li class="nav-item"><a class="nav-link" href="submissions.html">التسليمات</a></li>
           <li class="nav-item"><a class="nav-link" href="rules.html">القواعد والموارد</a></li>
+          <li class="nav-item"><a class="nav-link" href="gallery.html">المرئيات</a></li>
           <li class="nav-item"><a class="nav-link" href="contact.html">تواصل معنا</a></li>
           <li class="nav-item"><a class="btn btn-sm btn-lang" href="contract-en.html">EN</a></li>
         </ul>
       </div>
 
-      <!-- شعار الجمعية -->
       <div class="assoc-fixed d-flex align-items-center gap-2">
-        <a href="https://taqa.org.sa" target="_blank" rel="noopener" aria-label="جمعية الطاقة للتنمية المستدامة">
-          <img src="assets/association-logo.png" alt="جمعية الطاقة للتنمية المستدامة" class="assoc-logo">
+        <a href="https://taqa.org.sa" target="_blank" rel="noopener">
+          <img src="assets/association-logo.png" class="assoc-logo" alt="جمعية الطاقة للتنمية المستدامة">
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
-                aria-controls="mainNav" aria-expanded="false" aria-label="تبديل القائمة">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
           <span class="navbar-toggler-icon"></span>
         </button>
       </div>
+
     </div>
   </nav>
 

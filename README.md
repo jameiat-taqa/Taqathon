@@ -5,8 +5,8 @@ Light theme, green→blue gradient accents, rounded components, fully responsive
 Arabic pages use the Bootstrap **RTL** build and `dir="rtl"` for proper layout and typography.
 
 ## Pages
-EN: `index.html`, `contract.html`, `schedule.html`, `submissions.html`, `rules.html`, `contact.html`
-AR: `index-ar.html`, `contract-ar.html`, `schedule-ar.html`, `submissions-ar.html`, `rules-ar.html`, `contact-ar.html`
+EN: `index-en.html`, `contract-en.html`, `schedule-en.html`, `submissions-en.html`, `rules-en.html`, `contact-en.html`, `gallery-en.html`
+AR: `index.html`, `contract.html`, `schedule.html`, `submissions.html`, `rules.html`, `contact.html`
 
 Language toggle in the navbar links the paired EN/AR page.
 
