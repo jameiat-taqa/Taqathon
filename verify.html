@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <title>التحقق من الشهادات | طاقَثون 2025</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Bootstrap (CSS) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+
+  <!-- Basic styles -->
+  <style>
+
+    :root {
+  --brand-blue: #007DFD;
+  --brand-green: #09C899;
+
+  /* Light theme tokens */
+  --text-main: #0f172a;   /* slate-900 */
+  --text-muted: #475569;  /* slate-600 */
+
+  --danger: #dc2626;
+  --warning: #f59e0b;
+}
+
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      /* Light premium background with subtle brand tint */
+      background:
+        radial-gradient(circle at top, rgba(0,125,253,0.14), transparent 55%),
+        radial-gradient(circle at bottom, rgba(9,200,153,0.12), transparent 60%),
+        linear-gradient(180deg, #f8fbff 0%, #ffffff 55%, #f5fbf8 100%);
+      color: #0f172a; /* slate-900 */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+
+    .card {
+      background:
+        radial-gradient(circle at top, rgba(0,125,253,0.12), transparent 55%),
+        radial-gradient(circle at bottom, rgba(9,200,153,0.10), transparent 60%),
+        rgba(255,255,255,0.92);
+      border-radius: 1.5rem;
+      padding: 24px 22px;
+      border: 1px solid rgba(15,23,42,0.08);
+      box-shadow:
+        0 24px 60px rgba(15,23,42,0.12),
+        0 0 0 1px rgba(15,23,42,0.04);
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(8px);
+    }
+
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top left, rgba(0,125,253,0.22), transparent 60%);
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    @media (max-width: 640px) {
+      .card {
+        padding: 18px 16px;
+      }
+    }
+    /* Bootstrap enhancements for this page */
+.verify-card{
+  background:
+    radial-gradient(circle at top, rgba(0,125,253,0.12), transparent 55%),
+    radial-gradient(circle at bottom, rgba(9,200,153,0.10), transparent 60%),
+    rgba(255,255,255,0.92);
+  border: 1px solid rgba(15,23,42,0.08);
+  border-radius: 1.5rem;
+  backdrop-filter: blur(8px);
+}
+
+.verify-badge{
+  border-color: rgba(15,23,42,0.10) !important;
+}
+
+.verify-dot{
+  display:inline-block;
+  width:10px;
+  height:10px;
+  border-radius:999px;
+  background: linear-gradient(135deg, var(--brand-green), var(--brand-blue));
+  box-shadow: 0 0 10px rgba(56,189,248,0.35);
+}
+
+/* Keep your status styles, but make them work with Bootstrap badges */
+#status-pill{
+  border: 1px solid rgba(15,23,42,0.08);
+}
+
+.status-valid{
+  background: rgba(22,163,74,0.14) !important;
+  color: #166534 !important;
+  border-color: rgba(34,197,94,0.35) !important;
+}
+
+.status-invalid{
+  background: rgba(220,38,38,0.12) !important;
+  color: #991b1b !important;
+  border-color: rgba(248,113,113,0.35) !important;
+}
+
+.status-missing{
+  background: rgba(245,158,11,0.12) !important;
+  color: #92400e !important;
+  border-color: rgba(251,191,36,0.35) !important;
+}
+
+.status-dot{
+  display:inline-block;
+  width:8px;
+  height:8px;
+  border-radius:999px;
+  background: currentColor;
+}
+
+/* Button: keep your brand gradient */
+.verify-btn{
+  border: none;
+  background: linear-gradient(135deg, var(--brand-blue), var(--brand-green));
+}
+.verify-btn:hover{
+  filter: brightness(0.97);
+}
+
+/* Certificate input styling */
+.cert-input-group {
+  border-radius: 0.75rem;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  transition: all 0.2s ease;
+}
+
+.cert-input-group:focus-within {
+  box-shadow: 0 4px 16px rgba(0, 125, 253, 0.2);
+  border-color: var(--brand-blue);
+}
+
+.cert-label {
+  background: linear-gradient(135deg, rgba(0, 125, 253, 0.1), rgba(9, 200, 153, 0.08)) !important;
+  border: none !important;
+  border-right: 1px solid rgba(15, 23, 42, 0.12) !important;
+  color: var(--text-main);
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 12px 16px;
+  white-space: nowrap;
+}
+
+.cert-input {
+  border: none !important;
+  padding: 12px 16px !important;
+  font-size: 0.95rem;
+  background: rgba(255, 255, 255, 0.95) !important;
+  transition: all 0.2s ease;
+}
+
+.cert-input:focus {
+  background: rgba(255, 255, 255, 1) !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.cert-input::placeholder {
+  color: rgba(148, 163, 184, 0.6);
+  font-size: 0.9rem;
+}
+/* Header layout: logos left, title right, same row */
+.verify-header {
+  min-height: 64px;
+}
+
+.verify-logos {
+  min-width: 160px; /* prevents collapsing too early */
+}
+
+.verify-logo {
+  height: 56px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+/* Ensure title stays right-aligned and wraps nicely */
+.verify-title {
+  line-height: 1.2;
+}
+
+/* Mobile: allow wrapping, keep it clean */
+@media (max-width: 576px) {
+  .verify-header {
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+  }
+  .verify-title {
+    width: 100%;
+    text-align: center !important;
+  }
+  .verify-logos {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <div class="container py-4">
+    <div class="row justify-content-center">
+      <div class="col-12 col-lg-9">
+
+        <!-- Card -->
+        <div class="card border-0 shadow-sm verify-card">
+          <div class="card-body p-4">
+
+            <!-- Header -->
+            <div class="d-flex align-items-center justify-content-between gap-3 mb-3 flex-nowrap verify-header">
+              <!-- Logos (left) -->
+              <div class="d-flex align-items-center gap-3 flex-nowrap verify-logos">
+                <img class="verify-logo" src="assets/association-logo.png" alt="جمعية الطاقة للتنمية المستدامة" />
+                <img class="verify-logo" src="assets/taqathon-logo.png" alt="طاقَثون 2025" />
+              </div>
+
+              <!-- Title (right) -->
+              <div class="text-end verify-title">
+                <h1 class="h4 fw-bold mb-0">طاقَثون 2025</h1>
+                <div class="text-muted small">بوابة التحقق من الشهادات</div>
+              </div>
+            </div>
+
+            <!-- Top row: badge + status -->
+            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+              <span class="badge rounded-pill text-bg-light border verify-badge">
+                <span class="verify-dot me-2"></span>
+                بوابة التحقق من الشهادات
+              </span>
+
+              <span id="status-pill" class="badge rounded-pill status-missing px-3 py-2">
+                <span class="status-dot me-2"></span>
+                <span id="status-text">الرجاء إدخال رقم الشهادة</span>
+              </span>
+            </div>
+
+            <div class="text-center mb-4">
+              <h2 class="h5 fw-bold mb-1">التحقق من صحة الشهادة</h2>
+              <p class="text-muted mb-0">امسح رمز الـ QR</p>
+            </div>
+
+            <!-- Input -->
+            <div class="row g-2 align-items-center mb-2">
+              <div class="col-12 col-md">
+                <div class="input-group cert-input-group">
+                  <span class="input-group-text cert-label">رقم الشهادة</span>
+                  <input id="certId" type="text" class="form-control cert-input" placeholder="مثال: TAQ-2025-J-001" autocomplete="off" />
+                </div>
+              </div>
+              <div class="col-12 col-md-auto">
+                <button id="checkBtn" class="btn btn-primary w-100 verify-btn">
+                  <i class="bi bi-search ms-1"></i>
+                  تحقّق
+                </button>
+              </div>
+            </div>
+
+            <div class="text-muted small mb-3">
+              ملاحظة: جميع شهادات طاقَثون الرسمية تحتوي على رمز QR يقود إلى هذه الصفحة.
+            </div>
+
+            <!-- Result -->
+            <div id="resultContainer" class="border rounded-4 p-3 bg-white" style="display:none;">
+              <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-2">
+                <div class="fw-semibold" id="resultTitle"></div>
+                <div class="text-muted small" id="resultMeta"></div>
+              </div>
+
+              <div id="resultBody" class="mb-2"></div>
+
+              <div id="resultEnglishNote" class="pt-2 mt-2 border-top text-muted small" style="direction:ltr; text-align:left;"></div>
+            </div>
+
+            <!-- Footer -->
+            <div class="text-center text-muted small mt-4">
+              في حال وجود أي استفسار حول صحة الشهادة يمكن التواصل عبر البريد الإلكتروني:
+              <span class="fw-semibold">info@jameiat-taqa.sa</span>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // -------------------------------
+    // 1) Certificate registry
+    // -------------------------------
+    // TODO: add all your certificates here.
+    // Key = certificate ID (exactly as printed)
+    // Value = metadata
+    const CERTIFICATES = {
+  // طاقَثون 2025 — شهادات المحكّمين الرسميّة
+
+  "TAQ-2025-J-001": {
+    arName: "د. أحلام سعود الثبيتي",
+    enName: "Dr. Ahlam Saud Althubaity",
+    roleAr: "خبيرة محكّمة في طاقَثون 2025",
+    roleEn: "Expert Judge at Taqathon 2025",
+    type: "judge",
+    eventAr: "طاقَثون الطاقة 2025",
+    eventEn: "Taqathon 2025 – Energy Hackathon",
+    issueDateAr: "5 ديسمبر 2025",
+    issueDateEn: "5 December 2025",
+    periodAr: "خلال الفترة من 30 أغسطس إلى 2 ديسمبر 2025",
+    periodEn: "during the period 30 August – 2 December 2025",
+  },
+
+  "TAQ-2025-J-002": {
+    arName: "د. مها عبدالجبار ظفر",
+    enName: "Dr. Maha Abduljabbar Dhafer",
+    roleAr: "خبيرة محكّمة في طاقَثون 2025",
+    roleEn: "Expert Judge at Taqathon 2025",
+    type: "judge",
+    eventAr: "طاقَثون الطاقة 2025",
+    eventEn: "Taqathon 2025 – Energy Hackathon",
+    issueDateAr: "5 ديسمبر 2025",
+    issueDateEn: "5 December 2025",
+    periodAr: "خلال الفترة من 30 أغسطس إلى 2 ديسمبر 2025",
+    periodEn: "during the period 30 August – 2 December 2025",
+  },
+
+  "TAQ-2025-J-003": {
+    arName: "د. عهود سعود الثبيتي",
+    enName: "Dr. Ohoud Saud Althubaity",
+    roleAr: "خبيرة محكّمة في طاقَثون 2025",
+    roleEn: "Expert Judge at Taqathon 2025",
+    type: "judge",
+    eventAr: "طاقَثون الطاقة 2025",
+    eventEn: "Taqathon 2025 – Energy Hackathon",
+    issueDateAr: "5 ديسمبر 2025",
+    issueDateEn: "5 December 2025",
+    periodAr: "خلال الفترة من 30 أغسطس إلى 2 ديسمبر 2025",
+    periodEn: "during the period 30 August – 2 December 2025",
+  },
+
+  "TAQ-2025-J-004": {
+    arName: "م. علي حسن الغبيشي",
+    enName: "Eng. Ali Hassan Alghubaishi",
+    roleAr: "خبير محكّم في طاقَثون 2025",
+    roleEn: "Expert Judge at Taqathon 2025",
+    type: "judge",
+    eventAr: "طاقَثون الطاقة 2025",
+    eventEn: "Taqathon 2025 – Energy Hackathon",
+    issueDateAr: "5 ديسمبر 2025",
+    issueDateEn: "5 December 2025",
+    periodAr: "خلال الفترة من 30 أغسطس إلى 2 ديسمبر 2025",
+    periodEn: "during the period 30 August – 2 December 2025",
+  },
+
+  "TAQ-2025-J-005": {
+    arName: "م. فريد زروال",
+    enName: "Eng. Farid Zarwal",
+    roleAr: "خبير محكّم في طاقَثون 2025",
+    roleEn: "Expert Judge at Taqathon 2025",
+    type: "judge",
+    eventAr: "طاقَثون الطاقة 2025",
+    eventEn: "Taqathon 2025 – Energy Hackathon",
+    issueDateAr: "5 ديسمبر 2025",
+    issueDateEn: "5 December 2025",
+    periodAr: "خلال الفترة من 30 أغسطس إلى 2 ديسمبر 2025",
+    periodEn: "during the period 30 August – 2 December 2025",
+  },
+
+  "TAQ-2025-J-006": {
+    arName: "د. هيثم محمد رضوي",
+    enName: "Dr. Haitham Mohammed Radwi",
+    roleAr: "خبير محكّم في طاقَثون 2025",
+    roleEn: "Expert Judge at Taqathon 2025",
+    type: "judge",
+    eventAr: "طاقَثون الطاقة 2025",
+    eventEn: "Taqathon 2025 – Energy Hackathon",
+    issueDateAr: "5 ديسمبر 2025",
+    issueDateEn: "5 December 2025",
+    periodAr: "خلال الفترة من 30 أغسطس إلى 2 ديسمبر 2025",
+    periodEn: "during the period 30 August – 2 December 2025",
+  },
+};
+
+
+    // Helper: read URL param
+    function getQueryParam(name) {
+      const url = new URL(window.location.href);
+      return url.searchParams.get(name);
+    }
+
+    const certInput = document.getElementById("certId");
+    const checkBtn = document.getElementById("checkBtn");
+    const resultContainer = document.getElementById("resultContainer");
+    const resultTitle = document.getElementById("resultTitle");
+    const resultMeta = document.getElementById("resultMeta");
+    const resultBody = document.getElementById("resultBody");
+    const resultEnglishNote = document.getElementById("resultEnglishNote");
+    const statusPill = document.getElementById("status-pill");
+    const statusText = document.getElementById("status-text");
+
+    function setStatus(type, message) {
+      statusPill.classList.remove("status-valid", "status-invalid", "status-missing");
+
+      if (type === "valid") {
+        statusPill.classList.add("status-valid");
+      } else if (type === "invalid") {
+        statusPill.classList.add("status-invalid");
+      } else {
+        statusPill.classList.add("status-missing");
+      }
+
+      statusText.textContent = message;
+    }
+
+    function showResult(certId, cert) {
+      resultContainer.style.display = "block";
+
+      if (!cert) {
+        resultTitle.textContent = "لم يتم العثور على الشهادة";
+        resultMeta.innerHTML = `<span>رقم الشهادة: ${certId}</span>`;
+        resultBody.innerHTML =
+          "لم نتمكّن من العثور على شهادة مطابقة لرقم الشهادة المدخَل. الرجاء التأكد من الرقم كما يظهر في الشهادة، أو التواصل مع الجمعية للتحقق يدويًا.";
+        resultEnglishNote.textContent =
+          "No certificate found for the provided ID. Please verify the certificate number or contact the Association for manual verification.";
+        setStatus("invalid", "الشهادة غير موجودة في السجل");
+        return;
+      }
+
+      // Valid certificate
+      resultTitle.textContent = `الشهادة صالحة وصادرة عن جمعية الطاقة للتنمية المستدامة`;
+
+      resultMeta.innerHTML = `رقم الشهادة: ${certId} • نوع الشهادة: ${cert.type === "judge" ? "شهادة خبرة" : "شهادة"} • تاريخ الإصدار: ${cert.issueDateAr}`;
+
+
+      resultBody.innerHTML = `
+        تُؤكّد جمعية الطاقة للتنمية المستدامة أن:
+        <br />
+        <b>${cert.arName}</b>
+        <br />
+        قد شارك/شاركت بصفة <b>${cert.roleAr}</b> ضمن
+        <b>${cert.eventAr}</b>، وذلك ${cert.periodAr}.
+      `;
+
+      resultEnglishNote.innerHTML = `
+        This is to certify that <b>${cert.enName}</b> has served as
+        <b>${cert.roleEn}</b> in <b>${cert.eventEn}</b>, ${cert.periodEn}.
+        <br />
+        Issued by the Energy Association for Sustainable Development on ${cert.issueDateEn}.
+      `;
+
+      setStatus("valid", "الشهادة صالحة ✅");
+    }
+
+    function handleCheck() {
+      const raw = certInput.value.trim();
+      if (!raw) {
+        setStatus("missing", "الرجاء إدخال رقم الشهادة");
+        resultContainer.style.display = "none";
+        return;
+      }
+
+      // We keep the ID exactly as typed (case-sensitive),
+      // but you can normalize when adding keys above if needed.
+      const certId = raw.toUpperCase();
+      const cert = CERTIFICATES[certId];
+      showResult(certId, cert);
+    }
+
+    checkBtn.addEventListener("click", handleCheck);
+    certInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        handleCheck();
+      }
+    });
+
+    // Auto-check if ?id= is present in URL
+    const initialId = getQueryParam("id");
+    if (initialId) {
+      certInput.value = initialId;
+      handleCheck();
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
