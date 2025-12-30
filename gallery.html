@@ -83,26 +83,19 @@
       .logo-mark{ height:44px; } .assoc-logo{ height:32px; }
     }
 
-    /* ===== HERO ===== */
-    .hero{
-      padding:3rem 0;
-      background:
-        radial-gradient(circle at top right, rgba(0, 125, 253, 0.12), transparent 55%),
-        radial-gradient(circle at top left, rgba(9, 200, 153, 0.12), transparent 55%),
-        #ffffff;
-      border-bottom:1px solid #e2e8f0;
-      text-align:center;
-    }
-    .hero-title{
-      font-size:clamp(1.8rem, 3vw, 2.4rem);
-      font-weight:700;
-      color:var(--brand-dark);
-    }
-    .hero-subtitle{
-      font-size:1rem;
-      color:#475569;
-      max-width:640px;
-      margin:1rem auto 0;
+    /* ===== ICON CIRCLE ===== */
+    .icon-circle{
+      width:64px;
+      height:64px;
+      border-radius:999px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      background:linear-gradient(180deg,#eef6ff,#f3fbff);
+      border:1px solid #c9ddff;
+      color:var(--brand-blue);
+      box-shadow:0 4px 16px rgba(0,125,253,.25);
+      font-size:1.6rem;
     }
 
     /* ===== GALLERY ===== */
@@ -158,6 +151,83 @@
       border:none;
     }
 
+    /* ===== LOAD MORE BUTTON ===== */
+    #loadMoreBtn{
+      background:var(--brand-blue);
+      color:#fff;
+      border:none;
+      border-radius:.5rem;
+      padding:.5rem 1.5rem;
+      font-weight:500;
+      transition:background .2s ease, transform .2s ease, box-shadow .2s ease;
+      box-shadow:0 2px 8px rgba(0,125,253,.2);
+    }
+    #loadMoreBtn:hover:not(:disabled){
+      background:var(--brand-green);
+      transform:translateY(-1px);
+      box-shadow:0 4px 12px rgba(9,200,153,.3);
+      color:#fff;
+    }
+    #loadMoreBtn:active:not(:disabled){
+      transform:translateY(0);
+    }
+    #loadMoreBtn:disabled{
+      background:var(--muted);
+      cursor:not-allowed;
+      opacity:.7;
+      box-shadow:none;
+    }
+
+    /* ===== BACK TO TOP BUTTON ===== */
+    .back-to-top{
+      position:fixed;
+      bottom:2rem;
+      left:2rem;
+      width:3rem;
+      height:3rem;
+      border-radius:50%;
+      background:var(--brand-blue);
+      color:#fff;
+      border:none;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:1.25rem;
+      box-shadow:0 4px 12px rgba(0,125,253,.3);
+      cursor:pointer;
+      opacity:0;
+      visibility:hidden;
+      transition:opacity .3s ease, visibility .3s ease, transform .2s ease, background .2s ease;
+      z-index:9999;
+      pointer-events:none;
+    }
+    .back-to-top.show{
+      opacity:1;
+      visibility:visible;
+      pointer-events:auto;
+    }
+    .back-to-top:hover{
+      background:var(--brand-green);
+      transform:translateY(-2px);
+      box-shadow:0 6px 16px rgba(9,200,153,.4);
+    }
+    .back-to-top:active{
+      transform:translateY(0);
+    }
+    @media (max-width:575.98px){
+      .back-to-top{
+        bottom:1.5rem;
+        left:1.5rem;
+        width:2.75rem;
+        height:2.75rem;
+        font-size:1.1rem;
+      }
+    }
+
+    .modal-content .btn-close {
+      z-index: 5;
+    }
+
     /* ===== FOOTER ===== */
     footer{
       background:var(--brand-dark);
@@ -207,56 +277,37 @@
   </nav>
 
   <!-- MAIN -->
-  <main>
-
-    <!-- HERO -->
-    <section class="hero">
-      <div class="container">
-        <h1 class="hero-title">مرئيات الحفل الختامي</h1>
-        <p class="hero-subtitle">
-          لقطات من العروض النهائية، إعلان الفائزين، وتكريم الفرق المشاركة في طاقَثون 2025.
-        </p>
-      </div>
-    </section>
-
-    <!-- GALLERY GRID -->
-    <section class="py-5">
-      <div class="container">
-        <div class="row g-4">
-
-          <!-- Example card -->
-          <div class="col-sm-6 col-lg-4">
-            <div class="gallery-card">
-              <div class="gallery-img-wrapper">
-                <img src="" alt="مشهد من الحفل الختامي">
-                <span class="gallery-badge"></span>
-                <button class="gallery-zoom-icon"
-                        data-bs-toggle="modal"
-                        data-bs-target="#zoomModal"
-                        data-full="assets/taqathon-logo.png"
-                        aria-label="عرض الصورة بالحجم الكامل">
-                  <i class="bi bi-arrows-fullscreen"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <!-- أضف المزيد من البطاقات بنفس النمط -->
-
-
-
-          
+  <main class="py-5">
+    <div class="container">
+      <!-- Page header -->
+      <div class="text-center mb-5">
+        <div class="icon-circle mx-auto mb-3">
+          <i class="bi bi-images"></i>
         </div>
+        <h5 class="mb-1 fw-bold">مرئيات الحفل الختامي</h5>
+        <div style="height: 20px;"></div>
       </div>
-    </section>
 
+      <!-- GALLERY -->
+      <div class="row g-4" id="galleryGrid"></div>
+
+      <div class="d-flex flex-column flex-sm-row align-items-center justify-content-between gap-2 mt-4">
+        <div class="small text-secondary">
+          عرض <span id="shownCount">0</span> من <span id="totalCount">0</span>
+        </div>
+        <button class="btn btn-primary btn-sm px-4" id="loadMoreBtn" type="button">
+          تحميل المزيد
+        </button>
+      </div>
+    </div>
   </main>
 
   <!-- LIGHTBOX MODAL -->
   <div class="modal fade" id="zoomModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-xl">
-      <div class="modal-content bg-black border-0">
-        <button class="btn-close btn-close-white ms-auto m-2" data-bs-dismiss="modal" aria-label="إغلاق"></button>
+      <div class="modal-content bg-black border-0 position-relative">
+        <button class="btn-close btn-close-white position-absolute top-0 start-0 m-3"
+                data-bs-dismiss="modal" aria-label="إغلاق"></button>
         <img id="zoomImage" class="w-100" src="" alt="صورة بالحجم الكامل">
       </div>
     </div>
@@ -309,6 +360,166 @@
     // Footer year
     const y = document.getElementById('year');
     if (y) y.textContent = new Date().getFullYear();
+
+    // Back to top button
+    const backToTopBtn = document.getElementById('backToTop');
+    if (backToTopBtn) {
+      // Function to check scroll position - body is the scroll container
+      function checkScroll() {
+        const scrollTop = document.body.scrollTop || document.documentElement.scrollTop || window.pageYOffset || 0;
+        if (scrollTop > 200) {
+          backToTopBtn.classList.add('show');
+        } else {
+          backToTopBtn.classList.remove('show');
+        }
+      }
+
+      // Show/hide button based on scroll position
+      // Listen to body scroll since body has overflow:auto
+      document.body.addEventListener('scroll', checkScroll, { passive: true });
+      window.addEventListener('scroll', checkScroll, { passive: true });
+      // Also check on load and after images load
+      window.addEventListener('load', checkScroll);
+      // Check immediately
+      checkScroll();
+      setTimeout(checkScroll, 100);
+      setTimeout(checkScroll, 500); // Check after a short delay
+      
+      // Check periodically in case scroll events aren't firing
+      setInterval(checkScroll, 100);
+
+      // Smooth scroll to top on click
+      backToTopBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        document.body.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+        document.documentElement.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+    }
+  </script>
+<script>
+  (function () {
+    const grid = document.getElementById('galleryGrid');
+    const btn = document.getElementById('loadMoreBtn');
+    const shownEl = document.getElementById('shownCount');
+    const totalEl = document.getElementById('totalCount');
+
+    if (!grid || !btn || !shownEl || !totalEl) return;
+
+    const BATCH = 24; // 24 per click (fast + smooth)
+    let files = [];
+    let index = 0;
+
+    function updateCounts() {
+      shownEl.textContent = String(Math.min(index, files.length));
+      totalEl.textContent = String(files.length);
+      btn.disabled = index >= files.length;
+      btn.textContent = btn.disabled ? 'تم التحميل بالكامل' : 'تحميل المزيد';
+    }
+
+    function renderBatch() {
+      const slice = files.slice(index, index + BATCH);
+      index += slice.length;
+
+      const frag = document.createDocumentFragment();
+
+      slice.forEach((name) => {
+        const path = `assets/gallery/${name}`;
+
+        const col = document.createElement('div');
+        col.className = 'col-sm-6 col-lg-4';
+        col.innerHTML = `
+          <div class="gallery-card">
+            <div class="gallery-img-wrapper">
+              <img
+                src="${path}"
+                alt="طاقثون الحفل الختامي"
+                loading="lazy"
+                decoding="async"
+              >
+              <button class="gallery-zoom-icon"
+                data-bs-toggle="modal"
+                data-bs-target="#zoomModal"
+                data-full="${path}">
+                <i class="bi bi-arrows-fullscreen"></i>
+              </button>
+            </div>
+          </div>
+        `;
+
+        // If an image fails, remove the card (prevents black boxes)
+        const img = col.querySelector('img');
+        img.addEventListener('error', () => col.remove());
+
+        frag.appendChild(col);
+      });
+
+      // Append to DOM immediately
+      grid.appendChild(frag);
+      updateCounts();
+    }
+
+    fetch('gallery.json')
+      .then(r => {
+        if (!r.ok) throw new Error(`HTTP error! status: ${r.status}`);
+        return r.json();
+      })
+      .then((data) => {
+        files = Array.isArray(data) ? data : [];
+        index = 0;
+        updateCounts();
+        renderBatch(); // initial batch
+      })
+      .catch((error) => {
+        console.error('Error loading gallery.json:', error);
+        if (grid) {
+          grid.innerHTML = '<div class="col-12"><p class="text-center text-danger">خطأ في تحميل الصور. يرجى تحديث الصفحة.</p></div>';
+        }
+      });
+
+    btn.addEventListener('click', renderBatch);
+  })();
+</script>
+
+  <!-- BACK TO TOP BUTTON -->
+  <button class="back-to-top" id="backToTop" aria-label="العودة للأعلى">
+    <i class="bi bi-arrow-up"></i>
+  </button>
+
+  <script>
+    // Ensure back to top button works after DOM is ready
+    document.addEventListener('DOMContentLoaded', function() {
+      const backToTopBtn = document.getElementById('backToTop');
+      if (backToTopBtn) {
+        function checkScroll() {
+          const scrollTop = document.body.scrollTop || document.documentElement.scrollTop || window.pageYOffset || 0;
+          if (scrollTop > 200) {
+            backToTopBtn.classList.add('show');
+          } else {
+            backToTopBtn.classList.remove('show');
+          }
+        }
+
+        document.body.addEventListener('scroll', checkScroll, { passive: true });
+        window.addEventListener('scroll', checkScroll, { passive: true });
+        window.addEventListener('load', checkScroll);
+        checkScroll();
+        setTimeout(checkScroll, 100);
+        setTimeout(checkScroll, 500);
+        setInterval(checkScroll, 100);
+
+        backToTopBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          document.body.scrollTo({ top: 0, behavior: 'smooth' });
+          document.documentElement.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+    });
   </script>
 
 </body>
