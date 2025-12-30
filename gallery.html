@@ -491,36 +491,5 @@
     <i class="bi bi-arrow-up"></i>
   </button>
 
-  <script>
-    // Ensure back to top button works after DOM is ready
-    document.addEventListener('DOMContentLoaded', function() {
-      const backToTopBtn = document.getElementById('backToTop');
-      if (backToTopBtn) {
-        function checkScroll() {
-          const scrollTop = document.body.scrollTop || document.documentElement.scrollTop || window.pageYOffset || 0;
-          if (scrollTop > 200) {
-            backToTopBtn.classList.add('show');
-          } else {
-            backToTopBtn.classList.remove('show');
-          }
-        }
-
-        document.body.addEventListener('scroll', checkScroll, { passive: true });
-        window.addEventListener('scroll', checkScroll, { passive: true });
-        window.addEventListener('load', checkScroll);
-        checkScroll();
-        setTimeout(checkScroll, 100);
-        setTimeout(checkScroll, 500);
-        setInterval(checkScroll, 100);
-
-        backToTopBtn.addEventListener('click', (e) => {
-          e.preventDefault();
-          document.body.scrollTo({ top: 0, behavior: 'smooth' });
-          document.documentElement.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-      }
-    });
-  </script>
-
 </body>
 </html>
