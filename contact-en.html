@@ -1,4 +1,19 @@
 <!doctype html>
+<!--
+  TAQATHON - English Contact Page (contact-en.html)
+  
+  Contact page with form submission and organization information.
+  Features:
+  - Contact form with Google Apps Script integration
+  - Contact information display
+  - Supervising and supporting entities logos
+  - Location map (Google Maps embed)
+  
+  To customize:
+  - Update CONTACT_SCRIPT_URL in JavaScript section
+  - Modify contact information (email, phone, website)
+  - Update map coordinates if location changes
+-->
 <html lang="en" dir="ltr">
 <head>
   <meta charset="utf-8">
@@ -13,54 +28,19 @@
   <!-- Bootstrap 5 + Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  
+  <!-- Shared Styles -->
+  <link href="assets/common.css" rel="stylesheet">
 
   <style>
+  /* Page-specific variables */
   :root{
-    --brand-blue:#007DFD; --brand-green:#09C899; --brand-dark:#00284C;
-    --brand-grad: linear-gradient(90deg, #09C899, #007DFD);
-    --text:#1d2733; --muted:#66768a; --panel-border:#e9eef3;
-  }
-
-  /* === MATCH rules.html base layout exactly === */
-  html,body{ height:100%; }
-  html,body{
-    font-family:Poppins, Cairo, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    color:var(--text);
-    background:#f8fbfd;
-  }
-  body{ display:flex; flex-direction:column; min-height:100vh; }
-  main{ flex:1 0 auto; }
-  footer{ flex-shrink:0; }
-
-  /* Navbar (submissions style) */
-  .navbar{
-    background:#fff; box-shadow:0 2px 10px rgba(0,0,0,.04);
-    padding-top:.4rem; padding-bottom:.4rem;
-  }
-  .logo-mark{ height:60px; width:auto; object-fit:contain; }
-  .assoc-logo{ height:48px; width:auto; object-fit:contain; }
-  .navbar-nav .nav-link{ font-weight:500; color:var(--brand-dark); transition:.2s; }
-  .navbar-nav .nav-link:hover, .navbar-nav .nav-link.active{ color:var(--brand-blue); }
-  .btn-lang{
-    background:var(--brand-blue); color:#fff !important; border:none; border-radius:.4rem;
-    padding:.35rem .9rem; font-weight:500; transition:.2s;
-  }
-  .btn-lang:hover{ background:var(--brand-green); color:#fff !important; }
-  .navbar .container{ position:relative; flex-wrap:nowrap; }
-  .navbar .navbar-brand, .navbar .assoc-fixed{ flex-shrink:0; }
-  @media (max-width:991.98px){
-    .navbar .navbar-collapse{
-      position:absolute; inset-inline:0; top:100%;
-      background:#fff; padding:.75rem 1rem; border-top:1px solid #e9eef5; box-shadow:0 10px 24px rgba(0,0,0,.08); z-index:1000;
-    }
-    .logo-mark{ height:44px; } .assoc-logo{ height:32px; }
+    --panel-border:#e9eef3;
   }
 
   /* Panels */
   .panel{ background:#fff; border:1px solid var(--panel-border); border-radius:12px; }
-  .shadow-soft{ box-shadow:0 10px 30px rgba(0,0,0,.08); }
   .panel-header{ font-weight:600; }
-  .text-secondary{ color:var(--muted)!important; }
 
   /* Form */
   .btn-gradient{ background: var(--brand-grad); color:#fff; border:0; font-weight:600; padding:.65rem 1rem; border-radius:.6rem; }
@@ -77,28 +57,6 @@
     width:auto;
     object-fit:contain;
   }
-  /* Footer */
-  footer{ background:#00284C; color:#cfd6df; }
-  footer a{ color:#cfd6df; text-decoration:none; }
-  /* ===== Global / Edge + Scrollbar fix (non-destructive) ===== */
-    html, body {
-      margin: 0;
-      padding: 0;
-      font-family: Poppins, Cairo, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      color: var(--text);
-      background: #f8fbfd;
-      overflow-x: clip;               /* stop tiny right-edge line */
-    }
-    html { overflow: hidden; }        /* hide OS scrollbar track */
-    body {
-      height: 100vh;                  /* body becomes scroller */
-      overflow: auto;                 /* keep scrolling */
-      scrollbar-width: none;          /* Firefox: hide bar */
-    }
-    body::-webkit-scrollbar {         /* Chrome/Edge/Safari: hide bar */
-      width: 0;
-      height: 0;
-    }
   </style>
 </head>
 
@@ -107,7 +65,7 @@
   <nav class="navbar navbar-expand-lg navbar-light sticky-top">
     <div class="container d-flex align-items-center justify-content-between">
       <a class="navbar-brand d-flex align-items-center" href="index-en.html">
-        <img src="assets/taqathon-logo.png" alt="Taqathon logo" class="logo-mark">
+        <img src="assets/logos/taqathon-logo.png" alt="Taqathon logo" class="logo-mark">
       </a>
 
       <div class="collapse navbar-collapse justify-content-lg-center" id="mainNav">
@@ -125,7 +83,7 @@
 
       <div class="assoc-fixed d-flex align-items-center gap-2">
         <a href="https://jameiat-taqa.sa" target="_blank" rel="noopener" class="d-block" aria-label="Energy Association for Sustainable Development">
-          <img src="assets/association-logo.png" alt="Energy Association for Sustainable Development" class="assoc-logo">
+          <img src="assets/logos/association-logo.png" alt="Energy Association for Sustainable Development" class="assoc-logo">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -211,7 +169,7 @@
 
               <div class="col-6 col-md-5 d-flex flex-column align-items-center text-center">
                 <div style="height:90px; display:flex; align-items:center; justify-content:center;">
-                  <img src="assets/ministry-of-energy-logo.png" alt="Ministry of Energy" class="img-fluid sponsor-logo">
+                  <img src="assets/sponsors/ministry-of-energy-logo.png" alt="Ministry of Energy" class="img-fluid sponsor-logo">
                 </div>
                 <div style="min-height:50px; display:flex; align-items:center; justify-content:center; margin-top:0.75rem;">
                   <div class="badge rounded-pill px-3 py-2" style="background:#e9f3ff; color:#00284C; font-weight:600;">
@@ -225,7 +183,7 @@
 
               <div class="col-6 col-md-5 d-flex flex-column align-items-center text-center">
                 <div style="height:90px; display:flex; align-items:center; justify-content:center;">
-                  <img src="assets/NCNP-Sector-Logo.png" alt="National Center for Non-Profit Sector" class="img-fluid sponsor-logo">
+                  <img src="assets/sponsors/NCNP-Sector-Logo.png" alt="National Center for Non-Profit Sector" class="img-fluid sponsor-logo">
                 </div>
                 <div style="min-height:50px; display:flex; align-items:center; justify-content:center; margin-top:0.75rem;">
                   <div class="badge rounded-pill px-3 py-2" style="background:#e9f3ff; color:#00284C; font-weight:600;">
@@ -245,32 +203,32 @@
 
           <div class="row g-3 justify-content-evenly align-items-center text-center">
 
-            <div class="col-6 col-md-3">
-              <img src="assets/Associations-Support-Fund-Logo.png"
+            <div class="col-6 col-md-3 d-flex flex-column align-items-center">
+              <img src="assets/sponsors/Associations-Support-Fund-Logo.png"
                   alt="Associations Support Fund"
                   class="img-fluid sponsor-logo mb-2">
-              <div class="small text-secondary">Associations Support Fund</div>
+              <div class="small text-secondary text-center">Associations Support Fund</div>
             </div>
 
-            <div class="col-6 col-md-3">
-              <img src="assets/university-of-jeddah-logo.png"
+            <div class="col-6 col-md-3 d-flex flex-column align-items-center">
+              <img src="assets/sponsors/university-of-jeddah-logo.png"
                   alt="University of Jeddah"
                   class="img-fluid sponsor-logo mb-2">
-              <div class="small text-secondary">University of Jeddah</div>
+              <div class="small text-secondary text-center">University of Jeddah</div>
             </div>
 
-            <div class="col-6 col-md-3">
-              <img src="assets/york-logo.png"
+            <div class="col-6 col-md-3 d-flex flex-column align-items-center">
+              <img src="assets/sponsors/york-logo.png"
                   alt="York"
                   class="img-fluid sponsor-logo mb-2">
-              <div class="small text-secondary">York</div>
+              <div class="small text-secondary text-center">York</div>
             </div>
 
-            <div class="col-6 col-md-3">
-              <img src="assets/Tanmia-logo.png"
+            <div class="col-6 col-md-3 d-flex flex-column align-items-center">
+              <img src="assets/sponsors/Tanmia-logo.png"
                   alt="Tanmia Al-Qura Charity"
                   class="img-fluid sponsor-logo mb-2">
-              <div class="small text-secondary">Tanmia Al-Qura Charity</div>
+              <div class="small text-secondary text-center">Tanmia Al-Qura Charity</div>
             </div>
 
           </div>
@@ -324,22 +282,49 @@
 
   <!-- JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/common.js"></script>
   <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // ====== CONFIG your deployed Google Apps Script Web App URL ======
+    /**
+     * Contact Form Handler
+     * Submits contact form data to Google Apps Script for email processing.
+     * 
+     * SETUP REQUIRED:
+     * 1. Create a Google Apps Script that receives form data
+     * 2. Deploy it as a Web App with "Anyone" access
+     * 3. Update CONTACT_SCRIPT_URL below with your Web App URL
+     * 
+     * Features:
+     * - Form validation (required fields, email format)
+     * - Honeypot anti-bot protection
+     * - Error handling with user-friendly messages
+     * - Fallback to mailto: if submission fails
+     * - Includes metadata (page URL, user agent, timestamp)
+     */
+    
+    // ====== CONFIG: Update this with your Google Apps Script Web App URL ======
     const CONTACT_SCRIPT_URL = "https://script.google.com/a/macros/jameiat-taqa.sa/s/AKfycbyiOYec7tTrR5ZZuAoR59c6xmHSS5AxnslkiAzrfaFnd-pTGZb6PiKHEXe_uVSGsjUA/exec";
 
     const form = document.getElementById('contactForm');
     const alertBox = document.getElementById('contactAlert');
     const submitBtn = document.getElementById('submitBtn');
 
+    /**
+     * Shows an alert message to the user
+     * @param {string} kind - Alert type: 'success', 'warning', 'danger'
+     * @param {string} html - HTML content to display
+     */
     function showAlert(kind, html){
       alertBox.className = 'alert mt-3 alert-' + kind;
       alertBox.innerHTML = html;
       alertBox.classList.remove('d-none');
     }
     function hideAlert(){ alertBox.classList.add('d-none'); }
+    
+    /**
+     * Validates email format using regex
+     * @param {string} s - Email string to validate
+     * @returns {boolean} - True if valid email format
+     */
     function isValidEmail(s){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(s||'').trim()); }
 
     form.addEventListener('submit', async (e) => {
@@ -347,26 +332,29 @@
       hideAlert();
 
       const fd = new FormData(form);
-      if (fd.get('hp')) { return; } // honeypot
+      if (fd.get('hp')) { return; } // Honeypot: if filled, it's a bot - silently ignore
 
+      // Get and trim form values
       const name = (fd.get('name')||'').trim();
       const email = (fd.get('email')||'').trim();
       const subject = (fd.get('subject')||'').trim();
       const message = (fd.get('message')||'').trim();
 
+      // Validate required fields
       if (!name || !email || !subject || !message){
         showAlert('warning','Please fill out all fields.');
         return;
       }
+      // Validate email format
       if (!isValidEmail(email)){
         showAlert('warning','Please enter a valid email address.');
         return;
       }
 
-      // helpful metadata
-      fd.append('pageUrl', location.href);
-      fd.append('userAgent', navigator.userAgent);
-      fd.append('ts', new Date().toISOString());
+      // Add helpful metadata for form tracking and analytics
+      fd.append('pageUrl', location.href);        // Which page the form was submitted from
+      fd.append('userAgent', navigator.userAgent); // Browser/device info
+      fd.append('ts', new Date().toISOString());   // Timestamp
 
       const oldText = submitBtn.textContent;
       submitBtn.disabled = true;

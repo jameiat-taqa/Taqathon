@@ -1,0 +1,128 @@
+/* ===== TAQATHON SHARED STYLES ===== */
+/*
+ * This file contains all common styles shared across all pages.
+ * Page-specific styles should be kept in individual HTML files' <style> blocks.
+ * 
+ * File Structure:
+ * - CSS Variables: Brand colors and design tokens
+ * - Global Styles: Scrollbar fixes, overflow handling, base typography
+ * - Layout: Sticky footer implementation
+ * - Utilities: Reusable utility classes
+ * - Components: Navbar, buttons, icons, footer
+ */
+
+/* ===== CSS Variables ===== */
+/* Brand colors and design tokens used throughout the site */
+:root{
+  --brand-blue:#007DFD;
+  --brand-green:#09C899;
+  --brand-dark:#00284C;
+  --brand-grad: linear-gradient(90deg, var(--brand-green), var(--brand-blue));
+  --text:#1d2733;
+  --muted:#66768a;
+}
+
+/* ===== Global Styles ===== */
+/* 
+ * Scrollbar and overflow fixes:
+ * - Hides OS scrollbar track to prevent "white bar" appearance
+ * - Makes body the scroll container instead of html
+ * - Prevents horizontal overflow on all screen sizes
+ */
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: Poppins, Cairo, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color: var(--text);
+  background: #f8fbfd;
+  overflow-x: clip;               /* Prevents tiny right-edge line on some browsers */
+}
+html { overflow: hidden; }        /* Hides OS scrollbar track */
+body {
+  height: 100vh;                  /* Body becomes the scroll container */
+  overflow: auto;                 /* Enables vertical scrolling */
+  scrollbar-width: none;          /* Firefox: hides scrollbar */
+}
+body::-webkit-scrollbar {         /* Chrome/Edge/Safari: hides scrollbar */
+  width: 0;
+  height: 0;
+}
+/* Prevents any element from forcing horizontal overflow */
+*, *::before, *::after { box-sizing: border-box; }
+img, svg, canvas, video, iframe { max-width: 100%; height: auto; display: block; }
+
+/* ===== Sticky Footer Layout ===== */
+/* 
+ * Ensures footer stays at bottom of page even when content is short.
+ * Uses flexbox: main expands to fill space, footer stays at bottom.
+ */
+html,body{ height:100%; }
+body{ display:flex; flex-direction:column; min-height:100vh; }
+main{ flex:1 0 auto; }    /* Main content expands to fill available space */
+footer{ flex-shrink:0; }  /* Footer never shrinks, stays at bottom */
+
+/* ===== Common Utility Classes ===== */
+/* Reusable utility classes for consistent styling across pages */
+.rounded-2xl{ border-radius:1rem; }                    /* Large rounded corners */
+.shadow-soft{ box-shadow:0 10px 30px rgba(0,0,0,.12); } /* Soft shadow effect */
+.card-lite{ background:#fff; border:1px solid #e9eef3; } /* Light card background */
+.text-secondary{ color:var(--muted)!important; }         /* Muted text color */
+.divider-grad{ height:10px; background:var(--brand-grad); border-radius:.75rem; } /* Gradient divider */
+
+/* ===== Navbar ===== */
+/* Main navigation bar styling */
+.navbar{
+  background:#fff;
+  box-shadow:0 2px 10px rgba(0,0,0,.04);
+  padding-top:.4rem; padding-bottom:.4rem;
+}
+.logo-mark{ height:60px; width:auto; object-fit:contain; }      /* Main Taqathon logo */
+.assoc-logo{ height:48px; width:auto; object-fit:contain; }       /* Association logo */
+.navbar-nav .nav-link{ font-weight:500; color:var(--brand-dark); transition:.2s; }
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active{ color:var(--brand-blue); }          /* Active/hover state */
+
+/* Language toggle button (EN/AR switcher) */
+.btn-lang{
+  background:var(--brand-blue); color:#ffffff !important;
+  border:none; border-radius:.4rem;
+  padding:.35rem .9rem; font-weight:500; transition:.2s;
+}
+.btn-lang:hover{ background:var(--brand-green); color:#fff !important; }
+
+/* Mobile menu: makes dropdown full-width under navbar */
+.navbar .container{ position:relative; flex-wrap:nowrap; }
+.navbar .navbar-brand,
+.navbar .assoc-fixed{ flex-shrink:0; }
+@media (max-width:991.98px){
+  .navbar .navbar-collapse{
+    position:absolute; inset-inline:0; top:100%;  /* Full width, below navbar */
+    background:#fff; padding:.75rem 1rem;
+    border-top:1px solid #e9eef5;
+    box-shadow:0 10px 24px rgba(0,0,0,.08);
+    z-index:1000;
+  }
+  .logo-mark{ height:44px; } .assoc-logo{ height:32px; }  /* Smaller logos on mobile */
+}
+
+/* ===== Icon Circle ===== */
+/* Circular icon container used for page headers and feature highlights */
+.icon-circle{
+  width:64px; height:64px; border-radius:999px;
+  display:inline-flex; align-items:center; justify-content:center;
+  background:linear-gradient(180deg,#eef6ff,#f3fbff);
+  border:1px solid #c9ddff;
+  color:var(--brand-blue);
+  box-shadow:0 4px 16px rgba(0,125,253,.25);
+  font-size:1.6rem;
+}
+
+/* ===== Brand Button ===== */
+/* Primary action button with brand gradient */
+.btn-brand{ background:var(--brand-grad); border:0; color:#fff; font-weight:600; }
+.btn-brand:hover{ filter:brightness(.95); color:#fff; }
+
+/* ===== Footer ===== */
+/* Site footer styling */
+footer{ background:var(--brand-dark); color:#cfd6df; }
+footer a{ color:#cfd6df; text-decoration:none; }

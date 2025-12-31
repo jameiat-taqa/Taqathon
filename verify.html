@@ -1,4 +1,20 @@
 <!doctype html>
+<!--
+  TAQATHON - Certificate Verification Page (verify.html)
+  
+  Standalone page for verifying participant certificates.
+  Features:
+  - Certificate lookup by ID
+  - Certificate display with verification status
+  - Download/print functionality
+  - RTL layout support
+  
+  To customize:
+  - Update certificate data in JavaScript (CERTIFICATES array)
+  - Modify verification logic
+  - Adjust certificate template
+  - Update styling for certificate display
+-->
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8" />
@@ -237,8 +253,8 @@
             <div class="d-flex align-items-center justify-content-between gap-3 mb-3 flex-nowrap verify-header">
               <!-- Logos (left) -->
               <div class="d-flex align-items-center gap-3 flex-nowrap verify-logos">
-                <img class="verify-logo" src="assets/association-logo.png" alt="جمعية الطاقة للتنمية المستدامة" />
-                <img class="verify-logo" src="assets/taqathon-logo.png" alt="طاقَثون 2025" />
+                <img class="verify-logo" src="assets/logos/association-logo.png" alt="جمعية الطاقة للتنمية المستدامة" />
+                <img class="verify-logo" src="assets/logos/taqathon-logo.png" alt="طاقَثون 2025" />
               </div>
 
               <!-- Title (right) -->
@@ -312,12 +328,40 @@
   </div>
 
   <script>
+    /**
+     * Certificate Verification System
+     * 
+     * How it works:
+     * 1. User enters certificate ID in the search form
+     * 2. System looks up ID in CERTIFICATES registry
+     * 3. If found, displays certificate with all details
+     * 4. If not found, shows error message
+     * 
+     * Certificate Data Structure:
+     * - Key: Certificate ID (must match exactly as printed)
+     * - Value: Object containing:
+     *   - arName: Arabic name
+     *   - enName: English name
+     *   - roleAr: Arabic role description
+     *   - roleEn: English role description
+     *   - type: Certificate type (judge, participant, winner, etc.)
+     *   - eventAr: Event name in Arabic
+     *   - eventEn: Event name in English
+     *   - issueDateAr: Issue date in Arabic
+     *   - issueDateEn: Issue date in English
+     *   - periodAr: Period description in Arabic
+     *   - periodEn: Period description in English
+     * 
+     * To add certificates:
+     * 1. Add new entry to CERTIFICATES object below
+     * 2. Use certificate ID as the key
+     * 3. Fill in all required metadata fields
+     */
+    
     // -------------------------------
-    // 1) Certificate registry
+    // Certificate Registry
     // -------------------------------
-    // TODO: add all your certificates here.
-    // Key = certificate ID (exactly as printed)
-    // Value = metadata
+    // Add all certificates here using certificate ID as the key
     const CERTIFICATES = {
   // طاقَثون 2025 — شهادات المحكّمين الرسميّة
 
@@ -407,7 +451,13 @@
 };
 
 
-    // Helper: read URL param
+    /**
+     * Helper function to read URL query parameters
+     * @param {string} name - Parameter name to retrieve
+     * @returns {string|null} - Parameter value or null if not found
+     * 
+     * Usage: Allows pre-filling certificate ID from URL (e.g., ?id=TAQ-2025-J-001)
+     */
     function getQueryParam(name) {
       const url = new URL(window.location.href);
       return url.searchParams.get(name);
@@ -423,24 +473,35 @@
     const statusPill = document.getElementById("status-pill");
     const statusText = document.getElementById("status-text");
 
+    /**
+     * Updates the status indicator with appropriate styling
+     * @param {string} type - Status type: "valid", "invalid", or "missing"
+     * @param {string} message - Status message to display
+     */
     function setStatus(type, message) {
       statusPill.classList.remove("status-valid", "status-invalid", "status-missing");
 
       if (type === "valid") {
-        statusPill.classList.add("status-valid");
+        statusPill.classList.add("status-valid");      // Green for valid certificate
       } else if (type === "invalid") {
-        statusPill.classList.add("status-invalid");
+        statusPill.classList.add("status-invalid");    // Red for invalid/not found
       } else {
-        statusPill.classList.add("status-missing");
+        statusPill.classList.add("status-missing");    // Yellow for missing input
       }
 
       statusText.textContent = message;
     }
 
+    /**
+     * Displays certificate verification result
+     * @param {string} certId - Certificate ID that was searched
+     * @param {object|null} cert - Certificate data object or null if not found
+     */
     function showResult(certId, cert) {
       resultContainer.style.display = "block";
 
       if (!cert) {
+        // Certificate not found - show error message
         resultTitle.textContent = "لم يتم العثور على الشهادة";
         resultMeta.innerHTML = `<span>رقم الشهادة: ${certId}</span>`;
         resultBody.innerHTML =
@@ -451,12 +512,12 @@
         return;
       }
 
-      // Valid certificate
+      // Valid certificate found - display certificate details
       resultTitle.textContent = `الشهادة صالحة وصادرة عن جمعية الطاقة للتنمية المستدامة`;
 
       resultMeta.innerHTML = `رقم الشهادة: ${certId} • نوع الشهادة: ${cert.type === "judge" ? "شهادة خبرة" : "شهادة"} • تاريخ الإصدار: ${cert.issueDateAr}`;
 
-
+      // Display certificate information in Arabic
       resultBody.innerHTML = `
         تُؤكّد جمعية الطاقة للتنمية المستدامة أن:
         <br />
@@ -466,6 +527,7 @@
         <b>${cert.eventAr}</b>، وذلك ${cert.periodAr}.
       `;
 
+      // Display certificate information in English
       resultEnglishNote.innerHTML = `
         This is to certify that <b>${cert.enName}</b> has served as
         <b>${cert.roleEn}</b> in <b>${cert.eventEn}</b>, ${cert.periodEn}.
@@ -476,6 +538,13 @@
       setStatus("valid", "الشهادة صالحة ✅");
     }
 
+    /**
+     * Handles certificate verification when form is submitted
+     * - Gets certificate ID from input
+     * - Normalizes to uppercase for lookup
+     * - Searches CERTIFICATES registry
+     * - Displays result
+     */
     function handleCheck() {
       const raw = certInput.value.trim();
       if (!raw) {
@@ -484,26 +553,28 @@
         return;
       }
 
-      // We keep the ID exactly as typed (case-sensitive),
-      // but you can normalize when adding keys above if needed.
+      // Normalize to uppercase for case-insensitive lookup
+      // Note: Certificate IDs in registry should be uppercase
       const certId = raw.toUpperCase();
       const cert = CERTIFICATES[certId];
       showResult(certId, cert);
     }
 
-    checkBtn.addEventListener("click", handleCheck);
-    certInput.addEventListener("keydown", (e) => {
+    // Event listeners for form submission
+    checkBtn.addEventListener("click", handleCheck);  // Button click
+    certInput.addEventListener("keydown", (e) => {    // Enter key press
       if (e.key === "Enter") {
         e.preventDefault();
         handleCheck();
       }
     });
 
-    // Auto-check if ?id= is present in URL
+    // Auto-check if certificate ID is provided in URL query parameter
+    // Allows direct linking to specific certificates (e.g., verify.html?id=TAQ-2025-J-001)
     const initialId = getQueryParam("id");
     if (initialId) {
       certInput.value = initialId;
-      handleCheck();
+      handleCheck();  // Automatically verify on page load
     }
   </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
