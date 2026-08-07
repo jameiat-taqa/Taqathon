@@ -1,0 +1,28 @@
+{
+  "brand": { "href": "index-en.html", "logoAlt": "Taqathon logo", "ariaLabel": "Taqathon home" },
+  "assoc": { "href": "https://taqa.org.sa", "alt": "Energy Association for Sustainable Development", "ariaLabel": "Energy Association for Sustainable Development", "linkClass": "d-block" },
+  "toggler": { "ariaAttrs": true },
+  "langSwitch": { "label": "AR", "liClass": "ms-3" },
+  "nav": [
+    { "key": "home", "href": "index-en.html", "label": "Home" },
+    { "key": "contract", "href": "contract-en.html", "label": "Contract" },
+    { "key": "schedule", "href": "schedule-en.html", "label": "Schedule &amp; Workshops" },
+    { "key": "submissions", "href": "submissions-en.html", "label": "Submissions" },
+    { "key": "rules", "href": "rules-en.html", "label": "Rules &amp; Resources" },
+    { "key": "gallery", "href": "gallery-en.html", "label": "Gallery" },
+    { "key": "contact", "href": "contact-en.html", "label": "Contact Us" }
+  ],
+  "footer": {
+    "rowClass": "row g-4",
+    "brandName": "Taqathon",
+    "tagline": "Organized by Energy Association for Sustainable Development",
+    "followLabel": "Follow Us",
+    "copyrightSuffix": "Taqathon. All rights reserved."
+  },
+  "social": {
+    "twitter": "https://x.com/jameiat_taqa",
+    "instagram": "https://instagram.com/jameiat_taqa",
+    "linkedin": "https://www.linkedin.com/company/جمعية-الطاقة-للتنمية-المستدامة",
+    "tiktok": "https://tiktok.com/@jameiat_taqa"
+  }
+}

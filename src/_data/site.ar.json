@@ -1,0 +1,28 @@
+{
+  "brand": { "href": "index.html", "logoAlt": "شعار طاقثون", "ariaLabel": "" },
+  "assoc": { "href": "https://taqa.org.sa", "alt": "جمعية الطاقة للتنمية المستدامة", "ariaLabel": "", "linkClass": "" },
+  "toggler": { "ariaAttrs": false },
+  "langSwitch": { "label": "EN", "liClass": "" },
+  "nav": [
+    { "key": "home", "href": "index.html", "label": "الرئيسية" },
+    { "key": "contract", "href": "contract.html", "label": "العقد" },
+    { "key": "schedule", "href": "schedule.html", "label": "الجدول وورش العمل" },
+    { "key": "submissions", "href": "submissions.html", "label": "التسليمات" },
+    { "key": "rules", "href": "rules.html", "label": "القواعد والموارد" },
+    { "key": "gallery", "href": "gallery.html", "label": "المرئيات" },
+    { "key": "contact", "href": "contact.html", "label": "تواصل معنا" }
+  ],
+  "footer": {
+    "rowClass": "row g-4 align-items-start",
+    "brandName": "طاقَثون",
+    "tagline": "برعاية جمعية الطاقة للتنمية المستدامة.",
+    "followLabel": "تابعنا",
+    "copyrightSuffix": "طاقَثون. جميع الحقوق محفوظة."
+  },
+  "social": {
+    "twitter": "https://x.com/jameiat_taqa",
+    "instagram": "https://instagram.com/jameiat_taqa",
+    "linkedin": "https://www.linkedin.com/company/جمعية-الطاقة-للتنمية-المستدامة",
+    "tiktok": "https://tiktok.com/@jameiat_taqa"
+  }
+}

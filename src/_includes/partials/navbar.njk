@@ -1,0 +1,28 @@
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-light sticky-top">
+<div class="container d-flex align-items-center justify-content-between">
+
+  <a class="navbar-brand d-flex align-items-center" href="{{ locale.site.brand.href }}"{% if locale.site.brand.ariaLabel %} aria-label="{{ locale.site.brand.ariaLabel }}"{% endif %}>
+    <img src="assets/logos/taqathon-logo.png" alt="{{ locale.site.brand.logoAlt }}" class="logo-mark">
+  </a>
+
+  <div class="collapse navbar-collapse justify-content-lg-center" id="mainNav">
+    <ul class="navbar-nav mb-2 mb-lg-0 align-items-lg-center">
+      {% for item in locale.site.nav %}
+      <li class="nav-item"><a class="nav-link{% if item.key == locale.navActive %} active{% endif %}" href="{{ item.href }}">{{ item.label | safe }}</a></li>
+      {% endfor %}
+      <li class="nav-item{% if locale.site.langSwitch.liClass %} {{ locale.site.langSwitch.liClass }}{% endif %}"><a class="btn btn-sm btn-lang" href="{{ locale.altHref }}">{{ locale.site.langSwitch.label }}</a></li>
+    </ul>
+  </div>
+
+  <div class="assoc-fixed d-flex align-items-center gap-2">
+    <a href="{{ locale.site.assoc.href }}" target="_blank" rel="noopener"{% if locale.site.assoc.linkClass %} class="{{ locale.site.assoc.linkClass }}"{% endif %}{% if locale.site.assoc.ariaLabel %} aria-label="{{ locale.site.assoc.ariaLabel }}"{% endif %}>
+      <img src="assets/logos/association-logo.png" class="assoc-logo" alt="{{ locale.site.assoc.alt }}">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"{% if locale.site.toggler.ariaAttrs %} aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation"{% endif %}>
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+
+</div>
+</nav>

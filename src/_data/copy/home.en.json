@@ -1,0 +1,46 @@
+{
+  "pageTitle": "Home · Taqathon",
+  "hero": {
+    "badge": "Participant Portal",
+    "title": "Taqathon 2025",
+    "subtitle": "Saudi Arabia’s National Energy Hackathon",
+    "body": "This portal is for selected participants. Access workshop links and schedule, read the rules and resources, and submit your projects on time. Organized by the Energy Association for Sustainable Development and aligned with Saudi Vision 2030.",
+    "ctas": [
+      { "href": "contract-en.html", "icon": "bi-file-earmark-text", "label": "Sign Contract", "btnClass": "btn-success" },
+      { "href": "rules-en.html", "icon": "bi-journal-text", "label": "View Rules", "btnClass": "btn-outline-secondary" },
+      { "href": "submissions-en.html", "icon": "bi-rocket-takeoff", "label": "Submit Project", "btnClass": "btn-warning text-white" }
+    ],
+    "image": { "src": "assets/gallery/2AN08242.jpg", "alt": "Wind turbines in Saudi Arabia generating clean energy" },
+    "iconMarginClass": "me-1"
+  },
+  "countdown": {
+    "label": "Final Submission Deadline",
+    "deadline": "2025-11-22T14:00:00+03:00",
+    "units": { "days": "Days", "hours": "Hours", "mins": "Mins", "secs": "Secs" }
+  },
+  "announcements": {
+    "heading": "Announcements",
+    "source": "announcements.json",
+    "locale": "",
+    "emptyText": "No announcements yet. Check back soon.",
+    "errorText": "Unable to load announcements right now."
+  },
+  "about": {
+    "image": { "src": "assets/gallery/1AN07654.jpg", "alt": "Aerial view of solar panels in Saudi Arabia" },
+    "heading": "What You’ll Do in Taqathon",
+    "body": "Work in teams to build practical solutions in renewable energy, energy efficiency, and AI for energy—guided by experts and geared toward real-world adoption in line with Vision 2030.",
+    "listCol1": [
+      { "icon": "bi-lightbulb", "text": "Expert-led workshops" },
+      { "icon": "bi-person-lines-fill", "text": "Mentorship and technical guidance" }
+    ],
+    "prize": { "prefix": "Compete for", "amounts": ["18,000", "12,000", "9,000"], "suffix": "prizes", "riyalAlt": "Saudi Riyal", "riyalIconMarginStyle": "margin-left:.25rem", "spaceBeforeRiyalIcon": true },
+    "listCol2Extra": { "icon": "bi-building-check", "text": "Potential adoption by major companies" }
+  },
+  "cta": {
+    "heading": "Stay on track",
+    "body": "Complete your contract, review the rules, and keep an eye on the schedule and announcements.",
+    "buttonLabel": "Get Started Now",
+    "buttonHref": "contract.html",
+    "buttonExtraClass": "btn-md "
+  }
+}
