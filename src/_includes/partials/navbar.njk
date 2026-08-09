@@ -1,16 +1,64 @@
+{#
+  NAVBAR PARTIAL
+  --------------
+  An "include" (see base.njk, which does {% include "partials/navbar.njk" %})
+  is a smaller, reusable chunk of template that gets pasted into a
+  bigger one at render time — same idea as a {% block %}, but it's the
+  layout choosing to pull in a piece, rather than a page filling in a
+  slot the layout defined.
+
+  Every value here comes from `locale.site`, which is the per-language
+  data built in site.ar.json / site.en.json (loaded by home.js). That
+  file holds things that are the same shape on every page — nav links,
+  logos, footer text — so as more pages get migrated in later phases,
+  they can all reuse this exact partial instead of re-writing a navbar
+  by hand in every template like the old site did.
+#}
 <!-- NAVBAR -->
 <nav class="navbar navbar-expand-lg navbar-light sticky-top">
 <div class="container d-flex align-items-center justify-content-between">
 
+  {#
+    Some attributes here are conditional — e.g. aria-label only prints
+    if locale.site.brand.ariaLabel is a non-empty string. This isn't
+    just tidiness: the ORIGINAL Arabic page never had an aria-label on
+    this link, while the English page did (a pre-existing inconsistency
+    between the two hand-written files). Rather than silently "fixing"
+    that while migrating, we reproduced it exactly — site.ar.json sets
+    ariaLabel to "" and site.en.json sets a real string, so the output
+    matches what was live before. Worth fixing later as an accessibility
+    pass, just not silently as a side effect of this migration.
+  #}
   <a class="navbar-brand d-flex align-items-center" href="{{ locale.site.brand.href }}"{% if locale.site.brand.ariaLabel %} aria-label="{{ locale.site.brand.ariaLabel }}"{% endif %}>
     <img src="assets/logos/taqathon-logo.png" alt="{{ locale.site.brand.logoAlt }}" class="logo-mark">
   </a>
 
   <div class="collapse navbar-collapse justify-content-lg-center" id="mainNav">
     <ul class="navbar-nav mb-2 mb-lg-0 align-items-lg-center">
+      {#
+        This loop is the entire reason a navbar partial is worth having:
+        one {% for %} over a list, instead of seven near-identical
+        <li><a>...</a></li> lines typed out by hand (and kept in sync by
+        hand across every page, in both languages, forever). Adding a
+        new nav link later means adding one entry to site.*.json — this
+        loop just picks it up automatically.
+
+        The "active" class marks whichever link matches the current
+        page. `locale.navActive` is set per-page in each page's data
+        file (e.g. home.js sets it to "home"); it's compared against
+        each nav item's own `key` from site.*.json.
+      #}
       {% for item in locale.site.nav %}
       <li class="nav-item"><a class="nav-link{% if item.key == locale.navActive %} active{% endif %}" href="{{ item.href }}">{{ item.label | safe }}</a></li>
       {% endfor %}
+      {#
+        Nunjucks escapes {{ }} output by default (so a literal "&" in
+        JSON would show up as "&amp;amp;" — double-escaped). The nav
+        labels intentionally contain a real HTML entity, e.g.
+        "Schedule &amp; Workshops", copied from the original markup, so
+        `| safe` tells Nunjucks "trust this string as-is, don't
+        re-escape it" and it renders as "Schedule & Workshops" correctly.
+      #}
       <li class="nav-item{% if locale.site.langSwitch.liClass %} {{ locale.site.langSwitch.liClass }}{% endif %}"><a class="btn btn-sm btn-lang" href="{{ locale.altHref }}">{{ locale.site.langSwitch.label }}</a></li>
     </ul>
   </div>
@@ -19,6 +67,10 @@
     <a href="{{ locale.site.assoc.href }}" target="_blank" rel="noopener"{% if locale.site.assoc.linkClass %} class="{{ locale.site.assoc.linkClass }}"{% endif %}{% if locale.site.assoc.ariaLabel %} aria-label="{{ locale.site.assoc.ariaLabel }}"{% endif %}>
       <img src="assets/logos/association-logo.png" class="assoc-logo" alt="{{ locale.site.assoc.alt }}">
     </a>
+    {# Same story as the brand link above: the Arabic page's mobile-menu
+       button never had these three aria-* attributes, the English one
+       did. locale.site.toggler.ariaAttrs is true only for English, so
+       this reproduces that exact (pre-existing) asymmetry. #}
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"{% if locale.site.toggler.ariaAttrs %} aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation"{% endif %}>
       <span class="navbar-toggler-icon"></span>
     </button>

@@ -1,4 +1,5 @@
 {
+  "_comment": "HOME PAGE COPY (Arabic). Every piece of Arabic text on the Home page lives here instead of inside home.njk, so editing the page's wording never means touching template code. Loaded by src/_data/pages/home.js. 'deadline' below is still the ORIGINAL (already past) date from the live site — Phase 0 only migrated the template, it didn't change content. See home.en.json for the English mirror (must keep the same keys/shape).",
   "pageTitle": "الرئيسية · طاقَثون",
   "hero": {
     "badge": "بوابة المشاركين",

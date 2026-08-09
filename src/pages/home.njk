@@ -1,10 +1,46 @@
 ---
+# This front matter (the YAML between the --- lines) is how Eleventy
+# configures THIS specific template. "pagination" is the trick that
+# turns one template file into two output files:
+#   - "data" points at the list we built in src/_data/pages/home.js
+#     (Eleventy sees this file's path and exposes it as pages.home.locales)
+#   - "size: 1" means "give me one list item per generated page"
+#   - "alias: locale" means "call that one item `locale` inside this template"
+# So Eleventy runs this template TWICE — once with locale set to the
+# Arabic entry, once with the English entry — and "permalink" (which
+# reads locale.permalink) decides each time where the output HTML goes:
+# /index.html for Arabic, /index-en.html for English.
 pagination:
   data: pages.home.locales
   size: 1
   alias: locale
 permalink: "{{ locale.permalink }}"
 ---
+{#
+  TAQATHON - HOME PAGE TEMPLATE (src/pages/home.njk)
+  ---------------------------------------------------
+  This one file replaces what used to be two separate hand-written
+  files: index.html (Arabic) and index-en.html (English). See the
+  pagination front matter above for how "one template → two pages"
+  actually works.
+
+  Sections on this page (same content as the original site, just now
+  pulled from data instead of typed directly into the HTML):
+    - Hero: headline + 3 call-to-action buttons + hero photo
+    - Countdown: live timer to a deadline (data-deadline attribute)
+    - Announcements: list fetched client-side from a JSON file
+    - About: "what you'll do" copy + prize amounts
+    - CTA band: closing "get started" banner
+
+  TO CUSTOMIZE:
+    - Text (headings, button labels, prize amounts, etc.) → edit
+      src/_data/copy/home.ar.json and home.en.json, NOT this file.
+    - Shared nav/footer text → src/_data/site.ar.json / site.en.json.
+    - Countdown deadline → the "deadline" field inside the two
+      home.*.json files above (ISO 8601 format, e.g. "2026-09-01T00:00:00+03:00").
+    - Page structure/layout (adding a new section, changing markup) →
+      this file, inside the {% block content %} below.
+#}
 {% extends "layouts/base.njk" %}
 {% block pageStyle %}
 .badge-soft{ background:rgba(9,200,153,.15); color:#0a7b60; border:1px solid rgba(9,200,153,.3); }
@@ -46,6 +82,13 @@ box-shadow:0 6px 18px rgba(0,0,0,.06);
 
 /* ===== Announcements ===== */
 .ann-list{ max-width:900px; margin:0 auto; display:grid; gap:12px; }
+{#
+  The original Arabic and English pages mirrored this card's padding
+  and icon position (icon on the right for RTL, left for LTR) by
+  writing out two separate, near-identical <style> blocks. Here it's
+  one rule with an {% if %} branch instead — same visual result, half
+  the CSS to maintain.
+#}
 .ann-card{
 position:relative; background:#fff; border:1px solid #e7eef7;
 border-radius:12px; {% if locale.dir == "rtl" %}padding:16px 56px 16px 16px;{% else %}padding:16px 16px 16px 56px;{% endif %} box-shadow:0 6px 18px rgba(0,0,0,.06);
@@ -95,6 +138,15 @@ object-fit:cover; object-position:center;
         {{ locale.content.hero.body }}
       </p>
       <div class="d-flex flex-wrap gap-2 mt-3">
+        {#
+          Looping over hero.ctas means adding/removing/reordering a
+          button is a data change (home.ar.json / home.en.json), not a
+          template change. iconMarginClass exists because the original
+          Arabic buttons used "ms-1" (margin-start) and the English ones
+          used "me-1" (margin-end) on their icons — a small existing
+          inconsistency between the two old files, preserved here as
+          data rather than silently normalized.
+        #}
         {% for cta in locale.content.hero.ctas %}
         <a class="btn {{ cta.btnClass }}" href="{{ cta.href }}">
           <i class="bi {{ cta.icon }} {{ locale.content.hero.iconMarginClass }}"></i> {{ cta.label }}
@@ -117,6 +169,12 @@ object-fit:cover; object-position:center;
 <div class="container text-center">
   <div class="count-box p-4 text-white reveal">
     <div class="mb-2 fw-semibold">{{ locale.content.countdown.label }}</div>
+    {#
+      data-deadline is read by the countdown script down in pageScript.
+      This is still the ORIGINAL (already-past) deadline from the live
+      site — Phase 0's job was to prove the template pipeline works,
+      not to change content. Fixing this date is Phase 1, item 1.
+    #}
     <div id="deadline" class="d-flex justify-content-center align-items-center gap-3"
          data-deadline="{{ locale.content.countdown.deadline }}">
       <div class="text-center">
@@ -141,6 +199,12 @@ object-fit:cover; object-position:center;
 </section>
 
 <!-- ANNOUNCEMENTS -->
+{# The actual announcement cards are NOT rendered here by Nunjucks at
+   build time — this section starts empty on purpose. A script down in
+   pageScript fetches announcements-ar.json / announcements.json in the
+   visitor's browser and fills in #ann-wrap with JS, exactly like the
+   original site did. That's why there's no {% for %} loop in this
+   section the way there is in Hero/About below. #}
 <section class="py-5" id="announcements">
 <div class="container">
   <div class="text-center text-secondary mb-3">{{ locale.content.announcements.heading }}</div>
@@ -173,6 +237,12 @@ object-fit:cover; object-position:center;
           <div class="mb-2">
             <i class="bi bi-trophy-fill"></i>
                 {{ locale.content.about.prize.prefix }}
+              {#
+                Loops over the three prize amounts and puts a " / "
+                separator between them, but not after the last one —
+                `loop.last` is a built-in Nunjucks variable available
+                inside any {% for %} loop.
+              #}
               {% for amount in locale.content.about.prize.amounts %}<span style="color:#7f09c8; font-weight:600;">{{ amount }}</span>{% if not loop.last %} / {% endif %}{% endfor %}{% if locale.content.about.prize.spaceBeforeRiyalIcon %} {% endif %}<img src="assets/icons/saudi-riyal-symbol.svg" alt="{{ locale.content.about.prize.riyalAlt }}"
  style="display:inline; height:1em; width:auto; vertical-align:middle; {{ locale.content.about.prize.riyalIconMarginStyle }};">{% if locale.content.about.prize.suffix %} {{ locale.content.about.prize.suffix }}{% endif %}
           </div>
@@ -199,14 +269,24 @@ object-fit:cover; object-position:center;
 {% endblock %}
 
 {% block pageScript %}
+{#
+  Everything in this block is plain client-side JavaScript, copied over
+  from the original site almost unchanged — it runs in the VISITOR'S
+  browser after the page loads, not during the Eleventy build. The only
+  Nunjucks placeholders in here are the small {{ }} bits that pull in
+  per-language values (which JSON file to fetch, which text to show).
+#}
 (function(){
+  // ----- Countdown timer -----
+  // Reads the data-deadline attribute set above, then recalculates the
+  // remaining days/hours/minutes/seconds every second.
   const wrap = document.getElementById('deadline');
   if(!wrap) return;
   const deadline = new Date(wrap.getAttribute('data-deadline')).getTime();
-  function pad(n){ return (n<10?'0':'') + n; }
+  function pad(n){ return (n<10?'0':'') + n; }  // turns 5 into "05"
   function tick(){
     const now = Date.now();
-    let diff = Math.max(0, deadline - now);
+    let diff = Math.max(0, deadline - now);  // never show a negative countdown
     const days = Math.floor(diff / 86400000); diff -= days*86400000;
     const hours = Math.floor(diff / 3600000); diff -= hours*3600000;
     const mins = Math.floor(diff / 60000); diff -= mins*60000;
@@ -220,6 +300,11 @@ object-fit:cover; object-position:center;
 })();
 
 (function(){
+  // ----- Announcements loader -----
+  // Fetches the language-appropriate JSON file (announcements-ar.json
+  // or announcements.json — decided by locale.content.announcements.source,
+  // filled in by Nunjucks at build time) and renders up to 8 cards,
+  // newest first.
   const annWrap = document.getElementById('ann-wrap');
   if(!annWrap) return;
   fetch('{{ locale.content.announcements.source }}', { cache: 'no-store' })
@@ -244,6 +329,15 @@ object-fit:cover; object-position:center;
         const t = (it.type || 'general').toLowerCase();
         const cls = ['deadline','update','schedule'].includes(t) ? t : 'general';
         const icon = iconByType[cls] || iconByType.general;
+        {#
+          The original English page called toLocaleDateString() with NO
+          argument (browser's default locale), while the Arabic page
+          passed 'ar-SA' explicitly to get Arabic-Indic date formatting.
+          locale.content.announcements.locale is "ar-SA" for Arabic and
+          "" (empty) for English — this {% if %} makes the generated JS
+          either pass that string in, or pass nothing at all, matching
+          each language's original behavior exactly.
+        #}
         const dateStr = it.date ? new Date(it.date).toLocaleDateString({% if locale.content.announcements.locale %}'{{ locale.content.announcements.locale }}'{% endif %}) : '';
         return `
           <div class="ann-card type-${cls}">
@@ -263,6 +357,12 @@ object-fit:cover; object-position:center;
 })();
 
 (function(){
+  // ----- Scroll-reveal animation -----
+  // Any element with class="reveal" starts invisible (see the CSS
+  // above) and fades/slides into view the first time it scrolls into
+  // the viewport. IntersectionObserver is a browser API built for
+  // exactly this — it's much cheaper than checking scroll position by
+  // hand on every scroll event.
   const els = document.querySelectorAll('.reveal');
   if(!('IntersectionObserver' in window) || els.length===0){
     els.forEach(e => e.classList.add('in'));

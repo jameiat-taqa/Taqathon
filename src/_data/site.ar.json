@@ -1,4 +1,5 @@
 {
+  "_comment": "SHARED SITE CHROME (Arabic). Navbar links, footer text, and social links used by EVERY migrated page — not just Home. JSON doesn't support real comments, so this '_comment' field is just a plain data field the templates never read; it's here purely so a human opening this file understands its purpose. Edit the values below to change what appears in the navbar/footer across the whole site. See site.en.json for the English mirror of this file — the two must stay in sync in STRUCTURE (same keys) even though the VALUES differ per language.",
   "brand": { "href": "index.html", "logoAlt": "شعار طاقثون", "ariaLabel": "" },
   "assoc": { "href": "https://taqa.org.sa", "alt": "جمعية الطاقة للتنمية المستدامة", "ariaLabel": "", "linkClass": "" },
   "toggler": { "ariaAttrs": false },

@@ -1,4 +1,5 @@
 {
+  "_comment": "HOME PAGE COPY (English). English mirror of home.ar.json. 'iconMarginClass', 'spaceBeforeRiyalIcon', and 'buttonExtraClass' below look like odd one-off fields — they exist because the original hand-written index-en.html had small CSS-class differences from index.html (icon margin side, a line-break-induced space before the riyal icon, an extra 'btn-md' class) that we chose to preserve exactly during migration rather than silently changing.",
   "pageTitle": "Home · Taqathon",
   "hero": {
     "badge": "Participant Portal",

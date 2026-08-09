@@ -1,4 +1,5 @@
 {
+  "_comment": "SHARED SITE CHROME (English). English mirror of site.ar.json — same keys, English values. Used by navbar.njk and footer.njk for every migrated page's nav/footer/social links.",
   "brand": { "href": "index-en.html", "logoAlt": "Taqathon logo", "ariaLabel": "Taqathon home" },
   "assoc": { "href": "https://taqa.org.sa", "alt": "Energy Association for Sustainable Development", "ariaLabel": "Energy Association for Sustainable Development", "linkClass": "d-block" },
   "toggler": { "ariaAttrs": true },
