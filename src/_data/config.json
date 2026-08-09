@@ -1,0 +1,4 @@
+{
+  "_comment": "SITE-WIDE CONFIG. Values here aren't per-language (unlike site.*.json / copy/*.json) — they're the same for every page regardless of Arabic or English. Right now that's just the Contract form's Google Apps Script endpoint, which was previously hardcoded separately inside contract.html AND contract-en.html (identically, but duplicated). Centralizing it here means updating the deployed Apps Script URL in the future only requires changing ONE value, not hunting through every page that happens to use it. As more Apps-Script-backed forms get migrated (Contact, future Registration/Team-formation pages), their URLs belong here too.",
+  "contractScriptUrl": "https://script.google.com/macros/s/AKfycbyFKOWj5Ol_5wD1G1DssSlPBN63YsxOfYOlzd_URzkQT-N_HySGcogfjs1-vhQvlGs/exec"
+}

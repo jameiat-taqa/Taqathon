@@ -275,6 +275,17 @@ object-fit:cover; object-position:center;
   browser after the page loads, not during the Eleventy build. The only
   Nunjucks placeholders in here are the small {{ }} bits that pull in
   per-language values (which JSON file to fetch, which text to show).
+
+  Every one of those placeholders uses "| safe" — Nunjucks HTML-escapes
+  {{ }} output by default, but text inside a <script> tag is never
+  HTML-entity-decoded by the browser (it's read as raw JS source, not
+  parsed as HTML), so without "| safe" a content string containing a
+  quote character would come out as literal, visible "&quot;" text
+  instead of a real quote. None of today's announcement strings happen
+  to contain one, but the very same mistake broke a status message
+  during the Contract page's migration — see src/pages/contract.njk —
+  so it's fixed here pre-emptively rather than waiting for a future
+  content edit to trip over it.
 #}
 (function(){
   // ----- Countdown timer -----
@@ -307,14 +318,14 @@ object-fit:cover; object-position:center;
   // newest first.
   const annWrap = document.getElementById('ann-wrap');
   if(!annWrap) return;
-  fetch('{{ locale.content.announcements.source }}', { cache: 'no-store' })
+  fetch('{{ locale.content.announcements.source | safe }}', { cache: 'no-store' })
     .then(r => r.ok ? r.json() : [])
     .then(items => {
       if (!Array.isArray(items) || items.length === 0){
         annWrap.innerHTML = `
           <div class="ann-card type-general">
             <div class="ann-icon"><i class="bi bi-info-circle"></i></div>
-            <div class="ann-text">{{ locale.content.announcements.emptyText }}</div>
+            <div class="ann-text">{{ locale.content.announcements.emptyText | safe }}</div>
           </div>`;
         return;
       }
@@ -338,7 +349,7 @@ object-fit:cover; object-position:center;
           either pass that string in, or pass nothing at all, matching
           each language's original behavior exactly.
         #}
-        const dateStr = it.date ? new Date(it.date).toLocaleDateString({% if locale.content.announcements.locale %}'{{ locale.content.announcements.locale }}'{% endif %}) : '';
+        const dateStr = it.date ? new Date(it.date).toLocaleDateString({% if locale.content.announcements.locale %}'{{ locale.content.announcements.locale | safe }}'{% endif %}) : '';
         return `
           <div class="ann-card type-${cls}">
             <div class="ann-icon"><i class="bi ${icon}"></i></div>
@@ -351,7 +362,7 @@ object-fit:cover; object-position:center;
       annWrap.innerHTML = `
         <div class="ann-card type-general">
           <div class="ann-icon"><i class="bi bi-info-circle"></i></div>
-          <div class="ann-text">{{ locale.content.announcements.errorText }}</div>
+          <div class="ann-text">{{ locale.content.announcements.errorText | safe }}</div>
         </div>`;
     });
 })();

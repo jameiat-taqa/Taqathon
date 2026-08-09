@@ -1,0 +1,57 @@
+{
+  "_comment": "CONTRACT PAGE COPY (Arabic). See home.ar.json for the general pattern. A few fields here exist only to preserve small AR/EN differences that already existed in the original hand-written pages (see contract.en.json for the English side and its notes) — not because they're meaningful design choices, just because Phase 0's job is to migrate the template faithfully, not silently rewrite content.",
+  "pageTitle": "اتفاقية المشاركة · طاقَثون",
+  "requiredAsteriskWeight": 700,
+  "hero": {
+    "icon": "bi-pencil-square",
+    "iconAriaHidden": false,
+    "heading": "اتفاقية المشاركة",
+    "headingClass": "fw-bold"
+  },
+  "terms": {
+    "heading": "أبرز البنود",
+    "badgeAriaHidden": false,
+    "items": [
+      "تحدّد هذه الاتفاقية العلاقة القانونية بين جمعية الطاقة للتنمية المستدامة والفرق المشاركة في طاقَثون.",
+      "تنظّم المشاركة أثناء الهاكاثون وتمنح الجمعية حقوق التسويق الحصرية لمدة سنة واحدة من تاريخ التوقيع.",
+      "يقرّ الفريق بالأعمال الأصلية، والالتزام بالورش والجلسات المطلوبة، والسماح للجمعية بالترويج للمشروعات.",
+      "مدة الاتفاقية سنة واحدة (1)."
+    ]
+  },
+  "form": {
+    "heading": "رفع ملف PDF الموقّع",
+    "_note_subtext": "The Arabic subtext below says the fields ARE required; the English version's subtext (see contract.en.json) says they're OPTIONAL — even though both languages mark the same fields with a red required-asterisk. That's a genuine pre-existing content contradiction in the live site, not something introduced by this migration. Flagged for a content fix later; preserved as-is for now.",
+    "subtext": "يُقبل فقط ملف PDF. الحقول التالية مطلوبة.",
+    "fullNameLabel": "الاسم الكامل",
+    "fullNamePlaceholder": "اسمك الكامل",
+    "teamNameLabel": "اسم الفريق",
+    "teamNamePlaceholder": "اسم الفريق",
+    "emailLabel": "البريد الإلكتروني",
+    "emailPlaceholder": "you@email.com",
+    "fileLabel": "ملف PDF الموقّع",
+    "agreeLabel": "قرأتُ وأوافق على اتفاقية المشاركة وقواعد الهاكاثون.",
+    "submitLabel": "إرسال الاتفاقية",
+    "downloadLabel": "تحميل PDF",
+    "downloadIconMarginClass": "ms-1",
+    "notesHeading": "ملاحظات الرفع",
+    "note1Html": "ارفع <strong>ملف PDF فقط</strong>. سيتم حظر أي نوع آخر.",
+    "note2Html": "في حال واجهت مشكلة، يمكنك إرسال الملف إلى البريد: <a href=\"mailto:info@jameiat-taqa.sa\">info@jameiat-taqa.sa</a>."
+  },
+  "status": {
+    "chooseFile": "فضلاً اختر ملف PDF للرفع.",
+    "mustAgree": "يجب الموافقة على الشروط قبل الإرسال.",
+    "submitting": "جارٍ الإرسال...",
+    "submitSuccess": "تم الإرسال بنجاح.",
+    "submitFailedGeneric": "فشل الإرسال، فضلاً حاول مرة أخرى.",
+    "requestFailedPrefix": "فشل الطلب (",
+    "requestFailedSuffix": ")",
+    "htmlDetectedHint": " (تم اكتشاف صفحة دخول/صلاحيات — تأكد من ضبط صلاحيات Web App على \"Anyone\")",
+    "noCorsFallback": "تم إرسال الطلب بوضع no-cors. إذا لم يظهر الملف/الصف في Drive، تأكد من صلاحيات Web App.",
+    "networkError": "خطأ في الشبكة أو CORS. تأكد من رابط /exec وصلاحيات الوصول."
+  },
+  "meta": {
+    "locale": "ar",
+    "hiddenSourceValue": "contract.html",
+    "jsSourceValue": "contract.html"
+  }
+}
