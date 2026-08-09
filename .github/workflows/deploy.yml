@@ -1,0 +1,75 @@
+name: Build and Deploy
+
+# WHEN THIS WORKFLOW RUNS AT ALL.
+# GitHub checks these conditions before it even starts a run — if a
+# push or PR doesn't match one of these, nothing happens (no run shows
+# up, not even a skipped one). Both main and dev are listed here so
+# pushes AND pull requests on either branch get build-checked. Actually
+# deploying to the live site is a separate, stricter gate further down
+# (see the "deploy" job's "if:") — listing dev here only means "build
+# and validate," never "publish."
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main, dev]
+  workflow_dispatch: # lets a human trigger a run manually from the Actions tab, for any branch
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Only one deploy at a time; don't cancel one that's already running.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: npm ci
+
+      - run: npx eleventy
+
+      # Most pages haven't been migrated to Eleventy yet (Phase 0 covers Home only).
+      # Copy everything still hand-written, plus the shared static assets/data,
+      # into the build output alongside the generated index.html / index-en.html.
+      - name: Copy not-yet-migrated pages and static assets
+        run: |
+          cp -r assets _site/assets
+          cp announcements.json announcements-ar.json gallery.json _site/
+          cp contract.html contract-en.html _site/
+          cp contact.html contact-en.html _site/
+          cp gallery.html gallery-en.html _site/
+          cp rules.html rules-en.html _site/
+          cp schedule.html schedule-en.html _site/
+          cp submissions.html submissions-en.html _site/
+          cp verify.html _site/
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    # This is the actual "publish to the live site" gate — separate
+    # from the "on:" triggers above. Even though builds now also run
+    # for dev (pushes and PRs), this condition means the deploy job
+    # only ever does anything on a direct push to main. Everything
+    # else (PRs, pushes to dev, manual runs) builds and stops there.
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

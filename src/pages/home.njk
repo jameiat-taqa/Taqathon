@@ -1,0 +1,378 @@
+---
+# This front matter (the YAML between the --- lines) is how Eleventy
+# configures THIS specific template. "pagination" is the trick that
+# turns one template file into two output files:
+#   - "data" points at the list we built in src/_data/pages/home.js
+#     (Eleventy sees this file's path and exposes it as pages.home.locales)
+#   - "size: 1" means "give me one list item per generated page"
+#   - "alias: locale" means "call that one item `locale` inside this template"
+# So Eleventy runs this template TWICE — once with locale set to the
+# Arabic entry, once with the English entry — and "permalink" (which
+# reads locale.permalink) decides each time where the output HTML goes:
+# /index.html for Arabic, /index-en.html for English.
+pagination:
+  data: pages.home.locales
+  size: 1
+  alias: locale
+permalink: "{{ locale.permalink }}"
+---
+{#
+  TAQATHON - HOME PAGE TEMPLATE (src/pages/home.njk)
+  ---------------------------------------------------
+  This one file replaces what used to be two separate hand-written
+  files: index.html (Arabic) and index-en.html (English). See the
+  pagination front matter above for how "one template → two pages"
+  actually works.
+
+  Sections on this page (same content as the original site, just now
+  pulled from data instead of typed directly into the HTML):
+    - Hero: headline + 3 call-to-action buttons + hero photo
+    - Countdown: live timer to a deadline (data-deadline attribute)
+    - Announcements: list fetched client-side from a JSON file
+    - About: "what you'll do" copy + prize amounts
+    - CTA band: closing "get started" banner
+
+  TO CUSTOMIZE:
+    - Text (headings, button labels, prize amounts, etc.) → edit
+      src/_data/copy/home.ar.json and home.en.json, NOT this file.
+    - Shared nav/footer text → src/_data/site.ar.json / site.en.json.
+    - Countdown deadline → the "deadline" field inside the two
+      home.*.json files above (ISO 8601 format, e.g. "2026-09-01T00:00:00+03:00").
+    - Page structure/layout (adding a new section, changing markup) →
+      this file, inside the {% block content %} below.
+#}
+{% extends "layouts/base.njk" %}
+{% block pageStyle %}
+.badge-soft{ background:rgba(9,200,153,.15); color:#0a7b60; border:1px solid rgba(9,200,153,.3); }
+
+/* ===== HERO ===== */
+.hero-img{
+display:block; width:100%;
+height:clamp(260px, 35vw, 520px);
+object-fit:cover; object-position:center;
+border-radius: 1rem; box-shadow: 0 18px 40px rgba(0,0,0,.18);
+}
+
+/* ===== CTA band ===== */
+.cta-band{ background: var(--brand-grad); color:#042233; }
+.cta-band .btn{ background:#fff; border:0; color:#042233; font-weight:700; }
+
+/* ===== Countdown ===== */
+.gb-band{ background:transparent; }
+.count-box{
+background:linear-gradient(135deg, #09C899, #007DFD, #09C899);
+background-size:300% 300%;
+border-radius:1rem; max-width:650px; margin-inline:auto;
+box-shadow:0 10px 25px rgba(0,0,0,.15);
+animation:gradientMove 15s ease infinite;
+}
+.count-tile{
+background: rgba(255,255,255,.15);
+border:1px solid rgba(255,255,255,.25);
+color:#fff; border-radius:.75rem; width:56px; height:56px;
+display:flex; align-items:center; justify-content:center; font-weight:700;
+box-shadow:0 6px 18px rgba(0,0,0,.06);
+}
+.count-label{ font-size:.8rem; color: rgba(255,255,255,.9); }
+@keyframes gradientMove {
+0% { background-position:0% 50%; }
+50% { background-position:100% 50%; }
+100% { background-position:0% 50%; }
+}
+
+/* ===== Announcements ===== */
+.ann-list{ max-width:900px; margin:0 auto; display:grid; gap:12px; }
+{#
+  The original Arabic and English pages mirrored this card's padding
+  and icon position (icon on the right for RTL, left for LTR) by
+  writing out two separate, near-identical <style> blocks. Here it's
+  one rule with an {% if %} branch instead — same visual result, half
+  the CSS to maintain.
+#}
+.ann-card{
+position:relative; background:#fff; border:1px solid #e7eef7;
+border-radius:12px; {% if locale.dir == "rtl" %}padding:16px 56px 16px 16px;{% else %}padding:16px 16px 16px 56px;{% endif %} box-shadow:0 6px 18px rgba(0,0,0,.06);
+}
+.ann-icon{
+position:absolute; {% if locale.dir == "rtl" %}right:16px;{% else %}left:16px;{% endif %} top:16px; width:28px; height:28px; border-radius:8px;
+display:grid; place-items:center; font-size:16px;
+}
+.ann-date{ font-size:.8rem; color:#6c7a8a; }
+.ann-text{ color:#1d2733; }
+.type-deadline .ann-icon{ background:#FFE8E8; color:#BB2D3B; }
+.type-update  .ann-icon{ background:#FFF3D6; color:#8A5A14; }
+.type-schedule .ann-icon{ background:#E7F0FF; color:#0D6EFD; }
+.type-general .ann-icon{ background:#E6FAF3; color:#0A7B60; }
+
+/* ===== About ===== */
+.about-img{
+display:block; width:100%; height:auto; border-radius:1rem;
+object-fit:cover; object-position:center;
+}
+@media (max-width: 767.98px){ .about-img{ height:240px; } }
+.about-list .bi{ {% if locale.dir == "rtl" %}margin-inline-start:.5rem;{% else %}margin-right:.5rem;{% endif %} }
+.about-list .bi-lightbulb{ color:#FFD43B; }
+.about-list .bi-person-lines-fill{ color:#007DFD; }
+.about-list .bi-trophy-fill{ color:#E67E22; }
+.about-list .bi-building-check{ color:#09C899; }
+
+/* ===== Reveal ===== */
+.reveal{ opacity:0; transform:translateY(12px); transition:opacity .6s ease, transform .6s ease; }
+.reveal.in{ opacity:1; transform:none; }
+@media (prefers-reduced-motion: reduce){
+.count-box{ animation:none !important; }
+.reveal{ transition:none !important; opacity:1 !important; transform:none !important; }
+}
+{% endblock %}
+
+{% block content %}
+<!-- HERO -->
+<section class="py-5">
+<div class="container">
+  <div class="row g-4 align-items-center">
+    <div class="col-lg-6 reveal">
+      <span class="badge badge-soft">{{ locale.content.hero.badge }}</span>
+      <h1 class="mt-3 mb-2">{{ locale.content.hero.title }}</h1>
+      <h6 class="text-secondary mb-3">{{ locale.content.hero.subtitle }}</h6>
+      <p class="text-secondary">
+        {{ locale.content.hero.body }}
+      </p>
+      <div class="d-flex flex-wrap gap-2 mt-3">
+        {#
+          Looping over hero.ctas means adding/removing/reordering a
+          button is a data change (home.ar.json / home.en.json), not a
+          template change. iconMarginClass exists because the original
+          Arabic buttons used "ms-1" (margin-start) and the English ones
+          used "me-1" (margin-end) on their icons — a small existing
+          inconsistency between the two old files, preserved here as
+          data rather than silently normalized.
+        #}
+        {% for cta in locale.content.hero.ctas %}
+        <a class="btn {{ cta.btnClass }}" href="{{ cta.href }}">
+          <i class="bi {{ cta.icon }} {{ locale.content.hero.iconMarginClass }}"></i> {{ cta.label }}
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="col-lg-6 reveal">
+      <img class="w-100 hero-img"
+           src="{{ locale.content.hero.image.src }}"
+           alt="{{ locale.content.hero.image.alt }}"
+           loading="eager" decoding="async" width="1600" height="1000">
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- COUNTDOWN -->
+<section class="gb-band py-5">
+<div class="container text-center">
+  <div class="count-box p-4 text-white reveal">
+    <div class="mb-2 fw-semibold">{{ locale.content.countdown.label }}</div>
+    {#
+      data-deadline is read by the countdown script down in pageScript.
+      This is still the ORIGINAL (already-past) deadline from the live
+      site — Phase 0's job was to prove the template pipeline works,
+      not to change content. Fixing this date is Phase 1, item 1.
+    #}
+    <div id="deadline" class="d-flex justify-content-center align-items-center gap-3"
+         data-deadline="{{ locale.content.countdown.deadline }}">
+      <div class="text-center">
+        <div class="count-tile"><span id="ddays">00</span></div>
+        <div class="count-label">{{ locale.content.countdown.units.days }}</div>
+      </div>
+      <div class="text-center">
+        <div class="count-tile"><span id="dhours">00</span></div>
+        <div class="count-label">{{ locale.content.countdown.units.hours }}</div>
+      </div>
+      <div class="text-center">
+        <div class="count-tile"><span id="dmins">00</span></div>
+        <div class="count-label">{{ locale.content.countdown.units.mins }}</div>
+      </div>
+      <div class="text-center">
+        <div class="count-tile"><span id="dsecs">00</span></div>
+        <div class="count-label">{{ locale.content.countdown.units.secs }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ANNOUNCEMENTS -->
+{# The actual announcement cards are NOT rendered here by Nunjucks at
+   build time — this section starts empty on purpose. A script down in
+   pageScript fetches announcements-ar.json / announcements.json in the
+   visitor's browser and fills in #ann-wrap with JS, exactly like the
+   original site did. That's why there's no {% for %} loop in this
+   section the way there is in Hero/About below. #}
+<section class="py-5" id="announcements">
+<div class="container">
+  <div class="text-center text-secondary mb-3">{{ locale.content.announcements.heading }}</div>
+  <div id="ann-wrap" class="ann-list"><!-- injected by JS --></div>
+</div>
+</section>
+
+<!-- ABOUT -->
+<section class="py-5">
+<div class="container">
+  <div class="row g-4 align-items-center">
+    <div class="col-lg-6 reveal">
+      <img class="about-img shadow-sm"
+           src="{{ locale.content.about.image.src }}"
+           alt="{{ locale.content.about.image.alt }}"
+           loading="lazy" decoding="async" width="1400" height="500">
+    </div>
+    <div class="col-lg-6 reveal">
+      <h5>{{ locale.content.about.heading }}</h5>
+      <p class="text-secondary">
+        {{ locale.content.about.body }}
+      </p>
+      <div class="row">
+        <div class="col-6 about-list">
+          {% for item in locale.content.about.listCol1 %}
+          <div class="mb-2"><i class="bi {{ item.icon }}"></i> {{ item.text }}</div>
+          {% endfor %}
+        </div>
+        <div class="col-6 about-list">
+          <div class="mb-2">
+            <i class="bi bi-trophy-fill"></i>
+                {{ locale.content.about.prize.prefix }}
+              {#
+                Loops over the three prize amounts and puts a " / "
+                separator between them, but not after the last one —
+                `loop.last` is a built-in Nunjucks variable available
+                inside any {% for %} loop.
+              #}
+              {% for amount in locale.content.about.prize.amounts %}<span style="color:#7f09c8; font-weight:600;">{{ amount }}</span>{% if not loop.last %} / {% endif %}{% endfor %}{% if locale.content.about.prize.spaceBeforeRiyalIcon %} {% endif %}<img src="assets/icons/saudi-riyal-symbol.svg" alt="{{ locale.content.about.prize.riyalAlt }}"
+ style="display:inline; height:1em; width:auto; vertical-align:middle; {{ locale.content.about.prize.riyalIconMarginStyle }};">{% if locale.content.about.prize.suffix %} {{ locale.content.about.prize.suffix }}{% endif %}
+          </div>
+          <div class="mb-2"><i class="bi {{ locale.content.about.listCol2Extra.icon }}"></i> {{ locale.content.about.listCol2Extra.text }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- CTA BAND -->
+<section class="cta-band py-5 text-center">
+<div class="container reveal">
+  <h3 class="fw-bold mb-2" style="font-size:1.7rem;">{{ locale.content.cta.heading }}</h3>
+  <p class="mb-4" style="font-size:1.05rem;">
+    {{ locale.content.cta.body }}
+  </p>
+  <a class="btn {{ locale.content.cta.buttonExtraClass }}px-4 py-2" href="{{ locale.content.cta.buttonHref }}" style="background:#fff; color:#00284C; font-weight:700;">
+    {{ locale.content.cta.buttonLabel }}
+  </a>
+</div>
+</section>
+{% endblock %}
+
+{% block pageScript %}
+{#
+  Everything in this block is plain client-side JavaScript, copied over
+  from the original site almost unchanged — it runs in the VISITOR'S
+  browser after the page loads, not during the Eleventy build. The only
+  Nunjucks placeholders in here are the small {{ }} bits that pull in
+  per-language values (which JSON file to fetch, which text to show).
+#}
+(function(){
+  // ----- Countdown timer -----
+  // Reads the data-deadline attribute set above, then recalculates the
+  // remaining days/hours/minutes/seconds every second.
+  const wrap = document.getElementById('deadline');
+  if(!wrap) return;
+  const deadline = new Date(wrap.getAttribute('data-deadline')).getTime();
+  function pad(n){ return (n<10?'0':'') + n; }  // turns 5 into "05"
+  function tick(){
+    const now = Date.now();
+    let diff = Math.max(0, deadline - now);  // never show a negative countdown
+    const days = Math.floor(diff / 86400000); diff -= days*86400000;
+    const hours = Math.floor(diff / 3600000); diff -= hours*3600000;
+    const mins = Math.floor(diff / 60000); diff -= mins*60000;
+    const secs = Math.floor(diff / 1000);
+    document.getElementById('ddays').textContent = pad(days);
+    document.getElementById('dhours').textContent = pad(hours);
+    document.getElementById('dmins').textContent = pad(mins);
+    document.getElementById('dsecs').textContent = pad(secs);
+  }
+  tick(); setInterval(tick, 1000);
+})();
+
+(function(){
+  // ----- Announcements loader -----
+  // Fetches the language-appropriate JSON file (announcements-ar.json
+  // or announcements.json — decided by locale.content.announcements.source,
+  // filled in by Nunjucks at build time) and renders up to 8 cards,
+  // newest first.
+  const annWrap = document.getElementById('ann-wrap');
+  if(!annWrap) return;
+  fetch('{{ locale.content.announcements.source }}', { cache: 'no-store' })
+    .then(r => r.ok ? r.json() : [])
+    .then(items => {
+      if (!Array.isArray(items) || items.length === 0){
+        annWrap.innerHTML = `
+          <div class="ann-card type-general">
+            <div class="ann-icon"><i class="bi bi-info-circle"></i></div>
+            <div class="ann-text">{{ locale.content.announcements.emptyText }}</div>
+          </div>`;
+        return;
+      }
+      items.sort((a,b) => new Date(b.date) - new Date(a.date));
+      const iconByType = {
+        deadline: 'bi-alarm',
+        update:   'bi-megaphone',
+        schedule: 'bi-calendar-event',
+        general:  'bi-info-circle'
+      };
+      annWrap.innerHTML = items.slice(0, 8).map(it => {
+        const t = (it.type || 'general').toLowerCase();
+        const cls = ['deadline','update','schedule'].includes(t) ? t : 'general';
+        const icon = iconByType[cls] || iconByType.general;
+        {#
+          The original English page called toLocaleDateString() with NO
+          argument (browser's default locale), while the Arabic page
+          passed 'ar-SA' explicitly to get Arabic-Indic date formatting.
+          locale.content.announcements.locale is "ar-SA" for Arabic and
+          "" (empty) for English — this {% if %} makes the generated JS
+          either pass that string in, or pass nothing at all, matching
+          each language's original behavior exactly.
+        #}
+        const dateStr = it.date ? new Date(it.date).toLocaleDateString({% if locale.content.announcements.locale %}'{{ locale.content.announcements.locale }}'{% endif %}) : '';
+        return `
+          <div class="ann-card type-${cls}">
+            <div class="ann-icon"><i class="bi ${icon}"></i></div>
+            ${dateStr ? `<div class="ann-date mb-1">${dateStr}</div>` : ''}
+            <div class="ann-text">${it.text || ''}</div>
+          </div>`;
+      }).join('');
+    })
+    .catch(() => {
+      annWrap.innerHTML = `
+        <div class="ann-card type-general">
+          <div class="ann-icon"><i class="bi bi-info-circle"></i></div>
+          <div class="ann-text">{{ locale.content.announcements.errorText }}</div>
+        </div>`;
+    });
+})();
+
+(function(){
+  // ----- Scroll-reveal animation -----
+  // Any element with class="reveal" starts invisible (see the CSS
+  // above) and fades/slides into view the first time it scrolls into
+  // the viewport. IntersectionObserver is a browser API built for
+  // exactly this — it's much cheaper than checking scroll position by
+  // hand on every scroll event.
+  const els = document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window) || els.length===0){
+    els.forEach(e => e.classList.add('in'));
+    return;
+  }
+  const io = new IntersectionObserver(entries=>{
+    entries.forEach(en=>{
+      if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+    });
+  }, { rootMargin:'0px 0px -60px 0px' });
+  els.forEach(e => io.observe(e));
+})();
+{% endblock %}

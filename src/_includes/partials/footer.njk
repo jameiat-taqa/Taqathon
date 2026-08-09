@@ -1,0 +1,41 @@
+{#
+  FOOTER PARTIAL
+  --------------
+  Same idea as navbar.njk: shared markup, filled in from locale.site
+  (site.ar.json / site.en.json) so every future migrated page can reuse
+  it instead of hand-copying a footer.
+#}
+<!-- FOOTER -->
+<footer class="pt-5">
+<div class="container">
+  {# rowClass differs between languages in the original site too — the
+     Arabic footer's row had "align-items-start", the English one
+     didn't. Kept as data (site.*.json → footer.rowClass) rather than
+     hardcoded here, so this partial still works correctly for either
+     language without an {% if %} branch. #}
+  <div class="{{ locale.site.footer.rowClass }}">
+    <div class="col-md-6">
+      <h6 class="mb-3 text-white">{{ locale.site.footer.brandName }}</h6>
+      <p class="mb-1 small">{{ locale.site.footer.tagline }}</p>
+    </div>
+    <div class="col-md-6">
+      <h6 class="mb-3 text-white">{{ locale.site.footer.followLabel }}</h6>
+      <div class="d-flex gap-3">
+        <a href="{{ locale.site.social.twitter }}" target="_blank" rel="noopener" class="text-light"><i class="bi bi-twitter-x fs-5"></i></a>
+        <a href="{{ locale.site.social.instagram }}" target="_blank" rel="noopener" class="text-light"><i class="bi bi-instagram fs-5"></i></a>
+        <a href="{{ locale.site.social.linkedin }}" target="_blank" rel="noopener" class="text-light"><i class="bi bi-linkedin fs-5"></i></a>
+        <a href="{{ locale.site.social.tiktok }}" target="_blank" rel="noopener" class="text-light"><i class="bi bi-tiktok fs-5"></i></a>
+      </div>
+    </div>
+  </div>
+  <div class="border-top border-secondary mt-4 pt-3 pb-4 small text-center">
+    {#
+      The footer year used to be filled in by JS in assets/common.js
+      (document.getElementById('year').textContent = new Date()...).
+      That script is unchanged and still runs client-side — this <span>
+      just needs to exist with id="year" for it to find.
+    #}
+    © <span id="year"></span> {{ locale.site.footer.copyrightSuffix }}
+  </div>
+</div>
+</footer>

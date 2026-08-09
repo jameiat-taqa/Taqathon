@@ -1,0 +1,13 @@
+{
+  "name": "taqathon-site",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Taqathon hackathon website — Eleventy build",
+  "scripts": {
+    "build": "eleventy",
+    "serve": "eleventy --serve"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.0.0"
+  }
+}

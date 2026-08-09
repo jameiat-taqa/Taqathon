@@ -1,0 +1,47 @@
+{
+  "_comment": "HOME PAGE COPY (Arabic). Every piece of Arabic text on the Home page lives here instead of inside home.njk, so editing the page's wording never means touching template code. Loaded by src/_data/pages/home.js. 'deadline' below is still the ORIGINAL (already past) date from the live site — Phase 0 only migrated the template, it didn't change content. See home.en.json for the English mirror (must keep the same keys/shape).",
+  "pageTitle": "الرئيسية · طاقَثون",
+  "hero": {
+    "badge": "بوابة المشاركين",
+    "title": "طاقَثون 2025",
+    "subtitle": "هاكاثون الطاقة الوطني في المملكة العربية السعودية",
+    "body": "هذه البوابة مخصّصة للمشاركين المقبولين. هنا تجد روابط الورش والجدول، وتطّلع على القواعد والموارد، وتسلّم مشروعك في الوقت المحدد. ينظّم الحدث جمعية الطاقة للتنمية المستدامة ويدعم مستهدفات رؤية 2030.",
+    "ctas": [
+      { "href": "contract.html", "icon": "bi-file-earmark-text", "label": "توقيع العقد", "btnClass": "btn-success" },
+      { "href": "rules.html", "icon": "bi-journal-text", "label": "عرض القواعد", "btnClass": "btn-outline-secondary" },
+      { "href": "submissions.html", "icon": "bi-rocket-takeoff", "label": "تسليم المشروع", "btnClass": "btn-warning text-white" }
+    ],
+    "image": { "src": "assets/gallery/2AN08242.jpg", "alt": "توربينات رياح لتوليد طاقة نظيفة في المملكة" },
+    "iconMarginClass": "ms-1"
+  },
+  "countdown": {
+    "label": "الموعد النهائي للتسليم",
+    "deadline": "2025-11-22T14:00:00+03:00",
+    "units": { "days": "أيام", "hours": "ساعات", "mins": "دقائق", "secs": "ثوانٍ" }
+  },
+  "announcements": {
+    "heading": "الإعلانات",
+    "source": "announcements-ar.json",
+    "locale": "ar-SA",
+    "emptyText": "لا توجد إعلانات حالياً. عُد لاحقاً.",
+    "errorText": "تعذّر تحميل الإعلانات الآن."
+  },
+  "about": {
+    "image": { "src": "assets/gallery/1AN07654.jpg", "alt": "ألواح شمسية من منظور علوي" },
+    "heading": "ماذا ستفعل في طاقَثون؟",
+    "body": "ستعمل ضمن فرق لتطوير حلول عملية في الطاقة المتجددة وكفاءة الاستهلاك وذكاء الطاقة، بإرشاد خبراء وبهدف التبنّي الواقعي المتوافق مع رؤية 2030.",
+    "listCol1": [
+      { "icon": "bi-lightbulb", "text": "ورش يقودها خبراء" },
+      { "icon": "bi-person-lines-fill", "text": "إرشاد ومرافقة تقنية" }
+    ],
+    "prize": { "prefix": "جوائز:", "amounts": ["18,000", "12,000", "9,000"], "riyalAlt": "ريال سعودي", "riyalIconMarginStyle": "margin-inline-start:.25rem", "spaceBeforeRiyalIcon": false },
+    "listCol2Extra": { "icon": "bi-building-check", "text": "فرص تبنّي من شركات كبرى" }
+  },
+  "cta": {
+    "heading": "ابقَ على المسار",
+    "body": "أكمل عقدك، واطّلع على القواعد، وتابع الجدول والإعلانات أولاً بأول.",
+    "buttonLabel": "ابدأ الآن",
+    "buttonHref": "contract.html",
+    "buttonExtraClass": ""
+  }
+}

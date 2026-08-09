@@ -1,0 +1,95 @@
+{#
+  BASE LAYOUT
+  -----------
+  This is the shared page "shell" that every migrated page uses — it's
+  the Eleventy/Nunjucks equivalent of what used to be copy-pasted at the
+  top and bottom of every hand-written HTML file (the <head>, navbar,
+  footer, and closing scripts).
+
+  HOW A PAGE USES THIS FILE (see src/pages/home.njk for the real example):
+    {% extends "layouts/base.njk" %}
+    {% block pageStyle %} ... page-specific CSS ... {% endblock %}
+    {% block content %} ... page-specific HTML ... {% endblock %}
+    {% block pageScript %} ... page-specific JS ... {% endblock %}
+
+  {% extends %} means "start from this other template, then let me fill
+  in specific sections." Each {% block name %}...{% endblock %} below is
+  a named slot. A page that extends this layout can define its own
+  {% block name %} with the SAME name, and Nunjucks swaps that block's
+  content into this exact spot. If a page doesn't define a block, the
+  layout's own (usually empty) version of that block is used instead.
+
+  This is different from a plain HTML comment (angle-bracket-bang-dash
+  style), which still gets sent to the browser. A Nunjucks-style comment
+  like this whole block is stripped out during the build — it never
+  appears in the page source at all. Good for notes-to-future-editors;
+  use an HTML comment instead when you want a marker that survives into
+  the rendered HTML (like the "HERO" style comments already used
+  throughout this site).
+#}
+<!doctype html>
+<html lang="{{ locale.lang }}" dir="{{ locale.dir }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ locale.pageTitle }}</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  {#
+    The original site loaded a different Bootstrap CSS build depending
+    on language: bootstrap.rtl.min.css for Arabic pages (RTL = right to
+    left, so it mirrors margins, text-align, etc.) and the regular
+    bootstrap.min.css for English. We reproduce that here by branching
+    on locale.dir, which home.js already set to "rtl" or "ltr".
+  #}
+  {% if locale.dir == "rtl" %}
+  <!-- Bootstrap RTL + Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css">
+  {% else %}
+  <!-- Bootstrap 5 + Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  {% endif %}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+  <!-- Shared Styles (unchanged from the original site) -->
+  <link href="assets/common.css" rel="stylesheet">
+
+  <style>
+  {% if locale.dir == "rtl" %}
+  {# This body font-order + btn-lang spacing rule only ever appeared in
+     the Arabic page's own <style> block in the original site — English
+     pages didn't have it. Keeping it here, guarded by the same "rtl"
+     check, reproduces that exactly. #}
+  /* RTL-specific adjustments */
+  body{
+  font-family: Cairo, Poppins, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  }
+  .btn-lang{
+  margin-inline-start:1.25rem;
+  }
+  {% endif %}
+
+  {% block pageStyle %}{% endblock %}
+  </style>
+</head>
+
+<body>
+  {% include "partials/navbar.njk" %}
+
+  {% block content %}{% endblock %}
+
+  {% include "partials/footer.njk" %}
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/common.js"></script>
+
+  <script>
+  {% block pageScript %}{% endblock %}
+  </script>
+</body>
+</html>
