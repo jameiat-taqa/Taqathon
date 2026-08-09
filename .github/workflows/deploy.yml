@@ -1,11 +1,19 @@
 name: Build and Deploy
 
+# WHEN THIS WORKFLOW RUNS AT ALL.
+# GitHub checks these conditions before it even starts a run — if a
+# push or PR doesn't match one of these, nothing happens (no run shows
+# up, not even a skipped one). Both main and dev are listed here so
+# pushes AND pull requests on either branch get build-checked. Actually
+# deploying to the live site is a separate, stricter gate further down
+# (see the "deploy" job's "if:") — listing dev here only means "build
+# and validate," never "publish."
 on:
   push:
-    branches: [main]
+    branches: [main, dev]
   pull_request:
-    branches: [main]
-  workflow_dispatch:
+    branches: [main, dev]
+  workflow_dispatch: # lets a human trigger a run manually from the Actions tab, for any branch
 
 permissions:
   contents: read
@@ -51,6 +59,11 @@ jobs:
           path: _site
 
   deploy:
+    # This is the actual "publish to the live site" gate — separate
+    # from the "on:" triggers above. Even though builds now also run
+    # for dev (pushes and PRs), this condition means the deploy job
+    # only ever does anything on a direct push to main. Everything
+    # else (PRs, pushes to dev, manual runs) builds and stops there.
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     needs: build
     runs-on: ubuntu-latest
