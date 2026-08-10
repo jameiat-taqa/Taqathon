@@ -1,0 +1,31 @@
+{
+  "_comment": "SUBMISSIONS PAGE COPY (Arabic). The two form cards (project submission + promo video) are near-identical, so they're one 'forms' array rendered by a single loop in submissions.njk instead of two copy-pasted card blocks — and the copy-to-clipboard button now reuses one shared JS function instead of two nearly-identical click handlers (see pageScript in the template). The two original error messages differed slightly in wording for no clear reason; unified to the fuller one.",
+  "pageTitle": "التسليمات · طاقَثون",
+  "hero": { "icon": "bi-upload", "heading": "التسليمات", "headingClass": "fw-bold" },
+  "iconMarginClass": "ms-2",
+  "copyButtonLabel": "نسخ الرابط",
+  "copiedLabel": "تم النسخ!",
+  "copyErrorMsg": "تعذّر النسخ. استخدم الضغط المطوّل أو النقر بالزر الأيمن لنسخ الرابط.",
+  "noteLabel": "ملاحظة:",
+  "noteBodyPrefix": "تتطلّب عملية رفع الملفات تسجيل الدخول إلى Google. إذا لم يعمل الزر، استخدم الرابط المباشر:",
+  "forms": [
+    {
+      "cardTitle": "نموذج التسليم",
+      "openLabel": "فتح النموذج",
+      "openHref": "https://forms.gle/7AR3KYnWTJ6tABtn9",
+      "openIcon": "bi-box-arrow-up-right",
+      "openAriaLabel": "فتح نموذج التسليم في تبويب جديد",
+      "copyAriaLabel": "نسخ رابط نموذج التسليم",
+      "noscriptText": "تم تعطيل جافاسكريبت. استخدم هذا الرابط للتسليم:"
+    },
+    {
+      "cardTitle": "برومو الفيديو",
+      "openLabel": "فتح نموذج البرومو فيديو",
+      "openHref": "https://forms.gle/ReGU4xrLCxD2Ygvm6",
+      "openIcon": "bi-camera-video",
+      "openAriaLabel": "فتح نموذج برومو الفيديو",
+      "copyAriaLabel": "نسخ رابط نموذج برومو الفيديو",
+      "noscriptText": "تم تعطيل جافاسكريبت. استخدم هذا الرابط:"
+    }
+  ]
+}

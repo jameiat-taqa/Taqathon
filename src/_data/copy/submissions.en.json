@@ -1,0 +1,31 @@
+{
+  "_comment": "SUBMISSIONS PAGE COPY (English). English mirror of submissions.ar.json.",
+  "pageTitle": "Submissions · Taqathon",
+  "hero": { "icon": "bi-upload", "heading": "Project Submissions", "headingClass": "fw-semibold" },
+  "iconMarginClass": "me-2",
+  "copyButtonLabel": "Copy link",
+  "copiedLabel": "Copied!",
+  "copyErrorMsg": "Could not copy. Long-press or right-click the link to copy.",
+  "noteLabel": "Note:",
+  "noteBodyPrefix": "File uploads require Google sign-in. If the button doesn’t work, use this direct URL:",
+  "forms": [
+    {
+      "cardTitle": "Submission Form",
+      "openLabel": "Open submission form",
+      "openHref": "https://forms.gle/7AR3KYnWTJ6tABtn9",
+      "openIcon": "bi-box-arrow-up-right",
+      "openAriaLabel": "Open submission form in a new tab",
+      "copyAriaLabel": "Copy submission form link",
+      "noscriptText": "JavaScript is disabled. Use this link to submit:"
+    },
+    {
+      "cardTitle": "Promo Video Submission",
+      "openLabel": "Open Promo Video Form",
+      "openHref": "https://forms.gle/ReGU4xrLCxD2Ygvm6",
+      "openIcon": "bi-camera-video",
+      "openAriaLabel": "Open promo video form in a new tab",
+      "copyAriaLabel": "Copy promo video form link",
+      "noscriptText": "JavaScript is disabled. Use this link to submit:"
+    }
+  ]
+}
