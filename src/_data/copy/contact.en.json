@@ -1,5 +1,5 @@
 {
-  "_comment": "CONTACT PAGE COPY (English). See contact.ar.json's _comment for the big one: this form's actual submit logic is genuinely different from the Arabic version, not just translated text, and both are preserved as they were. Two more things worth flagging here specifically: (1) metaSourceValue below is 'contact.html' — the ORIGINAL English page's hidden 'source' field literally said 'contact.html', not 'contact-en.html', and unlike Contract's dead hidden field, this one actually gets submitted (this form builds its FormData directly from the whole <form>, hidden fields included) — very likely an unfixed copy-paste bug, but real backend data may already reflect it, so it's kept as-is rather than silently corrected. (2) this page's original association link pointed at 'https://jameiat-taqa.sa', a different domain than every other English page's 'https://taqa.org.sa' — since the navbar is now shared from site.en.json's single value, this page automatically picks up the same domain as every other page. Worth confirming which domain is actually correct.",
+  "_comment": "CONTACT PAGE COPY (English). See contact.ar.json's _comment: Arabic has been brought up to this form's full feature set (honeypot, validation, mailto fallback), and the submit handler in contact.njk is now one shared script instead of two diverging branches. Also fixed here: metaSourceValue used to be the literal string 'contact.html' (the ARABIC page's own filename) even on this English page — a copy-paste bug, since this hidden field actually gets submitted (this form builds its FormData from the whole <form>, hidden fields included, unlike Contract's dead hidden field). Corrected to 'contact-en.html' so English submissions are now tagged correctly. If the Apps Script backend or any spreadsheet/dashboard built on it was matching on the literal string 'contact.html' to mean 'Arabic submission', this change affects that — flagging it explicitly rather than changing it silently.",
   "pageTitle": "Contact · Taqathon",
   "panelHeaderWeight": 600,
   "form": {
@@ -8,7 +8,7 @@
     "hasHoneypot": true,
     "hasMetadataFields": true,
     "metaLocaleValue": "en",
-    "metaSourceValue": "contact.html",
+    "metaSourceValue": "contact-en.html",
     "nameLabel": "Name",
     "namePlaceholder": "Your full name",
     "emailLabel": "Email",

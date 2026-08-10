@@ -13,22 +13,18 @@ permalink: "{{ locale.permalink }}"
   (see contact.ar.json / contact.en.json), same idea as Schedule's
   table rows.
 
-  IMPORTANT — read this before changing the submit-handling JS below:
-  the Arabic and English forms are NOT just translations of each other.
-  The English one has a honeypot anti-bot field, real client-side
-  validation, a disabled-while-sending submit button, a mailto:
-  fallback on network failure, and checks the server response's "ok"
-  field. The Arabic one has NONE of that and checks a DIFFERENT
-  response field ("result" === "success"). That gap is preserved
-  exactly here (via a {% if locale.lang == "ar" %} branch covering the
-  whole submit handler, not just text swaps) rather than guessing which
-  behavior is "right" and unifying them — this migration can't verify
-  what the live Apps Script backend actually returns, and silently
-  changing which field a live form checks could make a working form
-  stop reporting success correctly. See the "_comment" fields in
-  contact.ar.json / contact.en.json for the full detail. This is
-  flagged to the user as something that needs an actual decision, not
-  something to guess through.
+  UPDATE: the Arabic and English forms used to be genuinely different
+  features — English had a honeypot, real client-side validation, a
+  disabled-while-sending button, and a mailto: fallback; Arabic had
+  none of that, and the two even checked different fields in the
+  server's response ("ok" vs "result" === "success"). Per explicit
+  direction, Arabic is now brought up to the same full feature set,
+  and pageScript below is ONE shared handler instead of two diverging
+  {% if locale.lang %} branches. The success-check accepts either
+  response shape (see the comment right above `succeeded` in
+  pageScript) since this migration still can't verify which one the
+  live Apps Script backend actually sends — see contact.ar.json's
+  "_comment" field for the full history.
 
   TO CUSTOMIZE:
     - Wording, sponsor/supervisor entries → the copy JSON files, NOT
@@ -187,55 +183,18 @@ permalink: "{{ locale.permalink }}"
 {% endblock %}
 
 {% block pageScript %}
+{#
+  This used to be two entirely separate submit handlers, branched by
+  {% if locale.lang == "ar" %} — Arabic's was a much simpler, less
+  robust version with no honeypot, no client validation, and no
+  mailto fallback. Both languages now share this one handler; only the
+  strings differ (via locale.content.status.*), the same pattern every
+  other page's pageScript already uses. See contact.ar.json's
+  "_comment" field for why this changed and what it replaced.
+#}
 const form = document.getElementById('contactForm');
 const alertBox = document.getElementById('contactAlert');
 const CONTACT_SCRIPT_URL = "{{ locale.config.contactScriptUrl | safe }}";
-
-{% if locale.lang == "ar" %}
-{#
-  ARABIC: the simpler, original submit handler — no client validation,
-  no honeypot, no button-disable, checks data.result === 'success'.
-  Preserved exactly as it was; see this file's header comment for why.
-#}
-form.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  alertBox.classList.add('d-none');
-
-  const formData = new FormData(form);
-  formData.append('pageUrl', window.location.href);
-  formData.append('userAgent', navigator.userAgent);
-  formData.append('ts', new Date().toISOString());
-
-  try {
-    const res = await fetch(CONTACT_SCRIPT_URL, { method: 'POST', body: formData });
-    const data = await res.json();
-    if (data.result === 'success') {
-      alertBox.className = 'alert alert-success mt-3';
-      alertBox.textContent = '{{ locale.content.status.successMessage | safe }}';
-      alertBox.classList.remove('d-none');
-      form.reset();
-    } else {
-      // This Error's message is never shown or logged anywhere (the
-      // catch block below always displays its own hardcoded fallback
-      // text, ignoring err.message) — the original literally used the
-      // Arabic string 'خطأ في الخادم' ("server error") here even
-      // though it's invisible either way. Left as a plain English
-      // marker since it carries no user-facing meaning.
-      throw new Error('server error');
-    }
-  } catch (err) {
-    alertBox.className = 'alert alert-danger mt-3';
-    alertBox.textContent = '{{ locale.content.status.genericError | safe }}';
-    alertBox.classList.remove('d-none');
-  }
-});
-{% else %}
-{#
-  ENGLISH: the more complete submit handler — honeypot check, required-
-  field + email-format validation, disabled-while-sending button state,
-  ticket ID display, and a mailto: fallback if the request throws
-  (network error or CORS block). Checks data.ok, not data.result.
-#}
 const submitBtn = document.getElementById('submitBtn');
 
 function showAlert(kind, html){
@@ -290,7 +249,14 @@ form.addEventListener('submit', async (e) => {
       return;
     }
 
-    if (data && data.ok){
+    // Accepts EITHER response shape the Apps Script backend might
+    // actually return — { ok: true, ... } or { result: 'success', ... }.
+    // The two languages used to check different fields (a leftover from
+    // when they were unrelated implementations); rather than guess which
+    // one the live backend really sends and risk breaking whichever
+    // language guessed wrong, both are treated as success here.
+    const succeeded = data && (data.ok === true || data.result === 'success');
+    if (succeeded){
       const ticket = data.ticketId ? `{{ locale.content.status.ticketIdLabelHtml | safe }}${data.ticketId}{{ locale.content.status.ticketIdCloseHtml | safe }}` : '';
       showAlert('success', '{{ locale.content.status.successMessage | safe }}' + ticket);
       form.reset();
@@ -319,5 +285,4 @@ form.addEventListener('submit', async (e) => {
     submitBtn.disabled = false;
   }
 });
-{% endif %}
 {% endblock %}

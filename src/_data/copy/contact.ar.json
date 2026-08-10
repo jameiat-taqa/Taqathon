@@ -1,28 +1,39 @@
 {
-  "_comment": "CONTACT PAGE COPY (Arabic). IMPORTANT — read before touching the submit logic: this page's Arabic and English forms are NOT just translations of each other, they're genuinely different features. The English form (see contact.en.json) has a honeypot anti-bot field, client-side required/email-format validation, a disabled-while-sending submit button, a mailto: fallback if the network request fails, and checks the server response's 'ok' field. The Arabic form has none of that — no honeypot, no client validation, no button-disable, no mailto fallback — and checks a DIFFERENT response field ('result' === 'success', not 'ok'). This migration preserves both exactly as they were rather than guessing which is 'correct' and unifying them, because the Apps Script backend both forms POST to is live and its actual response shape wasn't something this migration could verify. Flagged for a real decision: does the backend return {ok:true,...} or {result:'success',...}? If it's the former, the Arabic form may already be silently showing a false error to every successful submission today.",
+  "_comment": "CONTACT PAGE COPY (Arabic). UPDATED: the Arabic and English forms used to be genuinely different features (see git history on this file for the original note) — Arabic had no honeypot, no client validation, no mailto fallback, and checked a different response field than English. Per explicit direction, Arabic is now brought up to the same full feature set as English, and the submit handler in contact.njk was collapsed from two diverging {% if locale.lang %} branches into one shared script, since the logic is now genuinely identical between languages (only the strings differ). The success-check now accepts EITHER response shape (data.ok OR data.result === 'success') rather than assuming one — this couldn't be verified against the live Apps Script backend, so checking for both is the safe way to stop guessing wrong from silently breaking one language's forms.",
   "pageTitle": "تواصل معنا · طاقَثون",
   "panelHeaderWeight": 700,
   "form": {
     "heading": "أرسل لنا رسالة",
     "subheading": "املأ النموذج وسنعاود التواصل معك قريبًا",
-    "hasHoneypot": false,
-    "hasMetadataFields": false,
+    "hasHoneypot": true,
+    "hasMetadataFields": true,
+    "metaLocaleValue": "ar",
+    "metaSourceValue": "contact.html",
     "nameLabel": "الاسم الكامل",
     "namePlaceholder": "اكتب اسمك هنا",
     "emailLabel": "البريد الإلكتروني",
     "emailPlaceholder": "you@example.com",
-    "emailHelperText": "",
+    "emailHelperText": "نستخدمه فقط للرد على رسالتك.",
     "subjectLabel": "الموضوع",
     "subjectPlaceholder": "موضوع الرسالة",
     "messageLabel": "الرسالة",
     "messagePlaceholder": "اكتب رسالتك هنا...",
     "submitLabel": "إرسال الرسالة",
     "submitIconMarginClass": "ms-1",
-    "submitHelperHtml": ""
+    "submitHelperHtml": "تواجه مشكلة؟ راسلنا مباشرة على <a href=\"mailto:info@jameiat-taqa.sa\">info@jameiat-taqa.sa</a>."
   },
   "status": {
+    "requiredFieldsWarning": "الرجاء تعبئة جميع الحقول.",
+    "invalidEmailWarning": "الرجاء إدخال بريد إلكتروني صحيح.",
+    "sendingLabel": "جارٍ الإرسال...",
+    "htmlDetectedHint": " (يبدو أنها صفحة تسجيل دخول/صلاحيات — تأكد من ضبط صلاحيات Web App على \"Anyone\").",
+    "requestFailedPrefix": "فشل الطلب (",
+    "requestFailedSuffix": ")",
+    "genericSubmitFailed": "فشل الإرسال، الرجاء المحاولة مرة أخرى.",
     "successMessage": "تم إرسال الرسالة بنجاح! شكرًا لتواصلك معنا.",
-    "genericError": "حدث خطأ أثناء إرسال الرسالة. حاول مرة أخرى."
+    "ticketIdLabelHtml": "<br><small>رقم التذكرة: <code>",
+    "ticketIdCloseHtml": "</code></small>",
+    "networkErrorFallback": "تم حظر الطلب بسبب مشكلة في الشبكة أو CORS. فتحنا تطبيق البريد كحل بديل. إذا لم يفتح شيء، راسلنا مباشرة على <b>info@jameiat-taqa.sa</b>."
   },
   "contactInfo": {
     "heading": "معلومات التواصل",
