@@ -36,6 +36,14 @@
   <div class="collapse navbar-collapse justify-content-lg-center" id="mainNav">
     <ul class="navbar-nav mb-2 mb-lg-0 align-items-lg-center">
       {#
+        aria-current="page" tells screen readers which nav item matches
+        the page currently open — a real accessibility improvement, not
+        just cosmetic. It was only ever present on the original
+        Schedule (English) page's active link, missing everywhere else
+        on the site by accident. Since this loop is now shared by every
+        migrated page, adding it here once fixes that inconsistency
+        retroactively for Home and Contract too, not just Schedule.
+
         This loop is the entire reason a navbar partial is worth having:
         one {% for %} over a list, instead of seven near-identical
         <li><a>...</a></li> lines typed out by hand (and kept in sync by
@@ -49,7 +57,7 @@
         each nav item's own `key` from site.*.json.
       #}
       {% for item in locale.site.nav %}
-      <li class="nav-item"><a class="nav-link{% if item.key == locale.navActive %} active{% endif %}" href="{{ item.href }}">{{ item.label | safe }}</a></li>
+      <li class="nav-item"><a class="nav-link{% if item.key == locale.navActive %} active{% endif %}" href="{{ item.href }}"{% if item.key == locale.navActive %} aria-current="page"{% endif %}>{{ item.label | safe }}</a></li>
       {% endfor %}
       {#
         Nunjucks escapes {{ }} output by default (so a literal "&" in
