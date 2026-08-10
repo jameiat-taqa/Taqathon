@@ -22,7 +22,14 @@ backend:
   # "Content Management (Decap CMS)" section of README.md for the
   # one-time setup this depends on (a GitHub OAuth App + a Netlify
   # site with that OAuth App's ID/secret installed).
-  base_url: https://api.netlify.com
+  #
+  # base_url must be that placeholder Netlify site's own address, NOT
+  # https://api.netlify.com — the login flow sends this site's hostname
+  # to Netlify as the "which site's OAuth config do I use" identifier,
+  # so pointing at api.netlify.com itself (not a real registered site)
+  # 404s. Netlify serves /auth and /callback at the site's own domain,
+  # not at a shared api.netlify.com path.
+  base_url: https://lucky-twilight-b4bf3a.netlify.app
   auth_endpoint: auth
 
 # "editorial_workflow" (rather than the simpler default, which commits
