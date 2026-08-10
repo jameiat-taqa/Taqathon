@@ -318,10 +318,19 @@ object-fit:cover; object-position:center;
   // newest first.
   const annWrap = document.getElementById('ann-wrap');
   if(!annWrap) return;
+  {#
+    Phase 0.5 (Decap CMS): announcements.json / announcements-ar.json used
+    to be a bare JSON array — now they're { "announcements": [...] }.
+    That wrapper is required for Decap's "files" collection type, which
+    can only read/write a named field inside an object, never a raw
+    top-level array. The fetch below unwraps it back into a plain
+    "items" array so nothing past this point had to change.
+  #}
   fetch('{{ locale.content.announcements.source | safe }}', { cache: 'no-store' })
-    .then(r => r.ok ? r.json() : [])
-    .then(items => {
-      if (!Array.isArray(items) || items.length === 0){
+    .then(r => r.ok ? r.json() : { announcements: [] })
+    .then(data => {
+      const items = Array.isArray(data && data.announcements) ? data.announcements : [];
+      if (items.length === 0){
         annWrap.innerHTML = `
           <div class="ann-card type-general">
             <div class="ann-icon"><i class="bi bi-info-circle"></i></div>

@@ -39,17 +39,29 @@ jobs:
 
       - run: npx eleventy
 
+      # Phase 0.5 (Decap CMS): gallery.json is no longer a hand-edited
+      # file — it's generated from src/_data/gallery-items/*.json (one
+      # tiny file per photo, added/removed by the CMS) so that adding
+      # or deleting a gallery photo is a clean one-file git change
+      # instead of editing one big shared array. See
+      # scripts/generate-gallery-json.js and admin/config.yml.
+      - name: Generate gallery.json from CMS entry files
+        run: node scripts/generate-gallery-json.js _site/gallery.json
+
       # All 15 pages are now Eleventy-generated (Phase 0 is complete —
       # this used to also copy 13 hand-written pages here individually
       # while they were being migrated one at a time; not needed
       # anymore). What's left to copy is purely static: the images/CSS/
-      # JS in assets/, and the JSON files pages fetch client-side at
-      # runtime (announcements, gallery listing) — neither of those is
-      # a templating concern, so Eleventy doesn't generate them.
+      # JS in assets/, the JSON files pages fetch client-side at
+      # runtime (announcements — gallery listing is generated above,
+      # not copied), and admin/ (the Decap CMS itself, a static
+      # index.html + config.yml — Eleventy doesn't process these, same
+      # reasoning as the other static files here).
       - name: Copy static assets and client-fetched JSON data
         run: |
           cp -r assets _site/assets
-          cp announcements.json announcements-ar.json gallery.json _site/
+          cp -r admin _site/admin
+          cp announcements.json announcements-ar.json _site/
 
       - uses: actions/upload-pages-artifact@v3
         with:
