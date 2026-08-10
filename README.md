@@ -17,69 +17,86 @@ A bilingual (English/Arabic) website for the Taqathon Energy Hackathon, built wi
 
 ## 📁 Project Structure
 
+As of the Eleventy migration (Phase 0 of the site overhaul), the 15
+HTML pages you used to edit directly no longer exist as hand-written
+files — they're generated at build time from shared templates plus
+Arabic/English data files. If you're looking for where a piece of text
+actually lives, it's almost always in `src/_data/`, not in a `.html`
+file.
+
 ```
 Taqathon/
-├── index.html              # Arabic home page
-├── index-en.html           # English home page
-├── contract.html           # Arabic participation agreement
-├── contract-en.html        # English participation agreement
-├── schedule.html           # Arabic schedule & workshops
-├── schedule-en.html        # English schedule & workshops
-├── submissions.html        # Arabic submissions page
-├── submissions-en.html     # English submissions page
-├── rules.html              # Arabic rules & resources
-├── rules-en.html           # English rules & resources
-├── contact.html            # Arabic contact page
-├── contact-en.html         # English contact page
-├── gallery.html            # Arabic photo gallery
-├── gallery-en.html         # English photo gallery
-├── verify.html             # Certificate verification page
-├── announcements.json      # English announcements data
-├── announcements-ar.json   # Arabic announcements data
-├── gallery.json            # Gallery image filenames
+├── eleventy.config.js          # Eleventy build configuration
+├── package.json                 # npm scripts + the @11ty/eleventy dependency
+├── src/
+│   ├── _includes/
+│   │   ├── layouts/base.njk     # Shared page shell (<head>, nav, footer, scripts)
+│   │   └── partials/            # navbar.njk, footer.njk — reused by every page
+│   ├── _data/
+│   │   ├── site.ar.json         # Shared nav/footer/social text (Arabic)
+│   │   ├── site.en.json         # Shared nav/footer/social text (English)
+│   │   ├── config.json          # Site-wide config (Apps Script URLs, etc.)
+│   │   ├── copy/                # Per-page, per-language content
+│   │   │   ├── home.ar.json / home.en.json
+│   │   │   ├── contract.ar.json / contract.en.json
+│   │   │   └── ... one pair per page (see src/pages/ below)
+│   │   └── pages/                # Wires each page's site+copy+config into
+│   │       ├── home.js           # a "locales" list the pagination front
+│   │       └── ...               # matter in src/pages/*.njk loops over
+│   └── pages/
+│       ├── home.njk              # → generates index.html AND index-en.html
+│       ├── contract.njk          # → contract.html / contract-en.html
+│       ├── schedule.njk, submissions.njk, rules.njk, gallery.njk, contact.njk
+│       └── verify.njk            # → verify.html (standalone, no EN version)
+├── _site/                        # Build OUTPUT — git-ignored, never hand-edited
+├── announcements.json           # English announcements (unchanged — still
+├── announcements-ar.json        # fetched client-side by the Home page's JS,
+├── gallery.json                  # not templated by Eleventy)
 ├── assets/
-│   ├── common.css          # Shared styles (navbar, footer, utilities)
-│   ├── common.js           # Shared JavaScript (footer year update)
-│   ├── logos/              # Organization logos
-│   ├── sponsors/           # Sponsor logos
-│   ├── icons/              # SVG icons
-│   ├── docs/               # PDF documents
-│   ├── gallery/            # Gallery images
-│   └── images/             # Other images
+│   ├── common.css               # Shared styles (navbar, footer, utilities)
+│   ├── common.js                # Shared JavaScript (footer year update)
+│   ├── logos/ / sponsors/ / icons/ / docs/ / gallery/ / images/
+├── .github/workflows/deploy.yml # Builds with Eleventy + deploys to Pages on push to main
 └── README.md
 ```
+
+**Why one template can output two languages:** each page's `.njk`
+file uses Eleventy's *pagination* feature over a small list built in
+its matching `src/_data/pages/*.js` file — one list entry per language,
+each with its own output filename. See the comments at the top of
+`src/pages/home.njk` and `src/_data/pages/home.js` for the full
+walkthrough; every other page follows the same pattern.
 
 ## 🚀 Quick Start
 
 ### Local Development
 
-1. Clone or download this repository
-2. Open any HTML file in a web browser
-3. For full functionality, serve via a local web server:
-   ```bash
-   # Using Python
-   python -m http.server 8000
-   
-   # Using Node.js (http-server)
-   npx http-server
-   ```
-4. Navigate to `http://localhost:8000`
+This is now a build step, not just "open the HTML file":
+
+1. Clone this repository
+2. Install dependencies: `npm install` (needs Node.js)
+3. Build the site: `npx eleventy` — generates the 15 pages into `_site/`
+4. Serve `_site/` with any static file server, e.g. `npx http-server _site`,
+   and copy `assets/`, `announcements*.json`, and `gallery.json` into
+   `_site/` first (the same step `.github/workflows/deploy.yml` does
+   automatically in CI — see that file for the exact commands)
+5. For live-reload while editing templates: `npx eleventy --serve`
 
 ### Deployment
 
-#### GitHub Pages
+#### GitHub Pages (current setup)
 
-1. Create a repository on GitHub
-2. Upload all files to the repository
-3. Go to **Settings** → **Pages**
-4. Under **Source**, select:
-   - Branch: `main` (or your default branch)
-   - Folder: `/ (root)`
-5. Your site will be available at `https://<username>.github.io/<repository-name>/`
+Deployment is automatic: `.github/workflows/deploy.yml` runs on every
+push to `main`, builds the site with Eleventy, and publishes it via
+GitHub's official Pages Actions. The repo's **Settings → Pages →
+Build and deployment → Source** must be set to **"GitHub Actions"**
+(not "Deploy from a branch") for this to work.
 
 #### Other Hosting
 
-Upload all files to any static web hosting service (Netlify, Vercel, etc.). No build process required.
+Run `npx eleventy`, then upload the contents of `_site/` (plus
+`assets/`, `announcements*.json`, `gallery.json` copied alongside it)
+to any static host.
 
 ## 🎨 Customization
 
@@ -115,24 +132,26 @@ Edit `announcements.json` (English) or `announcements-ar.json` (Arabic):
 
 ### Changing Countdown Deadline
 
-In `index.html` or `index-en.html`, find the countdown section and update:
-```html
-<div id="deadline" data-deadline="2025-12-31T23:59:59">
+Edit the `deadline` field in `src/_data/copy/home.ar.json` AND
+`home.en.json` (both — they're independent data files, not derived
+from each other):
+```json
+"countdown": { "deadline": "2025-12-31T23:59:59+03:00", ... }
 ```
 
 ### Updating Form URLs
 
-#### Contact Form
-Edit `CONTACT_SCRIPT_URL` in `contact.html` or `contact-en.html`:
-```javascript
-const CONTACT_SCRIPT_URL = "YOUR_GOOGLE_APPS_SCRIPT_URL";
+Both the Contact and Contract forms' Google Apps Script endpoints are
+centralized in one place now: `src/_data/config.json`.
+```json
+{
+  "contractScriptUrl": "YOUR_GOOGLE_APPS_SCRIPT_URL",
+  "contactScriptUrl": "YOUR_GOOGLE_APPS_SCRIPT_URL"
+}
 ```
-
-#### Contract Form
-Edit `SCRIPT_URL` in `contract.html` or `contract-en.html`:
-```javascript
-var SCRIPT_URL = "YOUR_GOOGLE_APPS_SCRIPT_URL";
-```
+Change it once here — it's shared by both the Arabic and English
+version of whichever page uses it, instead of needing to be updated in
+two (or four) separate `<script>` blocks.
 
 ### Modifying Colors
 
@@ -149,7 +168,13 @@ Edit CSS variables in `assets/common.css`:
 
 ### Adding Certificates
 
-Edit the `CERTIFICATES` object in `verify.html`:
+Edit the `CERTIFICATES` object directly in `src/pages/verify.njk`
+(this one page's data intentionally wasn't extracted into a separate
+data file — see the comment at the top of that template for why, and
+note the security caveat documented there too: this data currently
+ships to every visitor's browser, unencrypted, and that's a known,
+separately-tracked issue, not something to casually add more real
+personal data to without reading that note first):
 ```javascript
 const CERTIFICATES = {
   "TAQ-2025-P-001": {
@@ -170,10 +195,18 @@ const CERTIFICATES = {
 
 ## 🛠️ Technologies Used
 
+- **Eleventy (11ty)**: Static site generator — turns the templates in
+  `src/pages/` + data in `src/_data/` into the plain HTML GitHub Pages
+  serves. No client-side framework; the build step only runs at
+  build/deploy time, not in the visitor's browser.
+- **Nunjucks**: The templating language used in `.njk` files
+  (`{{ variable }}`, `{% for %}` loops, `{% extends %}` layouts).
+- **GitHub Actions**: Runs the Eleventy build and deploys to Pages
+  automatically on every push to `main` (`.github/workflows/deploy.yml`).
 - **Bootstrap 5.3.3**: CSS framework (RTL version for Arabic)
 - **Bootstrap Icons 1.11.3**: Icon library
 - **Google Fonts**: Cairo (Arabic) and Poppins (English)
-- **Vanilla JavaScript**: No frameworks required
+- **Vanilla JavaScript**: No client-side frameworks required
 - **Google Apps Script**: Form submission handling
 
 ## 📝 File Organization
@@ -194,10 +227,15 @@ const CERTIFICATES = {
 
 ### Page-Specific Code
 
-Each HTML file contains:
-- Page-specific CSS in `<style>` tags
-- Page-specific JavaScript in `<script>` tags
-- Comprehensive comments explaining functionality
+Each `src/pages/*.njk` template contains:
+- Page-specific CSS in a `{% block pageStyle %}` (rendered into the
+  shared layout's `<style>` tag)
+- Page-specific JavaScript in a `{% block pageScript %}` (rendered
+  into the shared layout's closing `<script>` tag)
+- Comprehensive comments explaining both the page's own logic AND any
+  Eleventy/Nunjucks-specific mechanics used (pagination, the extends/
+  block system, data-driven loops) — written for someone learning this
+  stack, not shorthand for someone who already knows it
 
 ## 📄 Pages Overview
 
@@ -219,7 +257,7 @@ Each HTML file contains:
 1. Create a new Google Apps Script project
 2. Write a script to handle form submissions
 3. Deploy as a Web App with "Anyone" access
-4. Update the script URLs in the HTML files
+4. Update the URLs in `src/_data/config.json` (one file, not per-page)
 
 ### Announcements
 
