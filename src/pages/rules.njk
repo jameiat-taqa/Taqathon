@@ -1,0 +1,84 @@
+---
+pagination:
+  data: pages.rules.locales
+  size: 1
+  alias: locale
+permalink: "{{ locale.permalink }}"
+---
+{#
+  TAQATHON - RULES PAGE TEMPLATE (src/pages/rules.njk)
+  ------------------------------------------------------
+  A Bootstrap accordion with 10 sections, each rendered from one loop
+  over locale.content.sections (see rules.ar.json / rules.en.json)
+  instead of 10 hand-typed accordion-item blocks. Each section's ID
+  pair (heading-<slug> / collapse-<slug>) is generated here from that
+  section's "slug" field, so the data file never has to know or care
+  about Bootstrap's accordion ID-linking mechanics.
+
+  "expanded" controls whether a section starts open. Only the first
+  section (Judging Criteria) is expanded by default, matching the
+  original pages — everything else starts collapsed.
+
+  TO CUSTOMIZE:
+    - Add/remove/reorder a section → edit the "sections" array in the
+      copy JSON files. Give each section a unique "slug".
+    - Section body content → the "bodyHtml" field on that section, in
+      the copy JSON files. It's raw HTML on purpose (mixed paragraphs,
+      lists, and buttons per section — see the "_comment" field in
+      rules.ar.json for why this page doesn't use granular fields the
+      way Home/Schedule/Submissions do).
+#}
+{% extends "layouts/base.njk" %}
+{% block pageStyle %}
+{#
+  The original CSS on this page also defined .criteria-row and
+  .criteria-label rules — neither class is actually used anywhere in
+  the accordion body markup (checked both languages). Only
+  .criteria-badge is real. Dropped the two unused rules; zero visual
+  effect either way since they never matched anything.
+#}
+.criteria-badge{
+  background:var(--brand-grad);
+  color:#fff; border:0; padding:.25rem .6rem; border-radius:.5rem; font-weight:600;
+}
+{% endblock %}
+
+{% block content %}
+<main class="py-5">
+  <div class="container" style="max-width:980px;">
+
+    <div class="text-center mb-4">
+      <div class="icon-circle mx-auto mb-3">
+        <i class="bi {{ locale.content.hero.icon }}"></i>
+      </div>
+      <h5 class="mb-1 {{ locale.content.hero.headingClass }}">{{ locale.content.hero.heading }}</h5>
+      <p class="text-secondary mb-0">
+        {{ locale.content.hero.intro }}
+      </p>
+    </div>
+
+    <div class="accordion" id="rulesAccordion">
+      {% for s in locale.content.sections %}
+      <div class="accordion-item card-lite rounded-2xl mb-3 overflow-hidden">
+        <h2 class="accordion-header" id="heading-{{ s.slug }}">
+          <button class="accordion-button{% if not s.expanded %} collapsed{% endif %} fw-semibold" type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapse-{{ s.slug }}"
+                  aria-expanded="{{ 'true' if s.expanded else 'false' }}"
+                  aria-controls="collapse-{{ s.slug }}">
+            {{ s.heading }}
+          </button>
+        </h2>
+        <div id="collapse-{{ s.slug }}" class="accordion-collapse collapse{% if s.expanded %} show{% endif %}"
+             aria-labelledby="heading-{{ s.slug }}" data-bs-parent="#rulesAccordion">
+          <div class="accordion-body">
+            {{ s.bodyHtml | safe }}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</main>
+{% endblock %}

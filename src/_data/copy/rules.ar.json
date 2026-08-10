@@ -1,0 +1,72 @@
+{
+  "_comment": "RULES PAGE COPY (Arabic). Unlike the other pages' content files, each accordion section's body is stored as one pre-formatted HTML string (bodyHtml) instead of broken into granular fields. That's a deliberate exception, not an inconsistency: some sections are a plain bullet list, one is a percentage-weighted criteria list, others are download/video-link cards with their own paragraphs — genuinely different shapes, not a repeating pattern like Schedule's table rows. Forcing all of that into one rigid schema would need more optional fields than it would save. bodyHtml needs the '| safe' filter in the template since it contains real markup on purpose.",
+  "pageTitle": "القواعد والموارد · طاقَثون",
+  "hero": {
+    "icon": "bi-clipboard-check",
+    "heading": "الشروط والضوابط والموارد",
+    "headingClass": "fw-bold",
+    "intro": "اطّلع على معايير التحكيم، وآلية تسليم وعرض المشاريع، والموارد الرسمية الخاصة بطاقَثون. اضغط على كل قسم لعرض التفاصيل."
+  },
+  "sections": [
+    {
+      "slug": "criteria",
+      "heading": "معايير التحكيم (المجموع 100%)",
+      "expanded": true,
+      "bodyHtml": "<p class=\"text-secondary\">تُقيّم المشاريع وفق المعايير الرسمية التالية ونِسَبها المئوية:</p><ul class=\"list-unstyled mb-0\"><li class=\"mb-2 d-flex justify-content-between align-items-center\"><span class=\"fw-semibold\">الابتكار والجِدّة</span><span class=\"badge criteria-badge\">30%</span></li><li class=\"mb-2 d-flex justify-content-between align-items-center\"><span class=\"fw-semibold\">الجدوى الاقتصادية</span><span class=\"badge criteria-badge\">25%</span></li><li class=\"mb-2 d-flex justify-content-between align-items-center\"><span class=\"fw-semibold\">الأثر البيئي والاجتماعي</span><span class=\"badge criteria-badge\">20%</span></li><li class=\"mb-2 d-flex justify-content-between align-items-center\"><span class=\"fw-semibold\">إمكانية التنفيذ</span><span class=\"badge criteria-badge\">15%</span></li><li class=\"d-flex justify-content-between align-items-center\"><span class=\"fw-semibold\">وضوح العرض التقديمي</span><span class=\"badge criteria-badge\">10%</span></li></ul>"
+    },
+    {
+      "slug": "submission",
+      "heading": "تسليم المشروع",
+      "expanded": false,
+      "bodyHtml": "<p class=\"text-secondary\">لضمان العدالة وسلامة التقييم، يُرجى من جميع الفرق الالتزام بضوابط تسليم المشروع التالية:</p><ul><li>آخر موعد لتسليم الملفات هو <strong>الساعة 2:00 مساءً بتاريخ 22 نوفمبر</strong>.</li><li>يجب على كل فريق تسليم ملفين إلزاميين:<ul class=\"mt-2\"><li><strong>ملف المشروع</strong> ويتضمن الفكرة، منهجية العمل، الحلول، الجدوى الاقتصادية، والأثر.</li><li><strong>ملف العرض التقديمي</strong> الذي سيُستخدم أثناء جلسة العرض.</li></ul></li><li>يتم تسليم جميع الملفات حصريًا عبر منصة طاقَثون، مع إرسال نسخة إلى البريد الرسمي المخصّص للتسليم.</li><li>يلتزم الفريق بالتأكّد من:<ul class=\"mt-2\"><li>اكتمال الملفات المطلوبة وصحتها.</li><li>سلامة الروابط وقابليتها للوصول.</li><li>تطابق ملف العرض المستخدم مع الملف المرفوع على المنصة.</li></ul></li><li>يُعدّ عدم الالتزام بموعد التسليم انسحابًا تلقائيًا من المنافسة.</li></ul>"
+    },
+    {
+      "slug": "presentation",
+      "heading": "عرض المشروع (عن بُعد)",
+      "expanded": false,
+      "bodyHtml": "<ul><li>تُقام جلسة عرض المشاريع في تمام <strong>الساعة 8:00 مساءً بتاريخ 22 نوفمبر</strong>.</li><li>يجب على الفريق الدخول إلى الجلسة قبل الموعد بـ 10 دقائق للتأكّد من الجاهزية التقنية.</li><li>مدة العرض خمس دقائق، موزّعة كالتالي:<ul class=\"mt-2\"><li>دقيقتان: تقديم الفريق وتعريف بالمشكلة والفكرة.</li><li>ثلاث دقائق: عرض محتوى المشروع والحل المقترح.</li></ul></li><li>يُعتبر عدم استجابة الفريق خلال 60 ثانية من النداء عليه انسحابًا من المنافسة.</li><li>يجب استخدام نفس ملف العرض الذي تم رفعه مسبقًا، ولا يُسمح بتعديل الملف بعد التسليم.</li></ul>"
+    },
+    {
+      "slug": "technical",
+      "heading": "الجاهزية التقنية",
+      "expanded": false,
+      "bodyHtml": "<ul><li>يتحمّل كل فريق مسؤولية توفير:<ul class=\"mt-2\"><li>اتصال إنترنت مستقر،</li><li>جودة صوت وصورة مناسبة،</li><li>بيئة عرض ملائمة وهادئة.</li></ul></li><li>لا يُعاد جدولة العرض بسبب مشكلات تقنية ناتجة من جهة الفريق.</li><li>في حال حدوث عطل تقني عام أو واسع النطاق، يحق للجمعية إعادة جدولة الجلسة مع إصدار إعلان رسمي بذلك.</li></ul>"
+    },
+    {
+      "slug": "conduct",
+      "heading": "السلوك والالتزام",
+      "expanded": false,
+      "bodyHtml": "<ul><li>يلتزم المشاركون بالتحلّي بالسلوك المهني واللائق طوال فترة الفعالية.</li><li>يُمنع تسجيل أو مشاركة أو نشر أي جزء من الجلسات دون إذن خطي من الجمعية.</li><li>يجب ألا يتضمّن المحتوى أي مخالفة لحقوق الملكية الفكرية أو للأنظمة المعمول بها في المملكة العربية السعودية.</li></ul>"
+    },
+    {
+      "slug": "general",
+      "heading": "أحكام عامة",
+      "expanded": false,
+      "bodyHtml": "<ul><li>تُعدّ الملفات المُرسلة عبر المنصة هي النسخة الرسمية المُعتمدة لغرض التقييم.</li><li>الالتزام بهذه الضوابط شرط لاستمرار المشاركة في طاقَثون.</li><li>يحق للجمعية تعديل هذه الإجراءات عند الحاجة، مع إشعار الفرق المشاركة بأي تحديثات رسمية.</li></ul>"
+    },
+    {
+      "slug": "vision2030",
+      "heading": "دليل الطاقة المستدامة ورؤية 2030",
+      "expanded": false,
+      "bodyHtml": "<p class=\"text-secondary mb-2\">هذا هو الملف الإرشادي الذي قدّمه <strong>أ.د. علي فودة</strong> خلال <em>جلسة الطاقة</em> حول الطاقة المستدامة في ضوء <strong>رؤية المملكة العربية السعودية 2030</strong>.</p><p class=\"text-secondary mb-3\">يمكنك تحميل الملف للاطّلاع على أهم المفاهيم والتوجّهات في مجال الطاقة المستدامة، والاستفادة منها في تطوير مشروع طاقَثون.</p><a href=\"assets/docs/Sustainable-Energy-Future-in-Light-of-Saudi-Vision-2030.pdf\" class=\"btn btn-outline-secondary rounded-2xl\" download><i class=\"bi bi-download me-1\" aria-hidden=\"true\"></i> تحميل الملف PDF</a>"
+    },
+    {
+      "slug": "sami",
+      "heading": "دليل بناء وتطوير المشاريع",
+      "expanded": false,
+      "bodyHtml": "<p class=\"text-secondary mb-3\">هذا هو الدليل الخاص بجلسة <strong>بناء وتطوير المشاريع</strong> التي قدّمها <strong>د. سامي غزالي</strong>. يمكنكم مشاهدة تسجيل الجلسة للاستفادة من الإرشادات العملية المتعلقة بتطوير مشاريع طاقَثون.</p><a href=\"https://drive.google.com/file/d/1-qW9jzLyqx86OfGXvwQPtLKzHYU18Ur3/view?usp=sharing\" class=\"btn btn-outline-secondary rounded-2xl\" target=\"_blank\" rel=\"noopener\"><i class=\"bi bi-collection-play ms-1\" aria-hidden=\"true\"></i> مشاهدة تسجيل الجلسة</a>"
+    },
+    {
+      "slug": "guide",
+      "heading": "دليل العرض الاحترافي للمشاريع",
+      "expanded": false,
+      "bodyHtml": "<p class=\"text-secondary mb-2\">هذا هو الدليل الرسمي الذي قدّمه <strong>د. مهند باحشوان</strong> خلال <em>جلسة العرض الاحترافي للمشاريع</em>.</p><p class=\"text-secondary mb-3\">يمكنك تحميل الملف والاطّلاع على التوصيات، أو مشاهدة تسجيل الجلسة للاستفادة من الشرح الكامل.</p><div class=\"d-flex flex-wrap gap-2\"><a href=\"assets/docs/Professional-Project-Presentation.pdf\" class=\"btn btn-outline-secondary rounded-2xl\" download><i class=\"bi bi-download me-1\" aria-hidden=\"true\"></i> تحميل الملف PDF</a><a href=\"https://drive.google.com/file/d/1odVyNpyoQ3UdZIN4kqJo0IUR0VLBPNlQ/view?usp=sharing\" class=\"btn btn-outline-secondary rounded-2xl\" target=\"_blank\" rel=\"noopener\"><i class=\"bi bi-collection-play ms-1\" aria-hidden=\"true\"></i> مشاهدة تسجيل الجلسة</a></div>"
+    },
+    {
+      "slug": "clarification",
+      "heading": "تسجيل اللقاء التوضيحي للمشاركين",
+      "expanded": false,
+      "bodyHtml": "<p class=\"text-secondary mb-3\">هذا هو تسجيل <strong>اللقاء التوضيحي</strong> الذي عُقد للإجابة على استفسارات المشاركين حول آلية البرنامج، والتسليمات، ومعايير التحكيم. يمكنكم مشاهدة التسجيل للاستفادة من جميع التوجيهات التي تمت مشاركتها خلال اللقاء.</p><a href=\"https://drive.google.com/file/d/1aG6uJmwfY6Vgmw1rEypwDdEfOe10Q3wi/view?usp=sharing\" class=\"btn btn-outline-secondary rounded-2xl\" target=\"_blank\" rel=\"noopener\"><i class=\"bi bi-collection-play ms-1\" aria-hidden=\"true\"></i> مشاهدة تسجيل اللقاء</a>"
+    }
+  ]
+}
