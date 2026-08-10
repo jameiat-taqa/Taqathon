@@ -1,0 +1,33 @@
+<!--
+  DECAP CMS ENTRY POINT
+  ---------------------
+  This page has almost nothing on it on purpose. Decap CMS is a
+  JavaScript app: the single <script> tag below downloads its whole
+  editor UI from a CDN and builds the entire admin interface itself,
+  reading its instructions from the "config.yml" file sitting right next
+  to this one. There's no server-side code here at all — everything a
+  logged-in editor does (browsing content, uploading a photo, opening a
+  draft) happens by Decap CMS talking directly to the GitHub API from
+  inside the visitor's own browser.
+
+  Visit this page at /admin/ on the deployed site to use the CMS. It is
+  NOT protected by anything on the site itself — access control happens
+  entirely through the "Login with GitHub" button config.yml wires up,
+  which only lets people who are already collaborators on the GitHub
+  repo log in (see the Decap CMS section of README.md for the one-time
+  GitHub OAuth App + Netlify setup this depends on).
+-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Taqathon — Content Manager</title>
+  </head>
+  <body>
+    <!-- Pinned to the 3.x line so the CMS doesn't change behavior out
+         from under editors on a future major release without anyone
+         choosing to update this line. -->
+    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  </body>
+</html>

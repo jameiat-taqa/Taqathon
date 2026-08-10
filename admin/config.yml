@@ -1,0 +1,297 @@
+# DECAP CMS CONFIGURATION
+# ------------------------
+# This file is the whole "brain" of the CMS at /admin/ — it's read by
+# decap-cms.js (see index.html) in the visitor's browser and tells it
+# three things: (1) how to authenticate and where to save changes
+# ("backend"), (2) whether saves go live immediately or through a
+# review step ("publish_mode"), and (3) exactly which files/folders in
+# this repo are editable, and what form each one's editor should look
+# like ("collections"). Nothing here runs on a server — see index.html.
+
+backend:
+  name: github
+  repo: jameiat-taqa/Taqathon
+  branch: main
+  # Decap's GitHub backend needs to exchange a GitHub login for an
+  # access token, which requires a client secret — something that can
+  # never be safely embedded in browser-side code. base_url +
+  # auth_endpoint point the CMS at an OAuth proxy that does that
+  # exchange server-side instead. This project doesn't host its own
+  # proxy: it uses Netlify's built-in one (a free Netlify site, used
+  # only for this — it does not host the actual Taqathon site). See the
+  # "Content Management (Decap CMS)" section of README.md for the
+  # one-time setup this depends on (a GitHub OAuth App + a Netlify
+  # site with that OAuth App's ID/secret installed).
+  base_url: https://api.netlify.com
+  auth_endpoint: auth
+
+# "editorial_workflow" (rather than the simpler default, which commits
+# straight to `branch` above) means every save in the CMS opens a draft
+# and a pull request instead of publishing immediately — since editors
+# here are non-technical organizers rather than developers, this gives
+# a human a chance to review a change (in the GitHub PR, or via the
+# CMS's own "Editorial Workflow" board) before it goes live on the next
+# deploy.
+publish_mode: editorial_workflow
+
+# Lets the CMS talk to a LOCAL git working copy instead of GitHub, for
+# testing without needing to log in at all. Only takes effect when the
+# CMS is opened on localhost *and* `npx decap-server` is running
+# alongside it (see README.md) — has zero effect on the real deployed
+# site, so it's safe to leave enabled here permanently.
+local_backend: true
+
+# The repo is served from a GitHub Pages *project* site
+# (https://jameiat-taqa.github.io/Taqathon/, not a custom domain), so
+# the path includes "/Taqathon/" — these two both need that full path
+# for the CMS's own "preview" links and image previews to point at the
+# right place.
+site_url: https://jameiat-taqa.github.io/Taqathon/
+display_url: https://jameiat-taqa.github.io/Taqathon/
+# "../" because this CMS page itself lives one level down, at /admin/ —
+# without it, the browser looks for the logo at admin/assets/... (404).
+logo_url: ../assets/logos/taqathon-logo.png
+
+# Default upload location for any field that doesn't set its own. This
+# must NOT point at assets/gallery (478MB, 224 photos): opening ANY
+# entry — even an announcement with no images — makes Decap preload
+# the media library for whichever media_folder is in effect, and both
+# the local test proxy (decap-server) and, per Decap's GitHub-backend
+# docs, large real folders can choke or crawl trying to list one that
+# big. assets/images is small and mostly unused, so it's a safe,
+# harmless default; the "gallery_items" collection below sets its own
+# media_folder/public_folder (assets/gallery) that overrides this, since
+# that's the one place a large folder is unavoidable.
+media_folder: assets/images
+public_folder: assets/images
+
+collections:
+  # ---------------------------------------------------------------
+  # ANNOUNCEMENTS (English / Arabic)
+  # ---------------------------------------------------------------
+  # announcements.json / announcements-ar.json each hold ONE field
+  # ("announcements") at their top level — Decap's "files" collection
+  # type can only read/write named fields inside an object, so both
+  # files were changed from a bare array to { "announcements": [...] }
+  # specifically to make this possible (see src/pages/home.njk for the
+  # matching one-line fetch-code update).
+  #
+  # These are fetched client-side by the Home page at runtime (not
+  # read at Eleventy build time), so a merged CMS change here goes
+  # live for visitors as soon as the next deploy finishes — same as
+  # every other content change on this site.
+  - name: announcements_en
+    label: "Announcements — English"
+    files:
+      - name: announcements
+        label: "Announcements (EN)"
+        file: announcements.json
+        fields:
+          - label: Announcements
+            name: announcements
+            widget: list
+            label_singular: Announcement
+            summary: "{{fields.text}}"
+            fields:
+              # Plain "text" widget, not "markdown" — these strings
+              # already contain literal <br> tags for line breaks
+              # (see home.njk's announcement-card rendering), and a
+              # markdown widget would try to reinterpret/convert that
+              # HTML instead of leaving it alone.
+              - label: Text
+                name: text
+                widget: text
+                hint: "HTML like <br> is allowed and used for line breaks."
+
+  - name: announcements_ar
+    label: "الإعلانات — عربي"
+    files:
+      - name: announcements
+        label: "الإعلانات"
+        file: announcements-ar.json
+        fields:
+          - label: الإعلانات
+            name: announcements
+            widget: list
+            label_singular: إعلان
+            summary: "{{fields.text}}"
+            fields:
+              - label: النص
+                name: text
+                widget: text
+                hint: "يمكن استخدام <br> للفصل بين الأسطر."
+
+  # ---------------------------------------------------------------
+  # SCHEDULE (English / Arabic)
+  # ---------------------------------------------------------------
+  # src/_data/copy/schedule.*.json is read at Eleventy BUILD time (not
+  # fetched by the browser), so a merged CMS change here only appears
+  # on the live site after the next deploy rebuilds the page — same
+  # timing as any other git-committed content edit.
+  #
+  # A Decap "files" collection only writes back the fields it's told
+  # about — any top-level key of the real file that ISN'T declared
+  # below would be silently dropped on save. schedule.*.json has 10
+  # top-level keys; the 8 that aren't "workshops"/"keyDates" are
+  # declared here as "hidden" purely so their existing values survive
+  # every save untouched (organizers never see or edit them).
+  - name: schedule_en
+    label: "Schedule — English"
+    files:
+      - name: schedule
+        label: "Schedule content (EN)"
+        file: src/_data/copy/schedule.en.json
+        fields:
+          - { name: pageTitle, widget: hidden }
+          - { name: hero, widget: hidden }
+          - { name: iconMarginClass, widget: hidden }
+          - { name: workTitleFontFamily, widget: hidden }
+          - { name: workTitleFontWeight, widget: hidden }
+          - { name: tableHeaders, widget: hidden }
+          - { name: workshopsHeading, widget: hidden }
+          - label: Workshops
+            name: workshops
+            widget: list
+            summary: "{{fields.title}} — {{fields.date}}"
+            fields:
+              - { label: Title, name: title, widget: string }
+              - { label: Presenter, name: presenter, widget: string, required: false }
+              - { label: Date, name: date, widget: string }
+              - { label: Time, name: time, widget: string, required: false }
+              # Every workshop in today's data has a real action object
+              # (never null), so this is safe to expose as a normal
+              # editable field — unlike keyDates.action below.
+              - label: Action (join link)
+                name: action
+                widget: object
+                fields:
+                  - { label: Button label, name: label, widget: string }
+                  - { label: Link (URL), name: href, widget: string }
+                  - label: Icon
+                    name: icon
+                    widget: select
+                    default: bi-box-arrow-up-right
+                    options: [bi-box-arrow-up-right, bi-upload, bi-geo-alt-fill]
+          - { name: keyDatesHeading, widget: hidden }
+          - label: Key Dates
+            name: keyDates
+            widget: list
+            summary: "{{fields.title}} — {{fields.date}}"
+            fields:
+              - { label: Title, name: title, widget: string }
+              - { label: Date, name: date, widget: string }
+              - { label: Time, name: time, widget: string, required: false }
+              # Deliberately NOT made editable in this rollout: some
+              # key dates have action: null (no button at all) and
+              # some have a real action object, and schedule.njk
+              # branches its rendering on that exact null-vs-object
+              # distinction. Decap's "object" widget can't reliably
+              # write back a true `null` when left blank (it defaults
+              # to {}), which would turn a "no button" row into a
+              # broken empty-button one. Hidden here preserves
+              # whichever value already exists, unchanged.
+              - label: "Action (not editable here — see README)"
+                name: action
+                widget: hidden
+
+  - name: schedule_ar
+    label: "الجدول — عربي"
+    files:
+      - name: schedule
+        label: "محتوى الجدول"
+        file: src/_data/copy/schedule.ar.json
+        fields:
+          - { name: pageTitle, widget: hidden }
+          - { name: hero, widget: hidden }
+          - { name: iconMarginClass, widget: hidden }
+          - { name: workTitleFontFamily, widget: hidden }
+          - { name: workTitleFontWeight, widget: hidden }
+          - { name: tableHeaders, widget: hidden }
+          - { name: workshopsHeading, widget: hidden }
+          - label: الورش
+            name: workshops
+            widget: list
+            summary: "{{fields.title}} — {{fields.date}}"
+            fields:
+              - { label: العنوان, name: title, widget: string }
+              - { label: المحاضر, name: presenter, widget: string, required: false }
+              - { label: التاريخ, name: date, widget: string }
+              - { label: الوقت, name: time, widget: string, required: false }
+              - label: الإجراء (رابط الانضمام)
+                name: action
+                widget: object
+                fields:
+                  - { label: نص الزر, name: label, widget: string }
+                  - { label: الرابط, name: href, widget: string }
+                  - label: الأيقونة
+                    name: icon
+                    widget: select
+                    default: bi-box-arrow-up-right
+                    options: [bi-box-arrow-up-right, bi-upload, bi-geo-alt-fill]
+          - { name: keyDatesHeading, widget: hidden }
+          - label: التواريخ المهمة
+            name: keyDates
+            widget: list
+            summary: "{{fields.title}} — {{fields.date}}"
+            fields:
+              - { label: العنوان, name: title, widget: string }
+              - { label: التاريخ, name: date, widget: string }
+              - { label: الوقت, name: time, widget: string, required: false }
+              - label: "الإجراء (غير قابل للتحرير هنا)"
+                name: action
+                widget: hidden
+
+  # ---------------------------------------------------------------
+  # GALLERY PHOTOS
+  # ---------------------------------------------------------------
+  # There's no single file to point a "files" collection at for "add
+  # one photo" the way announcements/schedule work — so this is a
+  # "folder" collection instead: every *.json file inside
+  # src/_data/gallery-items/ is one independent, addable/deletable
+  # entry, each holding just one photo's path. That's what lets
+  # "upload a photo" / "delete a photo" in the CMS be one clean git
+  # commit each, rather than needing to edit one shared big list.
+  #
+  # The gallery page itself doesn't read this folder directly — it
+  # still fetches a flat gallery.json array of filenames, exactly like
+  # before. scripts/generate-gallery-json.js turns this folder's
+  # contents into that flat file at build time (see package.json and
+  # .github/workflows/deploy.yml), so gallery.njk needed zero changes.
+  #
+  # Known limitations (see README.md):
+  # 1. Deleting an entry here removes its small JSON file (so the
+  #    photo disappears from the live gallery on next deploy) but
+  #    does NOT delete the actual image from assets/gallery/ — that
+  #    still takes a separate manual cleanup.
+  # 2. This collection's entries have no text field for Decap's
+  #    editor to build its optional live-preview pane from (an
+  #    image-only entry), which makes that specific pane crash with
+  #    a harmless-but-ugly "There's been an error." The real editor
+  #    fields (photo upload, replace, remove) work fine regardless —
+  #    it's only the side-by-side live-preview panel that's affected,
+  #    and it can be toggled off with the eye icon at the top of the
+  #    entry editor.
+  - name: gallery_items
+    label: "Gallery Photos"
+    folder: src/_data/gallery-items
+    create: true
+    delete: true
+    # Folder collections (unlike "files" collections, which name an
+    # exact file with its own extension) scan a whole directory, so
+    # they need to be told what kind of file to look for. Without
+    # this, Decap defaults to Markdown (.md) and silently finds none
+    # of these .json entry files — not an error, just an empty list.
+    extension: json
+    format: json
+    # No natural title to slug from (these are just photos) — this
+    # guarantees a unique, collision-free filename for every new entry.
+    slug: "photo-{{year}}{{month}}{{day}}{{hour}}{{minute}}{{second}}"
+    # Decap normally shows a "title" field's value in the entries list;
+    # this collection has no such field, so identifier_field tells it
+    # to show the image path there instead (otherwise it warns that it
+    # can't infer a title and falls back to something unreadable).
+    identifier_field: image
+    media_folder: "assets/gallery"
+    public_folder: "assets/gallery"
+    fields:
+      - { label: Photo, name: image, widget: image }
