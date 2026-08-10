@@ -1,0 +1,323 @@
+---
+pagination:
+  data: pages.contact.locales
+  size: 1
+  alias: locale
+permalink: "{{ locale.permalink }}"
+---
+{#
+  TAQATHON - CONTACT PAGE TEMPLATE (src/pages/contact.njk)
+  ------------------------------------------------------------
+  A message form + contact info + sponsor/supervisor logo panels + an
+  embedded Google Map. Sponsor/supervisor entries are data-driven loops
+  (see contact.ar.json / contact.en.json), same idea as Schedule's
+  table rows.
+
+  IMPORTANT — read this before changing the submit-handling JS below:
+  the Arabic and English forms are NOT just translations of each other.
+  The English one has a honeypot anti-bot field, real client-side
+  validation, a disabled-while-sending submit button, a mailto:
+  fallback on network failure, and checks the server response's "ok"
+  field. The Arabic one has NONE of that and checks a DIFFERENT
+  response field ("result" === "success"). That gap is preserved
+  exactly here (via a {% if locale.lang == "ar" %} branch covering the
+  whole submit handler, not just text swaps) rather than guessing which
+  behavior is "right" and unifying them — this migration can't verify
+  what the live Apps Script backend actually returns, and silently
+  changing which field a live form checks could make a working form
+  stop reporting success correctly. See the "_comment" fields in
+  contact.ar.json / contact.en.json for the full detail. This is
+  flagged to the user as something that needs an actual decision, not
+  something to guess through.
+
+  TO CUSTOMIZE:
+    - Wording, sponsor/supervisor entries → the copy JSON files, NOT
+      this file.
+    - The Apps Script endpoint → src/_data/config.json.
+#}
+{% extends "layouts/base.njk" %}
+{% block pageStyle %}
+.panel{ background:#fff; border:1px solid #e9eef3; border-radius:12px; }
+.panel-header{ font-weight:{{ locale.content.panelHeaderWeight }}; }
+.btn-gradient{
+  background:var(--brand-grad);
+  color:#fff; border:0; font-weight:{{ locale.content.panelHeaderWeight }};
+  padding:.65rem 1rem; border-radius:.6rem;
+}
+.btn-gradient:hover{ filter:brightness(.98); color:#fff; }
+.form-text.small-muted{ color:#6c757d; font-size:.85rem; }
+
+.info-list{ list-style:none; padding:0; margin:0; }
+.info-item{ display:flex; gap:.6rem; align-items:flex-start; padding:.25rem 0; }
+.info-item i{ color:var(--brand-blue); font-size:1.05rem; line-height:1.6; }
+
+.sponsor-logo{
+  max-height:70px;
+  width:auto;
+  object-fit:contain;
+}
+{% endblock %}
+
+{% block content %}
+<main class="py-5">
+  <div class="container">
+    <div class="row g-4">
+
+      <!-- Message form -->
+      <div class="col-lg-7">
+        <div class="panel shadow-soft p-3 p-md-4">
+          <h6 class="panel-header mb-1">{{ locale.content.form.heading }}</h6>
+          <p class="text-secondary small mb-3">{{ locale.content.form.subheading }}</p>
+
+          <form id="contactForm" novalidate>
+            {% if locale.content.form.hasHoneypot %}
+            {# Hidden from sighted users AND screen readers (aria-hidden),
+               and never reachable by Tab (tabindex="-1") — a real user
+               will never see or fill this in, but a simple bot script
+               that blindly fills every input often will. If it's
+               non-empty on submit, the JS below silently drops the
+               request instead of sending it. #}
+            <input type="text" name="hp" id="hp" class="d-none" tabindex="-1" autocomplete="off" aria-hidden="true">
+            {% endif %}
+
+            <div class="mb-3">
+              <label class="form-label">{{ locale.content.form.nameLabel }}</label>
+              <input type="text" class="form-control" name="name" placeholder="{{ locale.content.form.namePlaceholder }}" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">{{ locale.content.form.emailLabel }}</label>
+              <input type="email" class="form-control" name="email" placeholder="{{ locale.content.form.emailPlaceholder }}" required>
+              {% if locale.content.form.emailHelperText %}
+              <div class="form-text small-muted">{{ locale.content.form.emailHelperText }}</div>
+              {% endif %}
+            </div>
+            <div class="mb-3">
+              <label class="form-label">{{ locale.content.form.subjectLabel }}</label>
+              <input type="text" class="form-control" name="subject" placeholder="{{ locale.content.form.subjectPlaceholder }}" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">{{ locale.content.form.messageLabel }}</label>
+              <textarea class="form-control" name="message" rows="6" placeholder="{{ locale.content.form.messagePlaceholder }}" required></textarea>
+            </div>
+
+            {% if locale.content.form.hasMetadataFields %}
+            <input type="hidden" name="locale" value="{{ locale.content.form.metaLocaleValue }}">
+            <input type="hidden" name="source" value="{{ locale.content.form.metaSourceValue }}">
+            {% endif %}
+
+            <button id="submitBtn" type="submit" class="btn btn-gradient w-100">
+              {{ locale.content.form.submitLabel }} <i class="bi bi-send {{ locale.content.form.submitIconMarginClass }}"></i>
+            </button>
+            <div id="contactAlert" class="alert mt-3 d-none" role="alert"></div>
+
+            {% if locale.content.form.submitHelperHtml %}
+            <div class="form-text small-muted mt-2">
+              {{ locale.content.form.submitHelperHtml | safe }}
+            </div>
+            {% endif %}
+          </form>
+        </div>
+      </div>
+
+      <!-- Contact info + sponsors + map -->
+      <div class="col-lg-5">
+        <div class="panel shadow-soft p-3 p-md-4 mb-3">
+          <h6 class="panel-header mb-3">{{ locale.content.contactInfo.heading }}</h6>
+          <ul class="info-list">
+            {% for item in locale.content.contactInfo.items %}
+            <li class="info-item">
+              <i class="bi {{ item.icon }}"></i>
+              <div><strong>{{ item.label }}</strong> — <a class="link-secondary" href="{{ item.href }}"{% if item.external %} target="_blank" rel="noopener"{% endif %}>{{ item.text }}</a></div>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+
+        <div class="panel shadow-soft p-3 p-md-4 mb-3">
+          <h6 class="panel-header mb-3 text-center">{{ locale.content.supervisors.heading }}</h6>
+          <div class="row g-3 justify-content-between align-items-center text-center">
+            {% for s in locale.content.supervisors.items %}
+            <div class="col-6 col-md-5 d-flex flex-column align-items-center text-center">
+              <div style="height:90px; display:flex; align-items:center; justify-content:center;">
+                <img src="{{ s.logoSrc }}" alt="{{ s.logoAlt }}" class="img-fluid sponsor-logo">
+              </div>
+              <div style="min-height:50px; display:flex; align-items:center; justify-content:center; margin-top:0.75rem;">
+                <div class="badge rounded-pill px-3 py-2" style="background:#e9f3ff; color:#00284C; font-weight:600;">
+                  {{ s.badgeText }}
+                </div>
+              </div>
+              <div class="small text-secondary mt-2" style="min-height:50px; display:flex; align-items:center; justify-content:center;">
+                {{ s.orgName }}
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+
+        <div class="panel shadow-soft p-3 p-md-4 mb-3">
+          <h6 class="panel-header mb-3 text-center">{{ locale.content.supporters.heading }}</h6>
+          <div class="row g-3 justify-content-evenly align-items-center text-center">
+            {% for s in locale.content.supporters.items %}
+            <div class="col-6 col-md-3 d-flex flex-column align-items-center">
+              <img src="{{ s.logoSrc }}" alt="{{ s.logoAlt }}" class="img-fluid sponsor-logo mb-2">
+              <div class="small text-secondary text-center">{{ s.orgName }}</div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+
+        <div class="panel shadow-soft p-3 p-md-4">
+          <h6 class="panel-header mb-2">{{ locale.content.location.heading }}</h6>
+          <p class="text-secondary mb-2">
+            {{ locale.content.location.addressHtml | safe }}
+          </p>
+          <iframe
+              src="{{ locale.content.location.mapSrc }}"
+              width="100%"
+              height="160"
+              style="border:0; border-radius:8px;"
+              allowfullscreen=""
+              loading="lazy">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}
+
+{% block pageScript %}
+const form = document.getElementById('contactForm');
+const alertBox = document.getElementById('contactAlert');
+const CONTACT_SCRIPT_URL = "{{ locale.config.contactScriptUrl | safe }}";
+
+{% if locale.lang == "ar" %}
+{#
+  ARABIC: the simpler, original submit handler — no client validation,
+  no honeypot, no button-disable, checks data.result === 'success'.
+  Preserved exactly as it was; see this file's header comment for why.
+#}
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  alertBox.classList.add('d-none');
+
+  const formData = new FormData(form);
+  formData.append('pageUrl', window.location.href);
+  formData.append('userAgent', navigator.userAgent);
+  formData.append('ts', new Date().toISOString());
+
+  try {
+    const res = await fetch(CONTACT_SCRIPT_URL, { method: 'POST', body: formData });
+    const data = await res.json();
+    if (data.result === 'success') {
+      alertBox.className = 'alert alert-success mt-3';
+      alertBox.textContent = '{{ locale.content.status.successMessage | safe }}';
+      alertBox.classList.remove('d-none');
+      form.reset();
+    } else {
+      // This Error's message is never shown or logged anywhere (the
+      // catch block below always displays its own hardcoded fallback
+      // text, ignoring err.message) — the original literally used the
+      // Arabic string 'خطأ في الخادم' ("server error") here even
+      // though it's invisible either way. Left as a plain English
+      // marker since it carries no user-facing meaning.
+      throw new Error('server error');
+    }
+  } catch (err) {
+    alertBox.className = 'alert alert-danger mt-3';
+    alertBox.textContent = '{{ locale.content.status.genericError | safe }}';
+    alertBox.classList.remove('d-none');
+  }
+});
+{% else %}
+{#
+  ENGLISH: the more complete submit handler — honeypot check, required-
+  field + email-format validation, disabled-while-sending button state,
+  ticket ID display, and a mailto: fallback if the request throws
+  (network error or CORS block). Checks data.ok, not data.result.
+#}
+const submitBtn = document.getElementById('submitBtn');
+
+function showAlert(kind, html){
+  alertBox.className = 'alert mt-3 alert-' + kind;
+  alertBox.innerHTML = html;
+  alertBox.classList.remove('d-none');
+}
+function hideAlert(){ alertBox.classList.add('d-none'); }
+
+function isValidEmail(s){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(s||'').trim()); }
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  hideAlert();
+
+  const fd = new FormData(form);
+  if (fd.get('hp')) { return; } // Honeypot filled in => bot => silently drop
+
+  const name = (fd.get('name')||'').trim();
+  const email = (fd.get('email')||'').trim();
+  const subject = (fd.get('subject')||'').trim();
+  const message = (fd.get('message')||'').trim();
+
+  if (!name || !email || !subject || !message){
+    showAlert('warning','{{ locale.content.status.requiredFieldsWarning | safe }}');
+    return;
+  }
+  if (!isValidEmail(email)){
+    showAlert('warning','{{ locale.content.status.invalidEmailWarning | safe }}');
+    return;
+  }
+
+  fd.append('pageUrl', location.href);
+  fd.append('userAgent', navigator.userAgent);
+  fd.append('ts', new Date().toISOString());
+
+  const oldText = submitBtn.textContent;
+  submitBtn.disabled = true;
+  submitBtn.textContent = '{{ locale.content.status.sendingLabel | safe }}';
+
+  try{
+    const res = await fetch(CONTACT_SCRIPT_URL, { method:'POST', body: fd, redirect:'follow' });
+    const text = await res.text();
+    let data = {};
+    try { data = JSON.parse(text); } catch(e){ /* non-JSON (possibly login page) */ }
+
+    const looksLikeHtml = /<html/i.test(text);
+    if (!res.ok || looksLikeHtml){
+      const hint = looksLikeHtml ? '{{ locale.content.status.htmlDetectedHint | safe }}' : '';
+      const msg = (data && data.error) ? data.error : `{{ locale.content.status.requestFailedPrefix | safe }}${res.status}{{ locale.content.status.requestFailedSuffix | safe }}` + hint;
+      showAlert('danger', msg);
+      return;
+    }
+
+    if (data && data.ok){
+      const ticket = data.ticketId ? `{{ locale.content.status.ticketIdLabelHtml | safe }}${data.ticketId}{{ locale.content.status.ticketIdCloseHtml | safe }}` : '';
+      showAlert('success', '{{ locale.content.status.successMessage | safe }}' + ticket);
+      form.reset();
+    } else {
+      // BUG FIX: the original had a misplaced closing parenthesis here —
+      // "showAlert('danger', (data && data.error) ) ? data.error : '...'"
+      // — which closes showAlert's argument list one token too early, so
+      // the "? ... : ..." ternary runs AFTER the call, on showAlert's
+      // (unused) return value, instead of choosing what to pass IN. In
+      // the specific case where the server responds {ok:false} with no
+      // error field, that bug would render the literal text "undefined"
+      // in the alert box instead of the intended fallback message. Fixed
+      // by wrapping the whole ternary as the single argument, which is
+      // clearly what was intended.
+      showAlert('danger', (data && data.error) ? data.error : '{{ locale.content.status.genericSubmitFailed | safe }}');
+    }
+  } catch(err){
+    console.error(err);
+    const mailto = `mailto:info@jameiat-taqa.sa?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(
+      `Name: ${name}\nEmail: ${email}\n\n${message}`
+    )}`;
+    try { window.location.href = mailto; } catch(_) {}
+    showAlert('warning','{{ locale.content.status.networkErrorFallback | safe }}');
+  } finally {
+    submitBtn.textContent = oldText;
+    submitBtn.disabled = false;
+  }
+});
+{% endif %}
+{% endblock %}
