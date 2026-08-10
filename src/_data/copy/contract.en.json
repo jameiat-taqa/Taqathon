@@ -1,0 +1,56 @@
+{
+  "_comment": "CONTRACT PAGE COPY (English). English mirror of contract.ar.json. Notice meta.hiddenSourceValue and meta.jsSourceValue below are DIFFERENT strings — that's not a typo introduced here, it's a real inconsistency that already existed in the live page: the hidden <input name=\"source\"> held 'Taqathon-Contract-EN.html', but the submit handler's JS builds its own FormData from scratch and never actually reads that hidden input — it separately hardcoded the literal string 'contract-en.html' when appending to the upload. So the hidden field's value was always dead markup; only the JS-appended value ever actually reached the Google Apps Script backend. Both are preserved exactly (in their correct spots) rather than unified into one 'obviously correct' value, since unifying them would silently change what the live backend/spreadsheet actually receives.",
+  "pageTitle": "Contract · Taqathon",
+  "requiredAsteriskWeight": 600,
+  "hero": {
+    "icon": "bi-pencil-square",
+    "iconAriaHidden": true,
+    "heading": "Participation Agreement",
+    "headingClass": "fw-semibold"
+  },
+  "terms": {
+    "heading": "Agreement Terms",
+    "badgeAriaHidden": true,
+    "items": [
+      "This agreement defines the legal relationship between the Energy Association for Sustainable Development and participating teams in Taqathon.",
+      "It governs participation during the hackathon and grants the Association exclusive marketing rights for one year after signing.",
+      "Teams agree to submit original work, attend required workshops and sessions, and allow the Association to promote their projects.",
+      "The agreement is valid for one (1) year."
+    ]
+  },
+  "form": {
+    "heading": "Upload Signed PDF",
+    "subtext": "Only PDF is accepted. Other fields are optional.",
+    "fullNameLabel": "Full name",
+    "fullNamePlaceholder": "Your full name",
+    "teamNameLabel": "Team name",
+    "teamNamePlaceholder": "Team name",
+    "emailLabel": "Email",
+    "emailPlaceholder": "you@email.com",
+    "fileLabel": "Signed PDF",
+    "agreeLabel": "I have read and agree to the Participation Agreement and Hackathon Rules.",
+    "submitLabel": "Submit Agreement",
+    "downloadLabel": "Download PDF",
+    "downloadIconMarginClass": "me-1",
+    "notesHeading": "Submission notes",
+    "note1Html": "Upload a <strong>PDF only</strong>. Other file types will be blocked.",
+    "note2Html": "If you face issues, email your PDF to <a href=\"mailto:info@jameiat-taqa.sa\">info@jameiat-taqa.sa</a>."
+  },
+  "status": {
+    "chooseFile": "Please choose a PDF file to upload.",
+    "mustAgree": "You must agree to the terms to proceed.",
+    "submitting": "Submitting...",
+    "submitSuccess": "Submitted successfully.",
+    "submitFailedGeneric": "Submission failed. Please try again.",
+    "requestFailedPrefix": "Request failed (",
+    "requestFailedSuffix": ")",
+    "htmlDetectedHint": " (login/permission page detected — set Web App access to \"Anyone\")",
+    "noCorsFallback": "Request sent with no-cors fallback. If you don’t see the file/row, fix Web App permissions.",
+    "networkError": "Network/CORS blocked. Double-check the /exec URL and Web App access."
+  },
+  "meta": {
+    "locale": "en",
+    "hiddenSourceValue": "Taqathon-Contract-EN.html",
+    "jsSourceValue": "contract-en.html"
+  }
+}
