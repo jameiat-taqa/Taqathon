@@ -1,0 +1,72 @@
+{
+  "_comment": "RULES PAGE COPY (English). English mirror of rules.ar.json — see that file for why bodyHtml is used instead of granular fields. Fixed during migration: every external Google Drive link (sections 8/9/10) was missing rel=\"noopener\" in BOTH languages (target=\"_blank\" alone) — added here, consistent with the same fix already made on the Schedule and Submissions pages. Also added a missing aria-hidden=\"true\" on section 8's icon, which its sibling sections' icons already had.",
+  "pageTitle": "Rules & Resources · Taqathon",
+  "hero": {
+    "icon": "bi-clipboard-check",
+    "heading": "Rules & Resources",
+    "headingClass": "fw-semibold",
+    "intro": "Browse the official criteria, procedures, and resources for Taqathon. Click each section to expand the details."
+  },
+  "sections": [
+    {
+      "slug": "criteria",
+      "heading": "Judging Criteria (Total 100%)",
+      "expanded": true,
+      "bodyHtml": "<p class=\"text-secondary\">Projects will be evaluated based on the following official criteria and percentage weights:</p><ul class=\"list-unstyled mb-0\"><li class=\"mb-2 d-flex justify-content-between align-items-center\"><span class=\"fw-semibold\">Innovation &amp; Novelty</span><span class=\"badge criteria-badge\">30%</span></li><li class=\"mb-2 d-flex justify-content-between align-items-center\"><span class=\"fw-semibold\">Economic Feasibility</span><span class=\"badge criteria-badge\">25%</span></li><li class=\"mb-2 d-flex justify-content-between align-items-center\"><span class=\"fw-semibold\">Environmental &amp; Social Impact</span><span class=\"badge criteria-badge\">20%</span></li><li class=\"mb-2 d-flex justify-content-between align-items-center\"><span class=\"fw-semibold\">Implementation Potential</span><span class=\"badge criteria-badge\">15%</span></li><li class=\"d-flex justify-content-between align-items-center\"><span class=\"fw-semibold\">Presentation Clarity</span><span class=\"badge criteria-badge\">10%</span></li></ul>"
+    },
+    {
+      "slug": "submission",
+      "heading": "Project Submission",
+      "expanded": false,
+      "bodyHtml": "<p class=\"text-secondary\">To ensure fairness and proper evaluation, all teams must follow the official project submission rules:</p><ul><li>The final submission deadline is <strong>2:00 PM on November 22</strong>.</li><li>Each team is required to submit two mandatory files:<ul class=\"mt-2\"><li><strong>The Project File</strong> which must include the concept, methodology, proposed solutions, economic feasibility, and impact.</li><li><strong>The Presentation File</strong> that will be used during the final pitch session.</li></ul></li><li>All files must be submitted exclusively through the Taqathon platform, with a copy sent to the official submission email.</li><li>Teams must ensure:<ul class=\"mt-2\"><li>All required files are complete and accurate.</li><li>All links are functional and accessible.</li><li>The presentation file matches the version submitted on the platform.</li></ul></li><li>Failure to submit by the deadline constitutes automatic withdrawal from the competition.</li></ul>"
+    },
+    {
+      "slug": "presentation",
+      "heading": "Project Presentation (Remote)",
+      "expanded": false,
+      "bodyHtml": "<ul><li>The presentation session will take place at <strong>8:00 PM on November 22</strong>.</li><li>Teams must join the session at least 10 minutes early to ensure technical readiness.</li><li>The presentation duration is five minutes, distributed as follows:<ul class=\"mt-2\"><li>2 minutes: Team introduction and concept overview.</li><li>3 minutes: Presentation of the project content.</li></ul></li><li>Failure to respond within 60 seconds of being called upon will be considered withdrawal.</li><li>The presentation must use the exact file previously submitted. No modifications are permitted.</li></ul>"
+    },
+    {
+      "slug": "technical",
+      "heading": "Technical Readiness",
+      "expanded": false,
+      "bodyHtml": "<ul><li>Each team is responsible for providing:<ul class=\"mt-2\"><li>A stable internet connection,</li><li>Clear audio and video quality,</li><li>An appropriate presentation environment.</li></ul></li><li>Rescheduling will not be permitted for technical issues originating from the team.</li><li>If a widespread technical issue occurs, the Association may reschedule and will issue an official announcement.</li></ul>"
+    },
+    {
+      "slug": "conduct",
+      "heading": "Conduct & Compliance",
+      "expanded": false,
+      "bodyHtml": "<ul><li>Participants must maintain professional conduct at all times.</li><li>Recording, sharing, or publishing any part of the session is prohibited without written permission from the Association.</li><li>No content may violate intellectual property rights or applicable laws.</li></ul>"
+    },
+    {
+      "slug": "general",
+      "heading": "General Provisions",
+      "expanded": false,
+      "bodyHtml": "<ul><li>Files submitted through the platform are considered the official versions for evaluation.</li><li>Compliance with these procedures is mandatory for continued participation.</li><li>The Association may amend these procedures if necessary and will notify participating teams.</li></ul>"
+    },
+    {
+      "slug": "vision2030",
+      "heading": "Sustainable Energy & Vision 2030 Guide",
+      "expanded": false,
+      "bodyHtml": "<p class=\"text-secondary mb-2\">This document presents key concepts and perspectives on sustainable energy in alignment with <strong>Saudi Arabia’s Vision 2030</strong>.</p><p class=\"text-secondary mb-3\">It was presented by <strong>Prof. Ali Foda</strong> during the <em>Energy Session</em>, and is provided here as a reference for Taqathon participants.</p><a href=\"assets/docs/Sustainable-Energy-Future-in-Light-of-Saudi-Vision-2030.pdf\" class=\"btn btn-outline-secondary rounded-2xl\" download><i class=\"bi bi-download me-1\" aria-hidden=\"true\"></i> Download PDF</a>"
+    },
+    {
+      "slug": "sami",
+      "heading": "Project Development Session Guide",
+      "expanded": false,
+      "bodyHtml": "<p class=\"text-secondary mb-3\">This is the recording of the advisory session <strong>“Project Development”</strong> presented by <strong>Dr. Sami Ghazali</strong>. You can watch it to benefit from his practical guidance on preparing and refining your Taqathon project.</p><a href=\"https://drive.google.com/file/d/1-qW9jzLyqx86OfGXvwQPtLKzHYU18Ur3/view?usp=sharing\" class=\"btn btn-outline-secondary rounded-2xl\" target=\"_blank\" rel=\"noopener\"><i class=\"bi bi-collection-play me-1\" aria-hidden=\"true\"></i> Watch Session Recording</a>"
+    },
+    {
+      "slug": "guide",
+      "heading": "Professional Project Presentation Guide",
+      "expanded": false,
+      "bodyHtml": "<p class=\"text-secondary mb-2\">This is the official guide presented by <strong>Dr. Mohannad Bahashwan</strong> during the <em>“Professional Project Presentation”</em> session.</p><p class=\"text-secondary mb-3\">You can download the PDF for key principles and recommendations, or watch the full session recording for a detailed walkthrough.</p><div class=\"d-flex flex-wrap gap-2\"><a href=\"assets/docs/Professional-Project-Presentation.pdf\" class=\"btn btn-outline-secondary rounded-2xl\" download><i class=\"bi bi-download me-1\" aria-hidden=\"true\"></i> Download PDF</a><a href=\"https://drive.google.com/file/d/1odVyNpyoQ3UdZIN4kqJo0IUR0VLBPNlQ/view?usp=sharing\" class=\"btn btn-outline-secondary rounded-2xl\" target=\"_blank\" rel=\"noopener\"><i class=\"bi bi-collection-play me-1\" aria-hidden=\"true\"></i> Watch Session Recording</a></div>"
+    },
+    {
+      "slug": "clarification",
+      "heading": "Clarification Meeting Recording",
+      "expanded": false,
+      "bodyHtml": "<p class=\"text-secondary mb-3\">This is the recording of the <strong>Clarification Meeting</strong> held to answer participants’ questions about the program flow, submissions, and judging criteria. You can watch the recording to review all key clarifications and guidance shared during the session.</p><a href=\"https://drive.google.com/file/d/1aG6uJmwfY6Vgmw1rEypwDdEfOe10Q3wi/view?usp=sharing\" class=\"btn btn-outline-secondary rounded-2xl\" target=\"_blank\" rel=\"noopener\"><i class=\"bi bi-collection-play me-1\" aria-hidden=\"true\"></i> Watch Meeting Recording</a>"
+    }
+  ]
+}

@@ -77,7 +77,16 @@
   </style>
 </head>
 
-<body>
+{#
+  locale.bodyClass is optional, per-page (set in a page's own
+  src/_data/pages/*.js, not in site.*.json, since it's page-specific
+  layout, not shared chrome) — most pages don't set it and get a plain
+  <body>. Submissions is the first page that needs it: its original
+  markup set class="bg-light text-dark" on <body>, which (thanks to
+  Bootstrap's !important on utility classes) actually overrides
+  common.css's usual body background for that one page.
+#}
+<body{% if locale.bodyClass %} class="{{ locale.bodyClass }}"{% endif %}>
   {% include "partials/navbar.njk" %}
 
   {% block content %}{% endblock %}

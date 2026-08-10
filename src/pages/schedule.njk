@@ -1,0 +1,203 @@
+---
+# Same pagination trick as home.njk / contract.njk.
+pagination:
+  data: pages.schedule.locales
+  size: 1
+  alias: locale
+permalink: "{{ locale.permalink }}"
+---
+{#
+  TAQATHON - SCHEDULE PAGE TEMPLATE (src/pages/schedule.njk)
+  ------------------------------------------------------------
+  Workshop + key-dates table. Every row is data (see
+  src/_data/copy/schedule.ar.json / schedule.en.json) rendered through
+  two {% for %} loops below, rather than 9 hand-typed <tr> blocks.
+
+  TO CUSTOMIZE:
+    - Add/remove/reorder a workshop or key date → edit the "workshops"
+      or "keyDates" arrays in the copy JSON files, NOT this file. A row
+      with "action": null renders with an empty action cell (some
+      events just don't have a join link).
+    - Table headers, section headings → same copy JSON files.
+
+  CLEANED UP DURING MIGRATION (zero visual effect, just removing dead
+  weight found while transcribing the original pages):
+    - Both original pages defined CSS custom properties --row-border
+      and --section-bg that were never actually used anywhere else in
+      either stylesheet. Dropped.
+    - The Arabic page's <style> block re-declared the exact same
+      scrollbar-hiding and sticky-footer rules already present in
+      assets/common.css (word for word) — harmless duplication, not
+      carried forward.
+    - Both original pages had a stray, unmatched closing </a> tag sitting
+      in an empty table cell (browsers silently ignore it) — on
+      DIFFERENT rows in each language, suggesting leftover copy-paste
+      debris rather than anything intentional. Not carried forward.
+    - The Arabic Closing Ceremony row had a trailing <br> with nothing
+      after it in the time cell (likely a deleted second line). Dropped.
+    - .icon-circle i had two different single-property overrides in the
+      two languages (Arabic: line-height:1 only: English: font-size only,
+      which was already redundant since .icon-circle itself sets that
+      size and icons inherit it). Unified to line-height:1 for both,
+      since that's the one override that actually does something.
+    - Icon margin utility classes: unlike Home/Contract (which used
+      "ms-1" for Arabic icons, "me-1" for English), this page's ORIGINAL
+      Arabic version actually used "me-1" almost everywhere already —
+      except one single row (the Closing Ceremony's location icon),
+      which used "ms-1", breaking its own page's pattern. Normalized
+      the whole page to "me-1" (its own majority convention) rather
+      than importing Home/Contract's convention or preserving a likely
+      one-off typo.
+    - The Arabic Closing Ceremony link opened with target="_blank" but
+      no rel="noopener" (the English version had it). Adding
+      rel="noopener" is a real, if minor, security improvement — it
+      stops the newly-opened tab from being able to reach back and
+      manipulate this page via window.opener — so it's applied to both
+      languages now via one shared {% if k.action.external %} check,
+      rather than left missing on the Arabic side.
+#}
+{% extends "layouts/base.njk" %}
+{% block pageStyle %}
+.icon-circle i{ line-height:1; }
+
+.table thead th{
+  color:#6b7785;
+  font-weight:600;
+}
+.section-row td{
+  background:#f2f6fb;
+  font-weight:600;
+  color:#17324a;
+}
+.table tbody tr.workshop-row td{ background:#ecfdf5; }
+.table tbody tr.keydate-row td{ background:#eef6ff; }
+
+.section-kicker{
+  display:inline-flex;
+  align-items:center;
+  gap:.5rem;
+  font-size:.9rem;
+  color:#3664a3;
+  text-transform:uppercase;
+}
+.k-dot{
+  width:8px;
+  height:8px;
+  border-radius:999px;
+  background:var(--brand-blue);
+  box-shadow:0 0 0 4px rgba(0,125,253,.12);
+}
+
+.btn-join{
+  border-color:var(--brand-green);
+  color:#0a7b60;
+  background:#f4fffb;
+}
+.btn-join:hover{
+  background:var(--brand-green);
+  color:#fff;
+  border-color:var(--brand-green);
+}
+
+{#
+  work-title font differs meaningfully by language (Cairo for Arabic
+  vs a Poppins-led Latin stack for English), and even the font-weight
+  differs (700 vs 600) — real, deliberate-looking differences, so both
+  come from data rather than a shared value.
+
+  workTitleFontFamily uses "| safe" because it contains a single-quote
+  character ('Cairo'). Without it, Nunjucks's default HTML-escaping
+  turns that quote into its numeric character-entity form — and just
+  like the <script>-tag issue documented in contract.njk, text inside
+  a <style> tag is never HTML-entity-decoded by the browser either. The
+  escaped quote would make the CSS parser treat "Cairo" as an unknown,
+  literally-entity-encoded font name and silently fall back to plain
+  sans-serif instead of loading the actual Cairo font — caught here
+  the same way the script-tag version was caught on the Contract page:
+  by diffing the build output against the live file before shipping.
+#}
+.table td .work-title{
+  font-family:{{ locale.content.workTitleFontFamily | safe }} !important;
+  font-weight:{{ locale.content.workTitleFontWeight }} !important;
+}
+{% endblock %}
+
+{% block content %}
+<main class="py-5">
+  <div class="container" style="max-width:980px;">
+
+    <div class="text-center mb-4">
+      <div class="icon-circle mx-auto mb-3"><i class="bi {{ locale.content.hero.icon }}"></i></div>
+      <h5 class="mb-1 {{ locale.content.hero.headingClass }}">{{ locale.content.hero.heading }}</h5>
+      <div style="height: 20px;"></div>
+    </div>
+
+    <div class="card card-lite rounded-2xl shadow-soft">
+      <div class="table-responsive">
+        <table class="table align-middle mb-0">
+          <thead>
+            <tr>
+              <th>{{ locale.content.tableHeaders.item }}</th>
+              <th>{{ locale.content.tableHeaders.date }}</th>
+              <th>{{ locale.content.tableHeaders.time }}</th>
+              <th style="min-width:180px;">{{ locale.content.tableHeaders.action }}</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <!-- Workshops -->
+            <tr class="section-row">
+              <td colspan="4">
+                <span class="section-kicker">
+                  <span class="k-dot"></span> {{ locale.content.workshopsHeading }}
+                </span>
+              </td>
+            </tr>
+
+            {% for w in locale.content.workshops %}
+            <tr class="workshop-row">
+              <td>
+                <div class="work-title">{{ w.title }}</div>
+                <div class="small text-secondary">{{ w.presenter }}</div>
+              </td>
+              <td>{{ w.date }}</td>
+              <td>{{ w.time }}</td>
+              <td>
+                <a class="btn btn-sm btn-outline-success btn-join" href="{{ w.action.href }}">
+                  <i class="bi {{ w.action.icon }} {{ locale.content.iconMarginClass }}"></i> {{ w.action.label }}
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
+
+            <!-- Key Dates -->
+            <tr class="section-row">
+              <td colspan="4">
+                <span class="section-kicker">
+                  <span class="k-dot"></span> {{ locale.content.keyDatesHeading }}
+                </span>
+              </td>
+            </tr>
+
+            {% for k in locale.content.keyDates %}
+            <tr class="keydate-row">
+              <td><div class="work-title">{{ k.title }}</div></td>
+              <td>{{ k.date }}</td>
+              <td>{{ k.time }}</td>
+              <td>
+                {% if k.action %}
+                <a class="btn btn-sm btn-outline-success btn-join" href="{{ k.action.href }}"{% if k.action.external %} target="_blank" rel="noopener"{% endif %}>
+                  <i class="bi {{ k.action.icon }} {{ locale.content.iconMarginClass }}"></i> {{ k.action.label }}
+                </a>
+                {% endif %}
+              </td>
+            </tr>
+            {% endfor %}
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}

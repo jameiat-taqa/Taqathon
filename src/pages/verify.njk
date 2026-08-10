@@ -1,20 +1,44 @@
+---
+# No pagination here — unlike every other migrated page, this one has
+# no English counterpart and never did. Just a fixed output path.
+permalink: "/verify.html"
+---
+{#
+  TAQATHON - CERTIFICATE VERIFICATION PAGE (src/pages/verify.njk)
+  -------------------------------------------------------------------
+  Deliberately standalone: this page does NOT extend layouts/base.njk
+  and doesn't use the shared navbar/footer partials or common.css —
+  it never did, even in the original site. It's meant to be a fast,
+  minimal page someone lands on after scanning a QR code printed on a
+  physical certificate, not a page for browsing the rest of the site.
+  Migrating it into the shared layout would add navigation chrome that
+  was intentionally never part of this page's design, so it keeps its
+  own full HTML shell here instead.
+
+  SECURITY NOTE (not fixed by this migration on purpose): the
+  CERTIFICATES object below ships every certificate record — real
+  names, roles, dates — to anyone who views this page's source, and
+  "verification" is just a client-side object lookup with no integrity
+  check. That's a known issue already tracked as its own piece of work
+  (moving this to a real lookup: a Google Sheet as the data store, an
+  Apps Script endpoint as the API, so the browser only ever receives
+  the ONE certificate being looked up). This migration's job is only
+  to move the existing page into the template system without changing
+  its behavior — changing how certificate data is stored and served is
+  a separate, deliberate piece of work, not a side effect of picking a
+  templating engine.
+
+  Because that rework is coming soon, the certificate registry stays
+  as a plain JS object literal directly in this template (matching the
+  original file exactly) rather than being extracted into a data file
+  the way other pages' content was — extracting it now would just be
+  extra work thrown away the moment Phase 1's real fix lands.
+
+  TO CUSTOMIZE (until the Phase 1 rework lands):
+    - Add/edit certificates → the CERTIFICATES object in the script
+      block below, same as the original file.
+#}
 <!doctype html>
-<!--
-  TAQATHON - Certificate Verification Page (verify.html)
-  
-  Standalone page for verifying participant certificates.
-  Features:
-  - Certificate lookup by ID
-  - Certificate display with verification status
-  - Download/print functionality
-  - RTL layout support
-  
-  To customize:
-  - Update certificate data in JavaScript (CERTIFICATES array)
-  - Modify verification logic
-  - Adjust certificate template
-  - Update styling for certificate display
--->
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8" />
@@ -330,13 +354,13 @@
   <script>
     /**
      * Certificate Verification System
-     * 
+     *
      * How it works:
      * 1. User enters certificate ID in the search form
      * 2. System looks up ID in CERTIFICATES registry
      * 3. If found, displays certificate with all details
      * 4. If not found, shows error message
-     * 
+     *
      * Certificate Data Structure:
      * - Key: Certificate ID (must match exactly as printed)
      * - Value: Object containing:
@@ -351,13 +375,13 @@
      *   - issueDateEn: Issue date in English
      *   - periodAr: Period description in Arabic
      *   - periodEn: Period description in English
-     * 
+     *
      * To add certificates:
      * 1. Add new entry to CERTIFICATES object below
      * 2. Use certificate ID as the key
      * 3. Fill in all required metadata fields
      */
-    
+
     // -------------------------------
     // Certificate Registry
     // -------------------------------
@@ -455,7 +479,7 @@
      * Helper function to read URL query parameters
      * @param {string} name - Parameter name to retrieve
      * @returns {string|null} - Parameter value or null if not found
-     * 
+     *
      * Usage: Allows pre-filling certificate ID from URL (e.g., ?id=TAQ-2025-J-001)
      */
     function getQueryParam(name) {

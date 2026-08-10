@@ -39,20 +39,17 @@ jobs:
 
       - run: npx eleventy
 
-      # Most pages haven't been migrated to Eleventy yet (Phase 0 covers Home only).
-      # Copy everything still hand-written, plus the shared static assets/data,
-      # into the build output alongside the generated index.html / index-en.html.
-      - name: Copy not-yet-migrated pages and static assets
+      # All 15 pages are now Eleventy-generated (Phase 0 is complete —
+      # this used to also copy 13 hand-written pages here individually
+      # while they were being migrated one at a time; not needed
+      # anymore). What's left to copy is purely static: the images/CSS/
+      # JS in assets/, and the JSON files pages fetch client-side at
+      # runtime (announcements, gallery listing) — neither of those is
+      # a templating concern, so Eleventy doesn't generate them.
+      - name: Copy static assets and client-fetched JSON data
         run: |
           cp -r assets _site/assets
           cp announcements.json announcements-ar.json gallery.json _site/
-          cp contract.html contract-en.html _site/
-          cp contact.html contact-en.html _site/
-          cp gallery.html gallery-en.html _site/
-          cp rules.html rules-en.html _site/
-          cp schedule.html schedule-en.html _site/
-          cp submissions.html submissions-en.html _site/
-          cp verify.html _site/
 
       - uses: actions/upload-pages-artifact@v3
         with:

@@ -19,15 +19,15 @@
 <div class="container d-flex align-items-center justify-content-between">
 
   {#
-    Some attributes here are conditional — e.g. aria-label only prints
-    if locale.site.brand.ariaLabel is a non-empty string. This isn't
-    just tidiness: the ORIGINAL Arabic page never had an aria-label on
-    this link, while the English page did (a pre-existing inconsistency
-    between the two hand-written files). Rather than silently "fixing"
-    that while migrating, we reproduced it exactly — site.ar.json sets
-    ariaLabel to "" and site.en.json sets a real string, so the output
-    matches what was live before. Worth fixing later as an accessibility
-    pass, just not silently as a side effect of this migration.
+    aria-label here is conditional on locale.site.brand.ariaLabel being
+    non-empty — kept that way for flexibility, even though both
+    languages currently do set a real value. Worth knowing the history:
+    early on (Home, Contract, Schedule), NEITHER language's Arabic page
+    had this aria-label, only English did. Migrating the Submissions
+    page surfaced that ITS original Arabic navbar already had one — so
+    rather than reproduce the gap on every other page too, a real
+    Arabic aria-label was adopted here for all pages going forward
+    (see the "_comment" note at the top of site.ar.json).
   #}
   <a class="navbar-brand d-flex align-items-center" href="{{ locale.site.brand.href }}"{% if locale.site.brand.ariaLabel %} aria-label="{{ locale.site.brand.ariaLabel }}"{% endif %}>
     <img src="assets/logos/taqathon-logo.png" alt="{{ locale.site.brand.logoAlt }}" class="logo-mark">
@@ -36,6 +36,14 @@
   <div class="collapse navbar-collapse justify-content-lg-center" id="mainNav">
     <ul class="navbar-nav mb-2 mb-lg-0 align-items-lg-center">
       {#
+        aria-current="page" tells screen readers which nav item matches
+        the page currently open — a real accessibility improvement, not
+        just cosmetic. It was only ever present on the original
+        Schedule (English) page's active link, missing everywhere else
+        on the site by accident. Since this loop is now shared by every
+        migrated page, adding it here once fixes that inconsistency
+        retroactively for Home and Contract too, not just Schedule.
+
         This loop is the entire reason a navbar partial is worth having:
         one {% for %} over a list, instead of seven near-identical
         <li><a>...</a></li> lines typed out by hand (and kept in sync by
@@ -49,7 +57,7 @@
         each nav item's own `key` from site.*.json.
       #}
       {% for item in locale.site.nav %}
-      <li class="nav-item"><a class="nav-link{% if item.key == locale.navActive %} active{% endif %}" href="{{ item.href }}">{{ item.label | safe }}</a></li>
+      <li class="nav-item"><a class="nav-link{% if item.key == locale.navActive %} active{% endif %}" href="{{ item.href }}"{% if item.key == locale.navActive %} aria-current="page"{% endif %}>{{ item.label | safe }}</a></li>
       {% endfor %}
       {#
         Nunjucks escapes {{ }} output by default (so a literal "&" in
@@ -67,11 +75,13 @@
     <a href="{{ locale.site.assoc.href }}" target="_blank" rel="noopener"{% if locale.site.assoc.linkClass %} class="{{ locale.site.assoc.linkClass }}"{% endif %}{% if locale.site.assoc.ariaLabel %} aria-label="{{ locale.site.assoc.ariaLabel }}"{% endif %}>
       <img src="assets/logos/association-logo.png" class="assoc-logo" alt="{{ locale.site.assoc.alt }}">
     </a>
-    {# Same story as the brand link above: the Arabic page's mobile-menu
-       button never had these three aria-* attributes, the English one
-       did. locale.site.toggler.ariaAttrs is true only for English, so
-       this reproduces that exact (pre-existing) asymmetry. #}
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"{% if locale.site.toggler.ariaAttrs %} aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation"{% endif %}>
+    {#
+      aria-controls / aria-expanded aren't language-specific, so they're
+      always included now; only the aria-label TEXT comes from data
+      (locale.site.toggler.ariaLabel). Same history as the brand link
+      above — early pages' Arabic navbar had none of this at all.
+    #}
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="{{ locale.site.toggler.ariaLabel }}">
       <span class="navbar-toggler-icon"></span>
     </button>
   </div>

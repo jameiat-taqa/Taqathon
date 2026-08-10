@@ -1,0 +1,67 @@
+{
+  "_comment": "CONTACT PAGE COPY (English). See contact.ar.json's _comment for the big one: this form's actual submit logic is genuinely different from the Arabic version, not just translated text, and both are preserved as they were. Two more things worth flagging here specifically: (1) metaSourceValue below is 'contact.html' — the ORIGINAL English page's hidden 'source' field literally said 'contact.html', not 'contact-en.html', and unlike Contract's dead hidden field, this one actually gets submitted (this form builds its FormData directly from the whole <form>, hidden fields included) — very likely an unfixed copy-paste bug, but real backend data may already reflect it, so it's kept as-is rather than silently corrected. (2) this page's original association link pointed at 'https://jameiat-taqa.sa', a different domain than every other English page's 'https://taqa.org.sa' — since the navbar is now shared from site.en.json's single value, this page automatically picks up the same domain as every other page. Worth confirming which domain is actually correct.",
+  "pageTitle": "Contact · Taqathon",
+  "panelHeaderWeight": 600,
+  "form": {
+    "heading": "Send us a message",
+    "subheading": "Fill out the form below and we’ll respond as soon as possible.",
+    "hasHoneypot": true,
+    "hasMetadataFields": true,
+    "metaLocaleValue": "en",
+    "metaSourceValue": "contact.html",
+    "nameLabel": "Name",
+    "namePlaceholder": "Your full name",
+    "emailLabel": "Email",
+    "emailPlaceholder": "your@email.com",
+    "emailHelperText": "We use this only to reply to your message.",
+    "subjectLabel": "Subject",
+    "subjectPlaceholder": "What is your inquiry about?",
+    "messageLabel": "Message",
+    "messagePlaceholder": "Your message...",
+    "submitLabel": "Send Message",
+    "submitIconMarginClass": "ms-1",
+    "submitHelperHtml": "Having trouble? Email us directly at <a href=\"mailto:info@jameiat-taqa.sa\">info@jameiat-taqa.sa</a>."
+  },
+  "status": {
+    "requiredFieldsWarning": "Please fill out all fields.",
+    "invalidEmailWarning": "Please enter a valid email address.",
+    "sendingLabel": "Sending...",
+    "htmlDetectedHint": " (It looks like a permissions/login page—set the Web App access to “Anyone”.)",
+    "requestFailedPrefix": "Request failed (",
+    "requestFailedSuffix": ")",
+    "genericSubmitFailed": "Submission failed. Please try again.",
+    "successMessage": "Thanks! Your message was received.",
+    "ticketIdLabelHtml": "<br><small>Ticket ID: <code>",
+    "ticketIdCloseHtml": "</code></small>",
+    "networkErrorFallback": "Network/CORS blocked. We opened your email app as a fallback. If nothing opened, email <b>info@jameiat-taqa.sa</b> directly."
+  },
+  "contactInfo": {
+    "heading": "Contact Information",
+    "items": [
+      { "icon": "bi-envelope", "label": "Email", "text": "info@jameiat-taqa.sa", "href": "mailto:info@jameiat-taqa.sa", "external": false },
+      { "icon": "bi-telephone", "label": "Phone", "text": "0539336648", "href": "tel:+966539336648", "external": false },
+      { "icon": "bi-globe", "label": "Website", "text": "https://taqa.org.sa/", "href": "https://taqa.org.sa/", "external": true }
+    ]
+  },
+  "supervisors": {
+    "heading": "Supervising Entities",
+    "items": [
+      { "logoSrc": "assets/sponsors/ministry-of-energy-logo.png", "logoAlt": "Ministry of Energy", "badgeText": "Technical Supervision", "orgName": "Ministry of Energy" },
+      { "logoSrc": "assets/sponsors/NCNP-Sector-Logo.png", "logoAlt": "National Center for Non-Profit Sector", "badgeText": "Administrative Supervision", "orgName": "National Center for Non-Profit Sector" }
+    ]
+  },
+  "supporters": {
+    "heading": "Supporting Entities",
+    "items": [
+      { "logoSrc": "assets/sponsors/Associations-Support-Fund-Logo.png", "logoAlt": "Associations Support Fund", "orgName": "Associations Support Fund" },
+      { "logoSrc": "assets/sponsors/university-of-jeddah-logo.png", "logoAlt": "University of Jeddah", "orgName": "University of Jeddah" },
+      { "logoSrc": "assets/sponsors/york-logo.png", "logoAlt": "York", "orgName": "York" },
+      { "logoSrc": "assets/sponsors/Tanmia-logo.png", "logoAlt": "Tanmia Al-Qura Charity", "orgName": "Tanmia Al-Qura Charity" }
+    ]
+  },
+  "location": {
+    "heading": "Ceremony Location",
+    "addressHtml": "University of Jeddah – Al Jawhara Hall<br>Jeddah, Saudi Arabia",
+    "mapSrc": "https://www.google.com/maps?q=21.5821755,39.1851925&z=17&output=embed"
+  }
+}
