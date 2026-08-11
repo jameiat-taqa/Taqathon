@@ -11,6 +11,7 @@
     { "key": "submissions", "href": "submissions-en.html", "label": "Submissions" },
     { "key": "rules", "href": "rules-en.html", "label": "Rules &amp; Resources" },
     { "key": "gallery", "href": "gallery-en.html", "label": "Gallery" },
+    { "key": "pastSeasons", "href": "past-seasons-en.html", "label": "Past Seasons" },
     { "key": "contact", "href": "contact-en.html", "label": "Contact Us" }
   ],
   "footer": {

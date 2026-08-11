@@ -109,6 +109,16 @@ collections:
                 name: text
                 widget: text
                 hint: "HTML like <br> is allowed and used for line breaks."
+              # Doesn't change anything about how this announcement
+              # displays live — it's purely a marker for later, when a
+              # season ends and its Year Archive page gets built: only
+              # announcements checked here are worth carrying into that
+              # permanent record before the rest get cleared out to make
+              # room for the next season's live feed.
+              - label: "Important (keep for this season's Year Archive)"
+                name: important
+                widget: boolean
+                default: false
 
   - name: announcements_ar
     label: "الإعلانات — عربي"
@@ -127,6 +137,10 @@ collections:
                 name: text
                 widget: text
                 hint: "يمكن استخدام <br> للفصل بين الأسطر."
+              - label: "مهم (يُحفظ في أرشيف هذا الموسم)"
+                name: important
+                widget: boolean
+                default: false
 
   # ---------------------------------------------------------------
   # SCHEDULE (English / Arabic)
@@ -302,3 +316,124 @@ collections:
     public_folder: "assets/gallery"
     fields:
       - { label: Photo, name: image, widget: image }
+
+  # ---------------------------------------------------------------
+  # YEAR ARCHIVES (English / Arabic)
+  # ---------------------------------------------------------------
+  # One page per completed Taqathon season (src/pages/years.njk),
+  # added over time rather than a fixed known set — same reasoning as
+  # gallery_items above, so this is a folder collection too. The
+  # difference: both languages' year files live together in ONE
+  # folder (src/_data/copy/years/), matching every other page's
+  # "<page>.ar.json" + "<page>.en.json" convention instead of
+  # inventing a separate folder-per-language scheme just for this
+  # page type. Since a folder collection normally shows every file in
+  # its folder, "filter" is what keeps each of these two collections
+  # showing only its own language — matched against the "lang" field
+  # inside each file (not the filename), which is why every year file
+  # needs that field set correctly.
+  #
+  # This CMS collection only ever EDITS a year that already exists.
+  # Creating a brand new year's archive — writing real winners/
+  # showcase/ceremony content for a season that just ended — happens
+  # in a dev session together, not solo through this form (see
+  # README.md's "Content Management" section); "create: false" here
+  # reflects that on purpose, rather than inviting an organizer to
+  # start a new year archive with nothing in it.
+  - name: years_en
+    label: "Year Archives — English"
+    folder: src/_data/copy/years
+    extension: json
+    format: json
+    create: false
+    delete: false
+    filter: { field: lang, value: en }
+    identifier_field: pageTitle
+    fields:
+      - { name: lang, widget: hidden, default: en }
+      - { name: pageTitle, widget: hidden }
+      - label: Hero
+        name: hero
+        widget: object
+        fields:
+          - { label: Heading, name: heading, widget: string }
+          - { label: Subtitle, name: subtitle, widget: string }
+      - { label: "Ceremony section heading", name: ceremonyHeading, widget: string }
+      - label: Closing Ceremony
+        name: ceremony
+        widget: object
+        required: false
+        fields:
+          - { label: Date, name: date, widget: string }
+          - { label: Time, name: time, widget: string }
+          - { label: Location, name: location, widget: string }
+          - { label: "Map link", name: mapHref, widget: string }
+      - { label: "Winners section heading", name: winnersHeading, widget: string }
+      - label: Winners
+        name: winners
+        widget: list
+        summary: "{{fields.rank}}. {{fields.team}}"
+        fields:
+          - { label: Rank, name: rank, widget: number, value_type: int }
+          - { label: Team, name: team, widget: string }
+      - { label: "Gallery section heading", name: galleryHeading, widget: string }
+      - { label: "Gallery note", name: galleryNote, widget: string }
+      - { label: "Gallery link", name: galleryHref, widget: string }
+      - { label: "Gallery button label", name: galleryButtonLabel, widget: string }
+      - { label: "Announcements section heading", name: announcementsHeading, widget: string }
+      - label: "Announcements carried over from this season"
+        name: announcements
+        widget: list
+        required: false
+        summary: "{{fields.text}}"
+        fields:
+          - { label: Text, name: text, widget: text }
+
+  - name: years_ar
+    label: "أرشيف المواسم — عربي"
+    folder: src/_data/copy/years
+    extension: json
+    format: json
+    create: false
+    delete: false
+    filter: { field: lang, value: ar }
+    identifier_field: pageTitle
+    fields:
+      - { name: lang, widget: hidden, default: ar }
+      - { name: pageTitle, widget: hidden }
+      - label: العنوان الرئيسي
+        name: hero
+        widget: object
+        fields:
+          - { label: العنوان, name: heading, widget: string }
+          - { label: العنوان الفرعي, name: subtitle, widget: string }
+      - { label: "عنوان قسم الحفل", name: ceremonyHeading, widget: string }
+      - label: الحفل الختامي
+        name: ceremony
+        widget: object
+        required: false
+        fields:
+          - { label: التاريخ, name: date, widget: string }
+          - { label: الوقت, name: time, widget: string }
+          - { label: المكان, name: location, widget: string }
+          - { label: "رابط الموقع", name: mapHref, widget: string }
+      - { label: "عنوان قسم النتائج", name: winnersHeading, widget: string }
+      - label: النتائج
+        name: winners
+        widget: list
+        summary: "{{fields.rank}}. {{fields.team}}"
+        fields:
+          - { label: المركز, name: rank, widget: number, value_type: int }
+          - { label: الفريق, name: team, widget: string }
+      - { label: "عنوان قسم الصور", name: galleryHeading, widget: string }
+      - { label: "ملاحظة الصور", name: galleryNote, widget: string }
+      - { label: "رابط الصور", name: galleryHref, widget: string }
+      - { label: "نص زر الصور", name: galleryButtonLabel, widget: string }
+      - { label: "عنوان قسم الإعلانات", name: announcementsHeading, widget: string }
+      - label: "إعلانات محفوظة من هذا الموسم"
+        name: announcements
+        widget: list
+        required: false
+        summary: "{{fields.text}}"
+        fields:
+          - { label: النص, name: text, widget: text }

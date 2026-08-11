@@ -1,0 +1,27 @@
+{
+  "_comment": "YEAR ARCHIVE — TAQATHON 2025 (English). English mirror of 2025.ar.json — see that file's note about where this content came from (built retroactively from the final-ranked-winners announcement + schedule.en.json's closing-ceremony keyDate; 'announcements' stays empty since the 'important' flag this archive relies on didn't exist during the 2025 season).",
+  "lang": "en",
+  "pageTitle": "Taqathon 2025 Archive · Taqathon",
+  "hero": { "heading": "Taqathon 2025", "subtitle": "Season Archive" },
+  "ceremonyHeading": "Closing Ceremony",
+  "ceremony": {
+    "date": "Dec 2, 2025",
+    "time": "6:30 – 8:30 p.m.",
+    "location": "Al Jawhara Hall – University of Jeddah",
+    "mapHref": "https://maps.app.goo.gl/3ucTAEBiY8wEivXK7"
+  },
+  "winnersHeading": "Final Results",
+  "winners": [
+    { "rank": 1, "team": "EcoPlus" },
+    { "rank": 2, "team": "Engineering Innovation" },
+    { "rank": 3, "team": "Talaa" },
+    { "rank": 4, "team": "Energy Generation" },
+    { "rank": 5, "team": "PowerLab Engineers" }
+  ],
+  "galleryHeading": "Closing Ceremony Photos",
+  "galleryNote": "Browse photos from Taqathon 2025's closing ceremony in the gallery.",
+  "galleryHref": "gallery-en.html",
+  "galleryButtonLabel": "View Gallery",
+  "announcementsHeading": "Key Announcements from This Season",
+  "announcements": []
+}

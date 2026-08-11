@@ -1,0 +1,92 @@
+---
+pagination:
+  data: pages.years.locales
+  size: 1
+  alias: locale
+permalink: "{{ locale.permalink }}"
+---
+{#
+  TAQATHON - YEAR ARCHIVE PAGE TEMPLATE (src/pages/years.njk)
+  --------------------------------------------------------------
+  One template, but unlike every OTHER page here (which always
+  produces exactly one AR/EN pair), this one produces a pair PER
+  COMPLETED SEASON — src/_data/pages/years.js builds its "locales"
+  list by scanning src/_data/copy/years/ (via src/_lib/years.js) for
+  whichever "<year>.ar.json" + "<year>.en.json" pairs already exist,
+  so adding Taqathon 2027's archive later means adding two new JSON
+  files here, not touching this template or its data file at all.
+
+  Content is deliberately plain and historical — no countdown, no
+  registration CTAs, nothing that implies the season is still active.
+  Four pieces, each shown only if the year's data file actually has
+  something for it:
+    - Closing ceremony details (date/time/location + map link)
+    - Final results (winners list, ranked)
+    - A link out to the photo gallery from that season
+    - Any announcements flagged "important" during that season and
+      carried over before the live announcements feed was cleared for
+      the next one (empty for 2025 — that flag didn't exist yet when
+      that season ran; real for seasons archived from here on).
+
+  TO ADD A NEW YEAR:
+    1. Create src/_data/copy/years/<year>.ar.json and <year>.en.json
+       (copy 2025's files as a starting shape).
+    2. Rebuild — that's it, no other file needs to change.
+#}
+{% extends "layouts/base.njk" %}
+{% block content %}
+<main class="py-5">
+  <div class="container" style="max-width:860px;">
+
+    <div class="text-center mb-4">
+      <h1 class="h3 fw-bold mb-1">{{ locale.content.hero.heading }}</h1>
+      <p class="text-secondary mb-0">{{ locale.content.hero.subtitle }}</p>
+    </div>
+
+    {% if locale.content.ceremony %}
+    <div class="card-lite rounded-2xl p-4 mb-4">
+      <h2 class="h5 fw-semibold mb-3">{{ locale.content.ceremonyHeading }}</h2>
+      <p class="mb-2">
+        <i class="bi bi-calendar-event me-2"></i>{{ locale.content.ceremony.date }} — {{ locale.content.ceremony.time }}
+      </p>
+      <a class="btn btn-sm btn-outline-success" href="{{ locale.content.ceremony.mapHref }}" target="_blank" rel="noopener">
+        <i class="bi bi-geo-alt-fill me-1"></i>{{ locale.content.ceremony.location }}
+      </a>
+    </div>
+    {% endif %}
+
+    {% if locale.content.winners and locale.content.winners.length %}
+    <div class="card-lite rounded-2xl p-4 mb-4">
+      <h2 class="h5 fw-semibold mb-3">{{ locale.content.winnersHeading }}</h2>
+      <ol class="list-group list-group-numbered">
+        {% for w in locale.content.winners %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          {{ w.team }}
+        </li>
+        {% endfor %}
+      </ol>
+    </div>
+    {% endif %}
+
+    {% if locale.content.galleryHref %}
+    <div class="card-lite rounded-2xl p-4 mb-4 text-center">
+      <h2 class="h5 fw-semibold mb-2">{{ locale.content.galleryHeading }}</h2>
+      <p class="text-secondary mb-3">{{ locale.content.galleryNote }}</p>
+      <a class="btn btn-primary" href="{{ locale.pathPrefix | default('') }}{{ locale.content.galleryHref }}">
+        <i class="bi bi-images me-1"></i>{{ locale.content.galleryButtonLabel }}
+      </a>
+    </div>
+    {% endif %}
+
+    {% if locale.content.announcements and locale.content.announcements.length %}
+    <div class="card-lite rounded-2xl p-4 mb-4">
+      <h2 class="h5 fw-semibold mb-3">{{ locale.content.announcementsHeading }}</h2>
+      {% for a in locale.content.announcements %}
+      <div class="ann-text mb-2">{{ a.text | safe }}</div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+  </div>
+</main>
+{% endblock %}
