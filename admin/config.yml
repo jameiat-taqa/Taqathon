@@ -29,10 +29,7 @@ backend:
   # code (a Cloudflare Worker, free tier) and README.md's "Content
   # Management (Decap CMS)" section for the deployment steps.
   #
-  # REPLACE this with your deployed Worker's own URL (something like
-  # https://taqathon-decap-oauth.<your-subdomain>.workers.dev) — this
-  # placeholder won't work until you do.
-  base_url: https://taqathon-decap-oauth.YOUR-SUBDOMAIN.workers.dev
+  base_url: https://taqathon-decap-oauth.sara-hm-mahmoud111.workers.dev
   auth_endpoint: auth
 
 # "editorial_workflow" (rather than the simpler default, which commits
