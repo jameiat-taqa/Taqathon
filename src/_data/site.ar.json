@@ -11,6 +11,7 @@
     { "key": "submissions", "href": "submissions.html", "label": "التسليمات" },
     { "key": "rules", "href": "rules.html", "label": "القواعد والموارد" },
     { "key": "gallery", "href": "gallery.html", "label": "المرئيات" },
+    { "key": "pastSeasons", "href": "past-seasons.html", "label": "المواسم السابقة" },
     { "key": "contact", "href": "contact.html", "label": "تواصل معنا" }
   ],
   "footer": {

@@ -1,0 +1,7 @@
+{
+  "_comment": "PAST SEASONS INDEX PAGE COPY (English). English mirror of past-seasons.ar.json — see that file's note about the pattern.",
+  "pageTitle": "Past Seasons · Taqathon",
+  "hero": { "icon": "bi-archive", "heading": "Past Seasons", "headingClass": "fw-bold" },
+  "intro": "An archive of each completed Taqathon season — team results, closing-ceremony photos, and the key announcements from that season.",
+  "emptyText": "No past-season archives yet."
+}

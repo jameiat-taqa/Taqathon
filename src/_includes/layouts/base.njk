@@ -26,6 +26,18 @@
   use an HTML comment instead when you want a marker that survives into
   the rendered HTML (like the "HERO" style comments already used
   throughout this site).
+
+  locale.pathPrefix (Phase 2, Year Archives): every page used to live
+  flat at the site root, so a relative link like "assets/common.css"
+  always worked. Year Archive pages are the first ones nested one
+  level down (src/pages/years.njk → /years/2025.html), where that same
+  relative link would resolve to the wrong place (/years/assets/...).
+  pathPrefix lets a page's own locale object say how many directories
+  "up" to go to reach the site root — "" for every existing root-level
+  page (the default below, so none of them needed to change), "../"
+  for pages under years/. Used here and in navbar.njk wherever a link
+  points at another page or a static asset (not needed for external
+  URLs, which are already absolute).
 #}
 <!doctype html>
 <html lang="{{ locale.lang }}" dir="{{ locale.dir }}">
@@ -56,7 +68,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 
   <!-- Shared Styles (unchanged from the original site) -->
-  <link href="assets/common.css" rel="stylesheet">
+  <link href="{{ locale.pathPrefix | default('') }}assets/common.css" rel="stylesheet">
 
   <style>
   {% if locale.dir == "rtl" %}
@@ -95,7 +107,7 @@
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/common.js"></script>
+  <script src="{{ locale.pathPrefix | default('') }}assets/common.js"></script>
 
   <script>
   {% block pageScript %}{% endblock %}

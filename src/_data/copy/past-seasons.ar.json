@@ -1,0 +1,7 @@
+{
+  "_comment": "PAST SEASONS INDEX PAGE COPY (Arabic). Just the page's own chrome text (title/hero/empty-state) — the actual list of years is built in src/_data/pages/past-seasons.js from whatever year-archive files exist under src/_data/copy/years/. See home.ar.json for the general per-page-copy pattern this follows.",
+  "pageTitle": "المواسم السابقة · طاقَثون",
+  "hero": { "icon": "bi-archive", "heading": "المواسم السابقة", "headingClass": "fw-bold" },
+  "intro": "أرشيف لكل موسم من مواسم طاقَثون بعد انتهائه — نتائج الفرق، صور الحفل الختامي، وأهم الإعلانات التي وقعت خلال الموسم.",
+  "emptyText": "لا توجد أرشيفات مواسم سابقة حتى الآن."
+}

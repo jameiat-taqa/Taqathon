@@ -1,0 +1,27 @@
+{
+  "_comment": "YEAR ARCHIVE — TAQATHON 2025 (Arabic). Built retroactively in Phase 2 from the only real 2025 data available: the final ranked-winners announcement (announcements.json's first entry before it was cleared) and the closing-ceremony details already in schedule.ar.json's keyDates. 'announcements' is intentionally empty — the 'important' CMS checkbox this archive concept relies on didn't exist yet during the 2025 season, so there's nothing real to carry over beyond the winners already captured below. See src/_lib/years.js for how this file gets discovered and turned into a page.",
+  "lang": "ar",
+  "pageTitle": "أرشيف طاقَثون 2025 · طاقَثون",
+  "hero": { "heading": "طاقَثون 2025", "subtitle": "أرشيف الموسم" },
+  "ceremonyHeading": "الحفل الختامي",
+  "ceremony": {
+    "date": "٢ ديسمبر 2025",
+    "time": "6:30 - 8:30 مساءً",
+    "location": "قاعة الجوهرة – جامعة جدة",
+    "mapHref": "https://maps.app.goo.gl/3ucTAEBiY8wEivXK7"
+  },
+  "winnersHeading": "النتائج النهائية",
+  "winners": [
+    { "rank": 1, "team": "EcoPlus" },
+    { "rank": 2, "team": "Engineering Innovation" },
+    { "rank": 3, "team": "Talaa" },
+    { "rank": 4, "team": "Energy Generation" },
+    { "rank": 5, "team": "PowerLab Engineers" }
+  ],
+  "galleryHeading": "صور الحفل الختامي",
+  "galleryNote": "استعرض صور الحفل الختامي لطاقَثون 2025 في معرض الصور.",
+  "galleryHref": "gallery.html",
+  "galleryButtonLabel": "عرض المرئيات",
+  "announcementsHeading": "إعلانات مهمة من هذا الموسم",
+  "announcements": []
+}

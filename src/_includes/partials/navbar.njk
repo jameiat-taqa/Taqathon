@@ -13,6 +13,11 @@
   logos, footer text — so as more pages get migrated in later phases,
   they can all reuse this exact partial instead of re-writing a navbar
   by hand in every template like the old site did.
+
+  Every link/image path below is prefixed with locale.pathPrefix (see
+  layouts/base.njk's header comment) so this same partial still points
+  at the right places from a nested page like a Year Archive
+  (/years/2025.html), not just from root-level pages.
 #}
 <!-- NAVBAR -->
 <nav class="navbar navbar-expand-lg navbar-light sticky-top">
@@ -29,8 +34,8 @@
     Arabic aria-label was adopted here for all pages going forward
     (see the "_comment" note at the top of site.ar.json).
   #}
-  <a class="navbar-brand d-flex align-items-center" href="{{ locale.site.brand.href }}"{% if locale.site.brand.ariaLabel %} aria-label="{{ locale.site.brand.ariaLabel }}"{% endif %}>
-    <img src="assets/logos/taqathon-logo.png" alt="{{ locale.site.brand.logoAlt }}" class="logo-mark">
+  <a class="navbar-brand d-flex align-items-center" href="{{ locale.pathPrefix | default('') }}{{ locale.site.brand.href }}"{% if locale.site.brand.ariaLabel %} aria-label="{{ locale.site.brand.ariaLabel }}"{% endif %}>
+    <img src="{{ locale.pathPrefix | default('') }}assets/logos/taqathon-logo.png" alt="{{ locale.site.brand.logoAlt }}" class="logo-mark">
   </a>
 
   <div class="collapse navbar-collapse justify-content-lg-center" id="mainNav">
@@ -57,7 +62,7 @@
         each nav item's own `key` from site.*.json.
       #}
       {% for item in locale.site.nav %}
-      <li class="nav-item"><a class="nav-link{% if item.key == locale.navActive %} active{% endif %}" href="{{ item.href }}"{% if item.key == locale.navActive %} aria-current="page"{% endif %}>{{ item.label | safe }}</a></li>
+      <li class="nav-item"><a class="nav-link{% if item.key == locale.navActive %} active{% endif %}" href="{{ locale.pathPrefix | default('') }}{{ item.href }}"{% if item.key == locale.navActive %} aria-current="page"{% endif %}>{{ item.label | safe }}</a></li>
       {% endfor %}
       {#
         Nunjucks escapes {{ }} output by default (so a literal "&" in
@@ -73,7 +78,7 @@
 
   <div class="assoc-fixed d-flex align-items-center gap-2">
     <a href="{{ locale.site.assoc.href }}" target="_blank" rel="noopener"{% if locale.site.assoc.linkClass %} class="{{ locale.site.assoc.linkClass }}"{% endif %}{% if locale.site.assoc.ariaLabel %} aria-label="{{ locale.site.assoc.ariaLabel }}"{% endif %}>
-      <img src="assets/logos/association-logo.png" class="assoc-logo" alt="{{ locale.site.assoc.alt }}">
+      <img src="{{ locale.pathPrefix | default('') }}assets/logos/association-logo.png" class="assoc-logo" alt="{{ locale.site.assoc.alt }}">
     </a>
     {#
       aria-controls / aria-expanded aren't language-specific, so they're
