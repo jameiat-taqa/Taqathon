@@ -1,5 +1,5 @@
 {
-  "_comment": "HOME PAGE COPY (Arabic). Every piece of Arabic text on the Home page lives here instead of inside home.njk, so editing the page's wording never means touching template code. Loaded by src/_data/pages/home.js. 'deadline' below is still the ORIGINAL (already past) date from the live site — Phase 0 only migrated the template, it didn't change content. See home.en.json for the English mirror (must keep the same keys/shape).",
+  "_comment": "HOME PAGE COPY (Arabic). Every piece of Arabic text on the Home page lives here instead of inside home.njk, so editing the page's wording never means touching template code. Loaded by src/_data/pages/home.js. 'deadline' now reflects Taqathon 2026's registration deadline (set in Phase 1, 2026-08-11) — the user gave Sept 28, 2026 with no exact time, so end-of-day Riyadh time (23:59:59+03:00) was used; correct this if a precise time is confirmed later. See home.en.json for the English mirror (must keep the same keys/shape).",
   "pageTitle": "الرئيسية · طاقَثون",
   "hero": {
     "badge": "بوابة المشاركين",
@@ -15,8 +15,8 @@
     "iconMarginClass": "ms-1"
   },
   "countdown": {
-    "label": "الموعد النهائي للتسليم",
-    "deadline": "2025-11-22T14:00:00+03:00",
+    "label": "الموعد النهائي للتسجيل في طاقَثون 2026",
+    "deadline": "2026-09-28T23:59:59+03:00",
     "units": { "days": "أيام", "hours": "ساعات", "mins": "دقائق", "secs": "ثوانٍ" }
   },
   "announcements": {
