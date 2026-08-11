@@ -15,8 +15,8 @@
     "iconMarginClass": "me-1"
   },
   "countdown": {
-    "label": "Final Submission Deadline",
-    "deadline": "2025-11-22T14:00:00+03:00",
+    "label": "Taqathon 2026 Registration Deadline",
+    "deadline": "2026-09-28T23:59:59+03:00",
     "units": { "days": "Days", "hours": "Hours", "mins": "Mins", "secs": "Secs" }
   },
   "announcements": {

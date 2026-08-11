@@ -16,13 +16,20 @@ backend:
   # access token, which requires a client secret — something that can
   # never be safely embedded in browser-side code. base_url +
   # auth_endpoint point the CMS at an OAuth proxy that does that
-  # exchange server-side instead. This project doesn't host its own
-  # proxy: it uses Netlify's built-in one (a free Netlify site, used
-  # only for this — it does not host the actual Taqathon site). See the
-  # "Content Management (Decap CMS)" section of README.md for the
-  # one-time setup this depends on (a GitHub OAuth App + a Netlify
-  # site with that OAuth App's ID/secret installed).
-  base_url: https://api.netlify.com
+  # exchange server-side instead.
+  #
+  # This used to point at a free Netlify site, on the assumption that
+  # Netlify's OAuth-provider feature works for any site in a Netlify
+  # account — it doesn't. That feature only works for sites Netlify is
+  # actually building and deploying; a blank placeholder site 404s.
+  # Confirmed by hitting that site's /auth endpoint directly and
+  # getting Netlify's own generic 404 page, before ever reaching
+  # GitHub. So instead this points at a small self-hosted OAuth proxy —
+  # see cloudflare-worker/decap-oauth-worker.js for the actual proxy
+  # code (a Cloudflare Worker, free tier) and README.md's "Content
+  # Management (Decap CMS)" section for the deployment steps.
+  #
+  base_url: https://taqathon-decap-oauth.sara-hm-mahmoud111.workers.dev
   auth_endpoint: auth
 
 # "editorial_workflow" (rather than the simpler default, which commits

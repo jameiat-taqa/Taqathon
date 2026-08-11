@@ -133,15 +133,31 @@ with Write access). There's no separate CMS user system — access is
 exactly the repo's collaborator list.
 
 **One-time setup this depends on** (not yet done automatically — see
-`admin/config.yml`'s comments for the full explanation of *why*):
+`cloudflare-worker/decap-oauth-worker.js`'s comments for the full
+protocol explanation, and `admin/config.yml`'s comments for why this
+isn't just pointed at Netlify — that was tried first and doesn't work
+for a site Netlify isn't actually building/deploying):
+
 1. Register a GitHub OAuth App (GitHub → Settings → Developer
-   settings → OAuth Apps) with callback URL `https://api.netlify.com/auth/done`.
-2. Create a free Netlify site used *only* for its built-in OAuth
-   provider (Site settings → Access control → OAuth → Install
-   provider → GitHub, using the Client ID/Secret from step 1). This
-   Netlify site does not host the real Taqathon site — GitHub Pages
-   still does.
-3. Visit `/admin/` and confirm login works.
+   settings → OAuth Apps → New OAuth App). Homepage URL can be the
+   live site; leave the callback URL for step 3.
+2. Deploy the OAuth proxy: Cloudflare dashboard (free account) →
+   Workers & Pages → Create → paste in the entire contents of
+   `cloudflare-worker/decap-oauth-worker.js` → Deploy. Note the
+   Worker's URL (something like
+   `https://taqathon-decap-oauth.<your-subdomain>.workers.dev`).
+3. Back on the GitHub OAuth App from step 1: set its **Authorization
+   callback URL** to that Worker's URL + `/callback`
+   (e.g. `https://taqathon-decap-oauth.<your-subdomain>.workers.dev/callback`).
+   Generate a **Client Secret** while you're there.
+4. On the Worker (Cloudflare dashboard → your Worker → Settings →
+   Variables and Secrets): add two **secret** environment variables —
+   `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET` — using the values
+   from the OAuth App.
+5. Update `admin/config.yml`'s `backend.base_url` to the Worker's own
+   URL from step 2 (no trailing `/callback` — the Worker's code
+   appends that itself), commit, and let it deploy.
+6. Visit `/admin/` and confirm "Login with GitHub" works.
 
 **Testing locally without any of the above:** run `npx decap-server`
 in one terminal (a local git-backend proxy) alongside `npm run build`
