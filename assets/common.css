@@ -82,6 +82,16 @@ footer{ flex-shrink:0; }  /* Footer never shrinks, stays at bottom */
 .navbar-nav .nav-link:hover,
 .navbar-nav .nav-link.active{ color:var(--brand-blue); }          /* Active/hover state */
 
+/* Phase 3: nav dropdowns (About / Participants / Community groups) */
+.navbar-nav .dropdown-item.active,
+.navbar-nav .dropdown-item:active{
+  background:var(--brand-blue); color:#fff;
+}
+/* Register button: a highlighted call-to-action, not a plain nav-link —
+   margin-inline-start (not margin-left) so the gap lands on the same
+   side in both LTR and RTL without a separate mirrored rule. */
+.nav-cta{ margin-inline-start:.5rem; }
+
 /* Language toggle button (EN/AR switcher) */
 .btn-lang{
   background:var(--brand-blue); color:#ffffff !important;

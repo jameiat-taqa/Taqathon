@@ -1,0 +1,22 @@
+{
+  "_comment": "ABOUT PAGE COPY (Arabic). PLACEHOLDER/DRAFT CONTENT — see about.en.json's note (English mirror) for full context, including the explicit sensitivity flag on 'associationStatus' (must come from the Association, never invented).",
+  "pageTitle": "حول · طاقَثون",
+  "hero": { "icon": "bi-info-circle", "heading": "حول", "headingClass": "fw-bold" },
+  "association": {
+    "heading": "حول الجمعية",
+    "bodyPlaceholder": "نص مسودة مؤقت — نظرة عامة موجزة عن جمعية الطاقة للتنمية المستدامة: نشاطها، رسالتها، ودورها في تنظيم طاقَثون. سيتم تزويده أو اعتماده من الجمعية.",
+    "statusLabel": "الوضع الرسمي",
+    "statusPlaceholder": "نص مسودة مؤقت — لا تُضاف هنا أي تفاصيل قانونية أو تسجيلية مُفتَرَضة. يجب تأكيد معلومات الوضع الرسمي/التسجيل للجمعية قبل اعتماد هذا القسم بشكل نهائي."
+  },
+  "taqathon": {
+    "heading": "حول طاقَثون",
+    "bodyPlaceholder": "نص مسودة مؤقت — قصة طاقَثون: كيف ولماذا انطلق، وما الذي يهدف لتحقيقه.",
+    "missionHeading": "رسالتنا",
+    "missionPlaceholder": "نص مسودة مؤقت — رسالة طاقَثون.",
+    "visionHeading": "رؤيتنا",
+    "visionPlaceholder": "نص مسودة مؤقت — رؤية طاقَثون، غالباً بارتباط مع رؤية السعودية 2030 (مذكورة في مواضع أخرى من الموقع)."
+  },
+  "ctaLabel": "مستعد للمشاركة؟",
+  "ctaButtonLabel": "سجّل فريقك",
+  "ctaButtonHref": "registration.html"
+}

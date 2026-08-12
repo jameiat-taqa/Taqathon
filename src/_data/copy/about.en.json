@@ -1,0 +1,22 @@
+{
+  "_comment": "ABOUT PAGE COPY (English). PLACEHOLDER/DRAFT CONTENT — built 2026-08-11 as part of Phase 3's nav restructure (the 'About' dropdown needed a real destination page, not just a menu label). Structure is real (association overview first, then Taqathon's own story/mission below it, per the user's explicit instruction) but EVERY sentence of body text is a draft stand-in pending real content. Handle 'associationStatus' with particular care — it's specifically flagged by the user as sensitive and NOT to be invented (legal/registration/official-recognition claims about the association must come from them, not guessed).",
+  "pageTitle": "About · Taqathon",
+  "hero": { "icon": "bi-info-circle", "heading": "About", "headingClass": "fw-semibold" },
+  "association": {
+    "heading": "About the Association",
+    "bodyPlaceholder": "Draft placeholder — a short overview of the Energy Association for Sustainable Development: what it does, its mission, and its role in organizing Taqathon. To be supplied or confirmed by the Association.",
+    "statusLabel": "Official Status",
+    "statusPlaceholder": "Draft placeholder — DO NOT invent legal/registration details here. The Association's official status/registration information must be confirmed before this section is finalized."
+  },
+  "taqathon": {
+    "heading": "About Taqathon",
+    "bodyPlaceholder": "Draft placeholder — Taqathon's own story: how and why it started, and what it aims to achieve.",
+    "missionHeading": "Our Mission",
+    "missionPlaceholder": "Draft placeholder — Taqathon's mission statement.",
+    "visionHeading": "Our Vision",
+    "visionPlaceholder": "Draft placeholder — Taqathon's vision, likely tied to Saudi Vision 2030 (already referenced elsewhere on this site)."
+  },
+  "ctaLabel": "Ready to take part?",
+  "ctaButtonLabel": "Register Your Team",
+  "ctaButtonHref": "registration-en.html"
+}

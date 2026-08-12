@@ -50,7 +50,7 @@
         retroactively for Home and Contract too, not just Schedule.
 
         This loop is the entire reason a navbar partial is worth having:
-        one {% for %} over a list, instead of seven near-identical
+        one {% for %} over a list, instead of many near-identical
         <li><a>...</a></li> lines typed out by hand (and kept in sync by
         hand across every page, in both languages, forever). Adding a
         new nav link later means adding one entry to site.*.json — this
@@ -60,9 +60,45 @@
         page. `locale.navActive` is set per-page in each page's data
         file (e.g. home.js sets it to "home"); it's compared against
         each nav item's own `key` from site.*.json.
+
+        Phase 3 (2026-08-11): the flat list of links grew to 16 items
+        and needed grouping, so each entry now has a "type" —
+          - "link": exactly what this loop always rendered.
+          - "dropdown": a Bootstrap navbar dropdown (toggle + submenu)
+            wrapping several related "items"; the toggle itself isn't
+            a real link (no page behind "About" or "Community" as a
+            GROUP — About's own page is one of the items inside it),
+            so it's rendered as a <button>-role link with
+            data-bs-toggle="dropdown", not an <a href>.
+          - "button": a single highlighted call-to-action (Register),
+            visually distinct from a plain nav-link.
+        A dropdown's toggle gets the "active" treatment too, so
+        landing on e.g. Tracks (inside the "About" group) still shows
+        SOMETHING highlighted in the top-level bar, not nothing.
       #}
       {% for item in locale.site.nav %}
-      <li class="nav-item"><a class="nav-link{% if item.key == locale.navActive %} active{% endif %}" href="{{ locale.pathPrefix | default('') }}{{ item.href }}"{% if item.key == locale.navActive %} aria-current="page"{% endif %}>{{ item.label | safe }}</a></li>
+        {% if item.type == "dropdown" %}
+          {% set groupActive = false %}
+          {% for sub in item.items %}
+            {% if sub.key == locale.navActive %}{% set groupActive = true %}{% endif %}
+          {% endfor %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle{% if groupActive %} active{% endif %}" href="#" id="navDropdown-{{ item.key }}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              {{ item.label | safe }}
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navDropdown-{{ item.key }}">
+              {% for sub in item.items %}
+              <li><a class="dropdown-item{% if sub.key == locale.navActive %} active{% endif %}" href="{{ locale.pathPrefix | default('') }}{{ sub.href }}"{% if sub.key == locale.navActive %} aria-current="page"{% endif %}>{{ sub.label | safe }}</a></li>
+              {% endfor %}
+            </ul>
+          </li>
+        {% elif item.type == "button" %}
+          <li class="nav-item">
+            <a class="btn btn-brand btn-sm nav-cta{% if item.key == locale.navActive %} active{% endif %}" href="{{ locale.pathPrefix | default('') }}{{ item.href }}"{% if item.key == locale.navActive %} aria-current="page"{% endif %}>{{ item.label | safe }}</a>
+          </li>
+        {% else %}
+          <li class="nav-item"><a class="nav-link{% if item.key == locale.navActive %} active{% endif %}" href="{{ locale.pathPrefix | default('') }}{{ item.href }}"{% if item.key == locale.navActive %} aria-current="page"{% endif %}>{{ item.label | safe }}</a></li>
+        {% endif %}
       {% endfor %}
       {#
         Nunjucks escapes {{ }} output by default (so a literal "&" in
