@@ -1,26 +1,33 @@
 {
-  "_comment": "SHARED SITE CHROME (English). English mirror of site.ar.json — same keys, English values. Used by navbar.njk and footer.njk for every migrated page's nav/footer/social links.",
+  "_comment": "SHARED SITE CHROME (English). English mirror of site.ar.json — same keys, English values. Used by navbar.njk and footer.njk for every migrated page's nav/footer/social links. 'nav' was restructured in Phase 3 (2026-08-11) from a flat list of 16 links into grouped dropdowns, per the user's exact spec — see navbar.njk for how 'type' (link/dropdown/button) is rendered. Each entry's 'key' (top-level OR nested inside a dropdown's 'items') is what a page's navActive value matches against, same as before.",
   "brand": { "href": "index-en.html", "logoAlt": "Taqathon logo", "ariaLabel": "Taqathon home" },
   "assoc": { "href": "https://taqa.org.sa", "alt": "Energy Association for Sustainable Development", "ariaLabel": "Energy Association for Sustainable Development", "linkClass": "d-block" },
   "toggler": { "ariaLabel": "Toggle navigation" },
   "langSwitch": { "label": "AR", "liClass": "ms-3" },
   "nav": [
-    { "key": "home", "href": "index-en.html", "label": "Home" },
-    { "key": "registration", "href": "registration-en.html", "label": "Registration" },
-    { "key": "tracks", "href": "tracks-en.html", "label": "Tracks" },
-    { "key": "contract", "href": "contract-en.html", "label": "Contract" },
-    { "key": "schedule", "href": "schedule-en.html", "label": "Schedule &amp; Workshops" },
-    { "key": "submissions", "href": "submissions-en.html", "label": "Submissions" },
-    { "key": "submissionGuidelines", "href": "submission-guidelines-en.html", "label": "Submission Guidelines" },
-    { "key": "rules", "href": "rules-en.html", "label": "Rules &amp; Resources" },
-    { "key": "judges", "href": "judges-en.html", "label": "Judges &amp; Mentors" },
-    { "key": "sponsors", "href": "sponsors-en.html", "label": "Sponsors" },
-    { "key": "gallery", "href": "gallery-en.html", "label": "Gallery" },
-    { "key": "pastSeasons", "href": "past-seasons-en.html", "label": "Past Seasons" },
-    { "key": "faq", "href": "faq-en.html", "label": "FAQ" },
-    { "key": "community", "href": "community-en.html", "label": "Community" },
-    { "key": "newsletter", "href": "newsletter-en.html", "label": "Newsletter" },
-    { "key": "contact", "href": "contact-en.html", "label": "Contact Us" }
+    { "type": "link", "key": "home", "href": "index-en.html", "label": "Home" },
+    { "type": "dropdown", "key": "about", "label": "About", "items": [
+        { "key": "about", "href": "about-en.html", "label": "About" },
+        { "key": "tracks", "href": "tracks-en.html", "label": "Tracks" },
+        { "key": "judges", "href": "judges-en.html", "label": "Judges &amp; Mentors" },
+        { "key": "sponsors", "href": "sponsors-en.html", "label": "Sponsors" },
+        { "key": "pastSeasons", "href": "past-seasons-en.html", "label": "Past Seasons" },
+        { "key": "faq", "href": "faq-en.html", "label": "FAQ" }
+    ] },
+    { "type": "dropdown", "key": "participants", "label": "Participants", "items": [
+        { "key": "contract", "href": "contract-en.html", "label": "Contract" },
+        { "key": "schedule", "href": "schedule-en.html", "label": "Schedule &amp; Workshops" },
+        { "key": "submissions", "href": "submissions-en.html", "label": "Submissions" },
+        { "key": "submissionGuidelines", "href": "submission-guidelines-en.html", "label": "Submission Guidelines" },
+        { "key": "rules", "href": "rules-en.html", "label": "Rules &amp; Resources" }
+    ] },
+    { "type": "dropdown", "key": "community", "label": "Community", "items": [
+        { "key": "gallery", "href": "gallery-en.html", "label": "Gallery" },
+        { "key": "community", "href": "community-en.html", "label": "Community" },
+        { "key": "newsletter", "href": "newsletter-en.html", "label": "Newsletter" }
+    ] },
+    { "type": "link", "key": "contact", "href": "contact-en.html", "label": "Contact Us" },
+    { "type": "button", "key": "registration", "href": "registration-en.html", "label": "Register" }
   ],
   "footer": {
     "rowClass": "row g-4",
