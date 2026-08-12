@@ -1,0 +1,18 @@
+{
+  "_comment": "COMMUNITY PAGE COPY (English). PLACEHOLDER CONTENT — built 2026-08-11, same batch as the other new pages. openHref='#' is a placeholder (no real community-chat link exists yet — Discord/WhatsApp/Telegram, whichever is chosen). Reuses the same 'open link' + 'copy link' card pattern as submissions.njk/registration.njk, just a single card instead of a loop, since there's only one community channel.",
+  "pageTitle": "Community · Taqathon",
+  "hero": { "icon": "bi-chat-dots", "heading": "Community", "headingClass": "fw-semibold" },
+  "intro": "Join the Taqathon community chat to ask questions and connect with other participants.",
+  "cardTitle": "Community Chat (placeholder link)",
+  "openLabel": "Join the community chat",
+  "openHref": "#",
+  "openIcon": "bi-box-arrow-up-right",
+  "openAriaLabel": "Open the community chat in a new tab",
+  "copyAriaLabel": "Copy the community chat link",
+  "copyButtonLabel": "Copy link",
+  "copiedLabel": "Copied!",
+  "copyErrorMsg": "Could not copy. Long-press or right-click the link to copy.",
+  "noteLabel": "Note:",
+  "noteBodyPrefix": "This link is a placeholder until the real community channel is set up:",
+  "iconMarginClass": "me-2"
+}

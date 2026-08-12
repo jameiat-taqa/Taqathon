@@ -1,0 +1,48 @@
+{
+  "_comment": "FAQ PAGE COPY (Arabic). PLACEHOLDER CONTENT — see faq.en.json's note (English mirror) for full context.",
+  "pageTitle": "الأسئلة الشائعة · طاقَثون",
+  "hero": {
+    "icon": "bi-question-circle",
+    "heading": "الأسئلة الشائعة",
+    "headingClass": "fw-bold",
+    "intro": "إجابات عن الأسئلة المتكررة حول طاقَثون. هذه القائمة مؤقتة وسيتم تحديثها بأسئلة حقيقية."
+  },
+  "sections": [
+    {
+      "slug": "who-can-join",
+      "heading": "من يمكنه المشاركة؟",
+      "expanded": true,
+      "bodyHtml": "<p class=\"text-secondary mb-0\">إجابة مؤقتة — ستتم إضافة تفاصيل الأهلية (العمر، الجنسية، الحالة الطلابية، إلخ) هنا.</p>"
+    },
+    {
+      "slug": "team-size",
+      "heading": "ما هو الحد الأقصى لعدد أعضاء الفريق؟",
+      "expanded": false,
+      "bodyHtml": "<p class=\"text-secondary mb-0\">إجابة مؤقتة — ستتم إضافة الحد الفعلي لعدد الأعضاء هنا.</p>"
+    },
+    {
+      "slug": "cost",
+      "heading": "هل هناك رسوم للمشاركة؟",
+      "expanded": false,
+      "bodyHtml": "<p class=\"text-secondary mb-0\">إجابة مؤقتة.</p>"
+    },
+    {
+      "slug": "no-team",
+      "heading": "لا يوجد لدي فريق بعد — هل يمكنني التسجيل؟",
+      "expanded": false,
+      "bodyHtml": "<p class=\"text-secondary mb-0\">إجابة مؤقتة.</p>"
+    },
+    {
+      "slug": "what-to-build",
+      "heading": "ما نوع المشروع الذي يجب علينا تطويره؟",
+      "expanded": false,
+      "bodyHtml": "<p class=\"text-secondary mb-0\">إجابة مؤقتة — راجع صفحة المسارات (وهي أيضاً مؤقتة حالياً) لقائمة المسارات.</p>"
+    },
+    {
+      "slug": "contact",
+      "heading": "لمن أتوجه بأسئلة أخرى؟",
+      "expanded": false,
+      "bodyHtml": "<p class=\"text-secondary mb-0\">راجع صفحة <a href=\"contact.html\">تواصل معنا</a>.</p>"
+    }
+  ]
+}

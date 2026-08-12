@@ -1,0 +1,21 @@
+{
+  "_comment": "SUBMISSION GUIDELINES PAGE COPY (Arabic). See submission-guidelines.en.json's note (English mirror) — this page is an interpretation call, not just placeholder text; may need rethinking once real 'Structured Submissions' requirements are clear.",
+  "pageTitle": "إرشادات التسليم · طاقَثون",
+  "hero": {
+    "icon": "bi-list-check",
+    "heading": "إرشادات التسليم",
+    "headingClass": "fw-bold",
+    "intro": "قائمة تحقق بما يجب تجهيزه قبل التسليم. للنماذج الفعلية للرفع، راجع صفحة التسليمات؛ لكامل قواعد التقييم والتسليم، راجع صفحة القواعد والموارد."
+  },
+  "checklistHeading": "قبل التسليم، تأكد من توفر:",
+  "checklist": [
+    "متطلب مؤقت 1 (مثل صيغة ملف المشروع).",
+    "متطلب مؤقت 2 (مثل صيغة ملف العرض التقديمي).",
+    "متطلب مؤقت 3 (مثل قائمة أعضاء الفريق)."
+  ],
+  "linksHeading": "صفحات ذات صلة",
+  "links": [
+    { "label": "التسليمات (رفع الملفات)", "href": "submissions.html", "icon": "bi-upload" },
+    { "label": "القواعد والموارد (كامل المتطلبات)", "href": "rules.html", "icon": "bi-clipboard-check" }
+  ]
+}

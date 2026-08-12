@@ -1,0 +1,16 @@
+{
+  "_comment": "JUDGES/MENTORS PAGE COPY (English). PLACEHOLDER CONTENT — built 2026-08-11, same batch as the other new pages. Names/roles/bios are all generic stand-ins. No photo files exist yet, so each profile renders a generic Bootstrap-Icon avatar circle instead of a broken <img> — once real photos exist, add a 'photo' path per person and swap the icon for an <img>.",
+  "pageTitle": "Judges & Mentors · Taqathon",
+  "hero": {
+    "icon": "bi-people",
+    "heading": "Judges & Mentors",
+    "headingClass": "fw-semibold",
+    "intro": "Placeholder list — real judge and mentor profiles will replace this once confirmed."
+  },
+  "people": [
+    { "name": "Name (placeholder)", "role": "Judge — role/affiliation pending", "bio": "Placeholder bio." },
+    { "name": "Name (placeholder)", "role": "Judge — role/affiliation pending", "bio": "Placeholder bio." },
+    { "name": "Name (placeholder)", "role": "Mentor — role/affiliation pending", "bio": "Placeholder bio." },
+    { "name": "Name (placeholder)", "role": "Mentor — role/affiliation pending", "bio": "Placeholder bio." }
+  ]
+}
