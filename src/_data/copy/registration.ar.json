@@ -1,0 +1,42 @@
+{
+  "_comment": "REGISTRATION PAGE COPY (Arabic). PLACEHOLDER CONTENT — see registration.en.json's note (same file, English mirror) for full context: track names/count/links below are all stand-ins pending a real file the user is sending. deadlineNote's date IS real (matches home.ar.json's countdown).",
+  "pageTitle": "التسجيل · طاقَثون",
+  "hero": { "icon": "bi-pencil-square", "heading": "تسجيل الفرق", "headingClass": "fw-bold" },
+  "deadlineNote": "يُغلق باب التسجيل في 28 سبتمبر 2026. تسجيل واحد لكل فريق — سجّل مرة واحدة للمسار الذي يتقدّم فريقك إليه.",
+  "placeholderNote": "أسماء المسارات وروابط التسجيل أدناه مؤقتة وسيتم تحديثها بعد اعتمادها بشكل نهائي.",
+  "iconMarginClass": "ms-2",
+  "copyButtonLabel": "نسخ الرابط",
+  "copiedLabel": "تم النسخ!",
+  "copyErrorMsg": "تعذّر النسخ. استخدم الضغط المطوّل أو النقر بالزر الأيمن لنسخ الرابط.",
+  "noteLabel": "ملاحظة:",
+  "noteBodyPrefix": "يتطلّب التسجيل تسجيل الدخول إلى Google. إذا لم يعمل الزر، استخدم الرابط المباشر:",
+  "forms": [
+    {
+      "cardTitle": "المسار الأول (الاسم قيد الاعتماد)",
+      "openLabel": "فتح نموذج تسجيل المسار الأول",
+      "openHref": "#",
+      "openIcon": "bi-box-arrow-up-right",
+      "openAriaLabel": "فتح نموذج تسجيل المسار الأول في تبويب جديد",
+      "copyAriaLabel": "نسخ رابط نموذج المسار الأول",
+      "noscriptText": "تم تعطيل جافاسكريبت. استخدم هذا الرابط للتسجيل:"
+    },
+    {
+      "cardTitle": "المسار الثاني (الاسم قيد الاعتماد)",
+      "openLabel": "فتح نموذج تسجيل المسار الثاني",
+      "openHref": "#",
+      "openIcon": "bi-box-arrow-up-right",
+      "openAriaLabel": "فتح نموذج تسجيل المسار الثاني في تبويب جديد",
+      "copyAriaLabel": "نسخ رابط نموذج المسار الثاني",
+      "noscriptText": "تم تعطيل جافاسكريبت. استخدم هذا الرابط للتسجيل:"
+    },
+    {
+      "cardTitle": "المسار الثالث (الاسم قيد الاعتماد)",
+      "openLabel": "فتح نموذج تسجيل المسار الثالث",
+      "openHref": "#",
+      "openIcon": "bi-box-arrow-up-right",
+      "openAriaLabel": "فتح نموذج تسجيل المسار الثالث في تبويب جديد",
+      "copyAriaLabel": "نسخ رابط نموذج المسار الثالث",
+      "noscriptText": "تم تعطيل جافاسكريبت. استخدم هذا الرابط للتسجيل:"
+    }
+  ]
+}
