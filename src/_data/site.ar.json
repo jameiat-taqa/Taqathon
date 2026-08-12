@@ -6,6 +6,7 @@
   "langSwitch": { "label": "EN", "liClass": "" },
   "nav": [
     { "key": "home", "href": "index.html", "label": "الرئيسية" },
+    { "key": "registration", "href": "registration.html", "label": "التسجيل" },
     { "key": "contract", "href": "contract.html", "label": "العقد" },
     { "key": "schedule", "href": "schedule.html", "label": "الجدول وورش العمل" },
     { "key": "submissions", "href": "submissions.html", "label": "التسليمات" },
