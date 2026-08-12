@@ -1,0 +1,33 @@
+{
+  "_comment": "SPONSORS PAGE COPY (Arabic). PLACEHOLDER CONTENT — see sponsors.en.json's note (English mirror).",
+  "pageTitle": "الرعاة · طاقَثون",
+  "hero": {
+    "icon": "bi-award",
+    "heading": "الرعاة والشركاء",
+    "headingClass": "fw-bold",
+    "intro": "قائمة الرعاة أدناه مؤقتة — سيتم استبدالها بالأسماء والشعارات الحقيقية بعد اعتمادها."
+  },
+  "tiers": [
+    {
+      "tierName": "الراعي البلاتيني",
+      "sponsors": [
+        { "name": "اسم الراعي (مؤقت)" }
+      ]
+    },
+    {
+      "tierName": "الرعاة الذهبيون",
+      "sponsors": [
+        { "name": "اسم الراعي (مؤقت)" },
+        { "name": "اسم الراعي (مؤقت)" }
+      ]
+    },
+    {
+      "tierName": "الشركاء الداعمون",
+      "sponsors": [
+        { "name": "اسم الشريك (مؤقت)" },
+        { "name": "اسم الشريك (مؤقت)" },
+        { "name": "اسم الشريك (مؤقت)" }
+      ]
+    }
+  ]
+}

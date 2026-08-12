@@ -1,0 +1,85 @@
+---
+pagination:
+  data: pages.newsletter.locales
+  size: 1
+  alias: locale
+permalink: "{{ locale.permalink }}"
+---
+{#
+  TAQATHON - NEWSLETTER PAGE TEMPLATE (src/pages/newsletter.njk)
+  -------------------------------------------------------------------
+  Identical single-card "open link" + "copy link" pattern as
+  community.njk — same reasoning, just a signup form link instead of
+  a chat link.
+
+  PLACEHOLDER CONTENT (Phase 2, 2026-08-11): openHref is "#" — no real
+  signup form exists yet. See newsletter.ar.json / newsletter.en.json's
+  "_comment" field.
+#}
+{% extends "layouts/base.njk" %}
+{% block pageStyle %}
+.card-lite{ padding:0; }
+.card-body{ padding:1.75rem 2rem; }
+@media (max-width:767.98px){ .card-body{ padding:1.25rem 1.5rem; } }
+
+.alert-info{
+  background:linear-gradient(135deg, #e7f3ff 0%, #f0f8ff 100%);
+  border:1px solid #b8daff;
+  border-inline-start:4px solid var(--brand-blue);
+  color:#004085;
+  border-radius:.75rem;
+}
+{% endblock %}
+
+{% block content %}
+<main class="py-5">
+  <div class="container" style="max-width:860px;">
+    <div class="text-center mb-4">
+      <div class="icon-circle mx-auto mb-3"><i class="bi {{ locale.content.hero.icon }}"></i></div>
+      <h5 class="mb-1 {{ locale.content.hero.headingClass }}">{{ locale.content.hero.heading }}</h5>
+      <p class="text-secondary mb-0">{{ locale.content.intro }}</p>
+    </div>
+
+    <div class="card card-lite rounded-2xl shadow-soft">
+      <div class="card-body">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-3">
+          <h5 class="mb-0 fw-semibold">{{ locale.content.cardTitle }}</h5>
+          <div class="d-flex gap-2">
+            <a class="btn btn-brand btn-lg" target="_blank" rel="noopener"
+               href="{{ locale.content.openHref }}" aria-label="{{ locale.content.openAriaLabel }}">
+              <i class="bi {{ locale.content.openIcon }} {{ locale.content.iconMarginClass }}"></i> {{ locale.content.openLabel }}
+            </a>
+            <button type="button" class="btn btn-outline-secondary btn-lg js-copy-link" data-url="{{ locale.content.openHref }}" aria-label="{{ locale.content.copyAriaLabel }}">
+              {{ locale.content.copyButtonLabel }}
+            </button>
+          </div>
+        </div>
+
+        <div class="alert alert-info fs-6 p-4 mb-0 d-flex align-items-start gap-3">
+          <i class="bi bi-info-circle fs-5 mt-1 flex-shrink-0" style="color:var(--brand-blue);"></i>
+          <div>
+            <strong class="d-block mb-1">{{ locale.content.noteLabel }}</strong>
+            {{ locale.content.noteBodyPrefix }}
+            <span class="text-break d-inline-block mt-1" dir="ltr">{{ locale.content.openHref }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}
+
+{% block pageScript %}
+document.querySelectorAll('.js-copy-link').forEach(function(btn){
+  btn.addEventListener('click', async function(){
+    try {
+      await navigator.clipboard.writeText(btn.dataset.url);
+      var original = btn.textContent;
+      btn.textContent = '{{ locale.content.copiedLabel | safe }}';
+      setTimeout(function(){ btn.textContent = original; }, 1200);
+    } catch (e) {
+      alert('{{ locale.content.copyErrorMsg | safe }}');
+    }
+  });
+});
+{% endblock %}

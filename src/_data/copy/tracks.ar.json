@@ -1,0 +1,27 @@
+{
+  "_comment": "TRACKS PAGE COPY (Arabic). PLACEHOLDER CONTENT — see tracks.en.json's note (English mirror). Names kept identical to registration.ar.json's placeholder track names — keep both files in sync when real content arrives.",
+  "pageTitle": "المسارات · طاقَثون",
+  "hero": {
+    "icon": "bi-signpost-split",
+    "heading": "مسارات المنافسة",
+    "headingClass": "fw-bold",
+    "intro": "قائمة المسارات أدناه مؤقتة — سيتم تحديث الأسماء والأوصاف بعد اعتمادها. راجع صفحة التسجيل لتسجيل فريقك في أحد المسارات."
+  },
+  "tracks": [
+    {
+      "icon": "bi-lightning-charge",
+      "name": "المسار الأول (الاسم قيد الاعتماد)",
+      "description": "وصف مؤقت لمحور هذا المسار."
+    },
+    {
+      "icon": "bi-battery-charging",
+      "name": "المسار الثاني (الاسم قيد الاعتماد)",
+      "description": "وصف مؤقت لمحور هذا المسار."
+    },
+    {
+      "icon": "bi-cpu",
+      "name": "المسار الثالث (الاسم قيد الاعتماد)",
+      "description": "وصف مؤقت لمحور هذا المسار."
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+---
+pagination:
+  data: pages.submission-guidelines.locales
+  size: 1
+  alias: locale
+permalink: "{{ locale.permalink }}"
+---
+{#
+  TAQATHON - SUBMISSION GUIDELINES PAGE (src/pages/submission-guidelines.njk)
+  ---------------------------------------------------------------------------------
+  This page exists to fill the original Phase 2 plan's "Structured
+  Submissions" slot WITHOUT duplicating two pages that already cover
+  adjacent ground: submissions.njk (the actual upload links) and
+  rules.njk (detailed, real, non-placeholder judging/submission
+  rules). So this is deliberately a short checklist + links to both,
+  not a full requirements page of its own — see
+  submission-guidelines.ar.json / .en.json's "_comment" for why this
+  is flagged as an interpretation call, not just placeholder text.
+#}
+{% extends "layouts/base.njk" %}
+{% block pageStyle %}{% endblock %}
+
+{% block content %}
+<main class="py-5">
+  <div class="container" style="max-width:860px;">
+
+    <div class="text-center mb-4">
+      <div class="icon-circle mx-auto mb-3">
+        <i class="bi {{ locale.content.hero.icon }}"></i>
+      </div>
+      <h5 class="mb-1 {{ locale.content.hero.headingClass }}">{{ locale.content.hero.heading }}</h5>
+      <p class="text-secondary mb-0">{{ locale.content.hero.intro }}</p>
+    </div>
+
+    <div class="card card-lite rounded-2xl p-4 mb-4">
+      <h6 class="fw-semibold mb-3">{{ locale.content.checklistHeading }}</h6>
+      <ul class="mb-0">
+        {% for item in locale.content.checklist %}
+        <li class="mb-2">{{ item }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <div class="card card-lite rounded-2xl p-4">
+      <h6 class="fw-semibold mb-3">{{ locale.content.linksHeading }}</h6>
+      <div class="d-flex flex-wrap gap-2">
+        {% for link in locale.content.links %}
+        <a class="btn btn-outline-secondary rounded-2xl" href="{{ link.href }}">
+          <i class="bi {{ link.icon }} me-1"></i>{{ link.label }}
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+
+  </div>
+</main>
+{% endblock %}

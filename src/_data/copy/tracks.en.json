@@ -1,0 +1,27 @@
+{
+  "_comment": "TRACKS PAGE COPY (English). PLACEHOLDER CONTENT — built 2026-08-11, same batch and same reason as registration.en.json (user: 'do all remaining pages at once, just put placeholders'). Track names/descriptions here are intentionally IDENTICAL placeholders to registration.en.json's 'forms' card titles ('Track 1 (name pending)' etc.) — keep these two files in sync until the user's real tracks file arrives, then update BOTH together so Registration and this page never disagree about what the tracks are called.",
+  "pageTitle": "Tracks · Taqathon",
+  "hero": {
+    "icon": "bi-signpost-split",
+    "heading": "Competition Tracks",
+    "headingClass": "fw-semibold",
+    "intro": "Placeholder track list — names and descriptions below will be replaced once finalized. See the Registration page to register your team for a track."
+  },
+  "tracks": [
+    {
+      "icon": "bi-lightning-charge",
+      "name": "Track 1 (name pending)",
+      "description": "Placeholder description of what this track focuses on."
+    },
+    {
+      "icon": "bi-battery-charging",
+      "name": "Track 2 (name pending)",
+      "description": "Placeholder description of what this track focuses on."
+    },
+    {
+      "icon": "bi-cpu",
+      "name": "Track 3 (name pending)",
+      "description": "Placeholder description of what this track focuses on."
+    }
+  ]
+}

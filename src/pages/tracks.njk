@@ -1,0 +1,60 @@
+---
+pagination:
+  data: pages.tracks.locales
+  size: 1
+  alias: locale
+permalink: "{{ locale.permalink }}"
+---
+{#
+  TAQATHON - TRACKS PAGE TEMPLATE (src/pages/tracks.njk)
+  ------------------------------------------------------------
+  One card per track — a simple grid, no accordion/form needed here,
+  this page is purely informational (what each track is about; the
+  Registration page is where a team actually signs up for one).
+
+  PLACEHOLDER CONTENT (Phase 2, 2026-08-11): track names/descriptions
+  are stand-ins, deliberately kept identical to registration.ar.json /
+  registration.en.json's placeholder track names — see tracks.ar.json /
+  tracks.en.json's "_comment" field. Update both files together once
+  real tracks arrive so this page and Registration never disagree.
+#}
+{% extends "layouts/base.njk" %}
+{% block pageStyle %}
+.track-card{
+  height:100%;
+}
+.track-icon{
+  width:56px; height:56px; border-radius:1rem;
+  display:flex; align-items:center; justify-content:center;
+  background:var(--brand-grad);
+  color:#fff; font-size:1.5rem;
+}
+{% endblock %}
+
+{% block content %}
+<main class="py-5">
+  <div class="container" style="max-width:980px;">
+
+    <div class="text-center mb-4">
+      <div class="icon-circle mx-auto mb-3">
+        <i class="bi {{ locale.content.hero.icon }}"></i>
+      </div>
+      <h5 class="mb-1 {{ locale.content.hero.headingClass }}">{{ locale.content.hero.heading }}</h5>
+      <p class="text-secondary mb-0">{{ locale.content.hero.intro }}</p>
+    </div>
+
+    <div class="row g-4">
+      {% for t in locale.content.tracks %}
+      <div class="col-md-4">
+        <div class="card card-lite rounded-2xl p-4 track-card">
+          <div class="track-icon mb-3"><i class="bi {{ t.icon }}"></i></div>
+          <h5 class="fw-semibold mb-2">{{ t.name }}</h5>
+          <p class="text-secondary mb-0">{{ t.description }}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</main>
+{% endblock %}

@@ -7,12 +7,19 @@
   "nav": [
     { "key": "home", "href": "index.html", "label": "الرئيسية" },
     { "key": "registration", "href": "registration.html", "label": "التسجيل" },
+    { "key": "tracks", "href": "tracks.html", "label": "المسارات" },
     { "key": "contract", "href": "contract.html", "label": "العقد" },
     { "key": "schedule", "href": "schedule.html", "label": "الجدول وورش العمل" },
     { "key": "submissions", "href": "submissions.html", "label": "التسليمات" },
+    { "key": "submissionGuidelines", "href": "submission-guidelines.html", "label": "إرشادات التسليم" },
     { "key": "rules", "href": "rules.html", "label": "القواعد والموارد" },
+    { "key": "judges", "href": "judges.html", "label": "المحكّمون والمرشدون" },
+    { "key": "sponsors", "href": "sponsors.html", "label": "الرعاة" },
     { "key": "gallery", "href": "gallery.html", "label": "المرئيات" },
     { "key": "pastSeasons", "href": "past-seasons.html", "label": "المواسم السابقة" },
+    { "key": "faq", "href": "faq.html", "label": "الأسئلة الشائعة" },
+    { "key": "community", "href": "community.html", "label": "المجتمع" },
+    { "key": "newsletter", "href": "newsletter.html", "label": "النشرة البريدية" },
     { "key": "contact", "href": "contact.html", "label": "تواصل معنا" }
   ],
   "footer": {

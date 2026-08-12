@@ -1,0 +1,48 @@
+{
+  "_comment": "FAQ PAGE COPY (English). PLACEHOLDER CONTENT — built 2026-08-11 per the user's explicit 'do all remaining Phase 2 pages at once, just put placeholders' instruction. Every question/answer below is a generic stand-in, not real FAQ content; replace with real questions once available. Structure copied from rules.en.json's accordion pattern (see rules.njk for the template this page's faq.njk mirrors).",
+  "pageTitle": "FAQ · Taqathon",
+  "hero": {
+    "icon": "bi-question-circle",
+    "heading": "Frequently Asked Questions",
+    "headingClass": "fw-semibold",
+    "intro": "Answers to common questions about Taqathon. This list is a placeholder and will be updated with real questions."
+  },
+  "sections": [
+    {
+      "slug": "who-can-join",
+      "heading": "Who can participate?",
+      "expanded": true,
+      "bodyHtml": "<p class=\"text-secondary mb-0\">Placeholder answer — eligibility details (age, nationality, student status, etc.) will go here.</p>"
+    },
+    {
+      "slug": "team-size",
+      "heading": "How big can a team be?",
+      "expanded": false,
+      "bodyHtml": "<p class=\"text-secondary mb-0\">Placeholder answer — real team size limits will go here.</p>"
+    },
+    {
+      "slug": "cost",
+      "heading": "Is there a participation fee?",
+      "expanded": false,
+      "bodyHtml": "<p class=\"text-secondary mb-0\">Placeholder answer.</p>"
+    },
+    {
+      "slug": "no-team",
+      "heading": "I don't have a team yet — can I still register?",
+      "expanded": false,
+      "bodyHtml": "<p class=\"text-secondary mb-0\">Placeholder answer.</p>"
+    },
+    {
+      "slug": "what-to-build",
+      "heading": "What kind of project should we build?",
+      "expanded": false,
+      "bodyHtml": "<p class=\"text-secondary mb-0\">Placeholder answer — see the Tracks page for the (also placeholder, for now) list of tracks.</p>"
+    },
+    {
+      "slug": "contact",
+      "heading": "Who do I contact with other questions?",
+      "expanded": false,
+      "bodyHtml": "<p class=\"text-secondary mb-0\">See the <a href=\"contact-en.html\">Contact</a> page.</p>"
+    }
+  ]
+}

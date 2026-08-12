@@ -1,0 +1,18 @@
+{
+  "_comment": "COMMUNITY PAGE COPY (Arabic). PLACEHOLDER CONTENT — see community.en.json's note (English mirror).",
+  "pageTitle": "المجتمع · طاقَثون",
+  "hero": { "icon": "bi-chat-dots", "heading": "المجتمع", "headingClass": "fw-bold" },
+  "intro": "انضم إلى مجتمع طاقَثون للتواصل مع المشاركين الآخرين وطرح استفساراتك.",
+  "cardTitle": "مجموعة التواصل (رابط مؤقت)",
+  "openLabel": "الانضمام إلى المجموعة",
+  "openHref": "#",
+  "openIcon": "bi-box-arrow-up-right",
+  "openAriaLabel": "فتح مجموعة التواصل في تبويب جديد",
+  "copyAriaLabel": "نسخ رابط مجموعة التواصل",
+  "copyButtonLabel": "نسخ الرابط",
+  "copiedLabel": "تم النسخ!",
+  "copyErrorMsg": "تعذّر النسخ. استخدم الضغط المطوّل أو النقر بالزر الأيمن لنسخ الرابط.",
+  "noteLabel": "ملاحظة:",
+  "noteBodyPrefix": "هذا رابط مؤقت حتى يتم إنشاء قناة التواصل الفعلية:",
+  "iconMarginClass": "ms-2"
+}

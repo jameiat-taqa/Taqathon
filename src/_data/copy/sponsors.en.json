@@ -1,0 +1,33 @@
+{
+  "_comment": "SPONSORS PAGE COPY (English). PLACEHOLDER CONTENT — built 2026-08-11, same batch as tracks/registration. Tier names and sponsor names are all generic stand-ins. Deliberately NOT using <img> logo placeholders (no real logo files exist yet, and a broken-image icon looks worse than a clean text box) — each sponsor renders as a plain named box until real logos are supplied, at which point 'name' fields should gain a matching 'logo' path (see assets/sponsors/ which already exists but is currently unused by this page).",
+  "pageTitle": "Sponsors · Taqathon",
+  "hero": {
+    "icon": "bi-award",
+    "heading": "Sponsors & Partners",
+    "headingClass": "fw-semibold",
+    "intro": "Placeholder sponsor list — real sponsor names and logos will replace this once confirmed."
+  },
+  "tiers": [
+    {
+      "tierName": "Platinum Sponsors",
+      "sponsors": [
+        { "name": "Sponsor Name (placeholder)" }
+      ]
+    },
+    {
+      "tierName": "Gold Sponsors",
+      "sponsors": [
+        { "name": "Sponsor Name (placeholder)" },
+        { "name": "Sponsor Name (placeholder)" }
+      ]
+    },
+    {
+      "tierName": "Supporting Partners",
+      "sponsors": [
+        { "name": "Partner Name (placeholder)" },
+        { "name": "Partner Name (placeholder)" },
+        { "name": "Partner Name (placeholder)" }
+      ]
+    }
+  ]
+}
