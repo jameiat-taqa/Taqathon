@@ -70,6 +70,18 @@
   <!-- Shared Styles (unchanged from the original site) -->
   <link href="{{ locale.pathPrefix | default('') }}assets/common.css" rel="stylesheet">
 
+  {#
+    Site search (Phase 3): Pagefind's default UI ships its own stylesheet
+    alongside the search index it builds (see package.json's "build"
+    script and .github/workflows/deploy.yml — both run
+    `npx pagefind --site _site` after Eleventy renders the pages, which
+    writes _site/pagefind/pagefind-ui.css and .js). Loaded on every page
+    since the search trigger lives in the shared navbar. common.css's
+    --pagefind-ui-* overrides below theme it to match the brand colors
+    instead of Pagefind's default purple.
+  #}
+  <link href="{{ locale.pathPrefix | default('') }}pagefind/pagefind-ui.css" rel="stylesheet">
+
   <style>
   {% if locale.dir == "rtl" %}
   {# This body font-order + btn-lang spacing rule only ever appeared in
@@ -98,16 +110,81 @@
   Bootstrap's !important on utility classes) actually overrides
   common.css's usual body background for that one page.
 #}
-<body{% if locale.bodyClass %} class="{{ locale.bodyClass }}"{% endif %}>
+{#
+  data-pagefind-body (Phase 3): once this attribute appears anywhere on
+  the site, Pagefind restricts indexing everywhere to just the elements
+  inside a tagged region, and skips entirely any page that has no such
+  region. Putting it on <body> means every Eleventy-rendered page is
+  indexed in full automatically — no per-page template changes needed —
+  while admin/index.html (the separate, hand-written Decap CMS entry
+  point; not rendered through this layout, has no such attribute) is
+  excluded for free, same as any future non-Eleventy static file would
+  be. navbar.njk/footer.njk carry data-pagefind-ignore so the same nav
+  labels and footer boilerplate aren't indexed as "content" on every
+  single page's search result.
+#}
+<body{% if locale.bodyClass %} class="{{ locale.bodyClass }}"{% endif %} data-pagefind-body>
   {% include "partials/navbar.njk" %}
 
   {% block content %}{% endblock %}
 
   {% include "partials/footer.njk" %}
 
+  {#
+    Search modal (Phase 3): one shared instance per page, opened by the
+    search-icon button in navbar.njk's assoc-fixed area. Lives here
+    rather than inside navbar.njk itself since it's page-level chrome
+    (a modal must be a direct child in the DOM, not nested inside the
+    <nav> it's triggered from) — same reasoning as navbar/footer being
+    separate includes rather than one giant partial.
+  #}
+  <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="searchModalLabel">{{ locale.site.search.modalTitle }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ locale.site.search.modalCloseAriaLabel }}"></button>
+        </div>
+        <div class="modal-body">
+          <div id="pagefind-search"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="{{ locale.pathPrefix | default('') }}assets/common.js"></script>
+
+  <!-- Pagefind UI bundle (generated at build time, see package.json) -->
+  <script src="{{ locale.pathPrefix | default('') }}pagefind/pagefind-ui.js"></script>
+  <script>
+  {#
+    Initialized lazily on the modal's own "show" event rather than at
+    page load — PagefindUI() itself is cheap, but there's no reason to
+    build the search box before anyone has asked to search. Guarded
+    with a flag since show.bs.modal fires every time the modal opens,
+    not just the first time.
+  #}
+  (function () {
+    var modalEl = document.getElementById("searchModal");
+    var initialized = false;
+    modalEl.addEventListener("show.bs.modal", function () {
+      if (initialized) return;
+      initialized = true;
+      new PagefindUI({
+        element: "#pagefind-search",
+        showSubResults: true,
+        showImages: false,
+        translations: {{ locale.site.search.translations | dump | safe }}
+      });
+    });
+    modalEl.addEventListener("shown.bs.modal", function () {
+      var input = modalEl.querySelector(".pagefind-ui__search-input");
+      if (input) input.focus();
+    });
+  })();
+  </script>
 
   <script>
   {% block pageScript %}{% endblock %}

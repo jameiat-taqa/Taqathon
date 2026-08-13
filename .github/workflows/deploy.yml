@@ -48,6 +48,18 @@ jobs:
       - name: Generate gallery.json from CMS entry files
         run: node scripts/generate-gallery-json.js _site/gallery.json
 
+      # Phase 3 (site search): builds a static search index from the
+      # rendered HTML in _site/ and writes it to _site/pagefind/ (index
+      # files + the pagefind-ui.js/css bundle navbar.njk's search modal
+      # loads). Runs after the HTML exists but doesn't need to wait for
+      # admin/assets to be copied below — indexing is scoped to elements
+      # under data-pagefind-body (see base.njk), so admin/index.html
+      # (no such attribute, not an Eleventy-rendered page) is skipped
+      # automatically regardless of copy order. Mirrors the local
+      # `npm run build` script so a local build produces the same index.
+      - name: Generate search index (Pagefind)
+        run: npx pagefind --site _site
+
       # All 15 pages are now Eleventy-generated (Phase 0 is complete —
       # this used to also copy 13 hand-written pages here individually
       # while they were being migrated one at a time; not needed

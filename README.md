@@ -83,16 +83,21 @@ This is now a build step, not just "open the HTML file":
 
 1. Clone this repository
 2. Install dependencies: `npm install` (needs Node.js)
-3. Build the site: `npm run build` — runs Eleventy (generates the 15
-   pages into `_site/`) and then `scripts/generate-gallery-json.js`
-   (writes `_site/gallery.json` from `src/_data/gallery-items/`)
+3. Build the site: `npm run build` — runs Eleventy (generates the
+   pages into `_site/`), then `scripts/generate-gallery-json.js`
+   (writes `_site/gallery.json` from `src/_data/gallery-items/`), then
+   `npx pagefind --site _site` (indexes the rendered pages for site
+   search — writes `_site/pagefind/`, which navbar.njk's search modal
+   loads; see `.cursor/rules/taqathon-conventions.mdc` for how the
+   `data-pagefind-body`/`data-pagefind-ignore` scoping works)
 4. Serve `_site/` with any static file server, e.g. `npx http-server _site`,
    and copy `assets/`, `admin/`, and `announcements*.json` into
    `_site/` first (the same step `.github/workflows/deploy.yml` does
    automatically in CI — see that file for the exact commands)
 5. For live-reload while editing templates: `npx eleventy --serve`
-   (note: this skips the gallery-json generation step — run
-   `npm run build` at least once first if you need `gallery.json` too)
+   (note: this skips both the gallery-json generation step and the
+   Pagefind indexing step — run `npm run build` at least once first if
+   you need `gallery.json` or a working search box)
 
 ### Deployment
 

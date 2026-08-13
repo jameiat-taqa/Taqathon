@@ -20,7 +20,13 @@
   (/years/2025.html), not just from root-level pages.
 #}
 <!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg navbar-light sticky-top">
+{#
+  data-pagefind-ignore (Phase 3): base.njk's <body data-pagefind-body>
+  makes the whole page indexable by default; this excludes just the nav
+  itself so every page's search result isn't padded with the same 16
+  nav-link labels. See base.njk's header comment for the full picture.
+#}
+<nav class="navbar navbar-expand-lg navbar-light sticky-top" data-pagefind-ignore>
 <div class="container d-flex align-items-center justify-content-between">
 
   {#
@@ -116,6 +122,17 @@
     <a href="{{ locale.site.assoc.href }}" target="_blank" rel="noopener"{% if locale.site.assoc.linkClass %} class="{{ locale.site.assoc.linkClass }}"{% endif %}{% if locale.site.assoc.ariaLabel %} aria-label="{{ locale.site.assoc.ariaLabel }}"{% endif %}>
       <img src="{{ locale.pathPrefix | default('') }}assets/logos/association-logo.png" class="assoc-logo" alt="{{ locale.site.assoc.alt }}">
     </a>
+    {#
+      Site search trigger (Phase 3). Lives here in assoc-fixed rather than
+      inside the collapsible navbar-nav list so it's reachable on mobile
+      without opening the hamburger menu first — same reasoning as the
+      association logo and toggler already being here. Opens the
+      #searchModal defined once in base.njk (shared chrome, not repeated
+      per nav item), which is where the actual Pagefind UI gets mounted.
+    #}
+    <button type="button" class="btn btn-sm btn-search-trigger" data-bs-toggle="modal" data-bs-target="#searchModal" aria-label="{{ locale.site.search.triggerAriaLabel }}">
+      <i class="bi bi-search"></i>
+    </button>
     {#
       aria-controls / aria-expanded aren't language-specific, so they're
       always included now; only the aria-label TEXT comes from data
