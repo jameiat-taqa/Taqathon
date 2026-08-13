@@ -11,7 +11,7 @@ A running, dated record of what's been done on this project and why. Newest entr
 - Decided to split work between Claude Code and Cursor by task type (Cursor for quick inline edits, Claude Code for multi-file features and the git/PR/deploy workflow) rather than a one-time handoff between the two.
 - Added `.cursor/rules/taqathon-conventions.mdc` (loads automatically in every Cursor session) covering: read PROGRESS.md first, the branch → PR → explicit-merge-approval workflow, the thorough-comments preference, AR/EN parity discipline, the Netlify OAuth dead end + other Decap CMS gotchas (folder collection `extension`/`format`, `media_folder` size limit, `editorial_workflow` + `local_backend` incompatibility), which pages are still placeholder-only, and the deferred `verify.njk` security fix — so either tool picks up consistent with the other.
 - **Open:** no code changes, just shared context. Rest of Phase 3 still not started.
-- PR TBD (this commit), → `dev` → `main`.
+- PR [#16](https://github.com/jameiat-taqa/Taqathon/pull/16), → `dev` → `main`.
 
 ## 2026-08-12 — Phase 3 started: nav restructured into grouped dropdowns, About page added
 
