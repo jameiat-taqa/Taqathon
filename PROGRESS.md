@@ -14,7 +14,7 @@ A running, dated record of what's been done on this project and why. Newest entr
 - UI: a search icon button in the navbar's `assoc-fixed` area (reachable on mobile without opening the hamburger) opens a Bootstrap modal with Pagefind's default UI mounted inside, lazy-initialized on first open. Themed to brand colors via `--pagefind-ui-*` CSS variables in `common.css`. Both languages' search strings live in `site.ar.json`/`site.en.json`'s new `search` object; Pagefind auto-selects the right language index from each page's `<html lang>`.
 - Verified: AR and EN search both return correct highlighted results; confirmed (by serving a local copy of `_site` under a `/Taqathon/` subpath) that Pagefind's automatic base-URL detection correctly prefixes result links for GitHub Pages' project-site subpath, not just root-domain hosting.
 - **Open:** rest of Phase 3 (visual system, dark mode, accessibility/mobile-first pass) still not started.
-- PR TBD, → `dev` → `main`.
+- PR [#17](https://github.com/jameiat-taqa/Taqathon/pull/17), → `dev` → `main`.
 
 ## 2026-08-12 — Added Cursor project rules for shared Claude Code / Cursor workflow
 
