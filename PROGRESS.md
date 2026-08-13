@@ -16,7 +16,7 @@ A running, dated record of what's been done on this project and why. Newest entr
 - **Deliberately left light-styled in dark mode** (self-contained boxes that already set their own fixed text color against their own fixed background, so they're a "these stay as light accent chips" design choice, not a bug): the `alert-info` callout boxes (Registration/Submissions/Community/Newsletter), `badge-soft`, the home page's announcement cards, and the gallery's photo cards. Revisit if/when a full visual-system pass happens, but nothing here is illegible.
 - Verified in-browser: light↔dark toggle round-trips correctly, persists across page navigation (no flash), falls back to `prefers-color-scheme` when nothing is stored, checked on Home/About/Contact/Sponsors/Schedule/FAQ/Gallery in both languages — RTL Arabic dark mode, the search modal (including live results), and the FAQ accordion all confirmed themed correctly with no console errors.
 - **Open**: rest of Phase 3's visual-system item (typography/spacing beyond color) not started; the still-open button-contrast finding from the accessibility pass (2026-08-13 entry below) is unrelated to this work and remains open.
-- PR TBD, → `dev` → `main`.
+- PR [#19](https://github.com/jameiat-taqa/Taqathon/pull/19), → `dev` → `main`.
 
 ## 2026-08-13 — Phase 3 accessibility pass
 
