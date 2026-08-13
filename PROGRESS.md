@@ -6,6 +6,16 @@ A running, dated record of what's been done on this project and why. Newest entr
 
 ---
 
+## 2026-08-12 — Site search added (Pagefind)
+
+- Picked up the first task since splitting work between Claude Code and Cursor by task type: Phase 3's site-search item, assigned to Claude Code.
+- Added `pagefind` as a dev dependency. `npm run build` and `.github/workflows/deploy.yml` both now run `npx pagefind --site _site` after Eleventy renders the pages, writing `_site/pagefind/` (search index + the `pagefind-ui.js`/`.css` bundle).
+- `base.njk`'s `<body>` carries `data-pagefind-body` so every Eleventy-rendered page is indexed automatically with no per-page template changes; `navbar.njk`/`footer.njk` carry `data-pagefind-ignore` so the same nav/footer boilerplate isn't indexed on every page. `admin/index.html` (Decap CMS, not rendered through this layout) is excluded for free by the same mechanism.
+- UI: a search icon button in the navbar's `assoc-fixed` area (reachable on mobile without opening the hamburger) opens a Bootstrap modal with Pagefind's default UI mounted inside, lazy-initialized on first open. Themed to brand colors via `--pagefind-ui-*` CSS variables in `common.css`. Both languages' search strings live in `site.ar.json`/`site.en.json`'s new `search` object; Pagefind auto-selects the right language index from each page's `<html lang>`.
+- Verified: AR and EN search both return correct highlighted results; confirmed (by serving a local copy of `_site` under a `/Taqathon/` subpath) that Pagefind's automatic base-URL detection correctly prefixes result links for GitHub Pages' project-site subpath, not just root-domain hosting.
+- **Open:** rest of Phase 3 (visual system, dark mode, accessibility/mobile-first pass) still not started.
+- PR TBD, → `dev` → `main`.
+
 ## 2026-08-12 — Added Cursor project rules for shared Claude Code / Cursor workflow
 
 - Decided to split work between Claude Code and Cursor by task type (Cursor for quick inline edits, Claude Code for multi-file features and the git/PR/deploy workflow) rather than a one-time handoff between the two.

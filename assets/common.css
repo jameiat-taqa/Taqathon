@@ -100,6 +100,31 @@ footer{ flex-shrink:0; }  /* Footer never shrinks, stays at bottom */
 }
 .btn-lang:hover{ background:var(--brand-green); color:#fff !important; }
 
+/* Site search trigger (Phase 3): a plain icon button next to the
+   association logo/hamburger, opens #searchModal (see base.njk). */
+.btn-search-trigger{
+  display:inline-flex; align-items:center; justify-content:center;
+  width:36px; height:36px; padding:0;
+  background:transparent; border:none; border-radius:999px;
+  color:var(--brand-dark); font-size:1.05rem; transition:.2s;
+}
+.btn-search-trigger:hover{ background:#eef3f9; color:var(--brand-blue); }
+
+/* Pagefind's default UI theme, remapped to the site's own brand colors
+   instead of its default purple — these are the CSS custom properties
+   pagefind-ui.css itself reads (see _site/pagefind/pagefind-ui.css,
+   generated at build time, not committed). */
+#pagefind-search{
+  --pagefind-ui-primary: var(--brand-blue);
+  --pagefind-ui-text: var(--text);
+  --pagefind-ui-background: #ffffff;
+  --pagefind-ui-border: #d8e2ee;
+  --pagefind-ui-tag: var(--brand-green);
+  --pagefind-ui-border-width: 1px;
+  --pagefind-ui-border-radius: .5rem;
+  --pagefind-ui-font: inherit;
+}
+
 /* Mobile menu: makes dropdown full-width under navbar */
 .navbar .container{ position:relative; flex-wrap:nowrap; }
 .navbar .navbar-brand,

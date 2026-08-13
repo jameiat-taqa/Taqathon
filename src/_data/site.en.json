@@ -4,6 +4,18 @@
   "assoc": { "href": "https://taqa.org.sa", "alt": "Energy Association for Sustainable Development", "ariaLabel": "Energy Association for Sustainable Development", "linkClass": "d-block" },
   "toggler": { "ariaLabel": "Toggle navigation" },
   "langSwitch": { "label": "AR", "liClass": "ms-3" },
+  "search": {
+    "triggerAriaLabel": "Search the site",
+    "modalTitle": "Search",
+    "modalCloseAriaLabel": "Close search",
+    "translations": {
+      "placeholder": "Search pages...",
+      "zero_results": "No results for [SEARCH_TERM]",
+      "many_results": "[COUNT] results for [SEARCH_TERM]",
+      "one_result": "[COUNT] result for [SEARCH_TERM]",
+      "searching": "Searching for [SEARCH_TERM]..."
+    }
+  },
   "nav": [
     { "type": "link", "key": "home", "href": "index-en.html", "label": "Home" },
     { "type": "dropdown", "key": "about", "label": "About", "items": [

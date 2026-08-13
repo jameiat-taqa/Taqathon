@@ -6,7 +6,9 @@
   it instead of hand-copying a footer.
 #}
 <!-- FOOTER -->
-<footer class="pt-5">
+{# data-pagefind-ignore (Phase 3): same reasoning as navbar.njk — keeps
+   the repeated footer boilerplate out of every page's search index. #}
+<footer class="pt-5" data-pagefind-ignore>
 <div class="container">
   {# rowClass differs between languages in the original site too — the
      Arabic footer's row had "align-items-start", the English one

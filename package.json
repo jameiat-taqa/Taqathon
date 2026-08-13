@@ -4,10 +4,11 @@
   "private": true,
   "description": "Taqathon hackathon website — Eleventy build",
   "scripts": {
-    "build": "eleventy && node scripts/generate-gallery-json.js _site/gallery.json",
+    "build": "eleventy && node scripts/generate-gallery-json.js _site/gallery.json && npx pagefind --site _site",
     "serve": "eleventy --serve"
   },
   "devDependencies": {
-    "@11ty/eleventy": "^3.0.0"
+    "@11ty/eleventy": "^3.0.0",
+    "pagefind": "^1.5.2"
   }
 }
