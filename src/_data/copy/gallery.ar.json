@@ -9,6 +9,7 @@
   "loadErrorMessage": "خطأ في تحميل الصور. يرجى تحديث الصفحة.",
   "imgAlt": "طاقثون الحفل الختامي",
   "modalCloseAriaLabel": "إغلاق",
+  "zoomButtonAriaLabel": "عرض الصورة بالحجم الكامل",
   "modalImageAlt": "صورة بالحجم الكامل",
   "modalCloseButtonPositionClass": "start-0",
   "backToTopAriaLabel": "العودة للأعلى"

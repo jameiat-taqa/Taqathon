@@ -22,11 +22,21 @@
     </div>
     <div class="col-md-6">
       <h6 class="mb-3 text-white">{{ locale.site.footer.followLabel }}</h6>
+      {#
+        aria-label on each (accessibility pass, Phase 3): these are
+        icon-only links — bootstrap-icons are just a font glyph with no
+        text a screen reader can read, so without a label each one was
+        announced as a bare, unnamed link. Labels come from
+        site.*.json's social.*Label fields (brand names, kept
+        untranslated in both languages — standard practice, screen
+        readers handle Latin-script brand names fine in an Arabic
+        context).
+      #}
       <div class="d-flex gap-3">
-        <a href="{{ locale.site.social.twitter }}" target="_blank" rel="noopener" class="text-light"><i class="bi bi-twitter-x fs-5"></i></a>
-        <a href="{{ locale.site.social.instagram }}" target="_blank" rel="noopener" class="text-light"><i class="bi bi-instagram fs-5"></i></a>
-        <a href="{{ locale.site.social.linkedin }}" target="_blank" rel="noopener" class="text-light"><i class="bi bi-linkedin fs-5"></i></a>
-        <a href="{{ locale.site.social.tiktok }}" target="_blank" rel="noopener" class="text-light"><i class="bi bi-tiktok fs-5"></i></a>
+        <a href="{{ locale.site.social.twitter }}" target="_blank" rel="noopener" class="text-light" aria-label="{{ locale.site.social.twitterLabel }}"><i class="bi bi-twitter-x fs-5"></i></a>
+        <a href="{{ locale.site.social.instagram }}" target="_blank" rel="noopener" class="text-light" aria-label="{{ locale.site.social.instagramLabel }}"><i class="bi bi-instagram fs-5"></i></a>
+        <a href="{{ locale.site.social.linkedin }}" target="_blank" rel="noopener" class="text-light" aria-label="{{ locale.site.social.linkedinLabel }}"><i class="bi bi-linkedin fs-5"></i></a>
+        <a href="{{ locale.site.social.tiktok }}" target="_blank" rel="noopener" class="text-light" aria-label="{{ locale.site.social.tiktokLabel }}"><i class="bi bi-tiktok fs-5"></i></a>
       </div>
     </div>
   </div>

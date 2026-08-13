@@ -114,7 +114,7 @@
         `| safe` tells Nunjucks "trust this string as-is, don't
         re-escape it" and it renders as "Schedule & Workshops" correctly.
       #}
-      <li class="nav-item{% if locale.site.langSwitch.liClass %} {{ locale.site.langSwitch.liClass }}{% endif %}"><a class="btn btn-sm btn-lang" href="{{ locale.altHref }}">{{ locale.site.langSwitch.label }}</a></li>
+      <li class="nav-item{% if locale.site.langSwitch.liClass %} {{ locale.site.langSwitch.liClass }}{% endif %}"><a class="btn btn-sm btn-lang" href="{{ locale.altHref }}"{% if locale.site.langSwitch.ariaLabel %} aria-label="{{ locale.site.langSwitch.ariaLabel }}"{% endif %}>{{ locale.site.langSwitch.label }}</a></li>
     </ul>
   </div>
 

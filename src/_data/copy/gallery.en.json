@@ -9,6 +9,7 @@
   "loadErrorMessage": "Error loading gallery images. Please refresh the page.",
   "imgAlt": "Taqathon Closing Ceremony",
   "modalCloseAriaLabel": "Close",
+  "zoomButtonAriaLabel": "View full-size photo",
   "modalImageAlt": "Full-size image",
   "modalCloseButtonPositionClass": "end-0",
   "backToTopAriaLabel": "Back to top"

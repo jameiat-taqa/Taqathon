@@ -2,8 +2,9 @@
   "_comment": "SHARED SITE CHROME (English). English mirror of site.ar.json — same keys, English values. Used by navbar.njk and footer.njk for every migrated page's nav/footer/social links. 'nav' was restructured in Phase 3 (2026-08-11) from a flat list of 16 links into grouped dropdowns, per the user's exact spec — see navbar.njk for how 'type' (link/dropdown/button) is rendered. Each entry's 'key' (top-level OR nested inside a dropdown's 'items') is what a page's navActive value matches against, same as before.",
   "brand": { "href": "index-en.html", "logoAlt": "Taqathon logo", "ariaLabel": "Taqathon home" },
   "assoc": { "href": "https://taqa.org.sa", "alt": "Energy Association for Sustainable Development", "ariaLabel": "Energy Association for Sustainable Development", "linkClass": "d-block" },
+  "skipLinkLabel": "Skip to main content",
   "toggler": { "ariaLabel": "Toggle navigation" },
-  "langSwitch": { "label": "AR", "liClass": "ms-3" },
+  "langSwitch": { "label": "AR", "liClass": "ms-3", "ariaLabel": "Switch to Arabic" },
   "search": {
     "triggerAriaLabel": "Search the site",
     "modalTitle": "Search",
@@ -50,8 +51,12 @@
   },
   "social": {
     "twitter": "https://x.com/jameiat_taqa",
+    "twitterLabel": "X (Twitter)",
     "instagram": "https://instagram.com/jameiat_taqa",
+    "instagramLabel": "Instagram",
     "linkedin": "https://www.linkedin.com/company/جمعية-الطاقة-للتنمية-المستدامة",
-    "tiktok": "https://tiktok.com/@jameiat_taqa"
+    "linkedinLabel": "LinkedIn",
+    "tiktok": "https://tiktok.com/@jameiat_taqa",
+    "tiktokLabel": "TikTok"
   }
 }

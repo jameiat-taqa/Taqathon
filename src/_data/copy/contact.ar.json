@@ -1,6 +1,7 @@
 {
   "_comment": "CONTACT PAGE COPY (Arabic). UPDATED: the Arabic and English forms used to be genuinely different features (see git history on this file for the original note) — Arabic had no honeypot, no client validation, no mailto fallback, and checked a different response field than English. Per explicit direction, Arabic is now brought up to the same full feature set as English, and the submit handler in contact.njk was collapsed from two diverging {% if locale.lang %} branches into one shared script, since the logic is now genuinely identical between languages (only the strings differ). The success-check now accepts EITHER response shape (data.ok OR data.result === 'success') rather than assuming one — this couldn't be verified against the live Apps Script backend, so checking for both is the safe way to stop guessing wrong from silently breaking one language's forms.",
   "pageTitle": "تواصل معنا · طاقَثون",
+  "pageHeading": "تواصل معنا",
   "panelHeaderWeight": 700,
   "form": {
     "heading": "أرسل لنا رسالة",

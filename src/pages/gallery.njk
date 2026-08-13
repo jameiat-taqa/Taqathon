@@ -90,11 +90,18 @@ font-weight:500;
 transition:background .2s ease, transform .2s ease, box-shadow .2s ease;
 box-shadow:0 2px 8px rgba(0,125,253,.2);
 }
+{#
+  Accessibility pass (Phase 3): color:#fff here used to pair with this
+  green background at a measured 2.16:1 contrast ratio — badly below
+  WCAG AA's 4.5:1 text minimum. Swapped to brand-dark (6.91:1) rather
+  than changing the background, for the same reasoning as
+  schedule.njk's .btn-join:hover — see PROGRESS.md.
+#}
 #loadMoreBtn:hover:not(:disabled){
 background:var(--brand-green);
 transform:translateY(-1px);
 box-shadow:0 4px 12px rgba(9,200,153,.3);
-color:#fff;
+color:var(--brand-dark);
 }
 #loadMoreBtn:active:not(:disabled){
 transform:translateY(0);
@@ -134,8 +141,17 @@ opacity:1;
 visibility:visible;
 pointer-events:auto;
 }
+{#
+  Accessibility pass (Phase 3): this is an icon-only button, so WCAG's
+  non-text-contrast rule (3:1, not the 4.5:1 that applies to text)
+  still applies to the arrow icon's color against its background. The
+  previous white icon measured 2.16:1 against --brand-green — fails
+  even that lower bar. Same brand-dark swap as the other green-hover
+  states on this page/site — see PROGRESS.md.
+#}
 .back-to-top:hover{
 background:var(--brand-green);
+color:var(--brand-dark);
 transform:translateY(-2px);
 box-shadow:0 6px 16px rgba(9,200,153,.4);
 }
@@ -163,13 +179,13 @@ z-index: 5;
 {% endblock %}
 
 {% block content %}
-<main class="py-5">
+<div class="py-5">
 <div class="container">
   <div class="text-center mb-5">
     <div class="icon-circle mx-auto mb-3">
       <i class="bi {{ locale.content.hero.icon }}"></i>
     </div>
-    <h5 class="mb-1 {{ locale.content.hero.headingClass }}">{{ locale.content.hero.heading }}</h5>
+    <h1 class="h5 mb-1 {{ locale.content.hero.headingClass }}">{{ locale.content.hero.heading }}</h1>
     <div style="height: 20px;"></div>
   </div>
 
@@ -188,7 +204,7 @@ z-index: 5;
     </button>
   </div>
 </div>
-</main>
+</div>
 
 <!-- LIGHTBOX MODAL -->
 <div class="modal fade" id="zoomModal" tabindex="-1" aria-hidden="true">
@@ -304,10 +320,11 @@ if (backToTopBtn) {
               loading="lazy"
               decoding="async"
             >
-            <button class="gallery-zoom-icon"
+            <button class="gallery-zoom-icon" type="button"
               data-bs-toggle="modal"
               data-bs-target="#zoomModal"
-              data-full="${path}">
+              data-full="${path}"
+              aria-label="{{ locale.content.zoomButtonAriaLabel | safe }}">
               <i class="bi bi-arrows-fullscreen"></i>
             </button>
           </div>
