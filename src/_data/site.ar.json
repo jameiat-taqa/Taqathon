@@ -2,8 +2,9 @@
   "_comment": "SHARED SITE CHROME (Arabic). Navbar links, footer text, and social links used by EVERY migrated page — not just Home. JSON doesn't support real comments, so this '_comment' field is just a plain data field the templates never read; it's here purely so a human opening this file understands its purpose. Edit the values below to change what appears in the navbar/footer across the whole site. See site.en.json for the English mirror of this file — the two must stay in sync in STRUCTURE (same keys) even though the VALUES differ per language. brand.ariaLabel, assoc.ariaLabel, and toggler.ariaLabel below were all empty/absent until the Submissions page's migration — its original Arabic navbar happened to already have all three, unlike every OTHER Arabic page migrated so far. Adopted here so the shared navbar carries them for every page from now on, not just Submissions. 'nav' was restructured in Phase 3 (2026-08-11) from a flat list of 16 links into grouped dropdowns, per the user's exact spec — see navbar.njk for how 'type' (link/dropdown/button) is rendered.",
   "brand": { "href": "index.html", "logoAlt": "شعار طاقثون", "ariaLabel": "الصفحة الرئيسية لطاقثون" },
   "assoc": { "href": "https://taqa.org.sa", "alt": "جمعية الطاقة للتنمية المستدامة", "ariaLabel": "جمعية الطاقة للتنمية المستدامة", "linkClass": "d-block" },
+  "skipLinkLabel": "تخطي إلى المحتوى الرئيسي",
   "toggler": { "ariaLabel": "تبديل القائمة" },
-  "langSwitch": { "label": "EN", "liClass": "" },
+  "langSwitch": { "label": "EN", "liClass": "", "ariaLabel": "التبديل إلى الإنجليزية" },
   "search": {
     "triggerAriaLabel": "البحث في الموقع",
     "modalTitle": "بحث",
@@ -50,8 +51,12 @@
   },
   "social": {
     "twitter": "https://x.com/jameiat_taqa",
+    "twitterLabel": "X (Twitter)",
     "instagram": "https://instagram.com/jameiat_taqa",
+    "instagramLabel": "Instagram",
     "linkedin": "https://www.linkedin.com/company/جمعية-الطاقة-للتنمية-المستدامة",
-    "tiktok": "https://tiktok.com/@jameiat_taqa"
+    "linkedinLabel": "LinkedIn",
+    "tiktok": "https://tiktok.com/@jameiat_taqa",
+    "tiktokLabel": "TikTok"
   }
 }

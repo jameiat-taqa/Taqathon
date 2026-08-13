@@ -54,11 +54,11 @@ permalink: "{{ locale.permalink }}"
 {% endblock %}
 
 {% block content %}
-<main class="py-5">
+<div class="py-5">
   <div class="container" style="max-width:980px;">
     <div class="text-center mb-4">
       <div class="icon-circle mx-auto mb-3"><i class="bi {{ locale.content.hero.icon }}"></i></div>
-      <h5 class="mb-1 {{ locale.content.hero.headingClass }}">{{ locale.content.hero.heading }}</h5>
+      <h1 class="h5 mb-1 {{ locale.content.hero.headingClass }}">{{ locale.content.hero.heading }}</h1>
       <p class="text-secondary mb-0">{{ locale.content.deadlineNote }}</p>
     </div>
 
@@ -103,7 +103,7 @@ permalink: "{{ locale.permalink }}"
     </div>
     {% endfor %}
   </div>
-</main>
+</div>
 {% endblock %}
 
 {% block pageScript %}

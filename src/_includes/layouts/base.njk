@@ -124,9 +124,51 @@
   single page's search result.
 #}
 <body{% if locale.bodyClass %} class="{{ locale.bodyClass }}"{% endif %} data-pagefind-body>
+  {#
+    Skip link (accessibility pass, Phase 3): the very first focusable
+    element on every page, for keyboard/screen-reader users who don't
+    want to tab through the full navbar (home/about-dropdown/
+    participants-dropdown/community-dropdown/search/register/hamburger)
+    on every single page load just to reach the actual content.
+    Bootstrap's .visually-hidden-focusable utility keeps it off-screen
+    until it receives keyboard focus, then it becomes visible — see
+    common.css for the small positioning rule that makes it land
+    somewhere sensible (top of viewport, above the sticky navbar)
+    instead of Bootstrap's default in-flow placement. Targets
+    #main-content, which is the <main> landmark just below.
+  #}
+  <a class="skip-link visually-hidden-focusable" href="#main-content">{{ locale.site.skipLinkLabel }}</a>
+
   {% include "partials/navbar.njk" %}
 
+  {#
+    <main id="main-content"> (accessibility pass, Phase 3): previously
+    each page template opened its own <main> inside {% block content %},
+    which meant home.njk — the one page whose content block starts
+    straight with <section> elements, no wrapper — had NO <main>
+    landmark at all, and no page had a stable id for the skip link
+    above to target. Centralizing the landmark here instead fixes both
+    at once: every page gets exactly one <main> automatically, and
+    common.css's existing `main{ flex:1 0 auto; }` sticky-footer rule
+    (which relies on there being exactly one <main> as a direct flex
+    child of <body>) keeps working the same way it always did. Page
+    templates that used to open their own <main class="py-5"> now open
+    a plain <div class="py-5"> instead — same visual result, no more
+    nested (invalid) <main> elements.
+  #}
+  {#
+    tabindex="-1" (not 0): makes <main> a valid target for the skip
+    link's fragment jump — without it, clicking the skip link scrolls
+    the page there but keyboard focus stays on the link itself, so a
+    screen reader user's very next Tab press would go right back into
+    the navbar they just tried to skip. tabindex="-1" makes an element
+    focusable via script/fragment-navigation only, NOT via the normal
+    Tab key sequence — exactly what's needed here, since <main> itself
+    isn't a control anyone should be able to Tab onto directly.
+  #}
+  <main id="main-content" tabindex="-1">
   {% block content %}{% endblock %}
+  </main>
 
   {% include "partials/footer.njk" %}
 

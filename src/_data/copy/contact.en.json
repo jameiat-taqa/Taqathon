@@ -1,6 +1,7 @@
 {
   "_comment": "CONTACT PAGE COPY (English). See contact.ar.json's _comment: Arabic has been brought up to this form's full feature set (honeypot, validation, mailto fallback), and the submit handler in contact.njk is now one shared script instead of two diverging branches. Also fixed here: metaSourceValue used to be the literal string 'contact.html' (the ARABIC page's own filename) even on this English page — a copy-paste bug, since this hidden field actually gets submitted (this form builds its FormData from the whole <form>, hidden fields included, unlike Contract's dead hidden field). Corrected to 'contact-en.html' so English submissions are now tagged correctly. If the Apps Script backend or any spreadsheet/dashboard built on it was matching on the literal string 'contact.html' to mean 'Arabic submission', this change affects that — flagging it explicitly rather than changing it silently.",
   "pageTitle": "Contact · Taqathon",
+  "pageHeading": "Contact Us",
   "panelHeaderWeight": 600,
   "form": {
     "heading": "Send us a message",

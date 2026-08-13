@@ -55,14 +55,30 @@ permalink: "{{ locale.permalink }}"
 {% endblock %}
 
 {% block content %}
-<main class="py-5">
+<div class="py-5">
   <div class="container">
+    {#
+      Accessibility pass (Phase 3): unlike every other page, Contact has
+      no hero section — it jumps straight into the two-column panel
+      layout by design, so there was never a natural spot for a visible
+      page title, and (unlike the panels below) this page had no h1 at
+      all. Rather than add a big visible heading that wasn't part of
+      the original design, this one is visually-hidden but still in the
+      accessibility tree, so screen-reader users get the same "what
+      page am I on" context sighted users get for free from the browser
+      tab title and the highlighted nav link. The five panel headings
+      below (Send us a message / Contact Info / Supervisors / Supporters
+      / Location) are this page's real h2s, promoted from h6 tags with
+      a `.h6` utility class added so they keep their original visual
+      size — same trick used for every other page's hero heading.
+    #}
+    <h1 class="visually-hidden">{{ locale.content.pageHeading }}</h1>
     <div class="row g-4">
 
       <!-- Message form -->
       <div class="col-lg-7">
         <div class="panel shadow-soft p-3 p-md-4">
-          <h6 class="panel-header mb-1">{{ locale.content.form.heading }}</h6>
+          <h2 class="h6 panel-header mb-1">{{ locale.content.form.heading }}</h2>
           <p class="text-secondary small mb-3">{{ locale.content.form.subheading }}</p>
 
           <form id="contactForm" novalidate>
@@ -77,23 +93,23 @@ permalink: "{{ locale.permalink }}"
             {% endif %}
 
             <div class="mb-3">
-              <label class="form-label">{{ locale.content.form.nameLabel }}</label>
-              <input type="text" class="form-control" name="name" placeholder="{{ locale.content.form.namePlaceholder }}" required>
+              <label class="form-label" for="contact-name">{{ locale.content.form.nameLabel }}</label>
+              <input type="text" class="form-control" id="contact-name" name="name" placeholder="{{ locale.content.form.namePlaceholder }}" required>
             </div>
             <div class="mb-3">
-              <label class="form-label">{{ locale.content.form.emailLabel }}</label>
-              <input type="email" class="form-control" name="email" placeholder="{{ locale.content.form.emailPlaceholder }}" required>
+              <label class="form-label" for="contact-email">{{ locale.content.form.emailLabel }}</label>
+              <input type="email" class="form-control" id="contact-email" name="email" placeholder="{{ locale.content.form.emailPlaceholder }}" required>
               {% if locale.content.form.emailHelperText %}
               <div class="form-text small-muted">{{ locale.content.form.emailHelperText }}</div>
               {% endif %}
             </div>
             <div class="mb-3">
-              <label class="form-label">{{ locale.content.form.subjectLabel }}</label>
-              <input type="text" class="form-control" name="subject" placeholder="{{ locale.content.form.subjectPlaceholder }}" required>
+              <label class="form-label" for="contact-subject">{{ locale.content.form.subjectLabel }}</label>
+              <input type="text" class="form-control" id="contact-subject" name="subject" placeholder="{{ locale.content.form.subjectPlaceholder }}" required>
             </div>
             <div class="mb-3">
-              <label class="form-label">{{ locale.content.form.messageLabel }}</label>
-              <textarea class="form-control" name="message" rows="6" placeholder="{{ locale.content.form.messagePlaceholder }}" required></textarea>
+              <label class="form-label" for="contact-message">{{ locale.content.form.messageLabel }}</label>
+              <textarea class="form-control" id="contact-message" name="message" rows="6" placeholder="{{ locale.content.form.messagePlaceholder }}" required></textarea>
             </div>
 
             {% if locale.content.form.hasMetadataFields %}
@@ -118,7 +134,7 @@ permalink: "{{ locale.permalink }}"
       <!-- Contact info + sponsors + map -->
       <div class="col-lg-5">
         <div class="panel shadow-soft p-3 p-md-4 mb-3">
-          <h6 class="panel-header mb-3">{{ locale.content.contactInfo.heading }}</h6>
+          <h2 class="h6 panel-header mb-3">{{ locale.content.contactInfo.heading }}</h2>
           <ul class="info-list">
             {% for item in locale.content.contactInfo.items %}
             <li class="info-item">
@@ -130,7 +146,7 @@ permalink: "{{ locale.permalink }}"
         </div>
 
         <div class="panel shadow-soft p-3 p-md-4 mb-3">
-          <h6 class="panel-header mb-3 text-center">{{ locale.content.supervisors.heading }}</h6>
+          <h2 class="h6 panel-header mb-3 text-center">{{ locale.content.supervisors.heading }}</h2>
           <div class="row g-3 justify-content-between align-items-center text-center">
             {% for s in locale.content.supervisors.items %}
             <div class="col-6 col-md-5 d-flex flex-column align-items-center text-center">
@@ -151,7 +167,7 @@ permalink: "{{ locale.permalink }}"
         </div>
 
         <div class="panel shadow-soft p-3 p-md-4 mb-3">
-          <h6 class="panel-header mb-3 text-center">{{ locale.content.supporters.heading }}</h6>
+          <h2 class="h6 panel-header mb-3 text-center">{{ locale.content.supporters.heading }}</h2>
           <div class="row g-3 justify-content-evenly align-items-center text-center">
             {% for s in locale.content.supporters.items %}
             <div class="col-6 col-md-3 d-flex flex-column align-items-center">
@@ -163,7 +179,7 @@ permalink: "{{ locale.permalink }}"
         </div>
 
         <div class="panel shadow-soft p-3 p-md-4">
-          <h6 class="panel-header mb-2">{{ locale.content.location.heading }}</h6>
+          <h2 class="h6 panel-header mb-2">{{ locale.content.location.heading }}</h2>
           <p class="text-secondary mb-2">
             {{ locale.content.location.addressHtml | safe }}
           </p>
@@ -179,7 +195,7 @@ permalink: "{{ locale.permalink }}"
       </div>
     </div>
   </div>
-</main>
+</div>
 {% endblock %}
 
 {% block pageScript %}

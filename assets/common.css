@@ -69,6 +69,19 @@ footer{ flex-shrink:0; }  /* Footer never shrinks, stays at bottom */
 .text-secondary{ color:var(--muted)!important; }         /* Muted text color */
 .divider-grad{ height:10px; background:var(--brand-grad); border-radius:.75rem; } /* Gradient divider */
 
+/* ===== Skip Link ===== */
+/* Bootstrap's .visually-hidden-focusable handles hiding this until it
+   receives keyboard focus; this just makes the focused state look like
+   an intentional "skip to content" affordance instead of plain text
+   sitting at the top of the page (positioned fixed so it overlaps the
+   navbar cleanly rather than pushing it down). */
+.skip-link:focus{
+  position:fixed; top:.75rem; inset-inline-start:.75rem; z-index:2000;
+  background:var(--brand-dark); color:#fff !important;
+  padding:.6rem 1.1rem; border-radius:.4rem; font-weight:600;
+  text-decoration:none;
+}
+
 /* ===== Navbar ===== */
 /* Main navigation bar styling */
 .navbar{
@@ -98,7 +111,13 @@ footer{ flex-shrink:0; }  /* Footer never shrinks, stays at bottom */
   border:none; border-radius:.4rem;
   padding:.35rem .9rem; font-weight:500; transition:.2s;
 }
-.btn-lang:hover{ background:var(--brand-green); color:#fff !important; }
+/* Accessibility pass (Phase 3): white text on this hover background
+   measured 2.16:1 contrast — badly below WCAG AA's 4.5:1 text minimum.
+   brand-dark instead measures 6.91:1. Same fix as the other
+   green-hover states across the site (schedule.njk's .btn-join:hover,
+   gallery.njk's #loadMoreBtn:hover/.back-to-top:hover) — see
+   PROGRESS.md for the full finding. */
+.btn-lang:hover{ background:var(--brand-green); color:var(--brand-dark) !important; }
 
 /* Site search trigger (Phase 3): a plain icon button next to the
    association logo/hamburger, opens #searchModal (see base.njk). */
