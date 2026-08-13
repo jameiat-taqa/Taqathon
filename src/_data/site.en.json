@@ -5,6 +5,7 @@
   "skipLinkLabel": "Skip to main content",
   "toggler": { "ariaLabel": "Toggle navigation" },
   "langSwitch": { "label": "AR", "liClass": "ms-3", "ariaLabel": "Switch to Arabic" },
+  "darkModeToggleAriaLabel": "Toggle dark mode",
   "search": {
     "triggerAriaLabel": "Search the site",
     "modalTitle": "Search",

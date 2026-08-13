@@ -134,6 +134,21 @@
       <i class="bi bi-search"></i>
     </button>
     {#
+      Dark-mode toggle (Phase 3). No data-bs-* attributes here — unlike
+      the search button, this doesn't open anything, it flips
+      <html data-bs-theme>, so its click handler lives in base.njk
+      instead (next to the inline script that sets the theme in the
+      first place, so both live together). Starts as the moon icon /
+      aria-pressed="false" in the static HTML (i.e. "light mode, click
+      to go dark") since that's the safest default before JS runs; the
+      script in base.njk corrects both immediately on load if the
+      visitor's actual page loaded in dark mode (stored preference or
+      OS setting).
+    #}
+    <button type="button" class="btn btn-sm btn-theme-toggle" aria-pressed="false" aria-label="{{ locale.site.darkModeToggleAriaLabel }}">
+      <i class="bi bi-moon-stars"></i>
+    </button>
+    {#
       aria-controls / aria-expanded aren't language-specific, so they're
       always included now; only the aria-label TEXT comes from data
       (locale.site.toggler.ariaLabel). Same history as the brand link

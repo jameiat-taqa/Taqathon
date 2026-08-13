@@ -12,7 +12,13 @@
  */
 
 /* ===== CSS Variables ===== */
-/* Brand colors and design tokens used throughout the site */
+/* Brand colors and design tokens used throughout the site.
+   --bg/--surface/--surface-border/--surface-hover/--text/--muted are
+   the theme-aware tokens (redefined below under
+   [data-bs-theme="dark"]) — every rule that needs to look right in
+   both light and dark mode should read colors from these, not from a
+   bare hex value. --brand-* stay the same in both modes on purpose:
+   they're the site's accent/identity colors, not surface colors. */
 :root{
   --brand-blue:#007DFD;
   --brand-green:#09C899;
@@ -20,7 +26,49 @@
   --brand-grad: linear-gradient(90deg, var(--brand-green), var(--brand-blue));
   --text:#1d2733;
   --muted:#66768a;
+  --bg:#f8fbfd;
+  --surface:#ffffff;
+  --surface-border:#e9eef3;
+  --surface-hover:#eef3f9;
+  --icon-circle-bg:linear-gradient(180deg,#eef6ff,#f3fbff);
+  --icon-circle-border:#c9ddff;
 }
+
+/* ===== Dark Mode ===== */
+/* Phase 3: driven by data-bs-theme on <html> (set in base.njk, before
+   first paint, from localStorage or the OS's prefers-color-scheme).
+   Using Bootstrap's own attribute — not a separate custom one — means
+   Bootstrap's built-in components (modals, dropdowns, accordions, form
+   controls, the search modal's close button, etc.) re-theme themselves
+   automatically via their own [data-bs-theme=dark] CSS, and this one
+   block only needs to cover the site's OWN custom surfaces (body,
+   navbar, cards, icon circles) on top of that.
+
+   Left DELIBERATELY unchanged here: --brand-*, the footer (already
+   dark in light mode by design), and a handful of per-page informational
+   boxes (alert-info callouts, badge-soft, gallery photo cards, the
+   Schedule table's light row tints) that already set their OWN
+   explicit text color against their OWN explicit background — self-
+   contained regardless of page theme, so leaving them light-styled in
+   dark mode is a deliberate "these stay as accent chips" choice, not
+   an oversight (see PROGRESS.md). */
+[data-bs-theme="dark"]{
+  --text:#e7ecf3;
+  --muted:#9aa7ba;
+  --bg:#0d1420;
+  --surface:#17212e;
+  --surface-border:#2a3648;
+  --surface-hover:#1f2a3a;
+  --icon-circle-bg:linear-gradient(180deg,#16202c,#111925);
+  --icon-circle-border:#2a3f57;
+}
+/* The hamburger icon is a Bootstrap-generated inline SVG background
+   image, not something `color:` can touch — the navbar is fixed to
+   the .navbar-light variant (its link/toggler colors are tuned for a
+   light background, unlike everything else here they don't respond
+   to data-bs-theme on their own), so its dark stroke color needs to be
+   inverted explicitly or it disappears against a dark navbar. */
+[data-bs-theme="dark"] .navbar-toggler-icon{ filter:invert(1); }
 
 /* ===== Global Styles ===== */
 /* 
@@ -34,7 +82,7 @@ html, body {
   padding: 0;
   font-family: Poppins, Cairo, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   color: var(--text);
-  background: #f8fbfd;
+  background: var(--bg);
   overflow-x: clip;               /* Prevents tiny right-edge line on some browsers */
 }
 html { overflow: hidden; }        /* Hides OS scrollbar track */
@@ -65,7 +113,7 @@ footer{ flex-shrink:0; }  /* Footer never shrinks, stays at bottom */
 /* Reusable utility classes for consistent styling across pages */
 .rounded-2xl{ border-radius:1rem; }                    /* Large rounded corners */
 .shadow-soft{ box-shadow:0 10px 30px rgba(0,0,0,.12); } /* Soft shadow effect */
-.card-lite{ background:#fff; border:1px solid #e9eef3; } /* Light card background */
+.card-lite{ background:var(--surface); border:1px solid var(--surface-border); } /* Themed card background */
 .text-secondary{ color:var(--muted)!important; }         /* Muted text color */
 .divider-grad{ height:10px; background:var(--brand-grad); border-radius:.75rem; } /* Gradient divider */
 
@@ -85,13 +133,20 @@ footer{ flex-shrink:0; }  /* Footer never shrinks, stays at bottom */
 /* ===== Navbar ===== */
 /* Main navigation bar styling */
 .navbar{
-  background:#fff;
+  background:var(--surface);
   box-shadow:0 2px 10px rgba(0,0,0,.04);
   padding-top:.4rem; padding-bottom:.4rem;
 }
 .logo-mark{ height:60px; width:auto; object-fit:contain; }      /* Main Taqathon logo */
 .assoc-logo{ height:48px; width:auto; object-fit:contain; }       /* Association logo */
-.navbar-nav .nav-link{ font-weight:500; color:var(--brand-dark); transition:.2s; }
+/* color:var(--text), not var(--brand-dark): --brand-dark is the
+   site's fixed identity color (always-navy, used for things like the
+   footer and the skip link that are deliberately dark regardless of
+   page theme). Nav-link text needs to actually flip for dark mode
+   instead — --text already does that (see the [data-bs-theme="dark"]
+   block up in :root) — so this is the "default readable text on this
+   page's current surface" token, not the "always-navy" one. */
+.navbar-nav .nav-link{ font-weight:500; color:var(--text); transition:.2s; }
 .navbar-nav .nav-link:hover,
 .navbar-nav .nav-link.active{ color:var(--brand-blue); }          /* Active/hover state */
 
@@ -125,9 +180,20 @@ footer{ flex-shrink:0; }  /* Footer never shrinks, stays at bottom */
   display:inline-flex; align-items:center; justify-content:center;
   width:36px; height:36px; padding:0;
   background:transparent; border:none; border-radius:999px;
-  color:var(--brand-dark); font-size:1.05rem; transition:.2s;
+  color:var(--text); font-size:1.05rem; transition:.2s;
 }
-.btn-search-trigger:hover{ background:#eef3f9; color:var(--brand-blue); }
+.btn-search-trigger:hover{ background:var(--surface-hover); color:var(--brand-blue); }
+
+/* Dark-mode toggle (Phase 3): same treatment as the search trigger
+   right next to it, so the two read as a matched pair of icon
+   buttons rather than two different button styles. */
+.btn-theme-toggle{
+  display:inline-flex; align-items:center; justify-content:center;
+  width:36px; height:36px; padding:0;
+  background:transparent; border:none; border-radius:999px;
+  color:var(--text); font-size:1.05rem; transition:.2s;
+}
+.btn-theme-toggle:hover{ background:var(--surface-hover); color:var(--brand-blue); }
 
 /* Pagefind's default UI theme, remapped to the site's own brand colors
    instead of its default purple — these are the CSS custom properties
@@ -136,8 +202,8 @@ footer{ flex-shrink:0; }  /* Footer never shrinks, stays at bottom */
 #pagefind-search{
   --pagefind-ui-primary: var(--brand-blue);
   --pagefind-ui-text: var(--text);
-  --pagefind-ui-background: #ffffff;
-  --pagefind-ui-border: #d8e2ee;
+  --pagefind-ui-background: var(--surface);
+  --pagefind-ui-border: var(--surface-border);
   --pagefind-ui-tag: var(--brand-green);
   --pagefind-ui-border-width: 1px;
   --pagefind-ui-border-radius: .5rem;
@@ -151,8 +217,8 @@ footer{ flex-shrink:0; }  /* Footer never shrinks, stays at bottom */
 @media (max-width:991.98px){
   .navbar .navbar-collapse{
     position:absolute; inset-inline:0; top:100%;  /* Full width, below navbar */
-    background:#fff; padding:.75rem 1rem;
-    border-top:1px solid #e9eef5;
+    background:var(--surface); padding:.75rem 1rem;
+    border-top:1px solid var(--surface-border);
     box-shadow:0 10px 24px rgba(0,0,0,.08);
     z-index:1000;
   }
@@ -164,8 +230,8 @@ footer{ flex-shrink:0; }  /* Footer never shrinks, stays at bottom */
 .icon-circle{
   width:64px; height:64px; border-radius:999px;
   display:inline-flex; align-items:center; justify-content:center;
-  background:linear-gradient(180deg,#eef6ff,#f3fbff);
-  border:1px solid #c9ddff;
+  background:var(--icon-circle-bg);
+  border:1px solid var(--icon-circle-border);
   color:var(--brand-blue);
   box-shadow:0 4px 16px rgba(0,125,253,.25);
   font-size:1.6rem;
