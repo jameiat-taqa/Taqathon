@@ -1,0 +1,77 @@
+---
+description: Taqathon project conventions — read before making changes
+alwaysApply: true
+---
+
+# Taqathon site — working conventions
+
+This project is worked on by both Claude Code and Cursor, split by task type
+(Cursor for quick inline edits, Claude Code for multi-file features and the
+git/PR/deploy workflow). These rules keep output consistent between the two.
+
+## Read PROGRESS.md first
+
+`PROGRESS.md` at the repo root is the authoritative, dated project log —
+more reliable than any chat history. Read it before starting work you don't
+have full context on.
+
+**Standing rule: every PR that represents a meaningful checkpoint (a phase
+completed, a real bug found and fixed, a significant decision made) must
+append a short dated bullet to PROGRESS.md in that SAME PR** — not a
+follow-up commit. Newest entries at the top. Bullets, not paragraphs: what
+changed, why if not obvious, what's still open.
+
+## Git workflow
+
+feature branch → PR against `dev` → **wait for explicit user go-ahead**
+("merge PR #N into dev") → **wait for explicit user go-ahead** to merge `dev`
+into `main` (fast-forward). Never merge either step without being told to,
+even if the PR looks obviously fine. GitHub Actions (`deploy.yml`) builds on
+every push/PR to `main`/`dev` but only deploys on a direct push to `main`.
+
+## Code comments
+
+Every change needs thorough, plain-language comments explaining the WHY
+(hidden constraints, workarounds, non-obvious history) — not just what the
+code does. This is an explicit, standing preference for this project, not
+the general terse-comment default.
+
+## AR/EN parity
+
+The site is bilingual (Arabic + English) via a pagination-over-a-locales-array
+pattern — one template renders both language pages from paired
+`*.ar.json`/`*.en.json` data files. **Never ship a change to one language
+without the matching change to the other.** Content that can't yet be
+published in both languages (e.g. a new Year Archive) should be held back
+entirely rather than going live lopsided — see `src/_lib/years.js`, which
+only surfaces a year once both language files exist.
+
+## Hard-won context — do not redo this work
+
+- **Netlify's OAuth-provider feature does not work for a placeholder/
+  non-deployed site.** Decap CMS auth is handled by a self-hosted Cloudflare
+  Worker instead (`cloudflare-worker/decap-oauth-worker.js`, deployed at the
+  URL in `admin/config.yml`'s `base_url`). Cloudflare secret changes require
+  clicking "Deploy" again on the Worker to take effect.
+- Decap **folder collections need `extension`/`format` declared explicitly**
+  (`extension: json, format: json`) — without it Decap defaults to Markdown
+  and silently shows 0 entries, no error.
+- Don't let a large asset folder (e.g. the gallery) be Decap's top-level
+  default `media_folder` — it crashes the editor for every collection.
+  Large folders get their own per-collection override.
+- `editorial_workflow: true` is not supported with `local_backend`/local_fs —
+  it silently downgrades to simple mode in local testing.
+
+## Content status
+
+Placeholder-only pages awaiting real content from the site owner:
+Registration, FAQ, Tracks, Sponsors, Judges/Mentors, Submission Guidelines,
+Community, Newsletter, and About's "Official Status" subsection (that one
+specifically must never be invented — it has to come verbatim from the
+Association).
+
+## Explicitly deferred
+
+A certificate-verification security fix on `src/pages/verify.njk` is
+intentionally deferred until all other phases are done. Don't fix it
+opportunistically without checking with the user first.
