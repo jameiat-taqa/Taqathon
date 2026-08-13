@@ -5,6 +5,7 @@
   "skipLinkLabel": "تخطي إلى المحتوى الرئيسي",
   "toggler": { "ariaLabel": "تبديل القائمة" },
   "langSwitch": { "label": "EN", "liClass": "", "ariaLabel": "التبديل إلى الإنجليزية" },
+  "darkModeToggleAriaLabel": "تبديل الوضع الداكن",
   "search": {
     "triggerAriaLabel": "البحث في الموقع",
     "modalTitle": "بحث",

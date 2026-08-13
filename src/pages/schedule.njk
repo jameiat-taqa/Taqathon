@@ -69,8 +69,19 @@ permalink: "{{ locale.permalink }}"
   font-weight:600;
   color:#17324a;
 }
-.table tbody tr.workshop-row td{ background:#ecfdf5; }
-.table tbody tr.keydate-row td{ background:#eef6ff; }
+{#
+  Dark mode (Phase 3): these two row tints had no text color of their
+  own, unlike .section-row right above — they were quietly relying on
+  Bootstrap's default table text color, which DOES flip light for dark
+  mode. Left as a fixed pastel background with no fixed text, that
+  combination goes to (near-)illegible light-on-light the moment dark
+  mode is active. Giving each an explicit dark, on-brand text color
+  (same idea as .section-row's own #17324a) keeps these rows reading
+  as the same colored "row type" accent in both themes, rather than
+  either breaking or being flattened to a plain neutral row.
+#}
+.table tbody tr.workshop-row td{ background:#ecfdf5; color:#0a7b60; }
+.table tbody tr.keydate-row td{ background:#eef6ff; color:#0d3b66; }
 
 .section-kicker{
   display:inline-flex;

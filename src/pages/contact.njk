@@ -33,7 +33,16 @@ permalink: "{{ locale.permalink }}"
 #}
 {% extends "layouts/base.njk" %}
 {% block pageStyle %}
-.panel{ background:#fff; border:1px solid #e9eef3; border-radius:12px; }
+{#
+  Dark mode (Phase 3): background/border here used to be hardcoded
+  white/light-gray. Since this panel's own text (labels, headings) has
+  no explicit color of its own — it just inherits body's var(--text),
+  which DOES flip for dark mode — leaving the panel's background
+  hardcoded would have meant light text silently landing on a still-
+  white box once dark mode shipped. var(--surface)/var(--surface-border)
+  are the same theme-aware tokens common.css's .card-lite already uses.
+#}
+.panel{ background:var(--surface); border:1px solid var(--surface-border); border-radius:12px; }
 .panel-header{ font-weight:{{ locale.content.panelHeaderWeight }}; }
 .btn-gradient{
   background:var(--brand-grad);

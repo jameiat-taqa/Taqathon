@@ -20,14 +20,22 @@ permalink: "{{ locale.permalink }}"
 #}
 {% extends "layouts/base.njk" %}
 {% block pageStyle %}
+{#
+  Dark mode (Phase 3): background was hardcoded white while color
+  already used var(--text) — meant this box was one bad combination
+  away from silently becoming light text on a white box the moment
+  dark mode existed. var(--surface)/var(--surface-border) match what
+  common.css's .card-lite and contact.njk's .panel now use for the
+  same "generic card surface" purpose.
+#}
 .sponsor-box{
-  border:1px dashed rgba(15,23,42,.18);
+  border:1px dashed var(--surface-border);
   border-radius:1rem;
   padding:1.25rem 1rem;
   text-align:center;
   color:var(--text);
   font-weight:600;
-  background:#fff;
+  background:var(--surface);
 }
 {% endblock %}
 
