@@ -14,7 +14,7 @@ A running, dated record of what's been done on this project and why. Newest entr
 - Verified via the same from-scratch WCAG contrast calculation used throughout this redesign before picking any value (`text`/`muted` on the two new dark backgrounds: 15.5:1 / 13.7:1 and 7.6:1 / 6.7:1; terra on the flipped-light stat surface: 4.83:1) — and confirmed the two new dark background tones are, if anything, slightly *more* visually distinct from each other and from the navbar/footer's navy than the original three light tones were (1.14–1.24:1 vs. 1.01–1.05:1), so the same "three related-but-distinct tones" read that worked in light mode carries over.
 - One structural fix along the way: the countdown section's decorative wave SVG had its two line colors hardcoded via the `stroke=""` attribute, which can't respond to a CSS override — switched to CSS classes (`stroke:` set as a real CSS property beats an SVG presentation attribute) so dark mode could brighten the navy line, which would otherwise have gone invisible against the new dark background.
 - Verified in-browser: both languages (AR/EN), light mode re-checked for regressions (none), dark mode checked section-by-section against the intended mirror, computed-style spot checks (not just visual) on a heading whose color looked amber but was confirmed to actually be the correct near-white `--text` token — a rendering/compression artifact against the dark background, not a bug.
-- Not yet opened as a PR — see next entry once opened.
+- PR [#21](https://github.com/jameiat-taqa/Taqathon/pull/21), open against `dev`, not yet merged.
 
 ## 2026-08-16 — Home page visual system (Design B editorial refresh)
 
