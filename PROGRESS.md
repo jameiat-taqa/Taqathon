@@ -15,7 +15,7 @@ A running, dated record of what's been done on this project and why. Newest entr
 - Mission/Vision reuse Home's "small dark accent card" pattern (two navy cards, flipping to light-cream accent cards in dark mode) — same idea as Home's prize/tracks stat cells, just holding text instead of a number.
 - **Not one word of copy changed** — every string is the exact same placeholder text from before (see the 2026-08-11 About page entry); this was purely a layout/visual pass.
 - Verified in-browser: both languages, both themes, no console errors.
-- Not yet opened as a PR — see next entry once opened. **16 pages still queued** after this one; each will get its own round, checkpoint, and PROGRESS.md entry rather than being bundled.
+- PR [#22](https://github.com/jameiat-taqa/Taqathon/pull/22), open against `dev`, not yet merged. **16 pages still queued** after this one; each will get its own round, checkpoint, and PROGRESS.md entry rather than being bundled.
 
 ## 2026-08-17 — Home page visual system: dark mode mirror
 
