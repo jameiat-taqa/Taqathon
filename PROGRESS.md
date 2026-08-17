@@ -6,6 +6,17 @@ A running, dated record of what's been done on this project and why. Newest entr
 
 ---
 
+## 2026-08-17 — Visual system rollout, page 1 of 17: About
+
+- Kicked off extending Home's Design B editorial system to the rest of the site. Scoped with the user first (two decisions, not guessed): **full per-page redesign**, not a lighter re-skin that just swaps colors onto existing layouts — and **one page at a time with a checkpoint**, mirroring how Home itself was iterated on, rather than one big batch PR across all 17 remaining pages.
+- **About was picked first**: it's the closest in kind to Home (a storytelling page, not a form/table/list), so it's the best next proof that the system generalizes before tackling structurally different page types (forms, tables, card grids) later in the queue.
+- Reused Home's exact tokens/mirror technique rather than inventing a second system: cream/sky alternating section rhythm, the display font for headings, mono labels, hairline section borders, and the dark-mode mirror (backgrounds flip for free via the tokens redefined in round 8; text/accent overrides follow the same amber-becomes-primary-dark-accent rule).
+- **New pattern this page needed that Home didn't**: the "Official Status" sub-section is real, sensitive, explicitly-not-yet-real content (association legal/registration details — flagged since Phase 3 as something that must come from the Association, never invented). Previously a plain muted paragraph, easy to mistake for finished copy. Redesigned as an unmissable dashed-border, terra-flagged (amber in dark mode) "pending confirmation" callout — a design response to an existing content-authenticity rule, not a new one.
+- Mission/Vision reuse Home's "small dark accent card" pattern (two navy cards, flipping to light-cream accent cards in dark mode) — same idea as Home's prize/tracks stat cells, just holding text instead of a number.
+- **Not one word of copy changed** — every string is the exact same placeholder text from before (see the 2026-08-11 About page entry); this was purely a layout/visual pass.
+- Verified in-browser: both languages, both themes, no console errors.
+- Not yet opened as a PR — see next entry once opened. **16 pages still queued** after this one; each will get its own round, checkpoint, and PROGRESS.md entry rather than being bundled.
+
 ## 2026-08-17 — Home page visual system: dark mode mirror
 
 - Built the dark mode the previous round's redesign explicitly deferred: a mirror of the light structure — deep tones as the base everywhere, light tones demoted to small accents — rather than a generic dark overlay bolted on afterward.
