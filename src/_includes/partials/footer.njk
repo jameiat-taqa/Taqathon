@@ -17,11 +17,11 @@
      language without an {% if %} branch. #}
   <div class="{{ locale.site.footer.rowClass }}">
     <div class="col-md-6">
-      <h6 class="mb-3 text-white">{{ locale.site.footer.brandName }}</h6>
+      <h6 class="mb-3">{{ locale.site.footer.brandName }}</h6>
       <p class="mb-1 small">{{ locale.site.footer.tagline }}</p>
     </div>
     <div class="col-md-6">
-      <h6 class="mb-3 text-white">{{ locale.site.footer.followLabel }}</h6>
+      <h6 class="mb-3">{{ locale.site.footer.followLabel }}</h6>
       {#
         aria-label on each (accessibility pass, Phase 3): these are
         icon-only links — bootstrap-icons are just a font glyph with no
@@ -31,12 +31,21 @@
         untranslated in both languages — standard practice, screen
         readers handle Latin-script brand names fine in an Arabic
         context).
+
+        Neither of these two headings nor the icons below carry a
+        Bootstrap text-white/text-light class anymore (round 3 of the
+        Home redesign, common.css): footer used to be unconditionally
+        dark, so forcing white text was harmless, but now that footer
+        is theme-aware (light in light mode, dark in dark mode) a
+        forced-white utility would make these invisible against the
+        new light footer. Left to inherit footer/footer a's own
+        theme-aware color instead.
       #}
       <div class="d-flex gap-3">
-        <a href="{{ locale.site.social.twitter }}" target="_blank" rel="noopener" class="text-light" aria-label="{{ locale.site.social.twitterLabel }}"><i class="bi bi-twitter-x fs-5"></i></a>
-        <a href="{{ locale.site.social.instagram }}" target="_blank" rel="noopener" class="text-light" aria-label="{{ locale.site.social.instagramLabel }}"><i class="bi bi-instagram fs-5"></i></a>
-        <a href="{{ locale.site.social.linkedin }}" target="_blank" rel="noopener" class="text-light" aria-label="{{ locale.site.social.linkedinLabel }}"><i class="bi bi-linkedin fs-5"></i></a>
-        <a href="{{ locale.site.social.tiktok }}" target="_blank" rel="noopener" class="text-light" aria-label="{{ locale.site.social.tiktokLabel }}"><i class="bi bi-tiktok fs-5"></i></a>
+        <a href="{{ locale.site.social.twitter }}" target="_blank" rel="noopener" aria-label="{{ locale.site.social.twitterLabel }}"><i class="bi bi-twitter-x fs-5"></i></a>
+        <a href="{{ locale.site.social.instagram }}" target="_blank" rel="noopener" aria-label="{{ locale.site.social.instagramLabel }}"><i class="bi bi-instagram fs-5"></i></a>
+        <a href="{{ locale.site.social.linkedin }}" target="_blank" rel="noopener" aria-label="{{ locale.site.social.linkedinLabel }}"><i class="bi bi-linkedin fs-5"></i></a>
+        <a href="{{ locale.site.social.tiktok }}" target="_blank" rel="noopener" aria-label="{{ locale.site.social.tiktokLabel }}"><i class="bi bi-tiktok fs-5"></i></a>
       </div>
     </div>
   </div>

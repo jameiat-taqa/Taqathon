@@ -42,45 +42,156 @@ permalink: "{{ locale.permalink }}"
       this file, inside the {% block content %} below.
 #}
 {% extends "layouts/base.njk" %}
+{% block pageHead %}
+{#
+  Visual system v2 (Phase 3): these three fonts are only used by the
+  editorial hero/About redesign below — no other page loads them yet,
+  hence a page-scoped pageHead block instead of adding them to the
+  global Cairo/Poppins link in base.njk. Big Shoulders Display for the
+  oversized Latin headline, Tajawal for the Arabic equivalent (this
+  design's own choice — distinct from the site-wide Cairo used
+  everywhere else, scoped to just .dz-display/.dz-about-heading via
+  the [dir="rtl"] overrides below), DM Mono for the small tracked
+  metadata labels.
+#}
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=Tajawal:wght@700;800;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+{% endblock %}
 {% block pageStyle %}
-.badge-soft{ background:rgba(9,200,153,.15); color:#0a7b60; border:1px solid rgba(9,200,153,.3); }
+{#
+  Editorial redesign, through several direct-feedback rounds (Phase 3,
+  visual system v2). Current state (round 7):
 
-/* ===== HERO ===== */
-.hero-img{
-display:block; width:100%;
-height:clamp(260px, 35vw, 520px);
-object-fit:cover; object-position:center;
-border-radius: 1rem; box-shadow: 0 18px 40px rgba(0,0,0,.18);
+  Three background tones total, each used with intent:
+    --color-cream — Hero and About. The two most "editorial" sections.
+    --color-sky — Countdown AND the CTA band, as of round 7 ("make the
+      CTA band the same blue as Countdown"): grouping the page's two
+      "do something" moments (check the deadline / take the final
+      action) under one tone, by purpose rather than by position.
+    --color-stone — navbar + footer, chrome's own tone, used nowhere
+      else on the page (round 7: "a different color that is not used
+      in the page but does not clash," after --color-pearl then reused
+      --color-sky both turned out too close to something else on the
+      page once the content-section palette itself changed under them).
+
+  With background no longer doing all the work of telling sections
+  apart, each one gets ONE small, restrained signal instead — shape,
+  icon, or texture, never a color shift: the Hero/CTA's soft blurred
+  orbs, the Countdown's flowing wave, the Announcements' faint dotted
+  grid, and About's own two-column photo+text layout plus its stat
+  cards. About specifically carries NO decorative texture layer (round
+  3 had a node-network SVG there; direct feedback called that section
+  "too many colors" and it was cut, not brought back since).
+
+  Dark navy is a small ACCENT only, never a section background: the
+  hero's stat bar, About's two stat cards, nothing more. Accent-color
+  rule unchanged: amber only reads as text on those small dark
+  accents; terra reads as text on the light tones. Buttons stay self-
+  contained (amber bg + navy text) regardless of section.
+
+  Dark mode is explicitly NOT built here yet — the plan (not yet
+  implemented) is a mirror of this exact structure: navy as the base
+  everywhere, these light tones demoted to small accents instead.
+#}
+.dz-hero{ background:var(--color-cream); color:var(--brand-dark); overflow:hidden; position:relative; border-bottom:1px solid rgba(0,40,76,.08); }
+{# Same faint navy hairline as the navbar/footer border (common.css)
+   — trying it at every real color change between sections (cream ->
+   sky -> cream -> sky) so each band reads as a deliberate, separated
+   region rather than blurring into its neighbor. Skipped between
+   Announcements and About below since both are cream with no color
+   change between them — that boundary is intentionally seamless per
+   the earlier "keep everything below the hero the same color" call. #}
+{#
+  Every section's decorative layer sits at z-index:0 with
+  pointer-events:none (so it's inert — never intercepts clicks or gets
+  picked up by a screen reader), and every section's actual content
+  wrapper gets position:relative + z-index:1 to sit above it. Same
+  pattern repeated per section below rather than one generic rule, so
+  each section's specific content wrapper (.dz-hero-grid, .container,
+  etc.) can be targeted precisely.
+#}
+.dz-hero::before{
+  content:""; position:absolute; top:-15%; inset-inline-end:-8%; width:460px; height:460px;
+  background:radial-gradient(circle, rgba(196,64,26,.08), transparent 70%);
+  border-radius:50%; pointer-events:none; z-index:0;
 }
+.dz-hero-grid{ position:relative; z-index:1; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); align-items:stretch; min-height:560px; }
+@media (max-width:991.98px){ .dz-hero-grid{ grid-template-columns:1fr; min-height:auto; } }
+.dz-hero-copy{ display:flex; flex-direction:column; justify-content:center; padding:3rem clamp(1.5rem, 5vw, 5rem); }
+.dz-badge{
+  display:inline-flex; width:fit-content; background:rgba(196,64,26,.1); color:var(--color-terra);
+  border:1px solid rgba(196,64,26,.25); padding:.4rem .9rem; border-radius:999px;
+  text-transform:uppercase; letter-spacing:.04em; font-size:.75rem; font-weight:700; margin-bottom:1rem;
+}
+.dz-display{
+  font-family:var(--font-display); font-weight:700;
+  font-size:clamp(2.75rem, 7vw, 5.5rem); line-height:.95; letter-spacing:-.01em;
+  margin:0 0 1rem;
+}
+[dir="rtl"] .dz-display{ font-family:'Tajawal', var(--font-display); font-weight:800; letter-spacing:0; }
+.dz-subtitle{ font-size:1.15rem; color:var(--color-dust); margin-bottom:1rem; max-width:32rem; }
+.dz-body{ color:var(--color-dust); max-width:32rem; margin-bottom:1.75rem; }
+.dz-hero-photo{ position:relative; min-height:320px; }
+.dz-hero-photo img{
+  width:100%; height:100%; min-height:320px; object-fit:cover; display:block;
+  clip-path:polygon(12% 0, 100% 0, 100% 100%, 0% 100%);
+}
+[dir="rtl"] .dz-hero-photo img{ clip-path:polygon(0 0, 88% 0, 100% 100%, 0 100%); }
+@media (max-width:991.98px){ .dz-hero-photo img{ clip-path:none; min-height:280px; } }
+{#
+  The stat bar is the hero's one small dark accent — exactly the kind
+  of use the round-3 rule allows (a stat bar, a badge — never a full
+  section). It's also a quiet preview of where the dark/light balance
+  flips once dark mode exists.
+#}
+.dz-stat-bar{
+  position:absolute; bottom:1.5rem; inset-inline-end:1.5rem;
+  background:var(--brand-dark); color:var(--color-cream);
+  border-radius:.5rem; padding:1rem 1.25rem; font-size:.85rem;
+  box-shadow:0 12px 30px rgba(0,0,0,.25);
+  display:flex; flex-direction:column; gap:.5rem; min-width:220px;
+}
+.dz-stat-bar .dz-stat-row{ display:flex; justify-content:space-between; gap:1rem; }
+.dz-stat-bar .dz-stat-label{
+  font-family:var(--font-mono-label); color:var(--color-mist); text-transform:uppercase; letter-spacing:.06em; font-size:.7rem;
+}
+[dir="rtl"] .dz-stat-bar .dz-stat-label{ font-family:inherit; text-transform:none; letter-spacing:0; }
+.dz-stat-bar .dz-stat-value{ font-weight:600; }
+@media (max-width:575.98px){ .dz-stat-bar{ position:static; margin-top:1rem; inset-inline-end:auto; } }
 
-/* ===== CTA band ===== */
-.cta-band{ background: var(--brand-grad); color:#042233; }
-.cta-band .btn{ background:#fff; border:0; color:#042233; font-weight:700; }
-
-/* ===== Countdown ===== */
-.gb-band{ background:transparent; }
+/* ===== Countdown: --color-sky, pale baby blue, + a flowing wave layer ===== */
+.gb-band{ background:var(--color-sky); color:var(--brand-dark); position:relative; overflow:hidden; border-bottom:1px solid rgba(0,40,76,.08); }
+.gb-band .container{ position:relative; z-index:1; }
+.dz-deco-wave{ position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:0; }
 .count-box{
-background:linear-gradient(135deg, #09C899, #007DFD, #09C899);
-background-size:300% 300%;
-border-radius:1rem; max-width:650px; margin-inline:auto;
-box-shadow:0 10px 25px rgba(0,0,0,.15);
-animation:gradientMove 15s ease infinite;
+position:relative; background:rgba(232,149,43,.07); border:1px solid rgba(232,149,43,.25);
+border-radius:1rem; max-width:650px; margin-inline:auto; padding:2rem;
 }
 .count-tile{
-background: rgba(255,255,255,.15);
-border:1px solid rgba(255,255,255,.25);
-color:#fff; border-radius:.75rem; width:56px; height:56px;
+background:#fff; border:1px solid rgba(0,40,76,.1);
+color:var(--brand-dark); border-radius:.75rem; width:56px; height:56px;
 display:flex; align-items:center; justify-content:center; font-weight:700;
-box-shadow:0 6px 18px rgba(0,0,0,.06);
 }
-.count-label{ font-size:.8rem; color: rgba(255,255,255,.9); }
-@keyframes gradientMove {
-0% { background-position:0% 50%; }
-50% { background-position:100% 50%; }
-100% { background-position:0% 50%; }
-}
+.count-label{ font-size:.8rem; color:var(--color-dust); }
 
-/* ===== Announcements ===== */
+{#
+  Round 5: cream now, not its own linen tone — direct instruction was
+  everything from Announcements down through the CTA band matches
+  Hero's cream exactly (Countdown explicitly excluded, stays sky), and
+  sections tell themselves apart with shape/icon/texture instead of a
+  shifting background. Announcements already had exactly that in the
+  dotted-grid layer below; it just needed the color underneath it to
+  change, not the idea.
+#}
+/* ===== Announcements: --color-cream (matches Hero), + a faint dotted grid ===== */
+#announcements{ background:var(--color-cream); color:var(--brand-dark); position:relative; overflow:hidden; border-bottom:1px solid rgba(0,40,76,.08); }
+#announcements::before{
+  content:""; position:absolute; inset:0; pointer-events:none; z-index:0;
+  background-image:radial-gradient(circle, rgba(0,40,76,.07) 1px, transparent 1px);
+  background-size:24px 24px;
+}
+#announcements .container{ position:relative; z-index:1; }
+.dz-muted-on-cream{ color:var(--color-dust); }
+.dz-muted-on-navy{ color:var(--color-mist); }
 .ann-list{ max-width:900px; margin:0 auto; display:grid; gap:12px; }
 {#
   The original Arabic and English pages mirrored this card's padding
@@ -90,75 +201,154 @@ box-shadow:0 6px 18px rgba(0,0,0,.06);
   the CSS to maintain.
 #}
 .ann-card{
-position:relative; background:#fff; border:1px solid #e7eef7;
-border-radius:12px; {% if locale.dir == "rtl" %}padding:16px 56px 16px 16px;{% else %}padding:16px 16px 16px 56px;{% endif %} box-shadow:0 6px 18px rgba(0,0,0,.06);
+position:relative; background:#fff; border:1px solid rgba(0,40,76,.08);
+border-radius:12px; {% if locale.dir == "rtl" %}padding:16px 56px 16px 16px;{% else %}padding:16px 16px 16px 56px;{% endif %}
+box-shadow:0 6px 18px rgba(0,0,0,.04);
 }
 .ann-icon{
 position:absolute; {% if locale.dir == "rtl" %}right:16px;{% else %}left:16px;{% endif %} top:16px; width:28px; height:28px; border-radius:8px;
 display:grid; place-items:center; font-size:16px;
 }
-.ann-date{ font-size:.8rem; color:#6c7a8a; }
-.ann-text{ color:#1d2733; }
-.type-deadline .ann-icon{ background:#FFE8E8; color:#BB2D3B; }
-.type-update  .ann-icon{ background:#FFF3D6; color:#8A5A14; }
-.type-schedule .ann-icon{ background:#E7F0FF; color:#0D6EFD; }
-.type-general .ann-icon{ background:#E6FAF3; color:#0A7B60; }
+.ann-date{ font-size:.8rem; color:var(--color-dust); }
+.ann-text{ color:var(--brand-dark); }
+{#
+  terra for the urgent type (deadline) — passes on every light tone
+  (4.5+:1, see common.css). amber does NOT pass on any of them (per
+  the accent-color rule) so it's not used here at all; the other types
+  use --brand-dark instead, still a real distinction from terra, just
+  not a third hue.
+#}
+.type-deadline .ann-icon{ background:rgba(196,64,26,.12); color:var(--color-terra); }
+.type-update .ann-icon, .type-schedule .ann-icon{ background:rgba(0,40,76,.08); color:var(--brand-dark); }
+.type-general .ann-icon{ background:rgba(0,40,76,.06); color:var(--color-dust); }
 
-/* ===== About ===== */
-.about-img{
-display:block; width:100%; height:auto; border-radius:1rem;
-object-fit:cover; object-position:center;
+{#
+  Round 4: dropped the marquee entirely (direct feedback — "the moving
+  bar"). It was originally justified as marking the one hard color
+  transition between a light Act 1 and a dark Act 2; round 3 already
+  made the whole page light, so that transition it was marking no
+  longer exists — removing it isn't just accommodating a preference,
+  it's also the more honest choice now that there's nothing left for
+  it to divide. Announcements now runs straight into About with just
+  the background tint doing the work, same as every other section
+  transition on the page.
+#}
+
+{#
+  Round 4: About simplified — direct feedback that the heading and
+  everything under it had too many colors going at once (sage bg +
+  terra heading + navy body + terra icons + amber/navy stat cells +
+  a node-network texture layer, all in one section). Dropped terra
+  from this section entirely and the decorative texture layer with
+  it — heading/icons/body are all navy now, monochrome against the
+  sage tint, the same restraint Hero already had (one accent color —
+  terra there, none here — plus navy, nothing more). The stat cells
+  stay as About's one deliberate accent moment (navy+amber), not
+  removed, since two small cards were never the "too much" part.
+
+  Round 5: sage retired too — same instruction as Announcements above,
+  cream now instead of its own tone. What still tells About apart from
+  Hero/Announcements/CTA at a glance is its own content shape (a photo
+  + text two-column layout none of the others use) and the navy/amber
+  stat cells, not a background color anymore.
+#}
+.dz-about{ background:var(--color-cream); color:var(--brand-dark); border-bottom:1px solid rgba(0,40,76,.08); }
+.dz-about-heading{
+  font-family:var(--font-display); font-weight:700; color:var(--brand-dark);
+  font-size:clamp(2rem, 4.5vw, 3rem); line-height:1.05; letter-spacing:-.01em; margin-bottom:1rem;
 }
-@media (max-width: 767.98px){ .about-img{ height:240px; } }
-.about-list .bi{ {% if locale.dir == "rtl" %}margin-inline-start:.5rem;{% else %}margin-right:.5rem;{% endif %} }
-.about-list .bi-lightbulb{ color:#FFD43B; }
-.about-list .bi-person-lines-fill{ color:#007DFD; }
-.about-list .bi-trophy-fill{ color:#E67E22; }
-.about-list .bi-building-check{ color:#09C899; }
+[dir="rtl"] .dz-about-heading{ font-family:'Tajawal', var(--font-display); font-weight:800; letter-spacing:0; }
+.dz-about-body{ color:var(--color-dust); max-width:38rem; margin-bottom:1.75rem; }
+.dz-about-list{ color:var(--brand-dark); list-style:none; padding:0; margin:0 0 2rem; }
+.dz-about-list li{ display:flex; align-items:flex-start; gap:.6rem; margin-bottom:.6rem; }
+.dz-about-list .bi{ color:var(--brand-dark); margin-top:.2rem; }
+{#
+  The stat cells are About's small dark accent (same allowance as the
+  hero's stat bar) — the one deliberately navy element inside an
+  otherwise light section, there specifically to make these two
+  numbers punch through.
+#}
+.dz-stats-grid{
+  display:grid; grid-template-columns:repeat(auto-fit, minmax(160px,1fr)); gap:1px;
+  background:rgba(0,40,76,.1); border:1px solid rgba(0,40,76,.1);
+  border-radius:.75rem; overflow:hidden;
+}
+.dz-stat-cell{ background:var(--brand-dark); padding:1.5rem 1.25rem; }
+.dz-stat-num{ font-family:var(--font-display); font-weight:700; color:var(--color-amber); font-size:1.85rem; line-height:1.1; margin-bottom:.4rem; display:block; }
+[dir="rtl"] .dz-stat-num{ font-family:inherit; font-weight:800; }
+.dz-stat-cell-label{ font-family:var(--font-mono-label); font-size:.7rem; letter-spacing:.06em; text-transform:uppercase; color:var(--color-mist); }
+[dir="rtl"] .dz-stat-cell-label{ font-family:inherit; text-transform:none; letter-spacing:0; }
+
+{#
+  Round 5: slate retired, cream. Round 7: cream retired too — direct
+  instruction to make the CTA band ("ابقَ على المسار") the same blue
+  as Countdown. The two now share --color-sky: both are "do something"
+  moments (check the deadline / take the final action), so tying them
+  to the same tone groups them by PURPOSE, not just position on the
+  page. The blurred amber orb still marks this as its own moment
+  within that shared tone.
+#}
+/* ===== CTA band: --color-sky (matches Countdown), + a blurred orb ===== */
+.cta-band{ background:var(--color-sky); color:var(--color-dust); position:relative; overflow:hidden; }
+.cta-band::before{
+  content:""; position:absolute; bottom:-25%; inset-inline-start:-8%; width:400px; height:400px;
+  background:radial-gradient(circle, rgba(232,149,43,.14), transparent 70%);
+  border-radius:50%; pointer-events:none; z-index:0;
+}
+.cta-band .container{ position:relative; z-index:1; }
+.cta-band h3{ color:var(--color-terra); }
+.cta-band .btn{ background:var(--color-amber); border:0; color:var(--brand-dark); font-weight:700; }
+.cta-band .btn:hover{ filter:brightness(1.05); color:var(--brand-dark); }
 
 /* ===== Reveal ===== */
 .reveal{ opacity:0; transform:translateY(12px); transition:opacity .6s ease, transform .6s ease; }
 .reveal.in{ opacity:1; transform:none; }
 @media (prefers-reduced-motion: reduce){
-.count-box{ animation:none !important; }
 .reveal{ transition:none !important; opacity:1 !important; transform:none !important; }
 }
 {% endblock %}
 
 {% block content %}
-<!-- HERO -->
-<section class="py-5">
-<div class="container">
-  <div class="row g-4 align-items-center">
-    <div class="col-lg-6 reveal">
-      <span class="badge badge-soft">{{ locale.content.hero.badge }}</span>
-      <h1 class="mt-3 mb-2">{{ locale.content.hero.title }}</h1>
-      <h6 class="text-secondary mb-3">{{ locale.content.hero.subtitle }}</h6>
-      <p class="text-secondary">
-        {{ locale.content.hero.body }}
-      </p>
-      <div class="d-flex flex-wrap gap-2 mt-3">
-        {#
-          Looping over hero.ctas means adding/removing/reordering a
-          button is a data change (home.ar.json / home.en.json), not a
-          template change. iconMarginClass exists because the original
-          Arabic buttons used "ms-1" (margin-start) and the English ones
-          used "me-1" (margin-end) on their icons — a small existing
-          inconsistency between the two old files, preserved here as
-          data rather than silently normalized.
-        #}
-        {% for cta in locale.content.hero.ctas %}
-        <a class="btn {{ cta.btnClass }}" href="{{ cta.href }}">
-          <i class="bi {{ cta.icon }} {{ locale.content.hero.iconMarginClass }}"></i> {{ cta.label }}
-        </a>
-        {% endfor %}
-      </div>
+{#
+  Editorial hero (Phase 3, visual system v2): every string here is an
+  existing home.*.json field, just re-laid-out — hero.title/subtitle/
+  body/ctas/badge are unchanged from the previous design, nothing
+  invented. The two new lines in the floating stat bar (deadline +
+  status) are built from the same countdown.deadline value the
+  countdown section below already uses, not new facts — "Open"/
+  "Closed" is computed client-side in pageScript by comparing that
+  deadline to the current date, same idea as the countdown timer
+  itself, so it flips on its own after the deadline passes instead of
+  needing a manual edit.
+#}
+<section class="dz-hero">
+<div class="dz-hero-grid">
+  <div class="dz-hero-copy reveal">
+    <span class="dz-badge">{{ locale.content.hero.badge }}</span>
+    <h1 class="dz-display">{{ locale.content.hero.title }}</h1>
+    <p class="dz-subtitle">{{ locale.content.hero.subtitle }}</p>
+    <p class="dz-body">{{ locale.content.hero.body }}</p>
+    <div class="d-flex flex-wrap gap-2">
+      {% for cta in locale.content.hero.ctas %}
+      <a class="btn {{ cta.btnClass }}" href="{{ cta.href }}">
+        <i class="bi {{ cta.icon }} {{ locale.content.hero.iconMarginClass }}"></i> {{ cta.label }}
+      </a>
+      {% endfor %}
     </div>
-    <div class="col-lg-6 reveal">
-      <img class="w-100 hero-img"
-           src="{{ locale.content.hero.image.src }}"
-           alt="{{ locale.content.hero.image.alt }}"
-           loading="eager" decoding="async" width="1600" height="1000">
+  </div>
+  <div class="dz-hero-photo reveal">
+    <img src="{{ locale.content.hero.image.src }}"
+         alt="{{ locale.content.hero.image.alt }}"
+         loading="eager" decoding="async" width="1600" height="1000">
+    <div class="dz-stat-bar">
+      <div class="dz-stat-row">
+        <span class="dz-stat-label">{{ locale.content.hero.metaDeadlineLabel }}</span>
+        <span class="dz-stat-value" id="heroDeadlineValue"></span>
+      </div>
+      <div class="dz-stat-row">
+        <span class="dz-stat-label">{{ locale.content.hero.metaStatusLabel }}</span>
+        <span class="dz-stat-value" id="heroStatusValue">{{ locale.content.hero.metaStatusOpen }}</span>
+      </div>
     </div>
   </div>
 </div>
@@ -166,8 +356,19 @@ object-fit:cover; object-position:center;
 
 <!-- COUNTDOWN -->
 <section class="gb-band py-5">
+{#
+  Decorative wave layer (Phase 3, round 3): purely atmospheric, no
+  information of its own — aria-hidden, and it sits behind the actual
+  content via z-index (see .dz-deco-wave/.gb-band .container in
+  pageStyle). Two soft flowing lines, navy and amber, at very low
+  opacity so they read as texture, not as competing content.
+#}
+<svg class="dz-deco-wave" viewBox="0 0 800 200" preserveAspectRatio="none" aria-hidden="true">
+  <path d="M0,110 C150,190 350,30 500,110 C650,190 750,70 800,110" fill="none" stroke="#00284C" stroke-width="2" opacity="0.05"/>
+  <path d="M0,150 C150,70 350,190 500,150 C650,110 750,170 800,130" fill="none" stroke="#E8952B" stroke-width="2" opacity="0.08"/>
+</svg>
 <div class="container text-center">
-  <div class="count-box p-4 text-white reveal">
+  <div class="count-box p-4 reveal">
     <div class="mb-2 fw-semibold">{{ locale.content.countdown.label }}</div>
     {#
       data-deadline is read by the countdown script down in pageScript.
@@ -207,46 +408,54 @@ object-fit:cover; object-position:center;
    section the way there is in Hero/About below. #}
 <section class="py-5" id="announcements">
 <div class="container">
-  <div class="text-center text-secondary mb-3">{{ locale.content.announcements.heading }}</div>
+  <div class="text-center dz-muted-on-cream mb-3">{{ locale.content.announcements.heading }}</div>
   <div id="ann-wrap" class="ann-list"><!-- injected by JS --></div>
 </div>
 </section>
 
-<!-- ABOUT -->
-<section class="py-5">
+{#
+  About (Phase 3, visual system v2): heading/body/list items are all
+  unchanged existing fields. The old inline "trophy icon + prize
+  amounts" line is now its own stat cell below instead of a bullet in
+  the list — same prize.amounts data, just presented as a number
+  instead of a sentence fragment, so it isn't shown twice. Track count
+  (3) is real and already reflected on the Registration page (three
+  track cards, names still placeholder) — see tracksStatValue in
+  home.*.json. Deliberately only 2 stat cells, not the 4 the reference
+  mockup used: duration/participant-count/university-count aren't in
+  any data file, and this project's rule is flag what's missing rather
+  than invent it. No decorative texture layer here (round 3 had a
+  node-network SVG; removed in round 4 along with the extra accent
+  color — see the big comment above .dz-about in pageStyle).
+#}
+<section class="dz-about py-5">
 <div class="container">
   <div class="row g-4 align-items-center">
-    <div class="col-lg-6 reveal">
-      <img class="about-img shadow-sm"
+    <div class="col-lg-5 reveal">
+      <img class="w-100 rounded-2xl shadow-soft"
            src="{{ locale.content.about.image.src }}"
            alt="{{ locale.content.about.image.alt }}"
            loading="lazy" decoding="async" width="1400" height="500">
     </div>
-    <div class="col-lg-6 reveal">
-      <h5>{{ locale.content.about.heading }}</h5>
-      <p class="text-secondary">
-        {{ locale.content.about.body }}
-      </p>
-      <div class="row">
-        <div class="col-6 about-list">
-          {% for item in locale.content.about.listCol1 %}
-          <div class="mb-2"><i class="bi {{ item.icon }}"></i> {{ item.text }}</div>
-          {% endfor %}
+    <div class="col-lg-7 reveal">
+      <h2 class="dz-about-heading">{{ locale.content.about.heading }}</h2>
+      <p class="dz-about-body">{{ locale.content.about.body }}</p>
+      <ul class="dz-about-list">
+        {% for item in locale.content.about.listCol1 %}
+        <li><i class="bi {{ item.icon }}"></i> {{ item.text }}</li>
+        {% endfor %}
+        <li><i class="bi {{ locale.content.about.listCol2Extra.icon }}"></i> {{ locale.content.about.listCol2Extra.text }}</li>
+      </ul>
+      <div class="dz-stats-grid">
+        <div class="dz-stat-cell">
+          <span class="dz-stat-num">
+            {% for amount in locale.content.about.prize.amounts %}{{ amount }}{% if not loop.last %} / {% endif %}{% endfor %}
+          </span>
+          <span class="dz-stat-cell-label">{{ locale.content.about.prizeStatLabel }}</span>
         </div>
-        <div class="col-6 about-list">
-          <div class="mb-2">
-            <i class="bi bi-trophy-fill"></i>
-                {{ locale.content.about.prize.prefix }}
-              {#
-                Loops over the three prize amounts and puts a " / "
-                separator between them, but not after the last one —
-                `loop.last` is a built-in Nunjucks variable available
-                inside any {% for %} loop.
-              #}
-              {% for amount in locale.content.about.prize.amounts %}<span style="color:#7f09c8; font-weight:600;">{{ amount }}</span>{% if not loop.last %} / {% endif %}{% endfor %}{% if locale.content.about.prize.spaceBeforeRiyalIcon %} {% endif %}<img src="assets/icons/saudi-riyal-symbol.svg" alt="{{ locale.content.about.prize.riyalAlt }}"
- style="display:inline; height:1em; width:auto; vertical-align:middle; {{ locale.content.about.prize.riyalIconMarginStyle }};">{% if locale.content.about.prize.suffix %} {{ locale.content.about.prize.suffix }}{% endif %}
-          </div>
-          <div class="mb-2"><i class="bi {{ locale.content.about.listCol2Extra.icon }}"></i> {{ locale.content.about.listCol2Extra.text }}</div>
+        <div class="dz-stat-cell">
+          <span class="dz-stat-num">{{ locale.content.about.tracksStatValue }}</span>
+          <span class="dz-stat-cell-label">{{ locale.content.about.tracksStatLabel }}</span>
         </div>
       </div>
     </div>
@@ -261,7 +470,7 @@ object-fit:cover; object-position:center;
   <p class="mb-4" style="font-size:1.05rem;">
     {{ locale.content.cta.body }}
   </p>
-  <a class="btn {{ locale.content.cta.buttonExtraClass }}px-4 py-2" href="{{ locale.content.cta.buttonHref }}" style="background:#fff; color:#00284C; font-weight:700;">
+  <a class="btn {{ locale.content.cta.buttonExtraClass }}px-4 py-2" href="{{ locale.content.cta.buttonHref }}">
     {{ locale.content.cta.buttonLabel }}
   </a>
 </div>
@@ -288,6 +497,28 @@ object-fit:cover; object-position:center;
   content edit to trip over it.
 #}
 (function(){
+  {#
+    Hero stat bar (Phase 3, visual system v2): formats the SAME
+    countdown.deadline value the timer below already uses — not a new
+    fact, just a second, human-readable presentation of it ("Sep 28,
+    2026" instead of a ticking counter) plus a derived Open/Closed
+    status. Computed client-side (not hardcoded "Open" in the copy
+    file) so it keeps being correct after the deadline passes without
+    anyone needing to remember to edit it.
+  #}
+  const heroDeadlineEl = document.getElementById('heroDeadlineValue');
+  const heroStatusEl = document.getElementById('heroStatusValue');
+  if (heroDeadlineEl && heroStatusEl) {
+    const heroDeadline = new Date('{{ locale.content.countdown.deadline | safe }}');
+    heroDeadlineEl.textContent = heroDeadline.toLocaleDateString(
+      {% if locale.content.announcements.locale %}'{{ locale.content.announcements.locale | safe }}'{% else %}undefined{% endif %},
+      { year: 'numeric', month: 'short', day: 'numeric' }
+    );
+    heroStatusEl.textContent = Date.now() < heroDeadline.getTime()
+      ? '{{ locale.content.hero.metaStatusOpen | safe }}'
+      : '{{ locale.content.hero.metaStatusClosed | safe }}';
+  }
+
   // ----- Countdown timer -----
   // Reads the data-deadline attribute set above, then recalculates the
   // remaining days/hours/minutes/seconds every second.

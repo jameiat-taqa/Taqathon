@@ -12,7 +12,11 @@
       { "href": "submissions.html", "icon": "bi-rocket-takeoff", "label": "تسليم المشروع", "btnClass": "btn-warning text-white" }
     ],
     "image": { "src": "assets/gallery/2AN08242.jpg", "alt": "توربينات رياح لتوليد طاقة نظيفة في المملكة" },
-    "iconMarginClass": "ms-1"
+    "iconMarginClass": "ms-1",
+    "metaDeadlineLabel": "التسجيل يُغلق في",
+    "metaStatusLabel": "الحالة",
+    "metaStatusOpen": "مفتوح",
+    "metaStatusClosed": "مغلق"
   },
   "countdown": {
     "label": "الموعد النهائي للتسجيل في طاقَثون 2026",
@@ -35,7 +39,10 @@
       { "icon": "bi-person-lines-fill", "text": "إرشاد ومرافقة تقنية" }
     ],
     "prize": { "prefix": "جوائز:", "amounts": ["18,000", "12,000", "9,000"], "riyalAlt": "ريال سعودي", "riyalIconMarginStyle": "margin-inline-start:.25rem", "spaceBeforeRiyalIcon": false },
-    "listCol2Extra": { "icon": "bi-building-check", "text": "فرص تبنّي من شركات كبرى" }
+    "listCol2Extra": { "icon": "bi-building-check", "text": "فرص تبنّي من شركات كبرى" },
+    "prizeStatLabel": "الجوائز",
+    "tracksStatValue": "3",
+    "tracksStatLabel": "المسارات"
   },
   "cta": {
     "heading": "ابقَ على المسار",

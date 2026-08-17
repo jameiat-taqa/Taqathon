@@ -12,7 +12,11 @@
       { "href": "submissions-en.html", "icon": "bi-rocket-takeoff", "label": "Submit Project", "btnClass": "btn-warning text-white" }
     ],
     "image": { "src": "assets/gallery/2AN08242.jpg", "alt": "Wind turbines in Saudi Arabia generating clean energy" },
-    "iconMarginClass": "me-1"
+    "iconMarginClass": "me-1",
+    "metaDeadlineLabel": "Registration closes",
+    "metaStatusLabel": "Status",
+    "metaStatusOpen": "Open",
+    "metaStatusClosed": "Closed"
   },
   "countdown": {
     "label": "Taqathon 2026 Registration Deadline",
@@ -35,7 +39,10 @@
       { "icon": "bi-person-lines-fill", "text": "Mentorship and technical guidance" }
     ],
     "prize": { "prefix": "Compete for", "amounts": ["18,000", "12,000", "9,000"], "suffix": "prizes", "riyalAlt": "Saudi Riyal", "riyalIconMarginStyle": "margin-left:.25rem", "spaceBeforeRiyalIcon": true },
-    "listCol2Extra": { "icon": "bi-building-check", "text": "Potential adoption by major companies" }
+    "listCol2Extra": { "icon": "bi-building-check", "text": "Potential adoption by major companies" },
+    "prizeStatLabel": "Prizes",
+    "tracksStatValue": "3",
+    "tracksStatLabel": "Tracks"
   },
   "cta": {
     "heading": "Stay on track",
