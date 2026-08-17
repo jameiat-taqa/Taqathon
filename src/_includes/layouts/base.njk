@@ -81,6 +81,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
   {#
+    pageHead (Phase 3, visual system v2): an escape hatch for a page
+    that needs its own extra <head> tags — right now that's just
+    Home's editorial redesign pulling in Big Shoulders Display/Tajawal/
+    DM Mono, fonts no other page uses yet. Kept as a separate block
+    from the global Cairo/Poppins link above so pages that don't need
+    the extra weight don't pay for it; a page opts in with
+    {% block pageHead %} the same way it opts into {% block pageStyle %}.
+  #}
+  {% block pageHead %}{% endblock %}
+
+  {#
     The original site loaded a different Bootstrap CSS build depending
     on language: bootstrap.rtl.min.css for Arabic pages (RTL = right to
     left, so it mirrors margins, text-align, etc.) and the regular

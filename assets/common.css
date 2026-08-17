@@ -32,7 +32,71 @@
   --surface-hover:#eef3f9;
   --icon-circle-bg:linear-gradient(180deg,#eef6ff,#f3fbff);
   --icon-circle-border:#c9ddff;
+  --brand-green-deep:#047857;
+  --brand-blue-deep:#0066CC;
+  --brand-grad-deep: linear-gradient(90deg, var(--brand-green-deep), var(--brand-blue-deep));
+
+  /* Editorial redesign (Phase 3, visual system v2) — a new palette and
+     type system, set up here as the reusable foundation for the
+     site's eventual full redesign per the brief, even though only
+     Home uses it so far (every other page still reads the --brand-*
+     and --surface-* tokens above; the two systems will get reconciled
+     when the redesign reaches the rest of the site, not before).
+
+     Deliberately only TWO neutrals, not three: cream (light) and
+     --brand-dark (dark) — reusing the site's EXISTING navy instead of
+     inventing a separate near-black "ink" the way the first pass at
+     this redesign did. That first pass put cream, a new invented
+     black, AND the existing navy footer all on the same page — three
+     competing dark/light tones was exactly the "looks like several
+     different pages" feedback that prompted this rewrite. Reusing
+     --brand-dark means any dark section on this page IS the same
+     color as the footer, so the page can flow straight into it with
+     no seam, instead of introducing a color the footer doesn't share.
+
+     Accent-color rule (verified by contrast math, not assumed): amber
+     only works as foreground TEXT on the dark neutral (6.23:1 on
+     --brand-dark; 2.26:1 on cream — fails); terra only works as
+     foreground text on the light neutral (4.83:1 on cream; 2.91:1 on
+     --brand-dark — fails). Never cross them. Both work as a button
+     BACKGROUND with the opposite neutral as text in either context
+     (e.g. --color-amber background + --brand-dark text = 6.23:1),
+     since a solid button carries its own self-contained pairing
+     regardless of the section it sits in. */
+  --color-amber:#E8952B;
+  --color-terra:#C4401A;
+  --color-dust:#6B6560;
+  --color-mist:#c9c5bf;
+  /* Round 7: three backgrounds now. Cream carries Hero and About.
+     Sky — Countdown's own tone — now ALSO carries the CTA band
+     ("ابقَ على المسار [Stay on track] the same blue as Countdown"),
+     so the two moments that most read as "do something" (check the
+     deadline, take the final action) share one tone. Chrome (navbar +
+     footer) gets its own third tone, --color-stone — round 6 had
+     chrome reuse sky too, but with sky now appearing in two content
+     sections as well, that would have meant sky everywhere; direct
+     feedback asked for a genuinely different, unused, non-clashing
+     off-white for chrome specifically. Stone is neutral (neither
+     cream's warmth nor sky's coolness) so it reads as its own thing
+     rather than a near-miss of either. All three verified against
+     navy (13+:1) and terra (4.5+:1) text. */
+  --color-cream:#FAF8F4;
+  --color-sky:#EFF5FB;
+  --color-stone:#F4F3F0;
+  --font-display:'Big Shoulders Display', Poppins, sans-serif;
+  --font-mono-label:'DM Mono', ui-monospace, monospace;
 }
+
+/* Visual refresh (Phase 3): --brand-grad-deep is a richer, more
+   saturated version of --brand-grad for anything that puts white text
+   directly on top of the gradient (.btn-brand). It's not a brand-color
+   change — --brand-blue/--brand-green themselves are untouched and
+   still used everywhere else (icons, links, accents) — it's a second,
+   text-safe stop pair chosen so white text passes 4.5:1 across the
+   ENTIRE gradient (previously as low as 2.16:1 at the green end; see
+   the still-open finding in PROGRESS.md's accessibility-pass entry,
+   which this closes). Deeper tones also just read more premium than
+   the brighter default. */
 
 /* ===== Dark Mode ===== */
 /* Phase 3: driven by data-bs-theme on <html> (set in base.njk, before
@@ -113,7 +177,7 @@ footer{ flex-shrink:0; }  /* Footer never shrinks, stays at bottom */
 /* Reusable utility classes for consistent styling across pages */
 .rounded-2xl{ border-radius:1rem; }                    /* Large rounded corners */
 .shadow-soft{ box-shadow:0 10px 30px rgba(0,0,0,.12); } /* Soft shadow effect */
-.card-lite{ background:var(--surface); border:1px solid var(--surface-border); } /* Themed card background */
+.card-lite{ background:var(--surface); border:1px solid var(--surface-border); box-shadow:0 1px 3px rgba(0,0,0,.03); } /* Themed card background + a touch of depth */
 .text-secondary{ color:var(--muted)!important; }         /* Muted text color */
 .divider-grad{ height:10px; background:var(--brand-grad); border-radius:.75rem; } /* Gradient divider */
 
@@ -131,12 +195,29 @@ footer{ flex-shrink:0; }  /* Footer never shrinks, stays at bottom */
 }
 
 /* ===== Navbar ===== */
-/* Main navigation bar styling */
+/* Main navigation bar styling. Background matches footer's own
+   --color-stone/--brand-dark pair exactly (not the generic --surface
+   token every card/panel uses) — nav and footer bookend every page in
+   an identical tone in both light and dark mode, while ordinary
+   content surfaces (cards, the search modal, etc.) keep using
+   --surface independently. History: --color-pearl (round 5, too close
+   to cream) → --color-sky (round 6, but then round 7 put sky in two
+   content sections too, so reusing it for chrome as well would have
+   meant sky nearly everywhere) → --color-stone (round 7), a genuinely
+   third, neutral tone — neither cream's warmth nor sky's coolness —
+   used nowhere else on the page, so chrome reads as its own distinct
+   band rather than a near-miss of whatever's directly below it. */
 .navbar{
-  background:var(--surface);
+  background:var(--color-stone);
   box-shadow:0 2px 10px rgba(0,0,0,.04);
   padding-top:.4rem; padding-bottom:.4rem;
+  /* Same stone tone as the footer, but sitting next to a different
+     section color (cream hero vs. sky CTA band) makes identical colors
+     read as slightly different — simultaneous contrast. A faint navy
+     edge on both gives the eye a hard line to reset at instead. */
+  border-bottom:1px solid rgba(0,40,76,.08);
 }
+[data-bs-theme="dark"] .navbar{ background:var(--brand-dark); border-bottom-color:rgba(255,255,255,.08); }
 .logo-mark{ height:60px; width:auto; object-fit:contain; }      /* Main Taqathon logo */
 .assoc-logo{ height:48px; width:auto; object-fit:contain; }       /* Association logo */
 /* color:var(--text), not var(--brand-dark): --brand-dark is the
@@ -217,13 +298,14 @@ footer{ flex-shrink:0; }  /* Footer never shrinks, stays at bottom */
 @media (max-width:991.98px){
   .navbar .navbar-collapse{
     position:absolute; inset-inline:0; top:100%;  /* Full width, below navbar */
-    background:var(--surface); padding:.75rem 1rem;
+    background:var(--color-stone); padding:.75rem 1rem;
     border-top:1px solid var(--surface-border);
     box-shadow:0 10px 24px rgba(0,0,0,.08);
     z-index:1000;
   }
   .logo-mark{ height:44px; } .assoc-logo{ height:32px; }  /* Smaller logos on mobile */
 }
+[data-bs-theme="dark"] .navbar .navbar-collapse{ background:var(--brand-dark); }
 
 /* ===== Icon Circle ===== */
 /* Circular icon container used for page headers and feature highlights */
@@ -238,11 +320,30 @@ footer{ flex-shrink:0; }  /* Footer never shrinks, stays at bottom */
 }
 
 /* ===== Brand Button ===== */
-/* Primary action button with brand gradient */
-.btn-brand{ background:var(--brand-grad); border:0; color:#fff; font-weight:600; }
-.btn-brand:hover{ filter:brightness(.95); color:#fff; }
+/* Primary action button with brand gradient. --brand-grad-deep (not
+   --brand-grad) — see the :root comment above for why: this is the
+   one place on the site where text sits directly on the gradient. */
+.btn-brand{
+  background:var(--brand-grad-deep); border:0; color:#fff; font-weight:600;
+  box-shadow:0 4px 14px rgba(0,102,204,.25);
+  transition:box-shadow .2s ease, transform .2s ease, filter .2s ease;
+}
+.btn-brand:hover{ filter:brightness(1.08); color:#fff; box-shadow:0 6px 20px rgba(0,102,204,.32); transform:translateY(-1px); }
 
 /* ===== Footer ===== */
-/* Site footer styling */
-footer{ background:var(--brand-dark); color:#cfd6df; }
-footer a{ color:#cfd6df; text-decoration:none; }
+/* Site footer styling. Was unconditionally dark navy in every mode —
+   a deliberate call at the time ("footer stays dark by design," see
+   the dark-mode entry in PROGRESS.md), but round 3 of the Home
+   redesign revisited that: light mode needs to be genuinely light
+   everywhere, footer included, or the page ends its scroll on a dark
+   note that contradicts the rest of the page. Footer now actually
+   respects data-bs-theme like the rest of the site's chrome already
+   does — light + navy text in light mode, the original dark navy +
+   light text in dark mode. This is shared chrome, so it changes every
+   page's footer, not just Home's — but it was already meant to be
+   theme-aware along with everything else; it just wasn't wired up
+   that way yet. */
+footer{ background:var(--color-stone); color:var(--brand-dark); border-top:1px solid rgba(0,40,76,.08); }
+footer a{ color:var(--brand-dark); text-decoration:none; }
+[data-bs-theme="dark"] footer{ background:var(--brand-dark); color:#cfd6df; border-top-color:rgba(255,255,255,.08); }
+[data-bs-theme="dark"] footer a{ color:#cfd6df; }
