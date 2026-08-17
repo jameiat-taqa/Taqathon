@@ -88,9 +88,13 @@ permalink: "{{ locale.permalink }}"
   accents; terra reads as text on the light tones. Buttons stay self-
   contained (amber bg + navy text) regardless of section.
 
-  Dark mode is explicitly NOT built here yet — the plan (not yet
-  implemented) is a mirror of this exact structure: navy as the base
-  everywhere, these light tones demoted to small accents instead.
+  Round 8: dark mode built as the mirror the earlier rounds planned
+  for — navy (well, --bg/--surface, see common.css) as the base
+  everywhere, cream/sky demoted to accents. See the big "DARK MODE
+  MIRROR" comment block further down for the full account of what
+  flips and why; the short version is nothing here in light mode
+  needed to change, dark mode is entirely additive [data-bs-theme="dark"]
+  overrides layered on top.
 #}
 .dz-hero{ background:var(--color-cream); color:var(--brand-dark); overflow:hidden; position:relative; border-bottom:1px solid rgba(0,40,76,.08); }
 {# Same faint navy hairline as the navbar/footer border (common.css)
@@ -162,6 +166,12 @@ permalink: "{{ locale.permalink }}"
 .gb-band{ background:var(--color-sky); color:var(--brand-dark); position:relative; overflow:hidden; border-bottom:1px solid rgba(0,40,76,.08); }
 .gb-band .container{ position:relative; z-index:1; }
 .dz-deco-wave{ position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:0; }
+{# stroke set via CSS (not the SVG's stroke="" attribute) specifically
+   so dark mode can override it below — a CSS property always beats an
+   SVG presentation attribute, so this is the one styling hook this
+   inline SVG actually has. #}
+.dz-wave-line-a{ stroke:#00284C; }
+.dz-wave-line-b{ stroke:#E8952B; }
 .count-box{
 position:relative; background:rgba(232,149,43,.07); border:1px solid rgba(232,149,43,.25);
 border-radius:1rem; max-width:650px; margin-inline:auto; padding:2rem;
@@ -300,6 +310,97 @@ display:grid; place-items:center; font-size:16px;
 .cta-band .btn{ background:var(--color-amber); border:0; color:var(--brand-dark); font-weight:700; }
 .cta-band .btn:hover{ filter:brightness(1.05); color:var(--brand-dark); }
 
+{#
+  ===== DARK MODE MIRROR (Phase 3, round 8) =====
+
+  Everything above this point is untouched — dark mode is purely
+  additive [data-bs-theme="dark"] overrides layered on top, same
+  approach common.css already uses for the navbar/footer.
+
+  THE MIRROR, AS PLANNED BACK IN ROUND 3: light mode is three light
+  tones (cream/sky/stone) with navy as a small accent (the hero stat
+  bar, About's two stat cells). Dark mode flips that: --color-cream
+  and --color-sky are redefined in common.css's [data-bs-theme="dark"]
+  block to reuse the site's existing dark tokens (--bg/--surface) —
+  so every section background here flips FOR FREE, nothing to change
+  in this file for that part. What this file still has to handle by
+  hand is everything that isn't a plain background:var(--color-*):
+  text colors hardcoded to var(--brand-dark)/var(--color-dust) (those
+  don't flip on their own — --brand-dark is the site's fixed identity
+  color, deliberately the same in both modes), and the accent-color
+  swap below.
+
+  ACCENT SWAP: light mode's rule is "amber only reads on the dark
+  neutral, terra only reads on the light neutral" (verified by
+  contrast math in common.css). Once the main section backgrounds ARE
+  the dark neutral, amber becomes the section's primary accent
+  (badge, CTA heading, decorative orbs) — taking over terra's role.
+  Terra doesn't disappear: it moves to the hero stat bar and About's
+  stat cells, which flip from "small dark accent on a light section"
+  to "small LIGHT accent on a dark section" (background flips to a
+  fixed, theme-invariant cream — not var(--color-cream), which is
+  dark in this mode — same self-contained-regardless-of-theme idea
+  already used by count-tile and every button), and terra is what
+  passes contrast on THAT light surface (4.83:1, verified) the way
+  amber no longer does (2.26:1, fails) once the surface underneath it
+  is light again.
+#}
+[data-bs-theme="dark"] .dz-hero,
+[data-bs-theme="dark"] .gb-band,
+[data-bs-theme="dark"] #announcements,
+[data-bs-theme="dark"] .dz-about{
+  color:var(--text);
+  border-bottom-color:rgba(255,255,255,.08);
+}
+[data-bs-theme="dark"] .dz-hero::before{
+  background:radial-gradient(circle, rgba(232,149,43,.10), transparent 70%);
+}
+[data-bs-theme="dark"] .dz-badge{
+  background:rgba(232,149,43,.12); color:var(--color-amber); border-color:rgba(232,149,43,.3);
+}
+[data-bs-theme="dark"] .dz-subtitle,
+[data-bs-theme="dark"] .dz-body,
+[data-bs-theme="dark"] .dz-about-body,
+[data-bs-theme="dark"] .count-label,
+[data-bs-theme="dark"] .dz-muted-on-cream{ color:var(--muted); }
+{#
+  Stat bar/cells: the one deliberate structural flip, not just a
+  color swap — background goes from --brand-dark to a fixed cream
+  hex (never var(--color-cream), which now points at the dark
+  background these elements are meant to stand OUT from), text goes
+  from cream to navy, and the accent number swaps amber → terra to
+  match (see the swap explanation above).
+#}
+[data-bs-theme="dark"] .dz-stat-bar{
+  background:#FAF8F4; color:var(--brand-dark);
+  box-shadow:0 12px 30px rgba(0,0,0,.45);
+}
+[data-bs-theme="dark"] .dz-stat-bar .dz-stat-label{ color:var(--color-dust); }
+[data-bs-theme="dark"] .dz-stat-cell{ background:#FAF8F4; }
+[data-bs-theme="dark"] .dz-stat-num{ color:var(--color-terra); }
+[data-bs-theme="dark"] .dz-stat-cell-label{ color:var(--color-dust); }
+[data-bs-theme="dark"] .dz-wave-line-a{ stroke:var(--text); }
+[data-bs-theme="dark"] .dz-wave-line-b{ stroke:var(--color-amber); }
+[data-bs-theme="dark"] .count-box{ background:rgba(232,149,43,.09); border-color:rgba(232,149,43,.3); }
+[data-bs-theme="dark"] #announcements::before{
+  background-image:radial-gradient(circle, rgba(255,255,255,.06) 1px, transparent 1px);
+}
+[data-bs-theme="dark"] .ann-card{
+  background:var(--surface); border-color:rgba(255,255,255,.08);
+  box-shadow:0 6px 18px rgba(0,0,0,.35);
+}
+[data-bs-theme="dark"] .ann-date{ color:var(--muted); }
+[data-bs-theme="dark"] .ann-text{ color:var(--text); }
+[data-bs-theme="dark"] .type-deadline .ann-icon{ background:rgba(232,149,43,.14); color:var(--color-amber); }
+[data-bs-theme="dark"] .type-update .ann-icon,
+[data-bs-theme="dark"] .type-schedule .ann-icon{ background:rgba(255,255,255,.08); color:var(--text); }
+[data-bs-theme="dark"] .type-general .ann-icon{ background:rgba(255,255,255,.06); color:var(--muted); }
+[data-bs-theme="dark"] .dz-about-heading{ color:var(--text); }
+[data-bs-theme="dark"] .dz-about-list,
+[data-bs-theme="dark"] .dz-about-list .bi{ color:var(--text); }
+[data-bs-theme="dark"] .cta-band{ color:var(--muted); }
+[data-bs-theme="dark"] .cta-band h3{ color:var(--color-amber); }
+
 /* ===== Reveal ===== */
 .reveal{ opacity:0; transform:translateY(12px); transition:opacity .6s ease, transform .6s ease; }
 .reveal.in{ opacity:1; transform:none; }
@@ -364,8 +465,8 @@ display:grid; place-items:center; font-size:16px;
   opacity so they read as texture, not as competing content.
 #}
 <svg class="dz-deco-wave" viewBox="0 0 800 200" preserveAspectRatio="none" aria-hidden="true">
-  <path d="M0,110 C150,190 350,30 500,110 C650,190 750,70 800,110" fill="none" stroke="#00284C" stroke-width="2" opacity="0.05"/>
-  <path d="M0,150 C150,70 350,190 500,150 C650,110 750,170 800,130" fill="none" stroke="#E8952B" stroke-width="2" opacity="0.08"/>
+  <path class="dz-wave-line-a" d="M0,110 C150,190 350,30 500,110 C650,190 750,70 800,110" fill="none" stroke-width="2" opacity="0.05"/>
+  <path class="dz-wave-line-b" d="M0,150 C150,70 350,190 500,150 C650,110 750,170 800,130" fill="none" stroke-width="2" opacity="0.08"/>
 </svg>
 <div class="container text-center">
   <div class="count-box p-4 reveal">

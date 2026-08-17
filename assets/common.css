@@ -125,6 +125,29 @@
   --surface-hover:#1f2a3a;
   --icon-circle-bg:linear-gradient(180deg,#16202c,#111925);
   --icon-circle-border:#2a3f57;
+
+  /* Home page visual system, dark-mode mirror (Phase 3, round 8):
+     redefining --color-cream/--color-sky here — rather than adding
+     one-off overrides inside home.njk — means every section that
+     already reads background:var(--color-cream)/var(--color-sky)
+     flips automatically, and any future page that adopts this same
+     token system inherits working dark-mode backgrounds for free.
+     Reusing --bg/--surface (not new hex values) mirrors how the light
+     palette reused --brand-dark instead of inventing a fourth neutral
+     — one dark "content" tone, one dark "chrome" tone (--brand-dark,
+     already used by nav/footer), not three unrelated darks. Verified
+     distinct-but-related via contrast math: --bg vs --surface is
+     1.14:1, --bg vs --brand-dark is 1.24:1 — both a touch MORE
+     separated than cream/sky/stone were from each other in light mode
+     (1.01–1.05:1), so if that trio read as "clearly different tones"
+     there, this trio reads at least as clearly here.
+     --color-terra/--color-amber are deliberately NOT redefined here:
+     the accent-color rule they follow (amber reads on dark, terra
+     reads on light) is what flips which one is the section's PRIMARY
+     accent in dark mode, not the colors themselves — see the dark-
+     mode block in home.njk's pageStyle for where that plays out. */
+  --color-cream:var(--bg);
+  --color-sky:var(--surface);
 }
 /* The hamburger icon is a Bootstrap-generated inline SVG background
    image, not something `color:` can touch — the navbar is fixed to
