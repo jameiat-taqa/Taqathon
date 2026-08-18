@@ -12,6 +12,11 @@ permalink: "{{ locale.permalink }}"
   Workshop + key-dates table. Every row is data (see
   src/_data/copy/schedule.ar.json / schedule.en.json) rendered through
   two {% for %} loops below, rather than 9 hand-typed <tr> blocks.
+  REAL content, not placeholder — this redesign changes only the
+  visual skin (Phase 3, editorial rollout, page 9 — see about.njk for
+  the token-system rationale), not the loops, the data-driven
+  workTitleFontFamily/-Weight logic, or the external-link rel=noopener
+  handling — all untouched from the previous migration.
 
   TO CUSTOMIZE:
     - Add/remove/reorder a workshop or key date → edit the "workshops"
@@ -19,125 +24,64 @@ permalink: "{{ locale.permalink }}"
       with "action": null renders with an empty action cell (some
       events just don't have a join link).
     - Table headers, section headings → same copy JSON files.
-
-  CLEANED UP DURING MIGRATION (zero visual effect, just removing dead
-  weight found while transcribing the original pages):
-    - Both original pages defined CSS custom properties --row-border
-      and --section-bg that were never actually used anywhere else in
-      either stylesheet. Dropped.
-    - The Arabic page's <style> block re-declared the exact same
-      scrollbar-hiding and sticky-footer rules already present in
-      assets/common.css (word for word) — harmless duplication, not
-      carried forward.
-    - Both original pages had a stray, unmatched closing </a> tag sitting
-      in an empty table cell (browsers silently ignore it) — on
-      DIFFERENT rows in each language, suggesting leftover copy-paste
-      debris rather than anything intentional. Not carried forward.
-    - The Arabic Closing Ceremony row had a trailing <br> with nothing
-      after it in the time cell (likely a deleted second line). Dropped.
-    - .icon-circle i had two different single-property overrides in the
-      two languages (Arabic: line-height:1 only: English: font-size only,
-      which was already redundant since .icon-circle itself sets that
-      size and icons inherit it). Unified to line-height:1 for both,
-      since that's the one override that actually does something.
-    - Icon margin utility classes: unlike Home/Contract (which used
-      "ms-1" for Arabic icons, "me-1" for English), this page's ORIGINAL
-      Arabic version actually used "me-1" almost everywhere already —
-      except one single row (the Closing Ceremony's location icon),
-      which used "ms-1", breaking its own page's pattern. Normalized
-      the whole page to "me-1" (its own majority convention) rather
-      than importing Home/Contract's convention or preserving a likely
-      one-off typo.
-    - The Arabic Closing Ceremony link opened with target="_blank" but
-      no rel="noopener" (the English version had it). Adding
-      rel="noopener" is a real, if minor, security improvement — it
-      stops the newly-opened tab from being able to reach back and
-      manipulate this page via window.opener — so it's applied to both
-      languages now via one shared {% if k.action.external %} check,
-      rather than left missing on the Arabic side.
 #}
 {% extends "layouts/base.njk" %}
+{% block pageHead %}
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=Tajawal:wght@700;800;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+{% endblock %}
 {% block pageStyle %}
-.icon-circle i{ line-height:1; }
+.sc-hero{ background:var(--color-cream); color:var(--brand-dark); padding:4rem 0 3rem; position:relative; overflow:hidden; border-bottom:1px solid rgba(0,40,76,.08); }
+.sc-hero::before{ content:""; position:absolute; top:-20%; inset-inline-end:-10%; width:420px; height:420px; background:radial-gradient(circle, rgba(196,64,26,.08), transparent 70%); border-radius:50%; pointer-events:none; z-index:0; }
+.sc-hero .container{ position:relative; z-index:1; max-width:760px; text-align:center; }
+.sc-badge{ display:inline-flex; background:rgba(196,64,26,.1); color:var(--color-terra); border:1px solid rgba(196,64,26,.25); padding:.4rem .9rem; border-radius:999px; text-transform:uppercase; letter-spacing:.04em; font-size:.75rem; font-weight:700; margin-bottom:1rem; }
+.sc-display{ font-family:var(--font-display); font-weight:700; font-size:clamp(2.5rem, 6vw, 4rem); line-height:1; letter-spacing:-.01em; margin:0; }
+[dir="rtl"] .sc-display{ font-family:'Tajawal', var(--font-display); font-weight:800; letter-spacing:0; }
+[data-bs-theme="dark"] .sc-hero{ color:var(--text); border-bottom-color:rgba(255,255,255,.08); }
+[data-bs-theme="dark"] .sc-hero::before{ background:radial-gradient(circle, rgba(232,149,43,.10), transparent 70%); }
+[data-bs-theme="dark"] .sc-badge{ background:rgba(232,149,43,.12); color:var(--color-amber); border-color:rgba(232,149,43,.3); }
 
-.table thead th{
-  color:#6b7785;
-  font-weight:600;
+.sc-section{ background:var(--color-sky); padding:3.5rem 0 4rem; }
+.sc-table-card{
+  background:#fff; border:1px solid rgba(0,40,76,.08); border-radius:1rem;
+  overflow:hidden; box-shadow:0 6px 18px rgba(0,0,0,.04);
 }
-.section-row td{
-  background:#f2f6fb;
-  font-weight:600;
-  color:#17324a;
+[data-bs-theme="dark"] .sc-table-card{ background:var(--surface); border-color:rgba(255,255,255,.08); box-shadow:0 6px 18px rgba(0,0,0,.35); }
+.sc-table-card .table{ margin-bottom:0; color:var(--brand-dark); }
+[data-bs-theme="dark"] .sc-table-card .table{ color:var(--text); }
+.sc-table-card .table thead th{
+  font-family:var(--font-mono-label); text-transform:uppercase; letter-spacing:.05em; font-size:.7rem;
+  color:var(--color-dust); font-weight:600; border-bottom:1px solid rgba(0,40,76,.1);
 }
-{#
-  Dark mode (Phase 3): these two row tints had no text color of their
-  own, unlike .section-row right above — they were quietly relying on
-  Bootstrap's default table text color, which DOES flip light for dark
-  mode. Left as a fixed pastel background with no fixed text, that
-  combination goes to (near-)illegible light-on-light the moment dark
-  mode is active. Giving each an explicit dark, on-brand text color
-  (same idea as .section-row's own #17324a) keeps these rows reading
-  as the same colored "row type" accent in both themes, rather than
-  either breaking or being flattened to a plain neutral row.
-#}
-.table tbody tr.workshop-row td{ background:#ecfdf5; color:#0a7b60; }
-.table tbody tr.keydate-row td{ background:#eef6ff; color:#0d3b66; }
+[dir="rtl"] .sc-table-card .table thead th{ font-family:inherit; text-transform:none; letter-spacing:0; }
+[data-bs-theme="dark"] .sc-table-card .table thead th{ color:var(--muted); border-bottom-color:rgba(255,255,255,.1); }
 
-.section-kicker{
-  display:inline-flex;
-  align-items:center;
-  gap:.5rem;
-  font-size:.9rem;
-  color:#3664a3;
-  text-transform:uppercase;
-}
-.k-dot{
-  width:8px;
-  height:8px;
-  border-radius:999px;
-  background:var(--brand-blue);
-  box-shadow:0 0 0 4px rgba(0,125,253,.12);
-}
-
-.btn-join{
-  border-color:var(--brand-green);
-  color:#0a7b60;
-  background:#f4fffb;
-}
-{#
-  Accessibility pass (Phase 3): text color on this hover state used to
-  be white, giving a measured contrast ratio of 2.16:1 against
-  --brand-green — badly below WCAG AA's 4.5:1 minimum for text (white
-  on this particular green is genuinely hard to read, not just a
-  technicality). Swapped to --brand-dark (6.91:1, comfortably passes)
-  instead of picking a new background color, since the background
-  itself is the site's actual brand color and changing that is a
-  visual-system decision, not an accessibility bug fix — see
-  PROGRESS.md for the broader finding this was pulled out of.
-#}
-.btn-join:hover{
-  background:var(--brand-green);
-  color:var(--brand-dark);
-  border-color:var(--brand-green);
-}
+.section-row td{ background:rgba(0,40,76,.04); font-weight:700; color:var(--brand-dark); }
+[data-bs-theme="dark"] .section-row td{ background:rgba(255,255,255,.04); color:var(--text); }
+.section-kicker{ display:inline-flex; align-items:center; gap:.5rem; font-size:.85rem; color:var(--color-terra); text-transform:uppercase; letter-spacing:.03em; }
+[data-bs-theme="dark"] .section-kicker{ color:var(--color-amber); }
+.k-dot{ width:8px; height:8px; border-radius:999px; background:var(--color-terra); }
+[data-bs-theme="dark"] .k-dot{ background:var(--color-amber); }
 
 {#
-  work-title font differs meaningfully by language (Cairo for Arabic
-  vs a Poppins-led Latin stack for English), and even the font-weight
-  differs (700 vs 600) — real, deliberate-looking differences, so both
-  come from data rather than a shared value.
-
-  workTitleFontFamily uses "| safe" because it contains a single-quote
-  character ('Cairo'). Without it, Nunjucks's default HTML-escaping
-  turns that quote into its numeric character-entity form — and just
-  like the <script>-tag issue documented in contract.njk, text inside
-  a <style> tag is never HTML-entity-decoded by the browser either. The
-  escaped quote would make the CSS parser treat "Cairo" as an unknown,
-  literally-entity-encoded font name and silently fall back to plain
-  sans-serif instead of loading the actual Cairo font — caught here
-  the same way the script-tag version was caught on the Contract page:
-  by diffing the build output against the live file before shipping.
+  Workshop rows lean amber (this system's "active/energetic" accent),
+  key-date rows lean terra ("attention/marker" accent) — same idea as
+  the original green-vs-blue row-type distinction, just re-expressed
+  in this page's own two accents instead of two colors outside the
+  system. Both keep an explicit text color alongside the tint (same
+  fix the pre-redesign dark-mode pass already made — a tinted
+  background with no fixed text color goes illegible the moment the
+  page's default text color flips).
 #}
+.table tbody tr.workshop-row td{ background:rgba(232,149,43,.06); color:var(--brand-dark); }
+.table tbody tr.keydate-row td{ background:rgba(196,64,26,.05); color:var(--brand-dark); }
+[data-bs-theme="dark"] .table tbody tr.workshop-row td{ background:rgba(232,149,43,.1); color:var(--text); }
+[data-bs-theme="dark"] .table tbody tr.keydate-row td{ background:rgba(196,64,26,.12); color:var(--text); }
+
+.btn-join{ border:1px solid var(--color-terra); color:var(--color-terra); background:transparent; }
+.btn-join:hover{ background:var(--color-amber); color:var(--brand-dark); border-color:var(--color-amber); }
+[data-bs-theme="dark"] .btn-join{ border-color:var(--color-amber); color:var(--color-amber); }
+[data-bs-theme="dark"] .btn-join:hover{ background:var(--color-amber); color:var(--brand-dark); }
+
 .table td .work-title{
   font-family:{{ locale.content.workTitleFontFamily | safe }} !important;
   font-weight:{{ locale.content.workTitleFontWeight }} !important;
@@ -145,81 +89,83 @@ permalink: "{{ locale.permalink }}"
 {% endblock %}
 
 {% block content %}
-<div class="py-5">
-  <div class="container" style="max-width:980px;">
 
-    <div class="text-center mb-4">
-      <div class="icon-circle mx-auto mb-3"><i class="bi {{ locale.content.hero.icon }}"></i></div>
-      <h1 class="h5 mb-1 {{ locale.content.hero.headingClass }}">{{ locale.content.hero.heading }}</h1>
-      <div style="height: 20px;"></div>
-    </div>
+<section class="sc-hero">
+<div class="container">
+  <span class="sc-badge"><i class="bi {{ locale.content.hero.icon }}"></i> {{ locale.content.hero.heading }}</span>
+  <h1 class="sc-display">{{ locale.content.hero.heading }}</h1>
+</div>
+</section>
 
-    <div class="card card-lite rounded-2xl shadow-soft">
-      <div class="table-responsive">
-        <table class="table align-middle mb-0">
-          <thead>
-            <tr>
-              <th>{{ locale.content.tableHeaders.item }}</th>
-              <th>{{ locale.content.tableHeaders.date }}</th>
-              <th>{{ locale.content.tableHeaders.time }}</th>
-              <th style="min-width:180px;">{{ locale.content.tableHeaders.action }}</th>
-            </tr>
-          </thead>
-          <tbody>
+<section class="sc-section">
+<div class="container" style="max-width:980px;">
+  <div class="sc-table-card">
+    <div class="table-responsive">
+      <table class="table align-middle mb-0">
+        <thead>
+          <tr>
+            <th>{{ locale.content.tableHeaders.item }}</th>
+            <th>{{ locale.content.tableHeaders.date }}</th>
+            <th>{{ locale.content.tableHeaders.time }}</th>
+            <th style="min-width:180px;">{{ locale.content.tableHeaders.action }}</th>
+          </tr>
+        </thead>
+        <tbody>
 
-            <!-- Workshops -->
-            <tr class="section-row">
-              <td colspan="4">
-                <span class="section-kicker">
-                  <span class="k-dot"></span> {{ locale.content.workshopsHeading }}
-                </span>
-              </td>
-            </tr>
+          <!-- Workshops -->
+          <tr class="section-row">
+            <td colspan="4">
+              <span class="section-kicker">
+                <span class="k-dot"></span> {{ locale.content.workshopsHeading }}
+              </span>
+            </td>
+          </tr>
 
-            {% for w in locale.content.workshops %}
-            <tr class="workshop-row">
-              <td>
-                <div class="work-title">{{ w.title }}</div>
-                <div class="small text-secondary">{{ w.presenter }}</div>
-              </td>
-              <td>{{ w.date }}</td>
-              <td>{{ w.time }}</td>
-              <td>
-                <a class="btn btn-sm btn-outline-success btn-join" href="{{ w.action.href }}">
-                  <i class="bi {{ w.action.icon }} {{ locale.content.iconMarginClass }}"></i> {{ w.action.label }}
-                </a>
-              </td>
-            </tr>
-            {% endfor %}
+          {% for w in locale.content.workshops %}
+          <tr class="workshop-row">
+            <td>
+              <div class="work-title">{{ w.title }}</div>
+              <div class="small" style="color:var(--color-dust);">{{ w.presenter }}</div>
+            </td>
+            <td>{{ w.date }}</td>
+            <td>{{ w.time }}</td>
+            <td>
+              <a class="btn btn-sm btn-join" href="{{ w.action.href }}">
+                <i class="bi {{ w.action.icon }} {{ locale.content.iconMarginClass }}"></i> {{ w.action.label }}
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
 
-            <!-- Key Dates -->
-            <tr class="section-row">
-              <td colspan="4">
-                <span class="section-kicker">
-                  <span class="k-dot"></span> {{ locale.content.keyDatesHeading }}
-                </span>
-              </td>
-            </tr>
+          <!-- Key Dates -->
+          <tr class="section-row">
+            <td colspan="4">
+              <span class="section-kicker">
+                <span class="k-dot"></span> {{ locale.content.keyDatesHeading }}
+              </span>
+            </td>
+          </tr>
 
-            {% for k in locale.content.keyDates %}
-            <tr class="keydate-row">
-              <td><div class="work-title">{{ k.title }}</div></td>
-              <td>{{ k.date }}</td>
-              <td>{{ k.time }}</td>
-              <td>
-                {% if k.action %}
-                <a class="btn btn-sm btn-outline-success btn-join" href="{{ k.action.href }}"{% if k.action.external %} target="_blank" rel="noopener"{% endif %}>
-                  <i class="bi {{ k.action.icon }} {{ locale.content.iconMarginClass }}"></i> {{ k.action.label }}
-                </a>
-                {% endif %}
-              </td>
-            </tr>
-            {% endfor %}
+          {% for k in locale.content.keyDates %}
+          <tr class="keydate-row">
+            <td><div class="work-title">{{ k.title }}</div></td>
+            <td>{{ k.date }}</td>
+            <td>{{ k.time }}</td>
+            <td>
+              {% if k.action %}
+              <a class="btn btn-sm btn-join" href="{{ k.action.href }}"{% if k.action.external %} target="_blank" rel="noopener"{% endif %}>
+                <i class="bi {{ k.action.icon }} {{ locale.content.iconMarginClass }}"></i> {{ k.action.label }}
+              </a>
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
 
-          </tbody>
-        </table>
-      </div>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
+</section>
+
 {% endblock %}

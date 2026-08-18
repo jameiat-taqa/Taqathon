@@ -3,10 +3,14 @@
   "pageTitle": "Tracks · Taqathon",
   "hero": {
     "icon": "bi-signpost-split",
+    "kicker": "Tracks",
     "heading": "Competition Tracks",
     "headingClass": "fw-semibold",
     "intro": "Placeholder track list — names and descriptions below will be replaced once finalized. See the Registration page to register your team for a track."
   },
+  "ctaLabel": "Ready to register your team for a track?",
+  "ctaButtonLabel": "Go to Registration",
+  "ctaButtonHref": "registration-en.html",
   "tracks": [
     {
       "icon": "bi-lightning-charge",

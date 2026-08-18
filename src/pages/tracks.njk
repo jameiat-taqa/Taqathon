@@ -12,49 +12,108 @@ permalink: "{{ locale.permalink }}"
   this page is purely informational (what each track is about; the
   Registration page is where a team actually signs up for one).
 
-  PLACEHOLDER CONTENT (Phase 2, 2026-08-11): track names/descriptions
-  are stand-ins, deliberately kept identical to registration.ar.json /
-  registration.en.json's placeholder track names — see tracks.ar.json /
-  tracks.en.json's "_comment" field. Update both files together once
-  real tracks arrive so this page and Registration never disagree.
+  PLACEHOLDER CONTENT (still true after this redesign): track names/
+  descriptions are stand-ins, deliberately kept identical to
+  registration.ar.json / registration.en.json's placeholder track
+  names — see tracks.ar.json / tracks.en.json's "_comment" field.
+  This redesign changes ONLY layout/visual treatment, not one word of
+  copy — update both files together once real tracks arrive.
+
+  VISUAL SYSTEM (Phase 3, editorial redesign rollout, page 2 — see
+  about.njk for the full "why" of the token system this reuses). This
+  page's own twist: since the three tracks are numbered and parallel
+  (not narrative like About), the cards are laid out like a numbered
+  index/dossier — big mono numerals, a hairline-divided row on wide
+  screens instead of three separate boxed cards, echoing the
+  editorial "table of contents" feel Big Shoulders Display and DM
+  Mono were picked for in the first place.
 #}
 {% extends "layouts/base.njk" %}
+{% block pageHead %}
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=Tajawal:wght@700;800;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+{% endblock %}
 {% block pageStyle %}
-.track-card{
-  height:100%;
+.tk-hero{ background:var(--color-cream); color:var(--brand-dark); padding:4rem 0 3rem; position:relative; overflow:hidden; border-bottom:1px solid rgba(0,40,76,.08); }
+.tk-hero::before{
+  content:""; position:absolute; top:-20%; inset-inline-end:-10%; width:420px; height:420px;
+  background:radial-gradient(circle, rgba(196,64,26,.08), transparent 70%);
+  border-radius:50%; pointer-events:none; z-index:0;
 }
-.track-icon{
-  width:56px; height:56px; border-radius:1rem;
-  display:flex; align-items:center; justify-content:center;
-  background:var(--brand-grad);
-  color:#fff; font-size:1.5rem;
+.tk-hero .container{ position:relative; z-index:1; max-width:760px; text-align:center; }
+.tk-badge{
+  display:inline-flex; background:rgba(196,64,26,.1); color:var(--color-terra);
+  border:1px solid rgba(196,64,26,.25); padding:.4rem .9rem; border-radius:999px;
+  text-transform:uppercase; letter-spacing:.04em; font-size:.75rem; font-weight:700; margin-bottom:1rem;
 }
+.tk-display{ font-family:var(--font-display); font-weight:700; font-size:clamp(2.5rem, 6vw, 4rem); line-height:1; letter-spacing:-.01em; margin:0 0 .75rem; }
+[dir="rtl"] .tk-display{ font-family:'Tajawal', var(--font-display); font-weight:800; letter-spacing:0; }
+.tk-hero-intro{ color:var(--color-dust); max-width:46ch; margin:0 auto; }
+[data-bs-theme="dark"] .tk-hero{ color:var(--text); border-bottom-color:rgba(255,255,255,.08); }
+[data-bs-theme="dark"] .tk-hero::before{ background:radial-gradient(circle, rgba(232,149,43,.10), transparent 70%); }
+[data-bs-theme="dark"] .tk-badge{ background:rgba(232,149,43,.12); color:var(--color-amber); border-color:rgba(232,149,43,.3); }
+[data-bs-theme="dark"] .tk-hero-intro{ color:var(--muted); }
+
+.tk-index{ background:var(--color-sky); color:var(--brand-dark); padding:1.5rem 0 4rem; }
+[data-bs-theme="dark"] .tk-index{ color:var(--text); }
+.tk-index .container{ max-width:900px; }
+.tk-row{ display:grid; grid-template-columns:repeat(3, 1fr); }
+@media (max-width:767.98px){ .tk-row{ grid-template-columns:1fr; } }
+.tk-item{
+  padding:2.5rem 1.75rem; border-inline-end:1px solid rgba(0,40,76,.1);
+  display:flex; flex-direction:column; gap:.9rem;
+}
+.tk-row .tk-item:last-child{ border-inline-end:0; }
+@media (max-width:767.98px){
+  .tk-item{ border-inline-end:0; border-bottom:1px solid rgba(0,40,76,.1); }
+  .tk-row .tk-item:last-child{ border-bottom:0; }
+}
+[data-bs-theme="dark"] .tk-item{ border-color:rgba(255,255,255,.08); }
+.tk-num{ font-family:var(--font-display); font-weight:700; font-size:2.25rem; color:var(--color-terra); line-height:1; }
+[dir="rtl"] .tk-num{ font-family:inherit; font-weight:800; }
+[data-bs-theme="dark"] .tk-num{ color:var(--color-amber); }
+.tk-item-icon{ font-size:1.4rem; color:var(--brand-dark); }
+[data-bs-theme="dark"] .tk-item-icon{ color:var(--text); }
+.tk-item-name{ font-family:var(--font-display); font-weight:700; font-size:1.35rem; margin:0; }
+[dir="rtl"] .tk-item-name{ font-family:'Tajawal', var(--font-display); font-weight:800; }
+.tk-item-desc{ color:var(--color-dust); font-size:.95rem; margin:0; }
+[data-bs-theme="dark"] .tk-item-desc{ color:var(--muted); }
+
+.tk-cta{ background:var(--color-cream); color:var(--color-dust); text-align:center; padding:3.5rem 0; }
+[data-bs-theme="dark"] .tk-cta{ color:var(--muted); }
+.tk-cta-btn{ background:var(--color-amber); border:0; color:var(--brand-dark); font-weight:700; }
+.tk-cta-btn:hover{ filter:brightness(1.05); color:var(--brand-dark); }
 {% endblock %}
 
 {% block content %}
-<div class="py-5">
-  <div class="container" style="max-width:980px;">
 
-    <div class="text-center mb-4">
-      <div class="icon-circle mx-auto mb-3">
-        <i class="bi {{ locale.content.hero.icon }}"></i>
-      </div>
-      <h1 class="h5 mb-1 {{ locale.content.hero.headingClass }}">{{ locale.content.hero.heading }}</h1>
-      <p class="text-secondary mb-0">{{ locale.content.hero.intro }}</p>
+<section class="tk-hero">
+<div class="container">
+  <span class="tk-badge"><i class="bi {{ locale.content.hero.icon }}"></i> {{ locale.content.hero.kicker }}</span>
+  <h1 class="tk-display">{{ locale.content.hero.heading }}</h1>
+  <p class="tk-hero-intro">{{ locale.content.hero.intro }}</p>
+</div>
+</section>
+
+<section class="tk-index">
+<div class="container">
+  <div class="tk-row">
+    {% for t in locale.content.tracks %}
+    <div class="tk-item">
+      <span class="tk-num">{{ loop.index | pad2 }}</span>
+      <i class="bi {{ t.icon }} tk-item-icon"></i>
+      <h2 class="tk-item-name">{{ t.name }}</h2>
+      <p class="tk-item-desc">{{ t.description }}</p>
     </div>
-
-    <div class="row g-4">
-      {% for t in locale.content.tracks %}
-      <div class="col-md-4">
-        <div class="card card-lite rounded-2xl p-4 track-card">
-          <div class="track-icon mb-3"><i class="bi {{ t.icon }}"></i></div>
-          <h5 class="fw-semibold mb-2">{{ t.name }}</h5>
-          <p class="text-secondary mb-0">{{ t.description }}</p>
-        </div>
-      </div>
-      {% endfor %}
-    </div>
-
+    {% endfor %}
   </div>
 </div>
+</section>
+
+<section class="tk-cta">
+<div class="container">
+  <p class="mb-3" style="font-size:1.05rem;">{{ locale.content.ctaLabel }}</p>
+  <a class="btn tk-cta-btn px-4 py-2" href="{{ locale.content.ctaButtonHref }}">{{ locale.content.ctaButtonLabel }}</a>
+</div>
+</section>
+
 {% endblock %}

@@ -11,20 +11,26 @@ permalink: "{{ locale.permalink }}"
   A message form + contact info + sponsor/supervisor logo panels + an
   embedded Google Map. Sponsor/supervisor entries are data-driven loops
   (see contact.ar.json / contact.en.json), same idea as Schedule's
-  table rows.
+  table rows. pageScript (the shared submit handler, honeypot check,
+  mailto fallback, response-shape tolerance, the misplaced-parenthesis
+  bug fix) is UNCHANGED by this redesign — see git history for the
+  full account of that logic if needed.
 
-  UPDATE: the Arabic and English forms used to be genuinely different
-  features — English had a honeypot, real client-side validation, a
-  disabled-while-sending button, and a mailto: fallback; Arabic had
-  none of that, and the two even checked different fields in the
-  server's response ("ok" vs "result" === "success"). Per explicit
-  direction, Arabic is now brought up to the same full feature set,
-  and pageScript below is ONE shared handler instead of two diverging
-  {% if locale.lang %} branches. The success-check accepts either
-  response shape (see the comment right above `succeeded` in
-  pageScript) since this migration still can't verify which one the
-  live Apps Script backend actually sends — see contact.ar.json's
-  "_comment" field for the full history.
+  DELIBERATE LAYOUT CHOICE, kept from the accessibility pass, NOT
+  reverted by this redesign: this page has no visible hero banner —
+  it jumps straight into the two-column form/info layout by design, so
+  there was never a natural spot for a big visible heading. The h1
+  stays visually-hidden (in the accessibility tree, not on screen) for
+  the same reason it was added then: screen-reader users still get a
+  "what page is this" announcement that sighted users get for free
+  from the tab title and highlighted nav link.
+
+  VISUAL SYSTEM (Phase 3, editorial rollout, page 14 — see about.njk
+  for the token-system rationale). Panels move from the generic
+  --surface/--surface-border tokens to this redesign's own white/
+  rgba(0,40,76,.08) card treatment, matching every other page in this
+  rollout (Judges, Submission Guidelines, Community, etc.) rather than
+  mixing two card styles on one site.
 
   TO CUSTOMIZE:
     - Wording, sponsor/supervisor entries → the copy JSON files, NOT
@@ -32,55 +38,42 @@ permalink: "{{ locale.permalink }}"
     - The Apps Script endpoint → src/_data/config.json.
 #}
 {% extends "layouts/base.njk" %}
+{% block pageHead %}
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=Tajawal:wght@700;800;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+{% endblock %}
 {% block pageStyle %}
-{#
-  Dark mode (Phase 3): background/border here used to be hardcoded
-  white/light-gray. Since this panel's own text (labels, headings) has
-  no explicit color of its own — it just inherits body's var(--text),
-  which DOES flip for dark mode — leaving the panel's background
-  hardcoded would have meant light text silently landing on a still-
-  white box once dark mode shipped. var(--surface)/var(--surface-border)
-  are the same theme-aware tokens common.css's .card-lite already uses.
-#}
-.panel{ background:var(--surface); border:1px solid var(--surface-border); border-radius:12px; }
-.panel-header{ font-weight:{{ locale.content.panelHeaderWeight }}; }
-.btn-gradient{
-  background:var(--brand-grad);
-  color:#fff; border:0; font-weight:{{ locale.content.panelHeaderWeight }};
+.cn-page{ background:var(--color-cream); padding:3.5rem 0 4rem; }
+[data-bs-theme="dark"] .cn-page{ color:var(--text); }
+
+.panel{ background:#fff; border:1px solid rgba(0,40,76,.08); border-radius:1rem; box-shadow:0 6px 18px rgba(0,0,0,.04); }
+[data-bs-theme="dark"] .panel{ background:var(--surface); border-color:rgba(255,255,255,.08); box-shadow:0 6px 18px rgba(0,0,0,.35); }
+.panel-header{ font-family:var(--font-display); font-weight:700; color:var(--brand-dark); }
+[dir="rtl"] .panel-header{ font-family:'Tajawal', var(--font-display); font-weight:800; }
+[data-bs-theme="dark"] .panel-header{ color:var(--text); }
+
+.btn-cn-submit{
+  background:var(--color-amber); color:var(--brand-dark); border:0; font-weight:700;
   padding:.65rem 1rem; border-radius:.6rem;
 }
-.btn-gradient:hover{ filter:brightness(.98); color:#fff; }
-.form-text.small-muted{ color:#6c757d; font-size:.85rem; }
+.btn-cn-submit:hover{ filter:brightness(1.05); color:var(--brand-dark); }
+.form-text.small-muted{ color:var(--color-dust); font-size:.85rem; }
+[data-bs-theme="dark"] .form-text.small-muted{ color:var(--muted); }
 
 .info-list{ list-style:none; padding:0; margin:0; }
 .info-item{ display:flex; gap:.6rem; align-items:flex-start; padding:.25rem 0; }
-.info-item i{ color:var(--brand-blue); font-size:1.05rem; line-height:1.6; }
+.info-item i{ color:var(--color-terra); font-size:1.05rem; line-height:1.6; }
+[data-bs-theme="dark"] .info-item i{ color:var(--color-amber); }
+.info-item a{ color:var(--color-terra); }
+[data-bs-theme="dark"] .info-item a{ color:var(--color-amber); }
 
-.sponsor-logo{
-  max-height:70px;
-  width:auto;
-  object-fit:contain;
-}
+.sponsor-logo{ max-height:70px; width:auto; object-fit:contain; }
+.sponsor-badge{ background:rgba(196,64,26,.1); color:var(--brand-dark); font-weight:700; }
+[data-bs-theme="dark"] .sponsor-badge{ background:rgba(232,149,43,.14); color:var(--text); }
 {% endblock %}
 
 {% block content %}
-<div class="py-5">
+<div class="cn-page">
   <div class="container">
-    {#
-      Accessibility pass (Phase 3): unlike every other page, Contact has
-      no hero section — it jumps straight into the two-column panel
-      layout by design, so there was never a natural spot for a visible
-      page title, and (unlike the panels below) this page had no h1 at
-      all. Rather than add a big visible heading that wasn't part of
-      the original design, this one is visually-hidden but still in the
-      accessibility tree, so screen-reader users get the same "what
-      page am I on" context sighted users get for free from the browser
-      tab title and the highlighted nav link. The five panel headings
-      below (Send us a message / Contact Info / Supervisors / Supporters
-      / Location) are this page's real h2s, promoted from h6 tags with
-      a `.h6` utility class added so they keep their original visual
-      size — same trick used for every other page's hero heading.
-    #}
     <h1 class="visually-hidden">{{ locale.content.pageHeading }}</h1>
     <div class="row g-4">
 
@@ -88,16 +81,10 @@ permalink: "{{ locale.permalink }}"
       <div class="col-lg-7">
         <div class="panel shadow-soft p-3 p-md-4">
           <h2 class="h6 panel-header mb-1">{{ locale.content.form.heading }}</h2>
-          <p class="text-secondary small mb-3">{{ locale.content.form.subheading }}</p>
+          <p class="small mb-3" style="color:var(--color-dust);">{{ locale.content.form.subheading }}</p>
 
           <form id="contactForm" novalidate>
             {% if locale.content.form.hasHoneypot %}
-            {# Hidden from sighted users AND screen readers (aria-hidden),
-               and never reachable by Tab (tabindex="-1") — a real user
-               will never see or fill this in, but a simple bot script
-               that blindly fills every input often will. If it's
-               non-empty on submit, the JS below silently drops the
-               request instead of sending it. #}
             <input type="text" name="hp" id="hp" class="d-none" tabindex="-1" autocomplete="off" aria-hidden="true">
             {% endif %}
 
@@ -126,7 +113,7 @@ permalink: "{{ locale.permalink }}"
             <input type="hidden" name="source" value="{{ locale.content.form.metaSourceValue }}">
             {% endif %}
 
-            <button id="submitBtn" type="submit" class="btn btn-gradient w-100">
+            <button id="submitBtn" type="submit" class="btn btn-cn-submit w-100">
               {{ locale.content.form.submitLabel }} <i class="bi bi-send {{ locale.content.form.submitIconMarginClass }}"></i>
             </button>
             <div id="contactAlert" class="alert mt-3 d-none" role="alert"></div>
@@ -148,7 +135,7 @@ permalink: "{{ locale.permalink }}"
             {% for item in locale.content.contactInfo.items %}
             <li class="info-item">
               <i class="bi {{ item.icon }}"></i>
-              <div><strong>{{ item.label }}</strong> — <a class="link-secondary" href="{{ item.href }}"{% if item.external %} target="_blank" rel="noopener"{% endif %}>{{ item.text }}</a></div>
+              <div><strong>{{ item.label }}</strong> — <a href="{{ item.href }}"{% if item.external %} target="_blank" rel="noopener"{% endif %}>{{ item.text }}</a></div>
             </li>
             {% endfor %}
           </ul>
@@ -163,11 +150,11 @@ permalink: "{{ locale.permalink }}"
                 <img src="{{ s.logoSrc }}" alt="{{ s.logoAlt }}" class="img-fluid sponsor-logo">
               </div>
               <div style="min-height:50px; display:flex; align-items:center; justify-content:center; margin-top:0.75rem;">
-                <div class="badge rounded-pill px-3 py-2" style="background:#e9f3ff; color:#00284C; font-weight:600;">
+                <div class="badge rounded-pill px-3 py-2 sponsor-badge">
                   {{ s.badgeText }}
                 </div>
               </div>
-              <div class="small text-secondary mt-2" style="min-height:50px; display:flex; align-items:center; justify-content:center;">
+              <div class="small mt-2" style="color:var(--color-dust); display:flex; align-items:center; justify-content:center; min-height:50px;">
                 {{ s.orgName }}
               </div>
             </div>
@@ -181,7 +168,7 @@ permalink: "{{ locale.permalink }}"
             {% for s in locale.content.supporters.items %}
             <div class="col-6 col-md-3 d-flex flex-column align-items-center">
               <img src="{{ s.logoSrc }}" alt="{{ s.logoAlt }}" class="img-fluid sponsor-logo mb-2">
-              <div class="small text-secondary text-center">{{ s.orgName }}</div>
+              <div class="small text-center" style="color:var(--color-dust);">{{ s.orgName }}</div>
             </div>
             {% endfor %}
           </div>
@@ -189,7 +176,7 @@ permalink: "{{ locale.permalink }}"
 
         <div class="panel shadow-soft p-3 p-md-4">
           <h2 class="h6 panel-header mb-2">{{ locale.content.location.heading }}</h2>
-          <p class="text-secondary mb-2">
+          <p class="mb-2" style="color:var(--color-dust);">
             {{ locale.content.location.addressHtml | safe }}
           </p>
           <iframe
@@ -208,15 +195,6 @@ permalink: "{{ locale.permalink }}"
 {% endblock %}
 
 {% block pageScript %}
-{#
-  This used to be two entirely separate submit handlers, branched by
-  {% if locale.lang == "ar" %} — Arabic's was a much simpler, less
-  robust version with no honeypot, no client validation, and no
-  mailto fallback. Both languages now share this one handler; only the
-  strings differ (via locale.content.status.*), the same pattern every
-  other page's pageScript already uses. See contact.ar.json's
-  "_comment" field for why this changed and what it replaced.
-#}
 const form = document.getElementById('contactForm');
 const alertBox = document.getElementById('contactAlert');
 const CONTACT_SCRIPT_URL = "{{ locale.config.contactScriptUrl | safe }}";
@@ -236,7 +214,7 @@ form.addEventListener('submit', async (e) => {
   hideAlert();
 
   const fd = new FormData(form);
-  if (fd.get('hp')) { return; } // Honeypot filled in => bot => silently drop
+  if (fd.get('hp')) { return; }
 
   const name = (fd.get('name')||'').trim();
   const email = (fd.get('email')||'').trim();
@@ -274,28 +252,12 @@ form.addEventListener('submit', async (e) => {
       return;
     }
 
-    // Accepts EITHER response shape the Apps Script backend might
-    // actually return — { ok: true, ... } or { result: 'success', ... }.
-    // The two languages used to check different fields (a leftover from
-    // when they were unrelated implementations); rather than guess which
-    // one the live backend really sends and risk breaking whichever
-    // language guessed wrong, both are treated as success here.
     const succeeded = data && (data.ok === true || data.result === 'success');
     if (succeeded){
       const ticket = data.ticketId ? `{{ locale.content.status.ticketIdLabelHtml | safe }}${data.ticketId}{{ locale.content.status.ticketIdCloseHtml | safe }}` : '';
       showAlert('success', '{{ locale.content.status.successMessage | safe }}' + ticket);
       form.reset();
     } else {
-      // BUG FIX: the original had a misplaced closing parenthesis here —
-      // "showAlert('danger', (data && data.error) ) ? data.error : '...'"
-      // — which closes showAlert's argument list one token too early, so
-      // the "? ... : ..." ternary runs AFTER the call, on showAlert's
-      // (unused) return value, instead of choosing what to pass IN. In
-      // the specific case where the server responds {ok:false} with no
-      // error field, that bug would render the literal text "undefined"
-      // in the alert box instead of the intended fallback message. Fixed
-      // by wrapping the whole ternary as the single argument, which is
-      // clearly what was intended.
       showAlert('danger', (data && data.error) ? data.error : '{{ locale.content.status.genericSubmitFailed | safe }}');
     }
   } catch(err){

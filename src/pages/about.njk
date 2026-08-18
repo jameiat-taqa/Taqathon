@@ -14,57 +14,192 @@ permalink: "{{ locale.permalink }}"
   Taqathon itself, per explicit instruction — a simple content page,
   no forms/loops needed.
 
-  PLACEHOLDER/DRAFT CONTENT (Phase 3, 2026-08-11): every body
-  paragraph is a draft stand-in — see about.ar.json / about.en.json's
+  PLACEHOLDER/DRAFT CONTENT (still true as of this redesign): every
+  body paragraph is a draft stand-in — see about.ar.json / about.en.json's
   "_comment" field. The "Official Status" sub-section is flagged with
   extra care there: don't let anyone (including a future editing
   session) casually fill it in with invented legal/registration
-  details — that specifically has to come from the Association.
+  details — that specifically has to come from the Association. This
+  redesign changes ONLY layout/visual treatment, not one word of copy
+  — the placeholder text is exactly what it was before, still flagged
+  as a placeholder (now more visibly so — see .ab-draft-flag below).
+
+  VISUAL SYSTEM (Phase 3, editorial redesign rollout — first page
+  after Home): reuses the exact same tokens/mirror technique Home's
+  hero/About sections established, not a new palette. Where this page
+  differs from Home is intentional, not accidental:
+    - Sections alternate cream → sky → cream → sky, same rhythm Home
+      uses between its own sections, so navigating Home → About feels
+      like the same site, not two different design systems.
+    - Mission/Vision reuse Home's "two navy accent cards" pattern
+      (.ab-pillar, mirrors Home's .dz-stat-cell) — text instead of a
+      number, same idea: a small deliberate dark accent inside an
+      otherwise light section.
+    - Official Status gets a NEW pattern Home didn't need: a visibly
+      flagged "draft, pending confirmation" callout (dashed terra
+      border + mono label), because unlike Home's content, this
+      section is explicitly not-yet-real information about a real
+      organization, and the design should make that obvious to anyone
+      reading the live site, not just to whoever reads this comment.
+    - Dark mode: backgrounds flip for free (--color-cream/--color-sky
+      are already redefined in common.css's dark block from Home's
+      round 8). Text/accent overrides below follow the exact same
+      rules Home's dark-mode block documents in full — amber takes
+      over as the primary dark-mode accent, terra moves to the two
+      small light-accent elements (the pillar cards), navy text
+      becomes --text. See home.njk if the "why" here is unclear.
 #}
 {% extends "layouts/base.njk" %}
-{% block pageStyle %}{% endblock %}
+{% block pageHead %}
+{# Same three fonts as Home, same reasoning: page-scoped so no other
+   page pays for them until the redesign reaches it too. #}
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=Tajawal:wght@700;800;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+{% endblock %}
+{% block pageStyle %}
+.ab-hero{ background:var(--color-cream); color:var(--brand-dark); padding:4rem 0 3rem; position:relative; overflow:hidden; border-bottom:1px solid rgba(0,40,76,.08); }
+.ab-hero::before{
+  content:""; position:absolute; top:-20%; inset-inline-end:-10%; width:420px; height:420px;
+  background:radial-gradient(circle, rgba(196,64,26,.08), transparent 70%);
+  border-radius:50%; pointer-events:none; z-index:0;
+}
+.ab-hero .container{ position:relative; z-index:1; max-width:760px; text-align:center; }
+.ab-badge{
+  display:inline-flex; background:rgba(196,64,26,.1); color:var(--color-terra);
+  border:1px solid rgba(196,64,26,.25); padding:.4rem .9rem; border-radius:999px;
+  text-transform:uppercase; letter-spacing:.04em; font-size:.75rem; font-weight:700; margin-bottom:1rem;
+}
+.ab-display{
+  font-family:var(--font-display); font-weight:700;
+  font-size:clamp(2.5rem, 6vw, 4rem); line-height:1; letter-spacing:-.01em; margin:0;
+}
+[dir="rtl"] .ab-display{ font-family:'Tajawal', var(--font-display); font-weight:800; letter-spacing:0; }
+[data-bs-theme="dark"] .ab-hero{ color:var(--text); border-bottom-color:rgba(255,255,255,.08); }
+[data-bs-theme="dark"] .ab-hero::before{ background:radial-gradient(circle, rgba(232,149,43,.10), transparent 70%); }
+[data-bs-theme="dark"] .ab-badge{ background:rgba(232,149,43,.12); color:var(--color-amber); border-color:rgba(232,149,43,.3); }
+
+{#
+  Both content sections share one rule-set (.ab-section) since they're
+  structurally identical (mono label + display heading + body copy) —
+  only the background alternates, set per-section via a modifier
+  class, same pattern as picking cream vs sky per section on Home.
+#}
+.ab-section{ padding:4rem 0; position:relative; }
+.ab-section.tone-cream{ background:var(--color-cream); color:var(--brand-dark); border-bottom:1px solid rgba(0,40,76,.08); }
+.ab-section.tone-sky{ background:var(--color-sky); color:var(--brand-dark); border-bottom:1px solid rgba(0,40,76,.08); }
+[data-bs-theme="dark"] .ab-section.tone-cream,
+[data-bs-theme="dark"] .ab-section.tone-sky{ color:var(--text); border-bottom-color:rgba(255,255,255,.08); }
+.ab-section .container{ max-width:760px; }
+.ab-label{
+  font-family:var(--font-mono-label); text-transform:uppercase; letter-spacing:.08em;
+  font-size:.75rem; color:var(--color-terra); margin-bottom:.6rem; display:block;
+}
+[dir="rtl"] .ab-label{ font-family:inherit; text-transform:none; letter-spacing:0; }
+[data-bs-theme="dark"] .ab-label{ color:var(--color-amber); }
+.ab-heading{
+  font-family:var(--font-display); font-weight:700; margin-bottom:1.25rem;
+  font-size:clamp(1.75rem, 4vw, 2.5rem); line-height:1.1; letter-spacing:-.01em;
+}
+[dir="rtl"] .ab-heading{ font-family:'Tajawal', var(--font-display); font-weight:800; letter-spacing:0; }
+.ab-body{ color:var(--color-dust); max-width:56ch; margin-bottom:0; }
+[data-bs-theme="dark"] .ab-body{ color:var(--muted); }
+
+{#
+  Official Status: the one section on this page that's explicitly NOT
+  ready to be treated as real content (see the front-matter comment
+  and about.*.json's own flag). Previously this was a plain
+  text-secondary paragraph under a border-top — easy to miss that
+  it's a placeholder rather than finished copy. This makes it
+  unmissable: a dashed terra border (terra already means "needs
+  attention" elsewhere — the Home announcements' deadline-type icon),
+  a small flag icon, and a mono "PENDING CONFIRMATION" label placed
+  ABOVE the placeholder text itself, not buried after it.
+#}
+.ab-draft-flag{
+  border:1.5px dashed rgba(196,64,26,.4); border-radius:.75rem;
+  padding:1.25rem 1.5rem; margin-top:1.75rem; background:rgba(196,64,26,.04);
+}
+.ab-draft-flag-label{
+  display:flex; align-items:center; gap:.5rem;
+  font-family:var(--font-mono-label); text-transform:uppercase; letter-spacing:.06em;
+  font-size:.7rem; font-weight:700; color:var(--color-terra); margin-bottom:.6rem;
+}
+[dir="rtl"] .ab-draft-flag-label{ font-family:inherit; text-transform:none; letter-spacing:0; }
+.ab-draft-flag-body{ color:var(--color-dust); margin:0; font-size:.95rem; }
+[data-bs-theme="dark"] .ab-draft-flag{ border-color:rgba(232,149,43,.4); background:rgba(232,149,43,.06); }
+[data-bs-theme="dark"] .ab-draft-flag-label{ color:var(--color-amber); }
+[data-bs-theme="dark"] .ab-draft-flag-body{ color:var(--muted); }
+
+{#
+  Mission/Vision pillars: same small-dark-accent-in-a-light-section
+  idea as Home's .dz-stat-cell, reused for text instead of a number.
+  Dark mode flips them the same way too — light accent on a dark
+  section, fixed cream (not the theme-flipping token) so they stay
+  self-contained regardless of page theme, exactly like Home's cards.
+#}
+.ab-pillars{ display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:1px; background:rgba(0,40,76,.1); border:1px solid rgba(0,40,76,.1); border-radius:.75rem; overflow:hidden; margin-top:2rem; }
+.ab-pillar{ background:var(--brand-dark); color:var(--color-cream); padding:1.5rem 1.75rem; }
+.ab-pillar-label{ font-family:var(--font-mono-label); text-transform:uppercase; letter-spacing:.06em; font-size:.7rem; color:var(--color-mist); margin-bottom:.5rem; display:block; }
+[dir="rtl"] .ab-pillar-label{ font-family:inherit; text-transform:none; letter-spacing:0; }
+.ab-pillar-text{ margin:0; font-size:.95rem; line-height:1.5; }
+[data-bs-theme="dark"] .ab-pillar{ background:#FAF8F4; color:var(--brand-dark); }
+[data-bs-theme="dark"] .ab-pillar-label{ color:var(--color-dust); }
+
+.ab-cta{ background:var(--color-sky); color:var(--color-dust); text-align:center; padding:4rem 0; position:relative; overflow:hidden; }
+.ab-cta::before{
+  content:""; position:absolute; bottom:-25%; inset-inline-start:-8%; width:360px; height:360px;
+  background:radial-gradient(circle, rgba(232,149,43,.14), transparent 70%);
+  border-radius:50%; pointer-events:none; z-index:0;
+}
+.ab-cta .container{ position:relative; z-index:1; }
+[data-bs-theme="dark"] .ab-cta{ color:var(--muted); }
+.ab-cta-btn{ background:var(--color-amber); border:0; color:var(--brand-dark); font-weight:700; }
+.ab-cta-btn:hover{ filter:brightness(1.05); color:var(--brand-dark); }
+{% endblock %}
 
 {% block content %}
-<div class="py-5">
-  <div class="container" style="max-width:860px;">
 
-    <div class="text-center mb-4">
-      <div class="icon-circle mx-auto mb-3">
-        <i class="bi {{ locale.content.hero.icon }}"></i>
-      </div>
-      <h1 class="h4 {{ locale.content.hero.headingClass }} mb-0">{{ locale.content.hero.heading }}</h1>
-    </div>
+<section class="ab-hero">
+<div class="container">
+  <span class="ab-badge">{{ locale.content.hero.heading }}</span>
+  <h1 class="ab-display">{{ locale.content.taqathon.heading }}</h1>
+</div>
+</section>
 
-    <div class="card card-lite rounded-2xl p-4 mb-4">
-      <h5 class="fw-semibold mb-3">{{ locale.content.association.heading }}</h5>
-      <p class="mb-3">{{ locale.content.association.bodyPlaceholder }}</p>
-      <div class="border-top pt-3">
-        <h6 class="fw-semibold mb-2">{{ locale.content.association.statusLabel }}</h6>
-        <p class="text-secondary mb-0">{{ locale.content.association.statusPlaceholder }}</p>
-      </div>
-    </div>
-
-    <div class="card card-lite rounded-2xl p-4 mb-4">
-      <h5 class="fw-semibold mb-3">{{ locale.content.taqathon.heading }}</h5>
-      <p class="mb-4">{{ locale.content.taqathon.bodyPlaceholder }}</p>
-
-      <div class="row g-4">
-        <div class="col-md-6">
-          <h6 class="fw-semibold mb-2">{{ locale.content.taqathon.missionHeading }}</h6>
-          <p class="mb-0">{{ locale.content.taqathon.missionPlaceholder }}</p>
-        </div>
-        <div class="col-md-6">
-          <h6 class="fw-semibold mb-2">{{ locale.content.taqathon.visionHeading }}</h6>
-          <p class="mb-0">{{ locale.content.taqathon.visionPlaceholder }}</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="text-center">
-      <p class="text-secondary mb-2">{{ locale.content.ctaLabel }}</p>
-      <a class="btn btn-brand btn-lg" href="{{ locale.content.ctaButtonHref }}">{{ locale.content.ctaButtonLabel }}</a>
-    </div>
-
+<section class="ab-section tone-cream">
+<div class="container">
+  <span class="ab-label">01 — {{ locale.content.association.heading }}</span>
+  <h2 class="ab-heading">{{ locale.content.association.heading }}</h2>
+  <p class="ab-body">{{ locale.content.association.bodyPlaceholder }}</p>
+  <div class="ab-draft-flag">
+    <div class="ab-draft-flag-label"><i class="bi bi-flag-fill"></i> {{ locale.content.association.statusLabel }} — {{ locale.content.draftPendingLabel }}</div>
+    <p class="ab-draft-flag-body">{{ locale.content.association.statusPlaceholder }}</p>
   </div>
 </div>
+</section>
+
+<section class="ab-section tone-sky">
+<div class="container">
+  <span class="ab-label">02 — {{ locale.content.taqathon.heading }}</span>
+  <h2 class="ab-heading">{{ locale.content.taqathon.heading }}</h2>
+  <p class="ab-body">{{ locale.content.taqathon.bodyPlaceholder }}</p>
+  <div class="ab-pillars">
+    <div class="ab-pillar">
+      <span class="ab-pillar-label">{{ locale.content.taqathon.missionHeading }}</span>
+      <p class="ab-pillar-text">{{ locale.content.taqathon.missionPlaceholder }}</p>
+    </div>
+    <div class="ab-pillar">
+      <span class="ab-pillar-label">{{ locale.content.taqathon.visionHeading }}</span>
+      <p class="ab-pillar-text">{{ locale.content.taqathon.visionPlaceholder }}</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="ab-cta">
+<div class="container">
+  <p class="mb-3" style="font-size:1.05rem;">{{ locale.content.ctaLabel }}</p>
+  <a class="btn ab-cta-btn px-4 py-2" href="{{ locale.content.ctaButtonHref }}">{{ locale.content.ctaButtonLabel }}</a>
+</div>
+</section>
+
 {% endblock %}

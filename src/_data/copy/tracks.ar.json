@@ -3,10 +3,14 @@
   "pageTitle": "المسارات · طاقَثون",
   "hero": {
     "icon": "bi-signpost-split",
+    "kicker": "المسارات",
     "heading": "مسارات المنافسة",
     "headingClass": "fw-bold",
     "intro": "قائمة المسارات أدناه مؤقتة — سيتم تحديث الأسماء والأوصاف بعد اعتمادها. راجع صفحة التسجيل لتسجيل فريقك في أحد المسارات."
   },
+  "ctaLabel": "مستعد لتسجيل فريقك في أحد المسارات؟",
+  "ctaButtonLabel": "الذهاب إلى التسجيل",
+  "ctaButtonHref": "registration.html",
   "tracks": [
     {
       "icon": "bi-lightning-charge",

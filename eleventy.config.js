@@ -28,6 +28,16 @@
  *     eleventyConfig.addPassthroughCopy("src/assets") style calls here.
  */
 module.exports = function (eleventyConfig) {
+  // pad2: turns 1 into "01", 12 stays "12" — used by the Phase 3
+  // editorial redesign for mono-numeral list markers (tracks,
+  // sponsor tiers, year-archive winner rankings). Nunjucks has no
+  // built-in numeric zero-pad filter (unlike Jinja2's "%02d"|format,
+  // which doesn't exist here), so this is the "reusable formatting
+  // helper" case this file's own top comment already anticipated.
+  eleventyConfig.addFilter("pad2", function (n) {
+    return String(n).padStart(2, "0");
+  });
+
   return {
     dir: {
       input: "src",           // Eleventy looks for templates/data starting here
