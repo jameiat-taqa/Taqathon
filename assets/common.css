@@ -259,10 +259,56 @@ footer{ flex-shrink:0; }  /* Footer never shrinks, stays at bottom */
 .navbar-nav .dropdown-item:active{
   background:var(--brand-blue); color:#fff;
 }
-/* Register button: a highlighted call-to-action, not a plain nav-link —
-   margin-inline-start (not margin-left) so the gap lands on the same
-   side in both LTR and RTL without a separate mirrored rule. */
-.nav-cta{ margin-inline-start:.5rem; }
+
+/* Navbar layout revision (2026-08-18): user feedback was that the nav
+   read as one cramped block — logo, links, Register, and language
+   switch all packed edge-to-edge on the left, then a lot of dead air
+   before the icon cluster on the right. Fix is two-part: (1) give the
+   nav-links their own breathing room instead of relying on Bootstrap's
+   default .nav-link padding alone, via an explicit gap on the list
+   itself; (2) let the brand+links group sit naturally at the start of
+   the bar (no more centering it) while the assoc-fixed cluster gets
+   pushed flush to the far end with margin-inline-start:auto on itself
+   — that's what actually creates the "nav on one side, actions on the
+   other" split, regardless of whether the middle collapse element is
+   present (mobile) or expanded (desktop), since it doesn't depend on
+   the container's own justify-content. column-gap spreads items
+   horizontally at the lg+ breakpoint; row-gap is the (smaller) vertical
+   gap Bootstrap's collapsed mobile menu uses when nav-items stack. */
+.navbar-nav{ gap:.4rem 1.6rem; }
+.navbar .navbar-brand{ margin-inline-end:1.75rem; }
+.navbar .assoc-fixed{ margin-inline-start:auto; gap:.85rem; }
+
+/* Register CTA (2026-08-18): previously just another <li> in the
+   packed nav-links row (same small pill size as the language switch),
+   easy to lose in the row. Now lives in its own slot in assoc-fixed
+   (see navbar.njk) styled as a real primary button — solid fill,
+   generous padding, pill shape, icon — so it reads as THE thing to
+   do here, not one more link among six. Same brand-blue base as
+   .btn-lang right next to it (already-verified-safe white-on-blue
+   combo, not a new color pairing) so the two "action" buttons in this
+   cluster read as a matched, deliberate pair rather than random hues. */
+.nav-register-btn{
+  display:inline-flex; align-items:center; gap:.45rem;
+  background:var(--brand-blue); color:#fff !important; font-weight:600;
+  border:none; border-radius:999px; padding:.5rem 1.15rem; font-size:.92rem;
+  transition:.2s;
+}
+.nav-register-btn:hover,
+.nav-register-btn.active{
+  background:var(--brand-blue-deep); color:#fff !important;
+  transform:translateY(-1px); box-shadow:0 4px 14px rgba(0,125,253,.3);
+}
+
+/* Vertical hairline separating the two "action" buttons (Register,
+   language switch) from the utility icon group (assoc logo, search,
+   theme toggle) that follows — a quiet visual break so the cluster
+   doesn't read as one undifferentiated row of six things. */
+.navbar-divider{
+  width:1px; height:22px; flex-shrink:0;
+  background:rgba(0,40,76,.15);
+}
+[data-bs-theme="dark"] .navbar-divider{ background:rgba(255,255,255,.15); }
 
 /* Language toggle button (EN/AR switcher) */
 .btn-lang{

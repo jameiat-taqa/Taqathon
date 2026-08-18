@@ -27,7 +27,7 @@
   nav-link labels. See base.njk's header comment for the full picture.
 #}
 <nav class="navbar navbar-expand-lg navbar-light sticky-top" data-pagefind-ignore>
-<div class="container d-flex align-items-center justify-content-between">
+<div class="container d-flex align-items-center">
 
   {#
     aria-label here is conditional on locale.site.brand.ariaLabel being
@@ -44,7 +44,7 @@
     <img src="{{ locale.pathPrefix | default('') }}assets/logos/taqathon-logo.png" alt="{{ locale.site.brand.logoAlt }}" class="logo-mark">
   </a>
 
-  <div class="collapse navbar-collapse justify-content-lg-center" id="mainNav">
+  <div class="collapse navbar-collapse" id="mainNav">
     <ul class="navbar-nav mb-2 mb-lg-0 align-items-lg-center">
       {#
         aria-current="page" tells screen readers which nav item matches
@@ -76,8 +76,14 @@
             GROUP — About's own page is one of the items inside it),
             so it's rendered as a <button>-role link with
             data-bs-toggle="dropdown", not an <a href>.
-          - "button": a single highlighted call-to-action (Register),
-            visually distinct from a plain nav-link.
+          - "button": a single highlighted call-to-action (Register).
+            Rendered OUTSIDE this loop now (see the navbar-actions
+            block below) — user feedback (2026-08-18) was that having
+            it inline as just another <li> made it disappear into the
+            packed row of nav links instead of reading as a distinct
+            CTA. Still declared here in site.*.json (so its href/label
+            stay data-driven, not hardcoded), just skipped by this
+            loop and picked out separately afterward.
         A dropdown's toggle gets the "active" treatment too, so
         landing on e.g. Tracks (inside the "About" group) still shows
         SOMETHING highlighted in the top-level bar, not nothing.
@@ -98,11 +104,7 @@
               {% endfor %}
             </ul>
           </li>
-        {% elif item.type == "button" %}
-          <li class="nav-item">
-            <a class="btn btn-brand btn-sm nav-cta{% if item.key == locale.navActive %} active{% endif %}" href="{{ locale.pathPrefix | default('') }}{{ item.href }}"{% if item.key == locale.navActive %} aria-current="page"{% endif %}>{{ item.label | safe }}</a>
-          </li>
-        {% else %}
+        {% elif item.type == "link" %}
           <li class="nav-item"><a class="nav-link{% if item.key == locale.navActive %} active{% endif %}" href="{{ locale.pathPrefix | default('') }}{{ item.href }}"{% if item.key == locale.navActive %} aria-current="page"{% endif %}>{{ item.label | safe }}</a></li>
         {% endif %}
       {% endfor %}
@@ -118,7 +120,25 @@
     </ul>
   </div>
 
-  <div class="assoc-fixed d-flex align-items-center gap-2">
+  <div class="assoc-fixed d-flex align-items-center">
+    {#
+      Register CTA (Phase 3, 2026-08-18 navbar revision). Pulled out of
+      the collapsible <ul> above — it used to be just another <li> in
+      the packed nav-links row, easy to miss next to Home/About/etc.
+      Living here means it's also always visible (not hidden behind
+      the mobile hamburger), which is the right call for a primary
+      call-to-action. Still driven by site.*.json's "button"-type nav
+      entry (href/label), just rendered in its own slot instead of
+      inline with the links loop above.
+    #}
+    {% for item in locale.site.nav %}
+      {% if item.type == "button" %}
+      <a class="btn nav-register-btn{% if item.key == locale.navActive %} active{% endif %}" href="{{ locale.pathPrefix | default('') }}{{ item.href }}"{% if item.key == locale.navActive %} aria-current="page"{% endif %}>
+        <i class="bi bi-pencil-square"></i> {{ item.label | safe }}
+      </a>
+      {% endif %}
+    {% endfor %}
+    <span class="navbar-divider" aria-hidden="true"></span>
     <a href="{{ locale.site.assoc.href }}" target="_blank" rel="noopener"{% if locale.site.assoc.linkClass %} class="{{ locale.site.assoc.linkClass }}"{% endif %}{% if locale.site.assoc.ariaLabel %} aria-label="{{ locale.site.assoc.ariaLabel }}"{% endif %}>
       <img src="{{ locale.pathPrefix | default('') }}assets/logos/association-logo.png" class="assoc-logo" alt="{{ locale.site.assoc.alt }}">
     </a>

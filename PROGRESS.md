@@ -6,6 +6,16 @@ A running, dated record of what's been done on this project and why. Newest entr
 
 ---
 
+## 2026-08-18 — Navbar layout revision: spacing, grouping, Register CTA
+
+- User feedback: the navbar read as one cramped block (nav links packed edge-to-edge with the logo), the search/dark-mode icons felt tight, and the Register button "looked wrong" and was placed badly.
+- **Root cause of the cramped look**: the container used `justify-content-between` across 3 flex children (brand / nav-links / assoc-fixed), and the nav-links block was also centered within its own space — so the nav-links group visually hugged the logo on the left while a large dead gap sat before the icon cluster on the right, and individual nav items had no spacing beyond Bootstrap's default link padding.
+- **Fix**: dropped `justify-content-between` in favor of natural flex order + `margin-inline-start:auto` on the right-hand cluster (`.assoc-fixed`) — pushes it flush to the far end regardless of screen size, while the brand+nav-links group now sits together at the start with its own `margin-inline-end` gap after the logo and an explicit `gap` on `.navbar-nav` so the individual links actually spread out instead of relying on link padding alone.
+- **Register CTA redesigned and relocated**: it was rendered as just another `<li>` inside the same packed `<ul>` as the nav links — same small-pill size as the AR/EN switcher, easy to lose in the row. Pulled it out of that loop entirely (site.*.json's data-driven "button" nav entry is unchanged, `navbar.njk` just renders it separately now) into its own slot in the right-hand cluster: a solid pill button with an icon, bigger padding, hover lift — reads as a primary action, not one more link. This also means it's now always visible, not hidden behind the mobile hamburger.
+- Added a quiet vertical divider between the two "action" buttons (Register, language switch) and the utility icon group (association logo, search, theme toggle) that follows, so the right-hand cluster doesn't read as one undifferentiated row.
+- Search/dark-mode icon spacing increased (`gap-2` → a slightly larger custom gap on `.assoc-fixed`).
+- Verified: desktop light + dark mode, Arabic RTL (confirmed via computed bounding boxes, not just visual — brand correctly anchors the RTL "start"/right edge, assoc-fixed cluster the "end"/left edge, mirroring the LTR layout exactly), and mobile (375px, no horizontal overflow, hamburger menu still opens correctly with all links + language switch, Register not duplicated inside the mobile menu since it now lives outside that `<ul>`). No console errors.
+
 ## 2026-08-18 — Registration correction: taqa.org.sa links → pending Google Forms
 
 - Caught right after the round below shipped: Registration had been wired to real links (`taqa.org.sa/energy-hackathon1/2/3/`), but the user clarified those native-page URLs are wrong to use — those pages are being deleted from the main site, and registration is moving to Google Forms per role instead. No Google Form URL exists in any of the 3 sources, so this isn't a "use a different real link," it's a "the real link doesn't exist yet."
