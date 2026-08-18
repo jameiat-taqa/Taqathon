@@ -6,16 +6,13 @@ A running, dated record of what's been done on this project and why. Newest entr
 
 ---
 
-## 2026-08-17 — Fix: badge pill repeating the heading text on 13 pages
+## 2026-08-17 — Removed the hero badge pill from every page
 
-- User's feedback after reviewing the full rollout: "you see how on every page there is a smaller title of the title above the title?" — the small terra badge pill above each page's big heading was, on 13 of the 17 redesigned pages, showing the exact same text as the heading right below it (e.g. Judges & Mentors: badge said "Judges & Mentors", heading said "Judges & Mentors" again). Home, Tracks, and About were already fine — Tracks had a short `hero.kicker` field from the start, About's badge/heading pull from two different existing fields — but the other 13 pages all reused `hero.heading` for both, which is what created the visible duplication.
-- **Fix**: added a short `kicker` field to each affected page's hero object, sourced from real data already in the site (each page's own nav dropdown group — About/Participants/Community — rather than invented marketing copy), and pointed the badge at `hero.kicker` instead of `hero.heading`:
-  - **About** group (Judges & Mentors, Sponsors, FAQ, Past Seasons): kicker "About" / "حول".
-  - **Participants** group (Rules & Resources, Contract, Schedule, Submissions, Submission Guidelines): kicker "Participants" / "المشاركون".
-  - **Community** group (Gallery, Newsletter): kicker "Community" / "المجتمع".
-  - **Registration**: kicker "Register" / "التسجيل" (its own standalone nav button label, distinct from the heading "Team Registration").
-- **One genuine edge case**: the Community page's own nav group IS "Community" — identical to its own heading, so a text kicker there would just repeat the same word again. Rather than invent a kicker phrase that isn't real nav/category data, that one page's badge was changed to icon-only (no text), documented inline in `community.njk`.
-- Verified in-browser: Judges & Mentors now shows "ABOUT" over "Judges & Mentors" (no repeat), Community shows only an icon with "Community" appearing once as the heading. Build succeeds, no console errors.
+- User's feedback after reviewing the full rollout: "you see how on every page there is a smaller title of the title above the title?" — the small terra badge pill above each page's big heading was, on 13 of the 17 redesigned pages, showing the exact same text as the heading right below it.
+- **First attempt** (superseded, see below): gave each page a short `hero.kicker` field (its nav dropdown group — About/Participants/Community — instead of the repeated heading text) and pointed the badge at that. User's response was direct: "noo i want those gone. i dont want this smaller title of the title above the title" — not a request to fix the text, a rejection of the badge-pill element itself, on every page including Home and About (whose badges never had duplicate text in the first place, just the same small-pill-above-big-heading shape).
+- **Final fix**: removed the badge pill entirely — markup, CSS rule, and dark-mode override — from all 16 pages that had one (Home, About, Tracks, Judges & Mentors, Sponsors, FAQ, Rules & Resources, Submission Guidelines, Community, Newsletter, Submissions, Schedule & Workshops, Contract, Gallery, Registration, Past Seasons). Also removed the now-unused `hero.kicker` fields the first attempt had just added, rather than leaving dead data behind. Years Archive and Verify never had this pattern, untouched.
+- Every hero now goes straight from the page chrome into the big display heading, no eyebrow label above it.
+- Verified in-browser (Home, About, Community, Registration): badges gone, headings render as the first element, no console errors, build succeeds. All copy JSON files confirmed still valid (no orphaned commas from the field removal).
 - PR [#23](https://github.com/jameiat-taqa/Taqathon/pull/23), open against `dev`, not yet merged.
 
 ## 2026-08-17 — Visual system rollout, pages 2–17: the rest of the site

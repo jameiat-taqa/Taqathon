@@ -1,7 +1,7 @@
 {
   "_comment": "NEWSLETTER PAGE COPY (English). PLACEHOLDER CONTENT — built 2026-08-11, same batch as the other new pages. openHref='#' is a placeholder (no real signup form exists yet). Same single-card pattern as community.njk.",
   "pageTitle": "Newsletter · Taqathon",
-  "hero": { "icon": "bi-envelope-paper", "kicker": "Community", "heading": "Newsletter", "headingClass": "fw-semibold" },
+  "hero": { "icon": "bi-envelope-paper", "heading": "Newsletter", "headingClass": "fw-semibold" },
   "intro": "Sign up to get updates about Taqathon 2026 by email.",
   "cardTitle": "Newsletter Signup (placeholder link)",
   "openLabel": "Sign up for updates",

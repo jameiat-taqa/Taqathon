@@ -5,7 +5,6 @@
   "hero": {
     "icon": "bi-pencil-square",
     "iconAriaHidden": true,
-    "kicker": "Participants",
     "heading": "Participation Agreement",
     "headingClass": "fw-semibold"
   },

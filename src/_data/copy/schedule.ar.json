@@ -1,7 +1,7 @@
 {
   "_comment": "SCHEDULE PAGE COPY (Arabic). The workshop/key-date table is fully data-driven (arrays below) instead of hand-typed rows, on purpose — Phase 3 of the overall project plan wants a card-based mobile layout for this exact table someday, which is much easier to build against structured data than against static HTML rows. 'action: null' means that row's button cell is intentionally empty (some events just don't have a join link/action).",
   "pageTitle": "الجدول والورش · طاقَثون",
-  "hero": { "icon": "bi-calendar-event", "kicker": "المشاركون", "heading": "الجدول والورش", "headingClass": "fw-bold" },
+  "hero": { "icon": "bi-calendar-event", "heading": "الجدول والورش", "headingClass": "fw-bold" },
   "iconMarginClass": "me-1",
   "workTitleFontFamily": "'Cairo', sans-serif",
   "workTitleFontWeight": 700,

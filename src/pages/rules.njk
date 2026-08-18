@@ -42,13 +42,11 @@ permalink: "{{ locale.permalink }}"
 .ed-hero{ background:var(--color-cream); color:var(--brand-dark); padding:4rem 0 3rem; position:relative; overflow:hidden; border-bottom:1px solid rgba(0,40,76,.08); }
 .ed-hero::before{ content:""; position:absolute; top:-20%; inset-inline-end:-10%; width:420px; height:420px; background:radial-gradient(circle, rgba(196,64,26,.08), transparent 70%); border-radius:50%; pointer-events:none; z-index:0; }
 .ed-hero .container{ position:relative; z-index:1; max-width:760px; text-align:center; }
-.ed-badge{ display:inline-flex; background:rgba(196,64,26,.1); color:var(--color-terra); border:1px solid rgba(196,64,26,.25); padding:.4rem .9rem; border-radius:999px; text-transform:uppercase; letter-spacing:.04em; font-size:.75rem; font-weight:700; margin-bottom:1rem; }
 .ed-display{ font-family:var(--font-display); font-weight:700; font-size:clamp(2.5rem, 6vw, 4rem); line-height:1; letter-spacing:-.01em; margin:0 0 .75rem; }
 [dir="rtl"] .ed-display{ font-family:'Tajawal', var(--font-display); font-weight:800; letter-spacing:0; }
 .ed-hero-intro{ color:var(--color-dust); max-width:46ch; margin:0 auto; }
 [data-bs-theme="dark"] .ed-hero{ color:var(--text); border-bottom-color:rgba(255,255,255,.08); }
 [data-bs-theme="dark"] .ed-hero::before{ background:radial-gradient(circle, rgba(232,149,43,.10), transparent 70%); }
-[data-bs-theme="dark"] .ed-badge{ background:rgba(232,149,43,.12); color:var(--color-amber); border-color:rgba(232,149,43,.3); }
 [data-bs-theme="dark"] .ed-hero-intro{ color:var(--muted); }
 
 .ed-accordion-section{ background:var(--color-sky); padding:3.5rem 0 4rem; }
@@ -80,17 +78,12 @@ permalink: "{{ locale.permalink }}"
   every button elsewhere in this system) — works identically in both
   themes, no dark-mode override needed.
 #}
-.criteria-badge{
-  background:var(--color-amber); color:var(--brand-dark);
-  border:0; padding:.25rem .6rem; border-radius:.5rem; font-weight:700;
-}
 {% endblock %}
 
 {% block content %}
 
 <section class="ed-hero">
 <div class="container">
-  <span class="ed-badge"><i class="bi {{ locale.content.hero.icon }}"></i> {{ locale.content.hero.kicker }}</span>
   <h1 class="ed-display">{{ locale.content.hero.heading }}</h1>
   <p class="ed-hero-intro">{{ locale.content.hero.intro }}</p>
 </div>

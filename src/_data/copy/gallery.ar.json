@@ -1,7 +1,7 @@
 {
   "_comment": "GALLERY PAGE COPY (Arabic). This page is mostly client-side JS (fetches gallery.json, renders image cards, handles the lightbox and load-more button) — there's very little server-rendered content, just the handful of strings the JS needs at runtime (loadMoreLabel, imgAlt, etc.), pulled in via pageScript placeholders same as the Contract/Home pages' scripts.",
   "pageTitle": "المرئيات · طاقَثون",
-  "hero": { "icon": "bi-images", "kicker": "المجتمع", "heading": "مرئيات الحفل الختامي", "headingClass": "fw-bold" },
+  "hero": { "icon": "bi-images", "heading": "مرئيات الحفل الختامي", "headingClass": "fw-bold" },
   "counterPrefix": "عرض",
   "counterSeparator": "من",
   "loadMoreLabel": "تحميل المزيد",

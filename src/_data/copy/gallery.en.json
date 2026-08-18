@@ -1,7 +1,7 @@
 {
   "_comment": "GALLERY PAGE COPY (English). English mirror of gallery.ar.json. Note pageTitle here IS \"Gallery · Taqathon\" — the original English page's <title> was just \"Gallery\" with no \"· Taqathon\" suffix, unlike every other migrated page. Treated as an oversight and fixed for consistency rather than preserved, since every other page (including this one's own Arabic version) follows the \"Page · Taqathon\" pattern.",
   "pageTitle": "Gallery · Taqathon",
-  "hero": { "icon": "bi-images", "kicker": "Community", "heading": "Closing Ceremony Gallery", "headingClass": "fw-semibold" },
+  "hero": { "icon": "bi-images", "heading": "Closing Ceremony Gallery", "headingClass": "fw-semibold" },
   "counterPrefix": "Showing",
   "counterSeparator": "of",
   "loadMoreLabel": "Load more",

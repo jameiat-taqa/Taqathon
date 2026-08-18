@@ -1,7 +1,7 @@
 {
   "_comment": "NEWSLETTER PAGE COPY (Arabic). PLACEHOLDER CONTENT — see newsletter.en.json's note (English mirror).",
   "pageTitle": "النشرة البريدية · طاقَثون",
-  "hero": { "icon": "bi-envelope-paper", "kicker": "المجتمع", "heading": "النشرة البريدية", "headingClass": "fw-bold" },
+  "hero": { "icon": "bi-envelope-paper", "heading": "النشرة البريدية", "headingClass": "fw-bold" },
   "intro": "سجّل للحصول على آخر تحديثات طاقَثون 2026 عبر البريد الإلكتروني.",
   "cardTitle": "التسجيل في النشرة البريدية (رابط مؤقت)",
   "openLabel": "سجّل للحصول على التحديثات",

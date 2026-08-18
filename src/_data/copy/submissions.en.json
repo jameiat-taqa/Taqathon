@@ -1,7 +1,7 @@
 {
   "_comment": "SUBMISSIONS PAGE COPY (English). English mirror of submissions.ar.json.",
   "pageTitle": "Submissions · Taqathon",
-  "hero": { "icon": "bi-upload", "kicker": "Participants", "heading": "Project Submissions", "headingClass": "fw-semibold" },
+  "hero": { "icon": "bi-upload", "heading": "Project Submissions", "headingClass": "fw-semibold" },
   "iconMarginClass": "me-2",
   "copyButtonLabel": "Copy link",
   "copiedLabel": "Copied!",
