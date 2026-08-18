@@ -16,7 +16,7 @@ A running, dated record of what's been done on this project and why. Newest entr
   - **Registration**: kicker "Register" / "التسجيل" (its own standalone nav button label, distinct from the heading "Team Registration").
 - **One genuine edge case**: the Community page's own nav group IS "Community" — identical to its own heading, so a text kicker there would just repeat the same word again. Rather than invent a kicker phrase that isn't real nav/category data, that one page's badge was changed to icon-only (no text), documented inline in `community.njk`.
 - Verified in-browser: Judges & Mentors now shows "ABOUT" over "Judges & Mentors" (no repeat), Community shows only an icon with "Community" appearing once as the heading. Build succeeds, no console errors.
-- Not yet opened as a PR — see next entry once opened.
+- PR [#23](https://github.com/jameiat-taqa/Taqathon/pull/23), open against `dev`, not yet merged.
 
 ## 2026-08-17 — Visual system rollout, pages 2–17: the rest of the site
 
