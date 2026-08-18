@@ -6,6 +6,22 @@ A running, dated record of what's been done on this project and why. Newest entr
 
 ---
 
+## 2026-08-18 — Navbar round 3: decluttered mobile, centered desktop nav
+
+- Two more pieces of feedback: mobile made the whole site feel "small," and desktop nav-links still sat too close to the paired logos from round 2.
+- **Desktop**: `.navbar-collapse` now gets `flex:1 1 auto; justify-content:center` at the lg breakpoint (needed `.navbar .navbar-collapse` specificity to beat Bootstrap's own same-shape rule — a bare `.navbar-collapse` selector was losing that fight). Nav-links now sit centered in the space between the logo pair and the Register/language/utility cluster — the standard logo / centered-nav / CTA layout most marketing and event sites use, and one that stays balanced at any viewport width instead of depending on a fixed margin.
+- **Mobile**: the persistent top bar had grown to 2 logos + Register + language switch + search + theme + hamburger — seven always-visible targets in a 375px row, which read as cluttered/small regardless of any individual element's size. Below the lg breakpoint, the persistent bar now shows only the logos, a compact Register button (kept, since it's the primary conversion action), and the hamburger. Language switch, search, and theme toggle moved into the drawer itself, in a new row below the nav links (`.navbar-drawer-utils`) — one tap away instead of permanently competing for space.
+- Duplicating the theme-toggle button (one always-visible copy for desktop, one inside the mobile drawer) meant its click handler in `base.njk` needed to stop assuming there's only one — switched from `querySelector` to `querySelectorAll` so both copies flip and stay in sync together. The search trigger and language link needed no JS changes (native Bootstrap modal target + a plain link, respectively — duplicating either is free).
+- Verified (after fixing the local `_site/assets/` staleness described above, so this is a real check): desktop light/dark with centering confirmed via computed `justify-content` (not just visual), Arabic RTL both breakpoints, mobile 375px with no horizontal overflow, drawer open/close, and the duplicated theme toggle confirmed to sync in both directions via both buttons' `aria-pressed`/icon state. No console errors.
+
+## 2026-08-18 — Local dev pitfall found: `_site/assets/` goes stale silently
+
+- While chasing why a `justify-content:center` rule wasn't taking effect during the round-3 navbar work below, discovered that `npm run build` (Eleventy alone) never refreshes `_site/assets/`, `_site/admin/`, or the root JSON files — by design, per eleventy.config.js's own comment, that copying is delegated to a separate step (`.github/workflows/deploy.yml` does `cp -r assets _site/assets` etc. on every CI run, which always starts from a clean checkout so it's never stale there).
+- **Locally, that separate copy step has to be run by hand after every build**, and it hadn't been for this entire day's navbar work — meaning every earlier navbar screenshot in today's rounds 1 and 2 (and their PROGRESS.md entries above) was actually rendering with WHATEVER `_site/assets/common.css` last happened to contain, not the CSS actually being edited and committed. The committed source (`assets/common.css`, `navbar.njk`) was correct the whole time — this was purely a local-verification gap, not a shipped-code bug.
+- Also found and fixed a second trap in the copy step itself: `cp -r assets _site/assets` behaves differently depending on whether `_site/assets` already exists — if it does (any build after the first), `cp -r` nests the source INSIDE it (`_site/assets/assets/...`) instead of refreshing its contents, silently making the problem worse on every subsequent local build. `rm -rf _site` before rebuilding avoids this.
+- Going forward: after any local `npm run build` that touches `assets/`, `admin/`, or the root JSON files, also run `rm -rf _site && npm run build && cp -r assets _site/assets && cp -r admin _site/admin && cp announcements.json announcements-ar.json _site/` (matching deploy.yml exactly) before trusting a browser screenshot.
+- Re-verified rounds 1–3 of the navbar work together once the real CSS was actually being served — see the round-3 entry below for what that confirmed.
+
 ## 2026-08-18 — Navbar follow-up: logos paired, language switch joins Register
 
 - Second round of feedback on the same day's navbar revision: move the AR/EN toggle next to Register, and pair the two logos together.

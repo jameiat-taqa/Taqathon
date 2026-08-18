@@ -125,21 +125,52 @@
         {% endif %}
       {% endfor %}
     </ul>
+
+    {#
+      Mobile drawer utilities (2026-08-18 navbar revision, round 3).
+      User feedback: the mobile top bar (2 logos + Register + language
+      switch + search + theme + hamburger, all always visible) made
+      the whole site read as cramped/small — too many small targets
+      competing for a 375px-wide row. Fix: below the lg breakpoint,
+      the persistent top bar now shows only the logos, a compact
+      Register button, and the hamburger (see navbar-mobile-actions
+      below) — language switch, search, and theme toggle move IN HERE,
+      inside the collapsible drawer alongside the nav links, reachable
+      with one tap on the hamburger instead of permanently competing
+      for space in the top bar. d-lg-none hides this block entirely at
+      the lg breakpoint, where the ORIGINAL always-visible copies of
+      these three controls (in .assoc-fixed below) take over instead —
+      see base.njk's theme-toggle script for how having two copies of
+      that particular button is kept in sync.
+    #}
+    <div class="navbar-drawer-utils d-flex d-lg-none align-items-center gap-2">
+      <a class="btn btn-sm btn-lang" href="{{ locale.altHref }}"{% if locale.site.langSwitch.ariaLabel %} aria-label="{{ locale.site.langSwitch.ariaLabel }}"{% endif %}>{{ locale.site.langSwitch.label }}</a>
+      <button type="button" class="btn btn-sm btn-search-trigger" data-bs-toggle="modal" data-bs-target="#searchModal" aria-label="{{ locale.site.search.triggerAriaLabel }}">
+        <i class="bi bi-search"></i>
+      </button>
+      <button type="button" class="btn btn-sm btn-theme-toggle" aria-pressed="false" aria-label="{{ locale.site.darkModeToggleAriaLabel }}">
+        <i class="bi bi-moon-stars"></i>
+      </button>
+    </div>
   </div>
 
-  <div class="assoc-fixed d-flex align-items-center">
-    {#
-      Register CTA + language switch (2026-08-18 navbar revision, both
-      steps). Register used to be just another <li> in the packed
-      nav-links row above; the language switch used to be the last
-      <li> in that same row. Both are "actions", not navigation, so
-      both now live here instead — grouped together, always visible
-      (not hidden behind the mobile hamburger), separated from the
-      pure-utility icons that follow (search/theme/menu) by the
-      divider below. Register is still driven by site.*.json's
-      "button"-type nav entry (href/label), just picked out of the
-      loop above instead of rendered inline with it.
-    #}
+  {#
+    Desktop action cluster (Register CTA + language switch, divider,
+    utility icons) — lg and up only (d-none d-lg-flex). Below lg, this
+    entire cluster is replaced by navbar-mobile-actions further down
+    and the drawer copies above; see the navbar-drawer-utils comment
+    for the full reasoning.
+
+    Nav-links centering (2026-08-18, round 3): .navbar-collapse gets
+    flex:1 and justify-content:center at the lg breakpoint (see
+    common.css) so the link group sits in the middle of the space
+    between the logos and this cluster, rather than hugging the logos
+    on the left — the standard "logo — centered nav — CTA" layout most
+    marketing/event sites use, and a layout that stays visually
+    balanced at any viewport width instead of depending on a fixed
+    margin value.
+  #}
+  <div class="assoc-fixed d-none d-lg-flex align-items-center">
     {% for item in locale.site.nav %}
       {% if item.type == "button" %}
       <a class="btn nav-register-btn{% if item.key == locale.navActive %} active{% endif %}" href="{{ locale.pathPrefix | default('') }}{{ item.href }}"{% if item.key == locale.navActive %} aria-current="page"{% endif %}>
@@ -147,42 +178,33 @@
       </a>
       {% endif %}
     {% endfor %}
-    {#
-      Nunjucks escapes {{ }} output by default (so a literal "&" in
-      JSON would show up as "&amp;amp;" — double-escaped). Not relevant
-      to this particular label, but the same rule applies site-wide
-      wherever a label can contain a real HTML entity — see the nav
-      dropdown loop above for the actual case that needs `| safe`.
-    #}
     <a class="btn btn-sm btn-lang" href="{{ locale.altHref }}"{% if locale.site.langSwitch.ariaLabel %} aria-label="{{ locale.site.langSwitch.ariaLabel }}"{% endif %}>{{ locale.site.langSwitch.label }}</a>
     <span class="navbar-divider" aria-hidden="true"></span>
-    {#
-      Site search trigger (Phase 3). Lives here in assoc-fixed rather than
-      inside the collapsible navbar-nav list so it's reachable on mobile
-      without opening the hamburger menu first — same reasoning as
-      Register, the language switch, and the toggler all being here.
-      Opens the #searchModal defined once in base.njk (shared chrome,
-      not repeated per nav item), which is where the actual Pagefind UI
-      gets mounted.
-    #}
     <button type="button" class="btn btn-sm btn-search-trigger" data-bs-toggle="modal" data-bs-target="#searchModal" aria-label="{{ locale.site.search.triggerAriaLabel }}">
       <i class="bi bi-search"></i>
     </button>
-    {#
-      Dark-mode toggle (Phase 3). No data-bs-* attributes here — unlike
-      the search button, this doesn't open anything, it flips
-      <html data-bs-theme>, so its click handler lives in base.njk
-      instead (next to the inline script that sets the theme in the
-      first place, so both live together). Starts as the moon icon /
-      aria-pressed="false" in the static HTML (i.e. "light mode, click
-      to go dark") since that's the safest default before JS runs; the
-      script in base.njk corrects both immediately on load if the
-      visitor's actual page loaded in dark mode (stored preference or
-      OS setting).
-    #}
     <button type="button" class="btn btn-sm btn-theme-toggle" aria-pressed="false" aria-label="{{ locale.site.darkModeToggleAriaLabel }}">
       <i class="bi bi-moon-stars"></i>
     </button>
+  </div>
+
+  {#
+    Mobile action cluster: below lg, this is the ONLY thing that stays
+    permanently visible next to the logos — a compact Register button
+    (still the primary CTA, so it stays reachable without opening the
+    menu) and the hamburger itself. Everything else lives one tap away
+    in the drawer above. margin-inline-start:auto pushes this flush to
+    the far end on its own, since .assoc-fixed (which normally carries
+    that margin) is display:none at this width and can't push anything.
+  #}
+  <div class="navbar-mobile-actions d-flex d-lg-none align-items-center gap-2">
+    {% for item in locale.site.nav %}
+      {% if item.type == "button" %}
+      <a class="btn nav-register-btn{% if item.key == locale.navActive %} active{% endif %}" href="{{ locale.pathPrefix | default('') }}{{ item.href }}"{% if item.key == locale.navActive %} aria-current="page"{% endif %}>
+        <i class="bi bi-pencil-square"></i> {{ item.label | safe }}
+      </a>
+      {% endif %}
+    {% endfor %}
     {#
       aria-controls / aria-expanded aren't language-specific, so they're
       always included now; only the aria-label TEXT comes from data

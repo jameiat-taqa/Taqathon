@@ -260,40 +260,50 @@ footer{ flex-shrink:0; }  /* Footer never shrinks, stays at bottom */
   background:var(--brand-blue); color:#fff;
 }
 
-/* Navbar layout revision (2026-08-18): user feedback was that the nav
-   read as one cramped block — logo, links, Register, and language
-   switch all packed edge-to-edge on the left, then a lot of dead air
-   before the icon cluster on the right. Fix is two-part: (1) give the
-   nav-links their own breathing room instead of relying on Bootstrap's
-   default .nav-link padding alone, via an explicit gap on the list
-   itself; (2) let the brand+links group sit naturally at the start of
-   the bar (no more centering it) while the assoc-fixed cluster gets
-   pushed flush to the far end with margin-inline-start:auto on itself
-   — that's what actually creates the "nav on one side, actions on the
-   other" split, regardless of whether the middle collapse element is
-   present (mobile) or expanded (desktop), since it doesn't depend on
-   the container's own justify-content. column-gap spreads items
-   horizontally at the lg+ breakpoint; row-gap is the (smaller) vertical
-   gap Bootstrap's collapsed mobile menu uses when nav-items stack. */
+/* Navbar layout revision (2026-08-18, round 3). Two rounds of feedback
+   led here: round 1 fixed cramped nav-link spacing and gave Register
+   its own slot; round 2 paired the logos and grouped the language
+   switch with Register. Round 3's feedback was that the nav STILL
+   read as too dense on mobile (2 logos + Register + language + search
+   + theme + hamburger, all always visible, made the whole site feel
+   "small"), and that nav-links sat too close to the logos on desktop.
+
+   Desktop fix: .navbar-collapse becomes a flex:1 item that CENTERS
+   its content at the lg breakpoint (see the media query below) —
+   logo — centered nav — CTA cluster is the standard three-zone
+   layout most marketing/event sites use, and unlike a fixed margin
+   value it stays visually balanced at any viewport width instead of
+   just adding a gap that can look too tight or too loose depending on
+   screen size.
+
+   Mobile fix: rather than showing every control all the time, the
+   persistent mobile top bar now only shows the logos, a compact
+   Register button, and the hamburger (see .navbar-mobile-actions).
+   Language switch, search, and theme toggle move into the drawer
+   itself (see .navbar-drawer-utils in navbar.njk) — one tap away
+   instead of permanently competing for space in a 375px-wide row.
+   The .assoc-fixed cluster below is what the DESKTOP top bar
+   uses instead (d-none d-lg-flex) — it's the one place these three
+   controls plus Register live outside the collapsible drawer. */
 .navbar-nav{ gap:.4rem 1.6rem; }
 .navbar .assoc-fixed{ margin-inline-start:auto; gap:.85rem; }
+@media (min-width:992px){
+  .navbar .navbar-collapse{ flex:1 1 auto; justify-content:center; }
+}
 
 /* Both logos, paired (2026-08-18): the association logo used to sit
-   in assoc-fixed at the far end of the bar; moved next to the brand
-   mark instead (see navbar.njk) since they're both identity, not
-   actions — a modest gap between the two marks, then the bigger gap
-   that separates "who this is" from the nav links that follow. */
+   at the far end of the bar with the utility icons; moved next to
+   the brand mark instead (see navbar.njk) since they're both
+   identity, not actions — a modest gap between the two marks, then
+   the bigger gap that separates "who this is" from the nav links. */
 .navbar-brands{ gap:.6rem; margin-inline-end:1.75rem; flex-shrink:0; }
 
-/* Register CTA (2026-08-18): previously just another <li> in the
-   packed nav-links row (same small pill size as the language switch),
-   easy to lose in the row. Now lives in its own slot in assoc-fixed
-   (see navbar.njk) styled as a real primary button — solid fill,
-   generous padding, pill shape, icon — so it reads as THE thing to
-   do here, not one more link among six. Same brand-blue base as
-   .btn-lang right next to it (already-verified-safe white-on-blue
-   combo, not a new color pairing) so the two "action" buttons in this
-   cluster read as a matched, deliberate pair rather than random hues. */
+/* Register CTA: reused for both the desktop cluster (.assoc-fixed)
+   and the compact mobile copy (.navbar-mobile-actions) — same solid
+   pill/icon treatment in both places so it reads as the same button,
+   not two different ones. Same brand-blue base as .btn-lang right
+   next to it (already-verified-safe white-on-blue combo) so the two
+   "action" buttons in the desktop cluster read as a matched pair. */
 .nav-register-btn{
   display:inline-flex; align-items:center; gap:.45rem;
   background:var(--brand-blue); color:#fff !important; font-weight:600;
@@ -307,12 +317,25 @@ footer{ flex-shrink:0; }  /* Footer never shrinks, stays at bottom */
 }
 
 /* Vertical hairline separating the two "action" buttons (Register,
-   language switch) from the utility icon group (assoc logo, search,
-   theme toggle) that follows — a quiet visual break so the cluster
-   doesn't read as one undifferentiated row of six things. */
+   language switch) from the utility icon group (search, theme
+   toggle) that follows — desktop cluster only, a quiet visual break
+   so it doesn't read as one undifferentiated row of five things. */
 .navbar-divider{
   width:1px; height:22px; flex-shrink:0;
   background:rgba(0,40,76,.15);
+}
+
+/* Mobile-only clusters (2026-08-18, round 3) — see the big comment
+   above for why these exist. margin-inline-start:auto on the actions
+   cluster does the same "push flush to the far end" job .assoc-fixed
+   does on desktop, since .assoc-fixed itself is display:none here and
+   can't push anything while hidden. The drawer utils get a hairline
+   + top spacing so they read as a distinct row under the nav links,
+   not a continuation of the list. */
+.navbar-mobile-actions{ margin-inline-start:auto; flex-shrink:0; }
+.navbar-drawer-utils{
+  margin-top:.75rem; padding-top:.75rem;
+  border-top:1px solid var(--surface-border);
 }
 [data-bs-theme="dark"] .navbar-divider{ background:rgba(255,255,255,.15); }
 
