@@ -1,5 +1,5 @@
 {
-  "_comment": "REGISTRATION PAGE COPY (English). REAL CONTENT (2026): the registration model itself changed, not just the copy — taqa.org.sa's own live 'هاكثون الطاقة' page registers people by ROLE (Researcher / Entrepreneur / Judge), each with its own native form hosted on the Association's site, not by competition track and not via Google Forms. The three 'forms' entries and their openHref links below were read directly from that live page's markup (each 'سجل الآن' button's real href). deadlineNote's date is unchanged (already real, matches home.*.json's countdown, set in Phase 1). noteBodyPrefix no longer claims 'requires Google sign-in' — that was true of the old placeholder Google-Form pattern this page used to describe, not of these real native forms.",
+  "_comment": "REGISTRATION PAGE COPY (English). REAL CONTENT (2026), revised: the ROLE-based model (Researcher / Entrepreneur / Judge) is real — taqa.org.sa's own live registration page registers people this way, not by competition track. But the actual links are NOT taqa.org.sa's native-page URLs (energy-hackathon1/2/3) — the user confirmed those pages are being deleted from the main website, and registration will instead go through Google Forms once those forms exist. No Google Form URLs appear in any of the 3 sources, so openHref is 'pending' (not a real link) for all three cards, and placeholderNote flags this explicitly instead of guessing a URL. Update openHref (and drop placeholderNote) once real Google Form links are provided.",
   "pageTitle": "Registration · Taqathon",
   "hero": { "icon": "bi-pencil-square", "heading": "Team Registration", "headingClass": "fw-semibold" },
   "deadlineNote": "Registration closes September 28, 2026.",
@@ -9,31 +9,32 @@
   "copyErrorMsg": "Could not copy. Long-press or right-click the link to copy.",
   "noteLabel": "Note:",
   "noteBodyPrefix": "If the button doesn’t work, use this direct URL:",
+  "placeholderNote": "Registration will open through Google Forms, one per role (Researcher / Entrepreneur / Judge). The form links haven't been published yet — they'll be added here as soon as they're available.",
   "forms": [
     {
       "cardTitle": "Researcher Registration",
-      "openLabel": "Open researcher registration form",
-      "openHref": "https://taqa.org.sa/energy-hackathon1/",
-      "openIcon": "bi-box-arrow-up-right",
-      "openAriaLabel": "Open researcher registration form in a new tab",
+      "openLabel": "Form link pending",
+      "openHref": "#",
+      "openIcon": "bi-hourglass-split",
+      "openAriaLabel": "Researcher registration form link is not yet available",
       "copyAriaLabel": "Copy researcher registration form link",
       "noscriptText": "JavaScript is disabled. Use this link to register:"
     },
     {
       "cardTitle": "Entrepreneur Registration",
-      "openLabel": "Open entrepreneur registration form",
-      "openHref": "https://taqa.org.sa/energy-hackathon2/",
-      "openIcon": "bi-box-arrow-up-right",
-      "openAriaLabel": "Open entrepreneur registration form in a new tab",
+      "openLabel": "Form link pending",
+      "openHref": "#",
+      "openIcon": "bi-hourglass-split",
+      "openAriaLabel": "Entrepreneur registration form link is not yet available",
       "copyAriaLabel": "Copy entrepreneur registration form link",
       "noscriptText": "JavaScript is disabled. Use this link to register:"
     },
     {
       "cardTitle": "Judge Registration",
-      "openLabel": "Open judge registration form",
-      "openHref": "https://taqa.org.sa/energy-hackathon3/",
-      "openIcon": "bi-box-arrow-up-right",
-      "openAriaLabel": "Open judge registration form in a new tab",
+      "openLabel": "Form link pending",
+      "openHref": "#",
+      "openIcon": "bi-hourglass-split",
+      "openAriaLabel": "Judge registration form link is not yet available",
       "copyAriaLabel": "Copy judge registration form link",
       "noscriptText": "JavaScript is disabled. Use this link to register:"
     }

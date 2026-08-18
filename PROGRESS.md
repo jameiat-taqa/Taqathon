@@ -6,6 +6,12 @@ A running, dated record of what's been done on this project and why. Newest entr
 
 ---
 
+## 2026-08-18 — Registration correction: taqa.org.sa links → pending Google Forms
+
+- Caught right after the round below shipped: Registration had been wired to real links (`taqa.org.sa/energy-hackathon1/2/3/`), but the user clarified those native-page URLs are wrong to use — those pages are being deleted from the main site, and registration is moving to Google Forms per role instead. No Google Form URL exists in any of the 3 sources, so this isn't a "use a different real link," it's a "the real link doesn't exist yet."
+- Reverted `openHref` on all 3 role cards (Researcher/Entrepreneur/Judge — that role-based model itself is still real, from taqa.org.sa) to a pending state: the dashed `.ed-draft-flag` note is back explaining registration will use Google Forms once published, and each card now renders a disabled "Form link pending" button instead of a live Open/Copy/URL control (`registration.njk` branches on `openHref == "#"`).
+- Straightforward to finish later: once real Google Form links exist, drop them into `forms[].openHref` in `registration.*.json` and remove `placeholderNote` — the template reverts to live-link rendering automatically, no template change needed.
+
 ## 2026-08-18 — Real content replacement: Taqathon 2 (2026)
 
 - User handed over the actual source-of-truth for Taqathon 2's content and asked for every invented mockup fact (dates, prize figures, participant/track counts, locations) to be replaced — with a hard rule: every fact written must trace to one of three named sources, and anything not found in those sources gets flagged as missing rather than filled in with a plausible guess.
