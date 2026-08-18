@@ -63,11 +63,6 @@ permalink: "{{ locale.permalink }}"
   border-radius:50%; pointer-events:none; z-index:0;
 }
 .ab-hero .container{ position:relative; z-index:1; max-width:760px; text-align:center; }
-.ab-badge{
-  display:inline-flex; background:rgba(196,64,26,.1); color:var(--color-terra);
-  border:1px solid rgba(196,64,26,.25); padding:.4rem .9rem; border-radius:999px;
-  text-transform:uppercase; letter-spacing:.04em; font-size:.75rem; font-weight:700; margin-bottom:1rem;
-}
 .ab-display{
   font-family:var(--font-display); font-weight:700;
   font-size:clamp(2.5rem, 6vw, 4rem); line-height:1; letter-spacing:-.01em; margin:0;
@@ -75,7 +70,6 @@ permalink: "{{ locale.permalink }}"
 [dir="rtl"] .ab-display{ font-family:'Tajawal', var(--font-display); font-weight:800; letter-spacing:0; }
 [data-bs-theme="dark"] .ab-hero{ color:var(--text); border-bottom-color:rgba(255,255,255,.08); }
 [data-bs-theme="dark"] .ab-hero::before{ background:radial-gradient(circle, rgba(232,149,43,.10), transparent 70%); }
-[data-bs-theme="dark"] .ab-badge{ background:rgba(232,149,43,.12); color:var(--color-amber); border-color:rgba(232,149,43,.3); }
 
 {#
   Both content sections share one rule-set (.ab-section) since they're
@@ -160,7 +154,6 @@ permalink: "{{ locale.permalink }}"
 
 <section class="ab-hero">
 <div class="container">
-  <span class="ab-badge">{{ locale.content.hero.heading }}</span>
   <h1 class="ab-display">{{ locale.content.taqathon.heading }}</h1>
 </div>
 </section>

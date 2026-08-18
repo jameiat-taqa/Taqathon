@@ -33,12 +33,10 @@ permalink: "{{ locale.permalink }}"
 .sc-hero{ background:var(--color-cream); color:var(--brand-dark); padding:4rem 0 3rem; position:relative; overflow:hidden; border-bottom:1px solid rgba(0,40,76,.08); }
 .sc-hero::before{ content:""; position:absolute; top:-20%; inset-inline-end:-10%; width:420px; height:420px; background:radial-gradient(circle, rgba(196,64,26,.08), transparent 70%); border-radius:50%; pointer-events:none; z-index:0; }
 .sc-hero .container{ position:relative; z-index:1; max-width:760px; text-align:center; }
-.sc-badge{ display:inline-flex; background:rgba(196,64,26,.1); color:var(--color-terra); border:1px solid rgba(196,64,26,.25); padding:.4rem .9rem; border-radius:999px; text-transform:uppercase; letter-spacing:.04em; font-size:.75rem; font-weight:700; margin-bottom:1rem; }
 .sc-display{ font-family:var(--font-display); font-weight:700; font-size:clamp(2.5rem, 6vw, 4rem); line-height:1; letter-spacing:-.01em; margin:0; }
 [dir="rtl"] .sc-display{ font-family:'Tajawal', var(--font-display); font-weight:800; letter-spacing:0; }
 [data-bs-theme="dark"] .sc-hero{ color:var(--text); border-bottom-color:rgba(255,255,255,.08); }
 [data-bs-theme="dark"] .sc-hero::before{ background:radial-gradient(circle, rgba(232,149,43,.10), transparent 70%); }
-[data-bs-theme="dark"] .sc-badge{ background:rgba(232,149,43,.12); color:var(--color-amber); border-color:rgba(232,149,43,.3); }
 
 .sc-section{ background:var(--color-sky); padding:3.5rem 0 4rem; }
 .sc-table-card{
@@ -92,7 +90,6 @@ permalink: "{{ locale.permalink }}"
 
 <section class="sc-hero">
 <div class="container">
-  <span class="sc-badge"><i class="bi {{ locale.content.hero.icon }}"></i> {{ locale.content.hero.heading }}</span>
   <h1 class="sc-display">{{ locale.content.hero.heading }}</h1>
 </div>
 </section>

@@ -6,6 +6,15 @@ A running, dated record of what's been done on this project and why. Newest entr
 
 ---
 
+## 2026-08-17 — Removed the hero badge pill from every page
+
+- User's feedback after reviewing the full rollout: "you see how on every page there is a smaller title of the title above the title?" — the small terra badge pill above each page's big heading was, on 13 of the 17 redesigned pages, showing the exact same text as the heading right below it.
+- **First attempt** (superseded, see below): gave each page a short `hero.kicker` field (its nav dropdown group — About/Participants/Community — instead of the repeated heading text) and pointed the badge at that. User's response was direct: "noo i want those gone. i dont want this smaller title of the title above the title" — not a request to fix the text, a rejection of the badge-pill element itself, on every page including Home and About (whose badges never had duplicate text in the first place, just the same small-pill-above-big-heading shape).
+- **Final fix**: removed the badge pill entirely — markup, CSS rule, and dark-mode override — from all 16 pages that had one (Home, About, Tracks, Judges & Mentors, Sponsors, FAQ, Rules & Resources, Submission Guidelines, Community, Newsletter, Submissions, Schedule & Workshops, Contract, Gallery, Registration, Past Seasons). Also removed the now-unused `hero.kicker` fields the first attempt had just added, rather than leaving dead data behind. Years Archive and Verify never had this pattern, untouched.
+- Every hero now goes straight from the page chrome into the big display heading, no eyebrow label above it.
+- Verified in-browser (Home, About, Community, Registration): badges gone, headings render as the first element, no console errors, build succeeds. All copy JSON files confirmed still valid (no orphaned commas from the field removal).
+- PR [#23](https://github.com/jameiat-taqa/Taqathon/pull/23), open against `dev`, not yet merged.
+
 ## 2026-08-17 — Visual system rollout, pages 2–17: the rest of the site
 
 - User's direction changed mid-rollout: after About shipped as the first checkpoint, the plan had been one page at a time with a review pause between each. User instead asked for all 16 remaining pages built in one pass, to be reviewed afterward as a batch, then everything pushed and merged straight to `dev` and `main` — so this entry covers Tracks, Judges & Mentors, Sponsors, FAQ, Rules & Resources, Submission Guidelines, Community, Newsletter, Submissions, Schedule & Workshops, Contract, Gallery, Contact, Registration, Verify, and Past Seasons + the Year Archive template, all in this same PR as About.
