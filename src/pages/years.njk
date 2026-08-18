@@ -28,65 +28,126 @@ permalink: "{{ locale.permalink }}"
       the next one (empty for 2025 — that flag didn't exist yet when
       that season ran; real for seasons archived from here on).
 
+  VISUAL SYSTEM (Phase 3, editorial rollout — see about.njk for the
+  token-system rationale). Deliberately quieter than the live-season
+  pages: no orb decorations, no badge pill — this is a historical
+  record, not a "come do something" page, so the hero is plain text
+  on cream and the four possible blocks are stacked cards on sky,
+  same white/surface card pattern as every other content card in this
+  redesign. Winners keep the "01/02/03" mono-numeral ranking style
+  tracks.njk/sponsors.njk established for ordered lists, since a
+  ranked results list is exactly that shape.
+
   TO ADD A NEW YEAR:
     1. Create src/_data/copy/years/<year>.ar.json and <year>.en.json
        (copy 2025's files as a starting shape).
     2. Rebuild — that's it, no other file needs to change.
 #}
 {% extends "layouts/base.njk" %}
+{% block pageHead %}
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=Tajawal:wght@700;800;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+{% endblock %}
+{% block pageStyle %}
+.yr-hero{ background:var(--color-cream); color:var(--brand-dark); padding:3.5rem 0 2.5rem; text-align:center; border-bottom:1px solid rgba(0,40,76,.08); }
+[data-bs-theme="dark"] .yr-hero{ color:var(--text); border-bottom-color:rgba(255,255,255,.08); }
+.yr-display{ font-family:var(--font-display); font-weight:700; font-size:clamp(2.25rem, 5vw, 3.25rem); line-height:1.05; letter-spacing:-.01em; margin:0 0 .5rem; }
+[dir="rtl"] .yr-display{ font-family:'Tajawal', var(--font-display); font-weight:800; letter-spacing:0; }
+.yr-subtitle{ color:var(--color-dust); margin:0; }
+[data-bs-theme="dark"] .yr-subtitle{ color:var(--muted); }
+
+.yr-section{ background:var(--color-sky); padding:3rem 0 4rem; }
+.yr-section .container{ max-width:760px; }
+.yr-card{
+  background:#fff; border:1px solid rgba(0,40,76,.08); border-radius:1rem;
+  padding:1.75rem; margin-bottom:1.5rem; box-shadow:0 6px 18px rgba(0,0,0,.04);
+}
+.yr-card:last-child{ margin-bottom:0; }
+[data-bs-theme="dark"] .yr-card{ background:var(--surface); border-color:rgba(255,255,255,.08); box-shadow:0 6px 18px rgba(0,0,0,.35); }
+.yr-card-heading{ font-family:var(--font-display); font-weight:700; color:var(--brand-dark); font-size:1.25rem; margin-bottom:1rem; }
+[dir="rtl"] .yr-card-heading{ font-family:'Tajawal', var(--font-display); font-weight:800; }
+[data-bs-theme="dark"] .yr-card-heading{ color:var(--text); }
+.yr-card p, .yr-card div{ color:var(--brand-dark); }
+[data-bs-theme="dark"] .yr-card p, [data-bs-theme="dark"] .yr-card div{ color:var(--text); }
+
+.yr-ceremony-btn{ border:1px solid rgba(0,40,76,.2); color:var(--brand-dark); background:transparent; }
+.yr-ceremony-btn:hover{ background:rgba(0,40,76,.05); color:var(--brand-dark); }
+[data-bs-theme="dark"] .yr-ceremony-btn{ border-color:rgba(255,255,255,.2); color:var(--text); }
+[data-bs-theme="dark"] .yr-ceremony-btn:hover{ background:rgba(255,255,255,.06); color:var(--text); }
+
+.yr-winners{ list-style:none; padding:0; margin:0; }
+.yr-winner-row{ display:flex; align-items:center; gap:.9rem; padding:.6rem 0; border-bottom:1px solid rgba(0,40,76,.06); }
+[data-bs-theme="dark"] .yr-winner-row{ border-bottom-color:rgba(255,255,255,.06); }
+.yr-winner-row:last-child{ border-bottom:0; }
+.yr-winner-rank{ font-family:var(--font-display); font-weight:700; font-size:1.35rem; color:var(--color-terra); min-width:2.2rem; }
+[dir="rtl"] .yr-winner-rank{ font-family:inherit; font-weight:800; }
+[data-bs-theme="dark"] .yr-winner-rank{ color:var(--color-amber); }
+.yr-winner-team{ font-weight:600; }
+
+.yr-gallery-btn{ background:var(--color-amber); border:0; color:var(--brand-dark); font-weight:700; }
+.yr-gallery-btn:hover{ filter:brightness(1.05); color:var(--brand-dark); }
+
+.yr-ann{ color:var(--color-dust); margin-bottom:.5rem; }
+[data-bs-theme="dark"] .yr-ann{ color:var(--muted); }
+{% endblock %}
+
 {% block content %}
-<div class="py-5">
-  <div class="container" style="max-width:860px;">
 
-    <div class="text-center mb-4">
-      <h1 class="h3 fw-bold mb-1">{{ locale.content.hero.heading }}</h1>
-      <p class="text-secondary mb-0">{{ locale.content.hero.subtitle }}</p>
-    </div>
-
-    {% if locale.content.ceremony %}
-    <div class="card-lite rounded-2xl p-4 mb-4">
-      <h2 class="h5 fw-semibold mb-3">{{ locale.content.ceremonyHeading }}</h2>
-      <p class="mb-2">
-        <i class="bi bi-calendar-event me-2"></i>{{ locale.content.ceremony.date }} — {{ locale.content.ceremony.time }}
-      </p>
-      <a class="btn btn-sm btn-outline-success" href="{{ locale.content.ceremony.mapHref }}" target="_blank" rel="noopener">
-        <i class="bi bi-geo-alt-fill me-1"></i>{{ locale.content.ceremony.location }}
-      </a>
-    </div>
-    {% endif %}
-
-    {% if locale.content.winners and locale.content.winners.length %}
-    <div class="card-lite rounded-2xl p-4 mb-4">
-      <h2 class="h5 fw-semibold mb-3">{{ locale.content.winnersHeading }}</h2>
-      <ol class="list-group list-group-numbered">
-        {% for w in locale.content.winners %}
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-          {{ w.team }}
-        </li>
-        {% endfor %}
-      </ol>
-    </div>
-    {% endif %}
-
-    {% if locale.content.galleryHref %}
-    <div class="card-lite rounded-2xl p-4 mb-4 text-center">
-      <h2 class="h5 fw-semibold mb-2">{{ locale.content.galleryHeading }}</h2>
-      <p class="text-secondary mb-3">{{ locale.content.galleryNote }}</p>
-      <a class="btn btn-primary" href="{{ locale.pathPrefix | default('') }}{{ locale.content.galleryHref }}">
-        <i class="bi bi-images me-1"></i>{{ locale.content.galleryButtonLabel }}
-      </a>
-    </div>
-    {% endif %}
-
-    {% if locale.content.announcements and locale.content.announcements.length %}
-    <div class="card-lite rounded-2xl p-4 mb-4">
-      <h2 class="h5 fw-semibold mb-3">{{ locale.content.announcementsHeading }}</h2>
-      {% for a in locale.content.announcements %}
-      <div class="ann-text mb-2">{{ a.text | safe }}</div>
-      {% endfor %}
-    </div>
-    {% endif %}
-
-  </div>
+<section class="yr-hero">
+<div class="container" style="max-width:700px;">
+  <h1 class="yr-display">{{ locale.content.hero.heading }}</h1>
+  <p class="yr-subtitle">{{ locale.content.hero.subtitle }}</p>
 </div>
+</section>
+
+<section class="yr-section">
+<div class="container">
+
+  {% if locale.content.ceremony %}
+  <div class="yr-card">
+    <h2 class="yr-card-heading">{{ locale.content.ceremonyHeading }}</h2>
+    <p class="mb-2">
+      <i class="bi bi-calendar-event me-2"></i>{{ locale.content.ceremony.date }} — {{ locale.content.ceremony.time }}
+    </p>
+    <a class="btn btn-sm yr-ceremony-btn" href="{{ locale.content.ceremony.mapHref }}" target="_blank" rel="noopener">
+      <i class="bi bi-geo-alt-fill me-1"></i>{{ locale.content.ceremony.location }}
+    </a>
+  </div>
+  {% endif %}
+
+  {% if locale.content.winners and locale.content.winners.length %}
+  <div class="yr-card">
+    <h2 class="yr-card-heading">{{ locale.content.winnersHeading }}</h2>
+    <ol class="yr-winners">
+      {% for w in locale.content.winners %}
+      <li class="yr-winner-row">
+        <span class="yr-winner-rank">{{ loop.index | pad2 }}</span>
+        <span class="yr-winner-team">{{ w.team }}</span>
+      </li>
+      {% endfor %}
+    </ol>
+  </div>
+  {% endif %}
+
+  {% if locale.content.galleryHref %}
+  <div class="yr-card text-center">
+    <h2 class="yr-card-heading">{{ locale.content.galleryHeading }}</h2>
+    <p class="mb-3" style="color:var(--color-dust);">{{ locale.content.galleryNote }}</p>
+    <a class="btn yr-gallery-btn" href="{{ locale.pathPrefix | default('') }}{{ locale.content.galleryHref }}">
+      <i class="bi bi-images me-1"></i>{{ locale.content.galleryButtonLabel }}
+    </a>
+  </div>
+  {% endif %}
+
+  {% if locale.content.announcements and locale.content.announcements.length %}
+  <div class="yr-card">
+    <h2 class="yr-card-heading">{{ locale.content.announcementsHeading }}</h2>
+    {% for a in locale.content.announcements %}
+    <div class="yr-ann">{{ a.text | safe }}</div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+</div>
+</section>
+
 {% endblock %}

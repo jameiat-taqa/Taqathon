@@ -12,61 +12,97 @@ permalink: "{{ locale.permalink }}"
   submissions.njk/registration.njk but for just one external link
   (a community chat channel) instead of a loop over several.
 
-  PLACEHOLDER CONTENT (Phase 2, 2026-08-11): openHref is "#" — no
-  real community-chat link exists yet. See community.ar.json /
-  community.en.json's "_comment" field.
+  PLACEHOLDER CONTENT (still true after this redesign): openHref is
+  "#" — no real community-chat link exists yet. See community.*.json's
+  "_comment" field. Layout/visual only.
+
+  VISUAL SYSTEM (Phase 3, editorial rollout, page 7 — see about.njk
+  for the token-system rationale). The info note reuses a SOLID terra-
+  tinted box (.ed-note), not the dashed one About introduced — dashed
+  specifically means "placeholder, pending confirmation" there; this
+  note is a normal informational aside, not a content-authenticity
+  flag, so it gets the plain-note treatment instead.
 #}
 {% extends "layouts/base.njk" %}
+{% block pageHead %}
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=Tajawal:wght@700;800;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+{% endblock %}
 {% block pageStyle %}
-.card-lite{ padding:0; }
-.card-body{ padding:1.75rem 2rem; }
-@media (max-width:767.98px){ .card-body{ padding:1.25rem 1.5rem; } }
+.cm-hero{ background:var(--color-cream); color:var(--brand-dark); padding:4rem 0 3rem; position:relative; overflow:hidden; border-bottom:1px solid rgba(0,40,76,.08); }
+.cm-hero::before{ content:""; position:absolute; top:-20%; inset-inline-end:-10%; width:420px; height:420px; background:radial-gradient(circle, rgba(196,64,26,.08), transparent 70%); border-radius:50%; pointer-events:none; z-index:0; }
+.cm-hero .container{ position:relative; z-index:1; max-width:760px; text-align:center; }
+.cm-badge{ display:inline-flex; background:rgba(196,64,26,.1); color:var(--color-terra); border:1px solid rgba(196,64,26,.25); padding:.4rem .9rem; border-radius:999px; text-transform:uppercase; letter-spacing:.04em; font-size:.75rem; font-weight:700; margin-bottom:1rem; }
+.cm-display{ font-family:var(--font-display); font-weight:700; font-size:clamp(2.5rem, 6vw, 4rem); line-height:1; letter-spacing:-.01em; margin:0 0 .75rem; }
+[dir="rtl"] .cm-display{ font-family:'Tajawal', var(--font-display); font-weight:800; letter-spacing:0; }
+.cm-hero-intro{ color:var(--color-dust); max-width:46ch; margin:0 auto; }
+[data-bs-theme="dark"] .cm-hero{ color:var(--text); border-bottom-color:rgba(255,255,255,.08); }
+[data-bs-theme="dark"] .cm-hero::before{ background:radial-gradient(circle, rgba(232,149,43,.10), transparent 70%); }
+[data-bs-theme="dark"] .cm-badge{ background:rgba(232,149,43,.12); color:var(--color-amber); border-color:rgba(232,149,43,.3); }
+[data-bs-theme="dark"] .cm-hero-intro{ color:var(--muted); }
 
-.alert-info{
-  background:linear-gradient(135deg, #e7f3ff 0%, #f0f8ff 100%);
-  border:1px solid #b8daff;
-  border-inline-start:4px solid var(--brand-blue);
-  color:#004085;
-  border-radius:.75rem;
+.cm-section{ background:var(--color-sky); padding:3.5rem 0 4rem; }
+.cm-section .container{ max-width:760px; }
+.cm-card{
+  background:#fff; border:1px solid rgba(0,40,76,.08); border-radius:1rem;
+  padding:1.75rem 2rem; box-shadow:0 6px 18px rgba(0,0,0,.04);
 }
+[data-bs-theme="dark"] .cm-card{ background:var(--surface); border-color:rgba(255,255,255,.08); box-shadow:0 6px 18px rgba(0,0,0,.35); }
+.cm-card-title{ font-family:var(--font-display); font-weight:700; color:var(--brand-dark); font-size:1.3rem; margin:0; }
+[dir="rtl"] .cm-card-title{ font-family:'Tajawal', var(--font-display); font-weight:800; }
+[data-bs-theme="dark"] .cm-card-title{ color:var(--text); }
+.cm-open-btn{ background:var(--color-amber); border:0; color:var(--brand-dark); font-weight:700; }
+.cm-open-btn:hover{ filter:brightness(1.05); color:var(--brand-dark); }
+.cm-copy-btn{ border:1px solid rgba(0,40,76,.2); color:var(--brand-dark); background:transparent; }
+.cm-copy-btn:hover{ background:rgba(0,40,76,.05); color:var(--brand-dark); }
+[data-bs-theme="dark"] .cm-copy-btn{ border-color:rgba(255,255,255,.2); color:var(--text); }
+[data-bs-theme="dark"] .cm-copy-btn:hover{ background:rgba(255,255,255,.06); color:var(--text); }
+.ed-note{
+  background:rgba(196,64,26,.05); border:1px solid rgba(196,64,26,.15); border-radius:.75rem;
+  padding:1rem 1.25rem; display:flex; align-items:flex-start; gap:.75rem; color:var(--brand-dark);
+}
+.ed-note .bi{ color:var(--color-terra); font-size:1.15rem; margin-top:.1rem; flex-shrink:0; }
+[data-bs-theme="dark"] .ed-note{ background:rgba(232,149,43,.06); border-color:rgba(232,149,43,.2); color:var(--text); }
+[data-bs-theme="dark"] .ed-note .bi{ color:var(--color-amber); }
 {% endblock %}
 
 {% block content %}
-<div class="py-5">
-  <div class="container" style="max-width:860px;">
-    <div class="text-center mb-4">
-      <div class="icon-circle mx-auto mb-3"><i class="bi {{ locale.content.hero.icon }}"></i></div>
-      <h1 class="h5 mb-1 {{ locale.content.hero.headingClass }}">{{ locale.content.hero.heading }}</h1>
-      <p class="text-secondary mb-0">{{ locale.content.intro }}</p>
+
+<section class="cm-hero">
+<div class="container">
+  <span class="cm-badge"><i class="bi {{ locale.content.hero.icon }}"></i> {{ locale.content.hero.heading }}</span>
+  <h1 class="cm-display">{{ locale.content.hero.heading }}</h1>
+  <p class="cm-hero-intro">{{ locale.content.intro }}</p>
+</div>
+</section>
+
+<section class="cm-section">
+<div class="container">
+  <div class="cm-card">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-3">
+      <h2 class="cm-card-title">{{ locale.content.cardTitle }}</h2>
+      <div class="d-flex gap-2">
+        <a class="btn cm-open-btn" target="_blank" rel="noopener"
+           href="{{ locale.content.openHref }}" aria-label="{{ locale.content.openAriaLabel }}">
+          <i class="bi {{ locale.content.openIcon }} {{ locale.content.iconMarginClass }}"></i> {{ locale.content.openLabel }}
+        </a>
+        <button type="button" class="btn cm-copy-btn js-copy-link" data-url="{{ locale.content.openHref }}" aria-label="{{ locale.content.copyAriaLabel }}">
+          {{ locale.content.copyButtonLabel }}
+        </button>
+      </div>
     </div>
 
-    <div class="card card-lite rounded-2xl shadow-soft">
-      <div class="card-body">
-        <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-3">
-          <h5 class="mb-0 fw-semibold">{{ locale.content.cardTitle }}</h5>
-          <div class="d-flex gap-2">
-            <a class="btn btn-brand btn-lg" target="_blank" rel="noopener"
-               href="{{ locale.content.openHref }}" aria-label="{{ locale.content.openAriaLabel }}">
-              <i class="bi {{ locale.content.openIcon }} {{ locale.content.iconMarginClass }}"></i> {{ locale.content.openLabel }}
-            </a>
-            <button type="button" class="btn btn-outline-secondary btn-lg js-copy-link" data-url="{{ locale.content.openHref }}" aria-label="{{ locale.content.copyAriaLabel }}">
-              {{ locale.content.copyButtonLabel }}
-            </button>
-          </div>
-        </div>
-
-        <div class="alert alert-info fs-6 p-4 mb-0 d-flex align-items-start gap-3">
-          <i class="bi bi-info-circle fs-5 mt-1 flex-shrink-0" style="color:var(--brand-blue);"></i>
-          <div>
-            <strong class="d-block mb-1">{{ locale.content.noteLabel }}</strong>
-            {{ locale.content.noteBodyPrefix }}
-            <span class="text-break d-inline-block mt-1" dir="ltr">{{ locale.content.openHref }}</span>
-          </div>
-        </div>
+    <div class="ed-note">
+      <i class="bi bi-info-circle-fill"></i>
+      <div>
+        <strong class="d-block mb-1">{{ locale.content.noteLabel }}</strong>
+        {{ locale.content.noteBodyPrefix }}
+        <span class="text-break d-inline-block mt-1" dir="ltr">{{ locale.content.openHref }}</span>
       </div>
     </div>
   </div>
 </div>
+</section>
+
 {% endblock %}
 
 {% block pageScript %}

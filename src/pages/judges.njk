@@ -13,47 +13,82 @@ permalink: "{{ locale.permalink }}"
   <img> — see judges.ar.json / judges.en.json's "_comment" for the
   same reasoning used on the Sponsors page.
 
-  PLACEHOLDER CONTENT (Phase 2, 2026-08-11): every name/role/bio is a
-  generic stand-in.
+  PLACEHOLDER CONTENT (still true after this redesign): every name/
+  role/bio is a generic stand-in — see judges.*.json's "_comment".
+  Layout/visual only, no copy changed.
+
+  VISUAL SYSTEM (Phase 3, editorial rollout, page 3 — see about.njk
+  for the full token-system rationale). Cards reuse the exact
+  card/border/dark-mode pattern Home's announcement cards established
+  (white in light mode, var(--surface) in dark, hairline border that
+  flips tint) rather than inventing a fourth card style for the site.
 #}
 {% extends "layouts/base.njk" %}
+{% block pageHead %}
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=Tajawal:wght@700;800;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+{% endblock %}
 {% block pageStyle %}
-.person-avatar{
-  width:64px; height:64px; border-radius:50%;
-  display:flex; align-items:center; justify-content:center;
-  background:var(--brand-grad);
-  color:#fff; font-size:1.75rem;
-  flex-shrink:0;
+.jg-hero{ background:var(--color-cream); color:var(--brand-dark); padding:4rem 0 3rem; position:relative; overflow:hidden; border-bottom:1px solid rgba(0,40,76,.08); }
+.jg-hero::before{ content:""; position:absolute; top:-20%; inset-inline-end:-10%; width:420px; height:420px; background:radial-gradient(circle, rgba(196,64,26,.08), transparent 70%); border-radius:50%; pointer-events:none; z-index:0; }
+.jg-hero .container{ position:relative; z-index:1; max-width:760px; text-align:center; }
+.jg-badge{ display:inline-flex; background:rgba(196,64,26,.1); color:var(--color-terra); border:1px solid rgba(196,64,26,.25); padding:.4rem .9rem; border-radius:999px; text-transform:uppercase; letter-spacing:.04em; font-size:.75rem; font-weight:700; margin-bottom:1rem; }
+.jg-display{ font-family:var(--font-display); font-weight:700; font-size:clamp(2.5rem, 6vw, 4rem); line-height:1; letter-spacing:-.01em; margin:0 0 .75rem; }
+[dir="rtl"] .jg-display{ font-family:'Tajawal', var(--font-display); font-weight:800; letter-spacing:0; }
+.jg-hero-intro{ color:var(--color-dust); max-width:46ch; margin:0 auto; }
+[data-bs-theme="dark"] .jg-hero{ color:var(--text); border-bottom-color:rgba(255,255,255,.08); }
+[data-bs-theme="dark"] .jg-hero::before{ background:radial-gradient(circle, rgba(232,149,43,.10), transparent 70%); }
+[data-bs-theme="dark"] .jg-badge{ background:rgba(232,149,43,.12); color:var(--color-amber); border-color:rgba(232,149,43,.3); }
+[data-bs-theme="dark"] .jg-hero-intro{ color:var(--muted); }
+
+.jg-grid-section{ background:var(--color-sky); padding:3.5rem 0 4rem; }
+.jg-card{
+  background:#fff; border:1px solid rgba(0,40,76,.08); border-radius:1rem;
+  padding:1.5rem; display:flex; gap:1.1rem; align-items:flex-start; height:100%;
+  box-shadow:0 6px 18px rgba(0,0,0,.04);
 }
+[data-bs-theme="dark"] .jg-card{ background:var(--surface); border-color:rgba(255,255,255,.08); box-shadow:0 6px 18px rgba(0,0,0,.35); }
+.jg-avatar{
+  width:60px; height:60px; border-radius:50%; flex-shrink:0;
+  background:var(--brand-dark); color:var(--color-cream);
+  display:flex; align-items:center; justify-content:center; font-size:1.6rem;
+}
+.jg-name{ font-family:var(--font-display); font-weight:700; font-size:1.15rem; margin:0 0 .15rem; color:var(--brand-dark); }
+[dir="rtl"] .jg-name{ font-family:'Tajawal', var(--font-display); font-weight:800; }
+[data-bs-theme="dark"] .jg-name{ color:var(--text); }
+.jg-role{ font-family:var(--font-mono-label); text-transform:uppercase; letter-spacing:.05em; font-size:.7rem; color:var(--color-terra); margin-bottom:.5rem; display:block; }
+[dir="rtl"] .jg-role{ font-family:inherit; text-transform:none; letter-spacing:0; }
+[data-bs-theme="dark"] .jg-role{ color:var(--color-amber); }
+.jg-bio{ color:var(--color-dust); font-size:.92rem; margin:0; }
+[data-bs-theme="dark"] .jg-bio{ color:var(--muted); }
 {% endblock %}
 
 {% block content %}
-<div class="py-5">
-  <div class="container" style="max-width:980px;">
 
-    <div class="text-center mb-4">
-      <div class="icon-circle mx-auto mb-3">
-        <i class="bi {{ locale.content.hero.icon }}"></i>
-      </div>
-      <h1 class="h5 mb-1 {{ locale.content.hero.headingClass }}">{{ locale.content.hero.heading }}</h1>
-      <p class="text-secondary mb-0">{{ locale.content.hero.intro }}</p>
-    </div>
+<section class="jg-hero">
+<div class="container">
+  <span class="jg-badge"><i class="bi {{ locale.content.hero.icon }}"></i> {{ locale.content.hero.heading }}</span>
+  <h1 class="jg-display">{{ locale.content.hero.heading }}</h1>
+  <p class="jg-hero-intro">{{ locale.content.hero.intro }}</p>
+</div>
+</section>
 
-    <div class="row g-4">
-      {% for p in locale.content.people %}
-      <div class="col-md-6">
-        <div class="card card-lite rounded-2xl p-4 d-flex flex-row gap-3 align-items-start">
-          <div class="person-avatar"><i class="bi bi-person-fill"></i></div>
-          <div>
-            <h6 class="fw-semibold mb-1">{{ p.name }}</h6>
-            <div class="text-secondary small mb-2">{{ p.role }}</div>
-            <p class="mb-0">{{ p.bio }}</p>
-          </div>
+<section class="jg-grid-section">
+<div class="container" style="max-width:980px;">
+  <div class="row g-4">
+    {% for p in locale.content.people %}
+    <div class="col-md-6">
+      <div class="jg-card">
+        <div class="jg-avatar"><i class="bi bi-person-fill"></i></div>
+        <div>
+          <h2 class="jg-name">{{ p.name }}</h2>
+          <span class="jg-role">{{ p.role }}</span>
+          <p class="jg-bio">{{ p.bio }}</p>
         </div>
       </div>
-      {% endfor %}
     </div>
-
+    {% endfor %}
   </div>
 </div>
+</section>
+
 {% endblock %}

@@ -16,6 +16,10 @@ permalink: "{{ locale.permalink }}"
   page shell and handing that script the handful of translated strings
   it needs (button labels, alt text, the error message).
 
+  REAL functionality, not placeholder — pageScript is UNCHANGED by
+  this redesign (Phase 3, editorial rollout, page 13 — see about.njk
+  for the token-system rationale). Only the visual skin changes.
+
   TO CUSTOMIZE:
     - Text/labels → src/_data/copy/gallery.ar.json / gallery.en.json.
     - Which images appear → gallery.json at the repo root (unchanged by
@@ -24,201 +28,88 @@ permalink: "{{ locale.permalink }}"
       same as the original).
 #}
 {% extends "layouts/base.njk" %}
+{% block pageHead %}
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=Tajawal:wght@700;800;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+{% endblock %}
 {% block pageStyle %}
-/* ===== GALLERY ===== */
+.gl-hero{ background:var(--color-cream); color:var(--brand-dark); padding:4rem 0 3rem; position:relative; overflow:hidden; border-bottom:1px solid rgba(0,40,76,.08); }
+.gl-hero::before{ content:""; position:absolute; top:-20%; inset-inline-end:-10%; width:420px; height:420px; background:radial-gradient(circle, rgba(196,64,26,.08), transparent 70%); border-radius:50%; pointer-events:none; z-index:0; }
+.gl-hero .container{ position:relative; z-index:1; max-width:760px; text-align:center; }
+.gl-badge{ display:inline-flex; background:rgba(196,64,26,.1); color:var(--color-terra); border:1px solid rgba(196,64,26,.25); padding:.4rem .9rem; border-radius:999px; text-transform:uppercase; letter-spacing:.04em; font-size:.75rem; font-weight:700; margin-bottom:1rem; }
+.gl-display{ font-family:var(--font-display); font-weight:700; font-size:clamp(2.5rem, 6vw, 4rem); line-height:1; letter-spacing:-.01em; margin:0; }
+[dir="rtl"] .gl-display{ font-family:'Tajawal', var(--font-display); font-weight:800; letter-spacing:0; }
+[data-bs-theme="dark"] .gl-hero{ color:var(--text); border-bottom-color:rgba(255,255,255,.08); }
+[data-bs-theme="dark"] .gl-hero::before{ background:radial-gradient(circle, rgba(232,149,43,.10), transparent 70%); }
+[data-bs-theme="dark"] .gl-badge{ background:rgba(232,149,43,.12); color:var(--color-amber); border-color:rgba(232,149,43,.3); }
+
+.gl-section{ background:var(--color-sky); padding:3.5rem 0 4rem; }
+
 .gallery-card{
-border:none;
-border-radius:1rem;
-overflow:hidden;
-background:#fff;
-box-shadow:0 10px 30px rgba(15,23,42,.08);
-transition:transform .12s ease, box-shadow .12s ease;
-height:100%;
+  border:1px solid rgba(0,40,76,.08); border-radius:1rem; overflow:hidden;
+  background:#fff; box-shadow:0 10px 30px rgba(15,23,42,.08);
+  transition:transform .12s ease, box-shadow .12s ease; height:100%;
 }
-.gallery-card:hover{
-transform:translateY(-4px);
-box-shadow:0 14px 40px rgba(15,23,42,.16);
-}
-
-.gallery-img-wrapper{
-position:relative;
-overflow:hidden;
-aspect-ratio:4/3;
-background:#000;
-}
-
-.gallery-img-wrapper img{
-width:100%;
-height:100%;
-object-fit:cover;
-transition:.3s ease;
-}
+[data-bs-theme="dark"] .gallery-card{ background:var(--surface); border-color:rgba(255,255,255,.08); }
+.gallery-card:hover{ transform:translateY(-4px); box-shadow:0 14px 40px rgba(15,23,42,.16); }
+.gallery-img-wrapper{ position:relative; overflow:hidden; aspect-ratio:4/3; background:#000; }
+.gallery-img-wrapper img{ width:100%; height:100%; object-fit:cover; transition:.3s ease; }
 .gallery-card:hover img{ transform:scale(1.05); }
 
-{#
-  The original pages mirrored this button's corner manually — Arabic
-  put it bottom-left, English bottom-right. Both were really aiming
-  for the same "trailing" corner, which is exactly what the logical
-  property inset-inline-end means: it resolves to the left in RTL and
-  the right in LTR automatically, so one rule replaces two mirrored
-  ones. Same trick used for the back-to-top button below. (There WAS
-  also a .gallery-badge rule in the original CSS, positioned the same
-  mirrored way — dropped entirely here since no element anywhere in
-  the gallery card markup actually has that class, in either language.)
-#}
 .gallery-zoom-icon{
-position:absolute;
-bottom:.9rem; inset-inline-end:.9rem;
-width:2rem; height:2rem;
-border-radius:50%;
-background:rgba(0,0,0,.7);
-color:#fff;
-display:flex;
-justify-content:center;
-align-items:center;
-border:none;
+  position:absolute; bottom:.9rem; inset-inline-end:.9rem; width:2rem; height:2rem; border-radius:50%;
+  background:var(--color-terra); color:var(--color-cream); display:flex; justify-content:center; align-items:center; border:none;
 }
+[data-bs-theme="dark"] .gallery-zoom-icon{ background:var(--color-amber); color:var(--brand-dark); }
 
-/* ===== LOAD MORE BUTTON ===== */
-#loadMoreBtn{
-background:var(--brand-blue);
-color:#fff;
-border:none;
-border-radius:.5rem;
-padding:.5rem 1.5rem;
-font-weight:500;
-transition:background .2s ease, transform .2s ease, box-shadow .2s ease;
-box-shadow:0 2px 8px rgba(0,125,253,.2);
-}
-{#
-  Accessibility pass (Phase 3): color:#fff here used to pair with this
-  green background at a measured 2.16:1 contrast ratio — badly below
-  WCAG AA's 4.5:1 text minimum. Swapped to brand-dark (6.91:1) rather
-  than changing the background, for the same reasoning as
-  schedule.njk's .btn-join:hover — see PROGRESS.md.
-#}
-#loadMoreBtn:hover:not(:disabled){
-background:var(--brand-green);
-transform:translateY(-1px);
-box-shadow:0 4px 12px rgba(9,200,153,.3);
-color:var(--brand-dark);
-}
-#loadMoreBtn:active:not(:disabled){
-transform:translateY(0);
-}
-#loadMoreBtn:disabled{
-background:var(--muted);
-cursor:not-allowed;
-opacity:.7;
-box-shadow:none;
-}
+#loadMoreBtn{ background:var(--color-amber); color:var(--brand-dark); border:none; border-radius:.5rem; padding:.5rem 1.5rem; font-weight:700; transition:filter .2s ease, transform .2s ease; }
+#loadMoreBtn:hover:not(:disabled){ filter:brightness(1.05); transform:translateY(-1px); }
+#loadMoreBtn:active:not(:disabled){ transform:translateY(0); }
+#loadMoreBtn:disabled{ background:rgba(0,40,76,.15); color:var(--color-dust); cursor:not-allowed; opacity:.7; }
+[data-bs-theme="dark"] #loadMoreBtn:disabled{ background:rgba(255,255,255,.12); color:var(--muted); }
 
-/* ===== BACK TO TOP BUTTON ===== */
 .back-to-top{
-position:fixed;
-bottom:2rem;
-inset-inline-end:2rem;
-width:3rem;
-height:3rem;
-border-radius:50%;
-background:var(--brand-blue);
-color:#fff;
-border:none;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:1.25rem;
-box-shadow:0 4px 12px rgba(0,125,253,.3);
-cursor:pointer;
-opacity:0;
-visibility:hidden;
-transition:opacity .3s ease, visibility .3s ease, transform .2s ease, background .2s ease;
-z-index:9999;
-pointer-events:none;
+  position:fixed; bottom:2rem; inset-inline-end:2rem; width:3rem; height:3rem; border-radius:50%;
+  background:var(--brand-dark); color:var(--color-cream); border:none; display:flex; align-items:center; justify-content:center;
+  font-size:1.25rem; box-shadow:0 4px 12px rgba(0,0,0,.3); cursor:pointer;
+  opacity:0; visibility:hidden; transition:opacity .3s ease, visibility .3s ease, transform .2s ease, filter .2s ease;
+  z-index:9999; pointer-events:none;
 }
-.back-to-top.show{
-opacity:1;
-visibility:visible;
-pointer-events:auto;
-}
-{#
-  Accessibility pass (Phase 3): this is an icon-only button, so WCAG's
-  non-text-contrast rule (3:1, not the 4.5:1 that applies to text)
-  still applies to the arrow icon's color against its background. The
-  previous white icon measured 2.16:1 against --brand-green — fails
-  even that lower bar. Same brand-dark swap as the other green-hover
-  states on this page/site — see PROGRESS.md.
-#}
-.back-to-top:hover{
-background:var(--brand-green);
-color:var(--brand-dark);
-transform:translateY(-2px);
-box-shadow:0 6px 16px rgba(9,200,153,.4);
-}
-.back-to-top:active{
-transform:translateY(0);
-}
-@media (max-width:575.98px){
-.back-to-top{
-  bottom:1.5rem;
-  inset-inline-end:1.5rem;
-  width:2.75rem;
-  height:2.75rem;
-  font-size:1.1rem;
-}
-}
+.back-to-top.show{ opacity:1; visibility:visible; pointer-events:auto; }
+.back-to-top:hover{ filter:brightness(1.2); transform:translateY(-2px); }
+.back-to-top:active{ transform:translateY(0); }
+@media (max-width:575.98px){ .back-to-top{ bottom:1.5rem; inset-inline-end:1.5rem; width:2.75rem; height:2.75rem; font-size:1.1rem; } }
 
-.modal-content .btn-close {
-z-index: 5;
-}
-{#
-  footer{...} and footer a{...} rules used to be repeated here too,
-  but they're word-for-word identical to rules already in
-  assets/common.css — dropped as duplication, not a behavior change.
-#}
+.modal-content .btn-close{ z-index:5; }
 {% endblock %}
 
 {% block content %}
-<div class="py-5">
-<div class="container">
-  <div class="text-center mb-5">
-    <div class="icon-circle mx-auto mb-3">
-      <i class="bi {{ locale.content.hero.icon }}"></i>
-    </div>
-    <h1 class="h5 mb-1 {{ locale.content.hero.headingClass }}">{{ locale.content.hero.heading }}</h1>
-    <div style="height: 20px;"></div>
-  </div>
 
-  {#
-    This empty grid is the ONLY gallery-related element Nunjucks
-    renders — everything inside it gets built by pageScript at runtime.
-  #}
+<section class="gl-hero">
+<div class="container">
+  <span class="gl-badge"><i class="bi {{ locale.content.hero.icon }}"></i> {{ locale.content.hero.heading }}</span>
+  <h1 class="gl-display">{{ locale.content.hero.heading }}</h1>
+</div>
+</section>
+
+<section class="gl-section">
+<div class="container">
   <div class="row g-4" id="galleryGrid"></div>
 
   <div class="d-flex flex-column flex-sm-row align-items-center justify-content-between gap-2 mt-4">
-    <div class="small text-secondary">
+    <div class="small" style="color:var(--color-dust);">
       {{ locale.content.counterPrefix }} <span id="shownCount">0</span> {{ locale.content.counterSeparator }} <span id="totalCount">0</span>
     </div>
-    <button class="btn btn-primary btn-sm px-4" id="loadMoreBtn" type="button">
+    <button class="btn btn-sm px-4" id="loadMoreBtn" type="button">
       {{ locale.content.loadMoreLabel }}
     </button>
   </div>
 </div>
-</div>
+</section>
 
 <!-- LIGHTBOX MODAL -->
 <div class="modal fade" id="zoomModal" tabindex="-1" aria-hidden="true">
 <div class="modal-dialog modal-dialog-centered modal-xl">
   <div class="modal-content bg-black border-0 position-relative">
-    {#
-      Both languages want this close button in the same visual (top
-      trailing) corner, but got there via different Bootstrap logical
-      classes — "start-0" happens to mean "right" in Arabic's RTL
-      context, "end-0" means "right" in English's LTR context. Kept as
-      data per language rather than collapsed into one value, since —
-      unlike the plain CSS above — these are Bootstrap's own utility
-      classes, not a property this template controls directly.
-    #}
     <button class="btn-close btn-close-white position-absolute top-0 {{ locale.content.modalCloseButtonPositionClass }} m-3"
             data-bs-dismiss="modal" aria-label="{{ locale.content.modalCloseAriaLabel }}"></button>
     <img id="zoomImage" class="w-100" src="" alt="{{ locale.content.modalImageAlt }}">
@@ -233,10 +124,6 @@ z-index: 5;
 {% endblock %}
 
 {% block pageScript %}
-{#
-  Lightbox + back-to-top button: unchanged from the original pages,
-  no translatable text involved. Copied over as-is.
-#}
 const zoomModal = document.getElementById('zoomModal');
 const zoomImage = document.getElementById('zoomImage');
 if (zoomModal && zoomImage) {
@@ -278,7 +165,6 @@ if (backToTopBtn) {
 }
 
 (function () {
-  // ----- Gallery image loader (fetches gallery.json, "load more" batches) -----
   const grid = document.getElementById('galleryGrid');
   const btn = document.getElementById('loadMoreBtn');
   const shownEl = document.getElementById('shownCount');
@@ -294,9 +180,6 @@ if (backToTopBtn) {
     shownEl.textContent = String(Math.min(index, files.length));
     totalEl.textContent = String(files.length);
     btn.disabled = index >= files.length;
-    // "| safe" here for the same reason documented in contract.njk:
-    // this string lands inside a <script> tag, which is never
-    // HTML-entity-decoded by the browser.
     btn.textContent = btn.disabled ? '{{ locale.content.allLoadedLabel | safe }}' : '{{ locale.content.loadMoreLabel | safe }}';
   }
 
