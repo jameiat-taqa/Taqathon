@@ -1,21 +1,22 @@
 {
-  "_comment": "ABOUT PAGE COPY (Arabic). PLACEHOLDER/DRAFT CONTENT — see about.en.json's note (English mirror) for full context, including the explicit sensitivity flag on 'associationStatus' (must come from the Association, never invented).",
+  "_comment": "ABOUT PAGE COPY (Arabic). REAL CONTENT PASS (2026) — see about.en.json's note (English mirror) for the full source breakdown per field. association.bodyPlaceholder and taqathon fields are sourced from taqa.org.sa and the board-approved resolution for 'طاقتون ٢'. association.statusPlaceholder now states the real, confirmed license number (was the one field explicitly flagged as sensitive/not-to-invent — now resolved, not a placeholder).",
   "pageTitle": "حول · طاقَثون",
   "hero": { "icon": "bi-info-circle", "heading": "حول", "headingClass": "fw-bold" },
   "draftPendingLabel": "بانتظار الاعتماد",
+  "confirmedLabel": "مؤكَّد",
   "association": {
     "heading": "حول الجمعية",
-    "bodyPlaceholder": "نص مسودة مؤقت — نظرة عامة موجزة عن جمعية الطاقة للتنمية المستدامة: نشاطها، رسالتها، ودورها في تنظيم طاقَثون. سيتم تزويده أو اعتماده من الجمعية.",
+    "bodyPlaceholder": "انطلقت جمعية الطاقة للتنمية المستدامة من مدينة جدة عام 2024، بهدف تعزيز الوعي المجتمعي بأهمية الطاقة المتجددة، ودعم المبادرات الوطنية، وتفعيل الابتكار في هذا المجال. وتضع الجمعية البحث العلمي في مقدمة أولوياتها، كما تسعى إلى ترسيخ السلوكيات المستدامة، وتنمية الوعي الاقتصادي لدى الأجيال، وبناء قدرات المبدعين.",
     "statusLabel": "الوضع الرسمي",
-    "statusPlaceholder": "نص مسودة مؤقت — لا تُضاف هنا أي تفاصيل قانونية أو تسجيلية مُفتَرَضة. يجب تأكيد معلومات الوضع الرسمي/التسجيل للجمعية قبل اعتماد هذا القسم بشكل نهائي."
+    "statusPlaceholder": "جمعية مرخّصة، رقم الترخيص 1000609300."
   },
   "taqathon": {
     "heading": "حول طاقَثون",
-    "bodyPlaceholder": "نص مسودة مؤقت — قصة طاقَثون: كيف ولماذا انطلق، وما الذي يهدف لتحقيقه.",
+    "bodyPlaceholder": "طاقَثون هاكاثون وطني للطاقة يجمع رواد الأعمال والباحثين لتطوير حلول ابتكارية تعزز استدامة الطاقة من خلال ورش عمل ومسابقات تقنية. اعتمد مجلس إدارة الجمعية «طاقتون ٢» كمبادرة وطنية مستمرة، على أن تُقام سنوياً لمدة خمس سنوات كمنصة للابتكار في مجال الطاقة والاستدامة.",
     "missionHeading": "رسالتنا",
-    "missionPlaceholder": "نص مسودة مؤقت — رسالة طاقَثون.",
+    "missionPlaceholder": "تقديم حلول مبتكرة في الطاقة المتجددة، ورفع الوعي حول تحديات قطاع الطاقة، وبناء شبكة علاقات بين المشاركين والخبراء، وتقديم الدعم الفني، وتحفيز الاستثمار.",
     "visionHeading": "رؤيتنا",
-    "visionPlaceholder": "نص مسودة مؤقت — رؤية طاقَثون، غالباً بارتباط مع رؤية السعودية 2030 (مذكورة في مواضع أخرى من الموقع)."
+    "visionPlaceholder": "مبادرة وطنية مستمرة ومنصة سنوية للابتكار في مجال الطاقة والاستدامة، تُقام لمدة خمس سنوات."
   },
   "ctaLabel": "مستعد للمشاركة؟",
   "ctaButtonLabel": "سجّل فريقك",

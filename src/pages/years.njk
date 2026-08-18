@@ -18,8 +18,11 @@ permalink: "{{ locale.permalink }}"
 
   Content is deliberately plain and historical — no countdown, no
   registration CTAs, nothing that implies the season is still active.
-  Four pieces, each shown only if the year's data file actually has
+  Five pieces, each shown only if the year's data file actually has
   something for it:
+    - Advisory/educational workshop sessions held that season (title,
+      presenter, date/time — no join links, since those meetings are
+      long over by the time this page exists)
     - Closing ceremony details (date/time/location + map link)
     - Final results (winners list, ranked)
     - A link out to the photo gallery from that season
@@ -101,6 +104,23 @@ permalink: "{{ locale.permalink }}"
 
 <section class="yr-section">
 <div class="container">
+
+  {% if locale.content.workshops and locale.content.workshops.length %}
+  <div class="yr-card">
+    <h2 class="yr-card-heading">{{ locale.content.workshopsHeading }}</h2>
+    <ol class="yr-winners">
+      {% for w in locale.content.workshops %}
+      <li class="yr-winner-row">
+        <span class="yr-winner-rank">{{ loop.index | pad2 }}</span>
+        <span>
+          <span class="yr-winner-team">{{ w.title }}</span>
+          <div class="small" style="color:var(--color-dust);">{{ w.presenter }} — {{ w.date }}{% if w.time %}, {{ w.time }}{% endif %}</div>
+        </span>
+      </li>
+      {% endfor %}
+    </ol>
+  </div>
+  {% endif %}
 
   {% if locale.content.ceremony %}
   <div class="yr-card">

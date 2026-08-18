@@ -9,29 +9,28 @@ permalink: "{{ locale.permalink }}"
   TAQATHON - REGISTRATION PAGE TEMPLATE (src/pages/registration.njk)
   -----------------------------------------------------------------------
   Deliberately copies src/pages/submissions.njk's exact pattern: one
-  card per track, each a real external Google Form (not an embedded/
-  custom form), with an "Open" button + a "copy link" button + a note
-  showing the raw URL + a <noscript> fallback. Registering for
-  Taqathon works the same way submitting a project does — a form this
-  site links out to, not one it hosts — so this page reuses that
-  pattern rather than inventing a different UI for the same idea.
+  card per registration type, each a real external form (not an
+  embedded/custom form), with an "Open" button + a "copy link" button
+  + a note showing the raw URL + a <noscript> fallback.
 
-  PLACEHOLDER CONTENT (still true after this redesign): the track
-  names and every form's link are stand-ins — see
-  registration.*.json's "_comment" field. locale.content.placeholderNote
-  renders a visible on-page note about this for exactly that reason.
-  This redesign upgrades that note from a plain alert box to the same
-  dashed-border "pending confirmation" flag About's Official Status
-  section introduced (.ed-draft-flag) — same content-authenticity
-  signal, now expressed consistently across the site instead of each
-  page inventing its own placeholder-warning styling.
+  REAL CONTENT (2026): the registration MODEL changed, not just the
+  copy — taqa.org.sa's own live registration page registers people by
+  ROLE (Researcher / Entrepreneur / Judge), not by competition track,
+  each via its own native form hosted on the Association's site (not
+  a Google Form). See registration.*.json's "_comment" field for
+  where each real link came from. The dashed-border "pending
+  confirmation" flag (.ed-draft-flag, still defined below) that used
+  to sit above these cards is gone along with it — these are real,
+  live links now, not placeholders, so {% if
+  locale.content.placeholderNote %} simply has nothing to render
+  (the field no longer exists in the copy JSON).
 
   VISUAL SYSTEM (Phase 3, editorial rollout, page 15 — see about.njk
   for the token-system rationale).
 
   TO CUSTOMIZE:
-    - Add/remove a track's card → edit the "forms" array in the copy
-      JSON files, same as Submissions.
+    - Add/remove a registration type's card → edit the "forms" array
+      in the copy JSON files, same as Submissions.
     - Wording → same copy JSON files, NOT this file.
 #}
 {% extends "layouts/base.njk" %}

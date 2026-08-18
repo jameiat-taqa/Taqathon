@@ -1,32 +1,18 @@
 {
-  "_comment": "SPONSORS PAGE COPY (English). PLACEHOLDER CONTENT — built 2026-08-11, same batch as tracks/registration. Tier names and sponsor names are all generic stand-ins. Deliberately NOT using <img> logo placeholders (no real logo files exist yet, and a broken-image icon looks worse than a clean text box) — each sponsor renders as a plain named box until real logos are supplied, at which point 'name' fields should gain a matching 'logo' path (see assets/sponsors/ which already exists but is currently unused by this page).",
+  "_comment": "SPONSORS PAGE COPY (English). REAL CONTENT (2026), partially: the board-approved resolution for 'Taqathon 2' (board minutes dated 2026-07-21) names exactly two confirmed 2026 partners — University of Jeddah as the scientific/academic partner, and Mishkat Interactive Center (مركز مشكاة التفاعلي) for judging support — and authorizes the executive team to sign with them and activate outreach to other supporting entities. Beyond those two, no specific sponsor names or tiers (Platinum/Gold/Silver) are confirmed for 2026 — 2025's sponsor list (Johnson Controls-York, Association Support Fund, etc., from the association's 2025 presentation deck) is NOT reused here since none of those are confirmed to be returning; inventing tier placeholders again would misrepresent partners who haven't actually signed on. See PROGRESS.md's 'still missing' list.",
   "pageTitle": "Sponsors · Taqathon",
   "hero": {
     "icon": "bi-award",
     "heading": "Sponsors & Partners",
     "headingClass": "fw-semibold",
-    "intro": "Placeholder sponsor list — real sponsor names and logos will replace this once confirmed."
+    "intro": "The Association's board has confirmed two partners for Taqathon 2 so far. Sponsorship tiers for 2026 are still being finalized."
   },
   "tiers": [
     {
-      "tierName": "Platinum Sponsors",
+      "tierName": "Confirmed Partners",
       "sponsors": [
-        { "name": "Sponsor Name (placeholder)" }
-      ]
-    },
-    {
-      "tierName": "Gold Sponsors",
-      "sponsors": [
-        { "name": "Sponsor Name (placeholder)" },
-        { "name": "Sponsor Name (placeholder)" }
-      ]
-    },
-    {
-      "tierName": "Supporting Partners",
-      "sponsors": [
-        { "name": "Partner Name (placeholder)" },
-        { "name": "Partner Name (placeholder)" },
-        { "name": "Partner Name (placeholder)" }
+        { "name": "University of Jeddah — Scientific Partner" },
+        { "name": "Mishkat Interactive Center — Judging Partner" }
       ]
     }
   ]

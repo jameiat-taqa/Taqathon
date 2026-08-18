@@ -1,9 +1,9 @@
 {
-  "_comment": "HOME PAGE COPY (Arabic). Every piece of Arabic text on the Home page lives here instead of inside home.njk, so editing the page's wording never means touching template code. Loaded by src/_data/pages/home.js. 'deadline' now reflects Taqathon 2026's registration deadline (set in Phase 1, 2026-08-11) — the user gave Sept 28, 2026 with no exact time, so end-of-day Riyadh time (23:59:59+03:00) was used; correct this if a precise time is confirmed later. See home.en.json for the English mirror (must keep the same keys/shape).",
+  "_comment": "HOME PAGE COPY (Arabic). Every piece of Arabic text on the Home page lives here instead of inside home.njk, so editing the page's wording never means touching template code. Loaded by src/_data/pages/home.js. 'deadline' now reflects Taqathon 2026's registration deadline (set in Phase 1, 2026-08-11) — the user gave Sept 28, 2026 with no exact time, so end-of-day Riyadh time (23:59:59+03:00) was used; correct this if a precise time is confirmed later. See home.en.json for the English mirror (must keep the same keys/shape). REAL CONTENT PASS (2026): hero.title, about.prize.amounts, and about.body updated from the board-approved resolution for 'طاقتون ٢' (board minutes dated 2026-07-21) and taqa.org.sa — see PROGRESS.md. hero.badge is unused dead data (hero badge pill removed site-wide in the previous round).",
   "pageTitle": "الرئيسية · طاقَثون",
   "hero": {
     "badge": "بوابة المشاركين",
-    "title": "طاقَثون 2025",
+    "title": "طاقَثون 2",
     "subtitle": "هاكاثون الطاقة الوطني في المملكة العربية السعودية",
     "body": "هذه البوابة مخصّصة للمشاركين المقبولين. هنا تجد روابط الورش والجدول، وتطّلع على القواعد والموارد، وتسلّم مشروعك في الوقت المحدد. ينظّم الحدث جمعية الطاقة للتنمية المستدامة ويدعم مستهدفات رؤية 2030.",
     "ctas": [
@@ -33,12 +33,12 @@
   "about": {
     "image": { "src": "assets/gallery/1AN07654.jpg", "alt": "ألواح شمسية من منظور علوي" },
     "heading": "ماذا ستفعل في طاقَثون؟",
-    "body": "ستعمل ضمن فرق لتطوير حلول عملية في الطاقة المتجددة وكفاءة الاستهلاك وذكاء الطاقة، بإرشاد خبراء وبهدف التبنّي الواقعي المتوافق مع رؤية 2030.",
+    "body": "ستعمل ضمن فرق لتطوير حلول عملية في الذكاء الاصطناعي والطاقة المتجددة، أو الشبكات الذكية وكفاءة الطاقة، أو استدامة الحج والعمرة، بإرشاد خبراء وبهدف التبنّي الواقعي المتوافق مع رؤية 2030.",
     "listCol1": [
       { "icon": "bi-lightbulb", "text": "ورش يقودها خبراء" },
       { "icon": "bi-person-lines-fill", "text": "إرشاد ومرافقة تقنية" }
     ],
-    "prize": { "prefix": "جوائز:", "amounts": ["18,000", "12,000", "9,000"], "riyalAlt": "ريال سعودي", "riyalIconMarginStyle": "margin-inline-start:.25rem", "spaceBeforeRiyalIcon": false },
+    "prize": { "prefix": "إجمالي الجوائز:", "amounts": ["45,000"], "riyalAlt": "ريال سعودي", "riyalIconMarginStyle": "margin-inline-start:.25rem", "spaceBeforeRiyalIcon": false },
     "listCol2Extra": { "icon": "bi-building-check", "text": "فرص تبنّي من شركات كبرى" },
     "prizeStatLabel": "الجوائز",
     "tracksStatValue": "3",

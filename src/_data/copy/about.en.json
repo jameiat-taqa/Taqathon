@@ -1,21 +1,22 @@
 {
-  "_comment": "ABOUT PAGE COPY (English). PLACEHOLDER/DRAFT CONTENT — built 2026-08-11 as part of Phase 3's nav restructure (the 'About' dropdown needed a real destination page, not just a menu label). Structure is real (association overview first, then Taqathon's own story/mission below it, per the user's explicit instruction) but EVERY sentence of body text is a draft stand-in pending real content. Handle 'associationStatus' with particular care — it's specifically flagged by the user as sensitive and NOT to be invented (legal/registration/official-recognition claims about the association must come from them, not guessed).",
+  "_comment": "ABOUT PAGE COPY (English). REAL CONTENT PASS (2026): association.bodyPlaceholder is a direct translation of the Association's own 'About us' text from taqa.org.sa and its 2025 presentation deck. association.statusPlaceholder now states the Association's real license number (1000609300, printed on every official document and the site header) — this was the one field explicitly flagged as sensitive and not to be invented; it's now a confirmed fact, not a guess, so it moved out of the dashed 'pending' treatment into a plain confirmed-fact callout (see about.njk). taqathon.bodyPlaceholder/missionPlaceholder/visionPlaceholder are sourced from taqa.org.sa's own 'هاكثون الطاقة' page (the program's stated goals) and the board-approved resolution for 'Taqathon 2' (the 5-year national-initiative framing). See PROGRESS.md for the full source-by-field breakdown. Field names still say 'Placeholder' for historical reasons (avoids touching about.njk's variable names) — the CONTENT is real, not a placeholder, except where still flagged missing.",
   "pageTitle": "About · Taqathon",
   "hero": { "icon": "bi-info-circle", "heading": "About", "headingClass": "fw-semibold" },
   "draftPendingLabel": "Pending Confirmation",
+  "confirmedLabel": "Confirmed",
   "association": {
     "heading": "About the Association",
-    "bodyPlaceholder": "Draft placeholder — a short overview of the Energy Association for Sustainable Development: what it does, its mission, and its role in organizing Taqathon. To be supplied or confirmed by the Association.",
+    "bodyPlaceholder": "Launched in Jeddah in 2024, the Energy Association for Sustainable Development works to raise community awareness of renewable energy, support national initiatives, and drive innovation in the energy sector. Scientific research is one of its top priorities, alongside instilling sustainable behaviors, building economic awareness across generations, and developing the capabilities of innovators.",
     "statusLabel": "Official Status",
-    "statusPlaceholder": "Draft placeholder — DO NOT invent legal/registration details here. The Association's official status/registration information must be confirmed before this section is finalized."
+    "statusPlaceholder": "Licensed association, license number 1000609300."
   },
   "taqathon": {
     "heading": "About Taqathon",
-    "bodyPlaceholder": "Draft placeholder — Taqathon's own story: how and why it started, and what it aims to achieve.",
+    "bodyPlaceholder": "Taqathon is a national energy hackathon that brings entrepreneurs and researchers together to develop innovative solutions for energy sustainability through workshops and technical competitions. \"Taqathon 2\" was approved by the Association's board as a continuous national initiative, planned to run annually for five years as a platform for innovation in energy and sustainability.",
     "missionHeading": "Our Mission",
-    "missionPlaceholder": "Draft placeholder — Taqathon's mission statement.",
+    "missionPlaceholder": "To deliver innovative renewable-energy solutions, raise awareness of the energy sector's challenges, connect participants with experts, provide technical support, and encourage investment in energy innovation.",
     "visionHeading": "Our Vision",
-    "visionPlaceholder": "Draft placeholder — Taqathon's vision, likely tied to Saudi Vision 2030 (already referenced elsewhere on this site)."
+    "visionPlaceholder": "A continuous national initiative and annual platform for innovation in energy and sustainability, running for five years."
   },
   "ctaLabel": "Ready to take part?",
   "ctaButtonLabel": "Register Your Team",

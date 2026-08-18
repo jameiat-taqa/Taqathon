@@ -14,15 +14,19 @@ permalink: "{{ locale.permalink }}"
   Taqathon itself, per explicit instruction — a simple content page,
   no forms/loops needed.
 
-  PLACEHOLDER/DRAFT CONTENT (still true as of this redesign): every
-  body paragraph is a draft stand-in — see about.ar.json / about.en.json's
-  "_comment" field. The "Official Status" sub-section is flagged with
-  extra care there: don't let anyone (including a future editing
-  session) casually fill it in with invented legal/registration
-  details — that specifically has to come from the Association. This
-  redesign changes ONLY layout/visual treatment, not one word of copy
-  — the placeholder text is exactly what it was before, still flagged
-  as a placeholder (now more visibly so — see .ab-draft-flag below).
+  REAL CONTENT (Phase 3, 2026 real-content pass): every body
+  paragraph on this page is now sourced from the board-approved
+  resolution for "طاقتون ٢" and taqa.org.sa — see about.ar.json /
+  about.en.json's "_comment" field for the source of each. The
+  "Official Status" sub-section was the one explicitly flagged as
+  sensitive and not to be invented; it's now a confirmed fact (the
+  Association's real license number), so it moved OUT of the dashed
+  "pending confirmation" treatment (.ab-draft-flag, still defined
+  below for any future placeholder that needs it) and into the plain
+  "confirmed fact" callout (.ab-fact) — same solid-border pattern
+  other pages in this redesign use for "here's a real, sourced note"
+  (see community.njk's .ed-note), just under this page's own .ab-
+  prefix instead of introducing a second shared class name.
 
   VISUAL SYSTEM (Phase 3, editorial redesign rollout — first page
   after Home): reuses the exact same tokens/mirror technique Home's
@@ -124,6 +128,28 @@ permalink: "{{ locale.permalink }}"
 [data-bs-theme="dark"] .ab-draft-flag-body{ color:var(--muted); }
 
 {#
+  .ab-fact: the "resolved" counterpart to .ab-draft-flag above — a
+  SOLID terra border instead of dashed, no "pending" label, for a
+  short factual note that's confirmed rather than awaiting
+  confirmation. Currently used for Official Status now that its one
+  real fact (the license number) is known.
+#}
+.ab-fact{
+  border:1.5px solid rgba(196,64,26,.3); border-radius:.75rem;
+  padding:1.25rem 1.5rem; margin-top:1.75rem; background:rgba(196,64,26,.04);
+}
+.ab-fact-label{
+  display:flex; align-items:center; gap:.5rem;
+  font-family:var(--font-mono-label); text-transform:uppercase; letter-spacing:.06em;
+  font-size:.7rem; font-weight:700; color:var(--color-terra); margin-bottom:.6rem;
+}
+[dir="rtl"] .ab-fact-label{ font-family:inherit; text-transform:none; letter-spacing:0; }
+.ab-fact-body{ color:var(--color-dust); margin:0; font-size:.95rem; }
+[data-bs-theme="dark"] .ab-fact{ border-color:rgba(232,149,43,.35); background:rgba(232,149,43,.06); }
+[data-bs-theme="dark"] .ab-fact-label{ color:var(--color-amber); }
+[data-bs-theme="dark"] .ab-fact-body{ color:var(--muted); }
+
+{#
   Mission/Vision pillars: same small-dark-accent-in-a-light-section
   idea as Home's .dz-stat-cell, reused for text instead of a number.
   Dark mode flips them the same way too — light accent on a dark
@@ -163,9 +189,9 @@ permalink: "{{ locale.permalink }}"
   <span class="ab-label">01 — {{ locale.content.association.heading }}</span>
   <h2 class="ab-heading">{{ locale.content.association.heading }}</h2>
   <p class="ab-body">{{ locale.content.association.bodyPlaceholder }}</p>
-  <div class="ab-draft-flag">
-    <div class="ab-draft-flag-label"><i class="bi bi-flag-fill"></i> {{ locale.content.association.statusLabel }} — {{ locale.content.draftPendingLabel }}</div>
-    <p class="ab-draft-flag-body">{{ locale.content.association.statusPlaceholder }}</p>
+  <div class="ab-fact">
+    <div class="ab-fact-label"><i class="bi bi-patch-check-fill"></i> {{ locale.content.association.statusLabel }} — {{ locale.content.confirmedLabel }}</div>
+    <p class="ab-fact-body">{{ locale.content.association.statusPlaceholder }}</p>
   </div>
 </div>
 </section>

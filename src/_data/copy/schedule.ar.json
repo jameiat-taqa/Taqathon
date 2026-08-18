@@ -1,5 +1,5 @@
 {
-  "_comment": "SCHEDULE PAGE COPY (Arabic). The workshop/key-date table is fully data-driven (arrays below) instead of hand-typed rows, on purpose — Phase 3 of the overall project plan wants a card-based mobile layout for this exact table someday, which is much easier to build against structured data than against static HTML rows. 'action: null' means that row's button cell is intentionally empty (some events just don't have a join link/action).",
+  "_comment": "SCHEDULE PAGE COPY (Arabic). محتوى حقيقي (2026) — انظر ملاحظة schedule.en.json (النسخة الإنجليزية) للتفصيل الكامل. مراحل «التواريخ المهمة» الأربعة مأخوذة من محضر قرار مجلس الإدارة المعتمد لـ«طاقتون ٢» (البند «الخط الزمني») ومن العرض التقديمي الرسمي لعام 2026، وكلاهما يتطابقان على نفس المراحل الأربعة. لا يوجد في أي من المصادر الثلاثة تواريخ ورش عمل محددة يوماً بيوم لعام 2026 حتى الآن، فتُرك 'workshops' فارغاً عمداً مع ملاحظة على الصفحة نفسها (workshopsNote). جدول ورش نوفمبر 2025 الحقيقي (طاقثون 1) نُقل إلى src/_data/copy/years/2025.ar.json بدلاً من حذفه — فهو محتوى حقيقي، لكنه يخص أرشيف الموسم السابق لا صفحة الجدول الحالية.",
   "pageTitle": "الجدول والورش · طاقَثون",
   "hero": { "icon": "bi-calendar-event", "heading": "الجدول والورش", "headingClass": "fw-bold" },
   "iconMarginClass": "me-1",
@@ -7,66 +7,33 @@
   "workTitleFontWeight": 700,
   "tableHeaders": { "item": "البند", "date": "التاريخ", "time": "الوقت", "action": "الإجراء" },
   "workshopsHeading": "جلسات ارشادية وتثقيفية",
-  "workshops": [
-    {
-      "title": "جلسة في مجال الطاقة",
-      "presenter": "أ.د/ علي فودة",
-      "date": "16 نوفمبر 2025",
-      "time": "6:30 - 7:15 مساءً",
-      "action": { "label": "انضم الآن", "href": "https://meet.google.com/wsa-asty-ctp", "icon": "bi-box-arrow-up-right" }
-    },
-    {
-      "title": "جلسة بناء وتطوير المشاريع",
-      "presenter": "د. سامي غزالي",
-      "date": "16 نوفمبر 2025",
-      "time": "7:30 - 8:15 مساءً",
-      "action": { "label": "انضم الآن", "href": "https://meet.google.com/pmq-pmvw-dqp", "icon": "bi-box-arrow-up-right" }
-    },
-    {
-      "title": "جلسة العرض الاحترافي للمشاريع",
-      "presenter": "د. مهند باحشوان",
-      "date": "16 نوفمبر 2025",
-      "time": "8:30 - 9:15 مساءً",
-      "action": { "label": "انضم الآن", "href": "https://meet.google.com/aka-ibmg-qup", "icon": "bi-box-arrow-up-right" }
-    }
-  ],
-  "keyDatesHeading": "التواريخ المهمة",
+  "workshopsNote": "لم تُعلَن بعد تواريخ أو مواضيع أو أسماء مقدّمي ورش العمل الخاصة بطاقتون 2 — سيتم إضافتها هنا بعد اعتمادها. الجدول الكامل لورش الموسم السابق محفوظ في أرشيف 2025.",
+  "workshops": [],
+  "keyDatesHeading": "الخط الزمني لبرنامج 2026",
   "keyDates": [
     {
-      "title": "اللقاء التوضيحي",
-      "date": "17 نوفمبر 2025",
-      "time": "2:00 - 2:30 مساءً",
-      "action": { "label": "انضم الآن", "href": "https://meet.google.com/agu-pcqy-khw", "icon": "bi-box-arrow-up-right" }
+      "title": "فترة التقديم والتسجيل",
+      "date": "سبتمبر 2026",
+      "time": "",
+      "action": { "label": "سجّل الآن", "href": "registration.html", "icon": "bi-pencil-square" }
     },
     {
-      "title": "تسليم المشروع النهائي",
-      "date": "22 نوفمبر 2025",
-      "time": "2:00 مساءً",
-      "action": { "label": "تسليم المشروع", "href": "submissions.html", "icon": "bi-upload" }
-    },
-    {
-      "title": "عرض المشروع النهائي",
-      "date": "23 نوفمبر 2025",
-      "time": "8:00 مساءً",
-      "action": null
-    },
-    {
-      "title": "إعلان الفائزين",
-      "date": "25 نوفمبر 2025",
+      "title": "فترة الفرز والترشيح",
+      "date": "أكتوبر 2026",
       "time": "",
       "action": null
     },
     {
-      "title": "تسليم برومو الفيديو",
-      "date": "30 نوفمبر 2025",
+      "title": "فترة العمل والإرشاد",
+      "date": "أكتوبر – نوفمبر 2026",
       "time": "",
-      "action": { "label": "تسليم الفيديو", "href": "submissions.html", "icon": "bi-upload" }
+      "action": null
     },
     {
-      "title": "الحفل الختامي",
-      "date": "٢ ديسمبر 2025",
-      "time": "6:30 - 8:30 مساءً",
-      "action": { "label": "قاعة الجوهرة – جامعة جدة", "href": "https://maps.app.goo.gl/3ucTAEBiY8wEivXK7", "icon": "bi-geo-alt-fill", "external": true }
+      "title": "إعلان الفائزين والجوائز",
+      "date": "ديسمبر 2026",
+      "time": "",
+      "action": null
     }
   ]
 }
