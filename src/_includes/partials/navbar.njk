@@ -40,9 +40,25 @@
     Arabic aria-label was adopted here for all pages going forward
     (see the "_comment" note at the top of site.ar.json).
   #}
-  <a class="navbar-brand d-flex align-items-center" href="{{ locale.pathPrefix | default('') }}{{ locale.site.brand.href }}"{% if locale.site.brand.ariaLabel %} aria-label="{{ locale.site.brand.ariaLabel }}"{% endif %}>
-    <img src="{{ locale.pathPrefix | default('') }}assets/logos/taqathon-logo.png" alt="{{ locale.site.brand.logoAlt }}" class="logo-mark">
-  </a>
+  {#
+    Both logos, side by side (2026-08-18 navbar revision). Previously
+    the association logo lived all the way at the other end of the
+    bar, in the assoc-fixed cluster with the utility icons — paired
+    with the brand mark here instead, since they're both "who this
+    is" (organizer + partner), not actions. Frees the right-hand
+    cluster to be pure actions/utilities (Register, language, search,
+    theme, menu). The association logo keeps its own external link to
+    taqa.org.sa; it's just adjacent to the brand link now, not merged
+    into one link.
+  #}
+  <div class="navbar-brands d-flex align-items-center">
+    <a class="navbar-brand d-flex align-items-center" href="{{ locale.pathPrefix | default('') }}{{ locale.site.brand.href }}"{% if locale.site.brand.ariaLabel %} aria-label="{{ locale.site.brand.ariaLabel }}"{% endif %}>
+      <img src="{{ locale.pathPrefix | default('') }}assets/logos/taqathon-logo.png" alt="{{ locale.site.brand.logoAlt }}" class="logo-mark">
+    </a>
+    <a href="{{ locale.site.assoc.href }}" target="_blank" rel="noopener"{% if locale.site.assoc.linkClass %} class="{{ locale.site.assoc.linkClass }}"{% endif %}{% if locale.site.assoc.ariaLabel %} aria-label="{{ locale.site.assoc.ariaLabel }}"{% endif %}>
+      <img src="{{ locale.pathPrefix | default('') }}assets/logos/association-logo.png" class="assoc-logo" alt="{{ locale.site.assoc.alt }}">
+    </a>
+  </div>
 
   <div class="collapse navbar-collapse" id="mainNav">
     <ul class="navbar-nav mb-2 mb-lg-0 align-items-lg-center">
@@ -108,28 +124,21 @@
           <li class="nav-item"><a class="nav-link{% if item.key == locale.navActive %} active{% endif %}" href="{{ locale.pathPrefix | default('') }}{{ item.href }}"{% if item.key == locale.navActive %} aria-current="page"{% endif %}>{{ item.label | safe }}</a></li>
         {% endif %}
       {% endfor %}
-      {#
-        Nunjucks escapes {{ }} output by default (so a literal "&" in
-        JSON would show up as "&amp;amp;" — double-escaped). The nav
-        labels intentionally contain a real HTML entity, e.g.
-        "Schedule &amp; Workshops", copied from the original markup, so
-        `| safe` tells Nunjucks "trust this string as-is, don't
-        re-escape it" and it renders as "Schedule & Workshops" correctly.
-      #}
-      <li class="nav-item{% if locale.site.langSwitch.liClass %} {{ locale.site.langSwitch.liClass }}{% endif %}"><a class="btn btn-sm btn-lang" href="{{ locale.altHref }}"{% if locale.site.langSwitch.ariaLabel %} aria-label="{{ locale.site.langSwitch.ariaLabel }}"{% endif %}>{{ locale.site.langSwitch.label }}</a></li>
     </ul>
   </div>
 
   <div class="assoc-fixed d-flex align-items-center">
     {#
-      Register CTA (Phase 3, 2026-08-18 navbar revision). Pulled out of
-      the collapsible <ul> above — it used to be just another <li> in
-      the packed nav-links row, easy to miss next to Home/About/etc.
-      Living here means it's also always visible (not hidden behind
-      the mobile hamburger), which is the right call for a primary
-      call-to-action. Still driven by site.*.json's "button"-type nav
-      entry (href/label), just rendered in its own slot instead of
-      inline with the links loop above.
+      Register CTA + language switch (2026-08-18 navbar revision, both
+      steps). Register used to be just another <li> in the packed
+      nav-links row above; the language switch used to be the last
+      <li> in that same row. Both are "actions", not navigation, so
+      both now live here instead — grouped together, always visible
+      (not hidden behind the mobile hamburger), separated from the
+      pure-utility icons that follow (search/theme/menu) by the
+      divider below. Register is still driven by site.*.json's
+      "button"-type nav entry (href/label), just picked out of the
+      loop above instead of rendered inline with it.
     #}
     {% for item in locale.site.nav %}
       {% if item.type == "button" %}
@@ -138,17 +147,23 @@
       </a>
       {% endif %}
     {% endfor %}
+    {#
+      Nunjucks escapes {{ }} output by default (so a literal "&" in
+      JSON would show up as "&amp;amp;" — double-escaped). Not relevant
+      to this particular label, but the same rule applies site-wide
+      wherever a label can contain a real HTML entity — see the nav
+      dropdown loop above for the actual case that needs `| safe`.
+    #}
+    <a class="btn btn-sm btn-lang" href="{{ locale.altHref }}"{% if locale.site.langSwitch.ariaLabel %} aria-label="{{ locale.site.langSwitch.ariaLabel }}"{% endif %}>{{ locale.site.langSwitch.label }}</a>
     <span class="navbar-divider" aria-hidden="true"></span>
-    <a href="{{ locale.site.assoc.href }}" target="_blank" rel="noopener"{% if locale.site.assoc.linkClass %} class="{{ locale.site.assoc.linkClass }}"{% endif %}{% if locale.site.assoc.ariaLabel %} aria-label="{{ locale.site.assoc.ariaLabel }}"{% endif %}>
-      <img src="{{ locale.pathPrefix | default('') }}assets/logos/association-logo.png" class="assoc-logo" alt="{{ locale.site.assoc.alt }}">
-    </a>
     {#
       Site search trigger (Phase 3). Lives here in assoc-fixed rather than
       inside the collapsible navbar-nav list so it's reachable on mobile
-      without opening the hamburger menu first — same reasoning as the
-      association logo and toggler already being here. Opens the
-      #searchModal defined once in base.njk (shared chrome, not repeated
-      per nav item), which is where the actual Pagefind UI gets mounted.
+      without opening the hamburger menu first — same reasoning as
+      Register, the language switch, and the toggler all being here.
+      Opens the #searchModal defined once in base.njk (shared chrome,
+      not repeated per nav item), which is where the actual Pagefind UI
+      gets mounted.
     #}
     <button type="button" class="btn btn-sm btn-search-trigger" data-bs-toggle="modal" data-bs-target="#searchModal" aria-label="{{ locale.site.search.triggerAriaLabel }}">
       <i class="bi bi-search"></i>

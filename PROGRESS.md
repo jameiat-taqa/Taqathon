@@ -6,6 +6,14 @@ A running, dated record of what's been done on this project and why. Newest entr
 
 ---
 
+## 2026-08-18 — Navbar follow-up: logos paired, language switch joins Register
+
+- Second round of feedback on the same day's navbar revision: move the AR/EN toggle next to Register, and pair the two logos together.
+- **Logos**: the association logo used to live at the far end of the bar in `assoc-fixed`, next to the utility icons; moved next to the Taqathon brand mark instead (new `.navbar-brands` wrapper) — both are "who this is" (organizer + partner), not actions, so grouping them together and keeping the right-hand cluster purely for actions/utilities reads more intentional.
+- **Language switch**: pulled out of the packed nav-links `<ul>` (it was the last `<li>` there) into the same right-hand cluster as Register — both are actions, not navigation, so they're grouped together now, ahead of the divider that separates them from the plain utility icons (search, theme, hamburger). Also means AR/EN is now always visible, not hidden behind the mobile hamburger.
+- Removed the now-dead `langSwitch.liClass` field from `site.ar.json`/`site.en.json` (it existed only to style the `<li>` wrapper the language switch no longer has).
+- Verified: light/dark, Arabic RTL (mirrors correctly), and mobile (375px, no overflow, hamburger menu shows only the pure nav links now — no duplicated Register/AR inside it since both live outside that `<ul>`). No console errors.
+
 ## 2026-08-18 — Navbar layout revision: spacing, grouping, Register CTA
 
 - User feedback: the navbar read as one cramped block (nav links packed edge-to-edge with the logo), the search/dark-mode icons felt tight, and the Register button "looked wrong" and was placed badly.
