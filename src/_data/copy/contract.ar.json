@@ -5,6 +5,7 @@
   "hero": {
     "icon": "bi-pencil-square",
     "iconAriaHidden": false,
+    "kicker": "المشاركون",
     "heading": "اتفاقية المشاركة",
     "headingClass": "fw-bold"
   },

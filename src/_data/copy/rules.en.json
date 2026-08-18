@@ -3,6 +3,7 @@
   "pageTitle": "Rules & Resources · Taqathon",
   "hero": {
     "icon": "bi-clipboard-check",
+    "kicker": "Participants",
     "heading": "Rules & Resources",
     "headingClass": "fw-semibold",
     "intro": "Browse the official criteria, procedures, and resources for Taqathon. Click each section to expand the details."

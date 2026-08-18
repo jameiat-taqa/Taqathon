@@ -3,6 +3,7 @@
   "pageTitle": "FAQ · Taqathon",
   "hero": {
     "icon": "bi-question-circle",
+    "kicker": "About",
     "heading": "Frequently Asked Questions",
     "headingClass": "fw-semibold",
     "intro": "Answers to common questions about Taqathon. This list is a placeholder and will be updated with real questions."

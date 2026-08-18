@@ -3,6 +3,7 @@
   "pageTitle": "Sponsors · Taqathon",
   "hero": {
     "icon": "bi-award",
+    "kicker": "About",
     "heading": "Sponsors & Partners",
     "headingClass": "fw-semibold",
     "intro": "Placeholder sponsor list — real sponsor names and logos will replace this once confirmed."

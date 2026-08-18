@@ -1,7 +1,7 @@
 {
   "_comment": "SUBMISSIONS PAGE COPY (Arabic). The two form cards (project submission + promo video) are near-identical, so they're one 'forms' array rendered by a single loop in submissions.njk instead of two copy-pasted card blocks — and the copy-to-clipboard button now reuses one shared JS function instead of two nearly-identical click handlers (see pageScript in the template). The two original error messages differed slightly in wording for no clear reason; unified to the fuller one.",
   "pageTitle": "التسليمات · طاقَثون",
-  "hero": { "icon": "bi-upload", "heading": "التسليمات", "headingClass": "fw-bold" },
+  "hero": { "icon": "bi-upload", "kicker": "المشاركون", "heading": "التسليمات", "headingClass": "fw-bold" },
   "iconMarginClass": "ms-2",
   "copyButtonLabel": "نسخ الرابط",
   "copiedLabel": "تم النسخ!",

@@ -1,7 +1,7 @@
 {
   "_comment": "SCHEDULE PAGE COPY (English). English mirror of schedule.ar.json — see that file's note about why the table is data-driven.",
   "pageTitle": "Schedule & Workshops · Taqathon",
-  "hero": { "icon": "bi-calendar-event", "heading": "Schedule & Workshops", "headingClass": "fw-semibold" },
+  "hero": { "icon": "bi-calendar-event", "kicker": "Participants", "heading": "Schedule & Workshops", "headingClass": "fw-semibold" },
   "iconMarginClass": "me-1",
   "workTitleFontFamily": "Poppins, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif",
   "workTitleFontWeight": 600,

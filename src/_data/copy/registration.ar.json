@@ -1,7 +1,7 @@
 {
   "_comment": "REGISTRATION PAGE COPY (Arabic). PLACEHOLDER CONTENT — see registration.en.json's note (same file, English mirror) for full context: track names/count/links below are all stand-ins pending a real file the user is sending. deadlineNote's date IS real (matches home.ar.json's countdown).",
   "pageTitle": "التسجيل · طاقَثون",
-  "hero": { "icon": "bi-pencil-square", "heading": "تسجيل الفرق", "headingClass": "fw-bold" },
+  "hero": { "icon": "bi-pencil-square", "kicker": "التسجيل", "heading": "تسجيل الفرق", "headingClass": "fw-bold" },
   "deadlineNote": "يُغلق باب التسجيل في 28 سبتمبر 2026. تسجيل واحد لكل فريق — سجّل مرة واحدة للمسار الذي يتقدّم فريقك إليه.",
   "placeholderNote": "أسماء المسارات وروابط التسجيل أدناه مؤقتة وسيتم تحديثها بعد اعتمادها بشكل نهائي.",
   "iconMarginClass": "ms-2",
