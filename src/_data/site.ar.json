@@ -37,8 +37,10 @@
         { "key": "gallery", "href": "gallery.html", "label": "المرئيات" },
         { "key": "community", "href": "community.html", "label": "المجتمع" }
     ] },
-    { "type": "link", "key": "faq", "href": "faq.html", "label": "الأسئلة الشائعة" },
-    { "type": "link", "key": "contact", "href": "contact.html", "label": "تواصل معنا" },
+    { "type": "dropdown", "key": "contact", "label": "الدعم", "items": [
+        { "key": "contact", "href": "contact.html", "label": "تواصل معنا" },
+        { "key": "faq", "href": "faq.html", "label": "الأسئلة الشائعة" }
+    ] },
     { "type": "button", "key": "registration", "href": "registration.html", "label": "التسجيل" }
   ],
   "footer": {

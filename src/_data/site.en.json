@@ -37,8 +37,10 @@
         { "key": "gallery", "href": "gallery-en.html", "label": "Gallery" },
         { "key": "community", "href": "community-en.html", "label": "Community" }
     ] },
-    { "type": "link", "key": "faq", "href": "faq-en.html", "label": "FAQ" },
-    { "type": "link", "key": "contact", "href": "contact-en.html", "label": "Contact Us" },
+    { "type": "dropdown", "key": "contact", "label": "Support", "items": [
+        { "key": "contact", "href": "contact-en.html", "label": "Contact Us" },
+        { "key": "faq", "href": "faq-en.html", "label": "FAQ" }
+    ] },
     { "type": "button", "key": "registration", "href": "registration-en.html", "label": "Register" }
   ],
   "footer": {
