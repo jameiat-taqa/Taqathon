@@ -34,7 +34,7 @@
     "downloadIconMarginClass": "me-1",
     "notesHeading": "Submission notes",
     "note1Html": "Upload a <strong>PDF only</strong>. Other file types will be blocked.",
-    "note2Html": "If you face issues, email your PDF to <a href=\"mailto:info@jameiat-taqa.sa\">info@jameiat-taqa.sa</a>."
+    "note2Html": "If you face issues, email your PDF to <a href=\"mailto:taqathon@jameiat-taqa.sa\">taqathon@jameiat-taqa.sa</a>."
   },
   "status": {
     "chooseFile": "Please choose a PDF file to upload.",

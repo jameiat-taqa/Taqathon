@@ -1,19 +1,35 @@
 {
-  "_comment": "SPONSORS PAGE COPY (English). REAL CONTENT (2026), partially: the board-approved resolution for 'Taqathon 2' (board minutes dated 2026-07-21) names exactly two confirmed 2026 partners — University of Jeddah as the scientific/academic partner, and Mishkat Interactive Center (مركز مشكاة التفاعلي) for judging support — and authorizes the executive team to sign with them and activate outreach to other supporting entities. Beyond those two, no specific sponsor names or tiers (Platinum/Gold/Silver) are confirmed for 2026 — 2025's sponsor list (Johnson Controls-York, Association Support Fund, etc., from the association's 2025 presentation deck) is NOT reused here since none of those are confirmed to be returning; inventing tier placeholders again would misrepresent partners who haven't actually signed on. See PROGRESS.md's 'still missing' list.",
+  "_comment": "SPONSORS PAGE COPY (English). REAL CONTENT (2026), partially: the board-approved resolution for 'Taqathon 2' names exactly two confirmed 2026 partners — University of Jeddah as the scientific/academic partner, and Mishkat Interactive Center (مركز مشكاة التفاعلي) for judging support. Beyond those two, no specific sponsor names or tiers (Platinum/Gold/Silver) are confirmed for 2026 — 2025's sponsor list is NOT reused here since none of those are confirmed to be returning. See PROGRESS.md's 'still missing' list. 'supervisors'/'supporters' were moved here from contact.en.json (2026-08-18, user request). REVISED (2026-08-18, user request — 'this whole sentence is not good' + board-language flagged again): tier renamed 'Confirmed Partners' -> 'Partners' (the 'confirmed' qualifier read as hedging/internal status-tracking, not something a visitor needs), intro rewritten with no board/approval framing and no 'still being finalized' internal-status note. University of Jeddah gets its real logo file (already used elsewhere on this page for the Supporting Entities panel) via a new 'logoSrc' field. Mishkat Interactive Center has NO logo file anywhere in assets/ — not invented, 'logoSrc' is simply omitted for that entry and sponsors.njk falls back to name-only for any sponsor without one.",
   "pageTitle": "Sponsors · Taqathon",
   "hero": {
     "icon": "bi-award",
     "heading": "Sponsors & Partners",
     "headingClass": "fw-semibold",
-    "intro": "The Association's board has confirmed two partners for Taqathon 2 so far. Sponsorship tiers for 2026 are still being finalized."
+    "intro": "Organizations partnering with us for Taqathon 2."
   },
   "tiers": [
     {
-      "tierName": "Confirmed Partners",
+      "tierName": "Partners",
       "sponsors": [
-        { "name": "University of Jeddah — Scientific Partner" },
+        { "name": "University of Jeddah — Scientific Partner", "logoSrc": "assets/sponsors/university-of-jeddah-logo.png", "logoAlt": "University of Jeddah" },
         { "name": "Mishkat Interactive Center — Judging Partner" }
       ]
     }
-  ]
+  ],
+  "supervisors": {
+    "heading": "Supervising Entities",
+    "items": [
+      { "logoSrc": "assets/sponsors/ministry-of-energy-logo.png", "logoAlt": "Ministry of Energy", "badgeText": "Technical Supervision", "orgName": "Ministry of Energy" },
+      { "logoSrc": "assets/sponsors/NCNP-Sector-Logo.png", "logoAlt": "National Center for Non-Profit Sector", "badgeText": "Administrative Supervision", "orgName": "National Center for Non-Profit Sector" }
+    ]
+  },
+  "supporters": {
+    "heading": "Supporting Entities",
+    "items": [
+      { "logoSrc": "assets/sponsors/Associations-Support-Fund-Logo.png", "logoAlt": "Associations Support Fund", "orgName": "Associations Support Fund" },
+      { "logoSrc": "assets/sponsors/university-of-jeddah-logo.png", "logoAlt": "University of Jeddah", "orgName": "University of Jeddah" },
+      { "logoSrc": "assets/sponsors/york-logo.png", "logoAlt": "York", "orgName": "York" },
+      { "logoSrc": "assets/sponsors/Tanmia-logo.png", "logoAlt": "Tanmia Al-Qura Charity", "orgName": "Tanmia Al-Qura Charity" }
+    ]
+  }
 }

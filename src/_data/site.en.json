@@ -32,13 +32,11 @@
         { "key": "contract", "href": "contract-en.html", "label": "Contract" },
         { "key": "schedule", "href": "schedule-en.html", "label": "Schedule &amp; Workshops" },
         { "key": "submissions", "href": "submissions-en.html", "label": "Submissions" },
-        { "key": "submissionGuidelines", "href": "submission-guidelines-en.html", "label": "Submission Guidelines" },
         { "key": "rules", "href": "rules-en.html", "label": "Rules &amp; Resources" }
     ] },
     { "type": "dropdown", "key": "community", "label": "Community", "items": [
         { "key": "gallery", "href": "gallery-en.html", "label": "Gallery" },
-        { "key": "community", "href": "community-en.html", "label": "Community" },
-        { "key": "newsletter", "href": "newsletter-en.html", "label": "Newsletter" }
+        { "key": "community", "href": "community-en.html", "label": "Community" }
     ] },
     { "type": "link", "key": "contact", "href": "contact-en.html", "label": "Contact Us" },
     { "type": "button", "key": "registration", "href": "registration-en.html", "label": "Register" }
@@ -53,7 +51,7 @@
   "social": {
     "twitter": "https://x.com/jameiat_taqa",
     "twitterLabel": "X (Twitter)",
-    "instagram": "https://instagram.com/jameiat_taqa",
+    "instagram": "https://instagram.com/jameiat.taqa",
     "instagramLabel": "Instagram",
     "linkedin": "https://www.linkedin.com/company/جمعية-الطاقة-للتنمية-المستدامة",
     "linkedinLabel": "LinkedIn",

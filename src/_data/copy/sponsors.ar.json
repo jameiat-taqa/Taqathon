@@ -1,19 +1,35 @@
 {
-  "_comment": "SPONSORS PAGE COPY (Arabic). محتوى حقيقي (2026)، جزئياً — انظر ملاحظة sponsors.en.json (النسخة الإنجليزية) للتفصيل الكامل. الشريكان المؤكَّدان لعام 2026 من محضر قرار مجلس الإدارة هما: جامعة جدة (الشريك العلمي) ومركز مشكاة التفاعلي (شريك التحكيم). لم تُستخدم قائمة رعاة 2025 (Johnson Controls-York وغيرها) لأنها غير مؤكَّدة للاستمرار في 2026.",
+  "_comment": "SPONSORS PAGE COPY (Arabic). محتوى حقيقي (2026)، جزئياً — انظر ملاحظة sponsors.en.json (النسخة الإنجليزية) للتفصيل الكامل. الشريكان المؤكَّدان لعام 2026 من محضر قرار مجلس الإدارة هما: جامعة جدة (الشريك العلمي) ومركز مشكاة التفاعلي (شريك التحكيم). نُقل قسما 'الجهات الإشرافية' و'الجهات الداعمة' إلى هنا من contact.ar.json (2026-08-18). مُعدَّل مجدداً (2026-08-18، طلب المستخدم): اسم الفئة تغيّر من 'الشركاء المؤكَّدون' إلى 'الشركاء' فقط، وأُعيدت صياغة المقدمة دون لغة 'مجلس الإدارة' أو 'قيد التحديد' الداخلية. أُضيف شعار جامعة جدة الحقيقي (logoSrc)؛ لا يوجد ملف شعار لمركز مشكاة التفاعلي في assets/، فتُرك بلا logoSrc بدلاً من اختلاق واحد.",
   "pageTitle": "الرعاة · طاقَثون",
   "hero": {
     "icon": "bi-award",
     "heading": "الرعاة والشركاء",
     "headingClass": "fw-bold",
-    "intro": "أكّد مجلس إدارة الجمعية شريكين لطاقتون 2 حتى الآن. مستويات الرعاية لعام 2026 ما زالت قيد الاعتماد."
+    "intro": "الجهات الشريكة في طاقتون 2."
   },
   "tiers": [
     {
-      "tierName": "الشركاء المؤكَّدون",
+      "tierName": "الشركاء",
       "sponsors": [
-        { "name": "جامعة جدة — الشريك العلمي" },
+        { "name": "جامعة جدة — الشريك العلمي", "logoSrc": "assets/sponsors/university-of-jeddah-logo.png", "logoAlt": "جامعة جدة" },
         { "name": "مركز مشكاة التفاعلي — شريك التحكيم" }
       ]
     }
-  ]
+  ],
+  "supervisors": {
+    "heading": "الجهات الإشرافية",
+    "items": [
+      { "logoSrc": "assets/sponsors/ministry-of-energy-logo.png", "logoAlt": "وزارة الطاقة", "badgeText": "إشراف فني", "orgName": "وزارة الطاقة" },
+      { "logoSrc": "assets/sponsors/NCNP-Sector-Logo.png", "logoAlt": "المركز الوطني لتنمية القطاع غير الربحي", "badgeText": "إشراف إداري", "orgName": "المركز الوطني لتنمية القطاع غير الربحي" }
+    ]
+  },
+  "supporters": {
+    "heading": "الجهات الداعمة",
+    "items": [
+      { "logoSrc": "assets/sponsors/Associations-Support-Fund-Logo.png", "logoAlt": "صندوق دعم الجمعيات", "orgName": "صندوق دعم الجمعيات" },
+      { "logoSrc": "assets/sponsors/university-of-jeddah-logo.png", "logoAlt": "جامعة جدة", "orgName": "جامعة جدة" },
+      { "logoSrc": "assets/sponsors/york-logo.png", "logoAlt": "شركة يورك", "orgName": "شركة يورك" },
+      { "logoSrc": "assets/sponsors/Tanmia-logo.png", "logoAlt": "جمعية تنمية القرى الخيرية", "orgName": "جمعية تنمية القرى الخيرية" }
+    ]
+  }
 }

@@ -32,13 +32,11 @@
         { "key": "contract", "href": "contract.html", "label": "العقد" },
         { "key": "schedule", "href": "schedule.html", "label": "الجدول وورش العمل" },
         { "key": "submissions", "href": "submissions.html", "label": "التسليمات" },
-        { "key": "submissionGuidelines", "href": "submission-guidelines.html", "label": "إرشادات التسليم" },
         { "key": "rules", "href": "rules.html", "label": "القواعد والموارد" }
     ] },
     { "type": "dropdown", "key": "community", "label": "المجتمع", "items": [
         { "key": "gallery", "href": "gallery.html", "label": "المرئيات" },
-        { "key": "community", "href": "community.html", "label": "المجتمع" },
-        { "key": "newsletter", "href": "newsletter.html", "label": "النشرة البريدية" }
+        { "key": "community", "href": "community.html", "label": "المجتمع" }
     ] },
     { "type": "link", "key": "contact", "href": "contact.html", "label": "تواصل معنا" },
     { "type": "button", "key": "registration", "href": "registration.html", "label": "التسجيل" }
@@ -53,7 +51,7 @@
   "social": {
     "twitter": "https://x.com/jameiat_taqa",
     "twitterLabel": "X (Twitter)",
-    "instagram": "https://instagram.com/jameiat_taqa",
+    "instagram": "https://instagram.com/jameiat.taqa",
     "instagramLabel": "Instagram",
     "linkedin": "https://www.linkedin.com/company/جمعية-الطاقة-للتنمية-المستدامة",
     "linkedinLabel": "LinkedIn",
