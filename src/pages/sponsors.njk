@@ -8,25 +8,28 @@ permalink: "{{ locale.permalink }}"
 {#
   TAQATHON - SPONSORS PAGE TEMPLATE (src/pages/sponsors.njk)
   -------------------------------------------------------------
-  One section per tier, one plain named box per sponsor within it —
-  see sponsors.ar.json / sponsors.en.json's "_comment" for why this
-  renders text boxes instead of <img> logos (no real logo files exist
-  yet; a broken-image icon would look worse than a clean placeholder).
-  Once real logos exist, add a "logo" path per sponsor and swap the
-  box's text for an <img src="{{ s.logo }}">.
-
-  PLACEHOLDER CONTENT (still true after this redesign): tier names and
-  every sponsor name are generic stand-ins. Layout/visual only.
+  One section per tier, one box per sponsor within it. The tier
+  currently on this page ("Partners") is REAL content, not
+  placeholder — board-approved 2026 partners, not stand-ins — so
+  .sponsor-box is a solid card, not the dashed "not final yet"
+  treatment an earlier round used here (that treatment now correctly
+  lives only on genuinely-placeholder content, if any tier like that
+  gets added back later). Each sponsor renders its real logo when one
+  exists (s.logoSrc), and falls back to name-only text when it
+  doesn't — see sponsors.*.json's "_comment" for exactly which
+  partners have a logo file and which don't; nothing here is invented.
 
   VISUAL SYSTEM (Phase 3, editorial rollout, page 4 — see about.njk
   for the token-system rationale). Tier hierarchy is expressed
   typographically (Platinum's heading is largest, Supporting's is
   smallest) instead of through color or badges, since color is
   already spoken for by the accent-role rule elsewhere on the site.
-  Each sponsor box keeps the dashed-border "placeholder" treatment
-  the pre-redesign page already used — that visual cue is doing real
-  work (this content is not final) and was worth keeping, not just
-  carrying over by default.
+
+  SUPERVISORS/SUPPORTERS (2026-08-18): a second section below the
+  tiers, moved here from the Contact page per user request — real
+  logo-bearing entities, so they render actual <img> logos in solid
+  cards (see .sp-org-panel), not the dashed placeholder-box tiers use.
+  Data lives in supervisors.items / supporters.items in the copy JSON.
 #}
 {% extends "layouts/base.njk" %}
 {% block pageHead %}
@@ -64,11 +67,35 @@ permalink: "{{ locale.permalink }}"
 .sp-tier-2 .sp-tier-heading{ font-size:1.5rem; }
 .sp-tier-3 .sp-tier-heading{ font-size:1.15rem; }
 .sponsor-box{
-  border:1.5px dashed rgba(0,40,76,.25); border-radius:.75rem;
-  padding:1.1rem 1rem; text-align:center; color:var(--brand-dark); font-weight:600;
-  background:rgba(0,40,76,.03);
+  border:1px solid rgba(0,40,76,.08); border-radius:.75rem;
+  padding:1.25rem 1rem; text-align:center; color:var(--brand-dark); font-weight:600;
+  background:#fff; box-shadow:0 6px 18px rgba(0,0,0,.04);
+  display:flex; flex-direction:column; align-items:center; gap:.75rem; height:100%; justify-content:center;
 }
-[data-bs-theme="dark"] .sponsor-box{ border-color:rgba(255,255,255,.25); color:var(--text); background:rgba(255,255,255,.04); }
+[data-bs-theme="dark"] .sponsor-box{ border-color:rgba(255,255,255,.08); color:var(--text); background:var(--surface); box-shadow:0 6px 18px rgba(0,0,0,.35); }
+.sponsor-box .sp-org-logo{ max-height:56px; }
+
+{#
+  Supervisors/supporters (2026-08-18): unlike the tiers above, these
+  ARE real, logo-bearing, confirmed entities (moved here from the
+  Contact page, which used to carry them) — so they get a solid card
+  with an actual <img> logo, not the dashed placeholder-box treatment
+  the tiers use. Same white/var(--surface) panel style as the rest of
+  this redesign (see about.njk's token-system rationale) rather than
+  inventing a third card look for this page alone.
+#}
+.sp-org-section{ background:var(--color-cream); padding:0 0 4rem; }
+.sp-org-panel{
+  background:#fff; border:1px solid rgba(0,40,76,.08); border-radius:1rem;
+  padding:1.75rem; box-shadow:0 6px 18px rgba(0,0,0,.04); margin-bottom:1.5rem;
+}
+.sp-org-panel:last-child{ margin-bottom:0; }
+[data-bs-theme="dark"] .sp-org-panel{ background:var(--surface); border-color:rgba(255,255,255,.08); box-shadow:0 6px 18px rgba(0,0,0,.35); }
+.sp-org-logo{ max-height:70px; width:auto; object-fit:contain; }
+.sp-org-badge{ background:rgba(196,64,26,.1); color:var(--brand-dark); font-weight:700; }
+[data-bs-theme="dark"] .sp-org-badge{ background:rgba(232,149,43,.14); color:var(--text); }
+.sp-org-name{ color:var(--color-dust); }
+[data-bs-theme="dark"] .sp-org-name{ color:var(--muted); }
 {% endblock %}
 
 {% block content %}
@@ -89,7 +116,12 @@ permalink: "{{ locale.permalink }}"
     <div class="row g-3">
       {% for s in tier.sponsors %}
       <div class="col-sm-6 col-md-4">
-        <div class="sponsor-box">{{ s.name }}</div>
+        <div class="sponsor-box">
+          {% if s.logoSrc %}
+          <img src="{{ locale.pathPrefix | default('') }}{{ s.logoSrc }}" alt="{{ s.logoAlt }}" class="img-fluid sp-org-logo">
+          {% endif %}
+          <span>{{ s.name }}</span>
+        </div>
       </div>
       {% endfor %}
     </div>
@@ -97,5 +129,46 @@ permalink: "{{ locale.permalink }}"
   {% endfor %}
 </div>
 </section>
+
+{% if locale.content.supervisors or locale.content.supporters %}
+<section class="sp-org-section">
+<div class="container" style="max-width:900px;">
+
+  {% if locale.content.supervisors %}
+  <div class="sp-org-panel">
+    <h2 class="h6 sp-tier-heading text-center mb-3" style="font-size:1.15rem;">{{ locale.content.supervisors.heading }}</h2>
+    <div class="row g-3 justify-content-center align-items-center text-center">
+      {% for s in locale.content.supervisors.items %}
+      <div class="col-6 col-md-5 d-flex flex-column align-items-center text-center">
+        <div style="height:90px; display:flex; align-items:center; justify-content:center;">
+          <img src="{{ locale.pathPrefix | default('') }}{{ s.logoSrc }}" alt="{{ s.logoAlt }}" class="img-fluid sp-org-logo">
+        </div>
+        <div style="min-height:50px; display:flex; align-items:center; justify-content:center; margin-top:.75rem;">
+          <div class="badge rounded-pill px-3 py-2 sp-org-badge">{{ s.badgeText }}</div>
+        </div>
+        <div class="small sp-org-name mt-2">{{ s.orgName }}</div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  {% if locale.content.supporters %}
+  <div class="sp-org-panel">
+    <h2 class="h6 sp-tier-heading text-center mb-3" style="font-size:1.15rem;">{{ locale.content.supporters.heading }}</h2>
+    <div class="row g-3 justify-content-evenly align-items-center text-center">
+      {% for s in locale.content.supporters.items %}
+      <div class="col-6 col-md-3 d-flex flex-column align-items-center">
+        <img src="{{ locale.pathPrefix | default('') }}{{ s.logoSrc }}" alt="{{ s.logoAlt }}" class="img-fluid sp-org-logo mb-2">
+        <div class="small sp-org-name text-center">{{ s.orgName }}</div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+</div>
+</section>
+{% endif %}
 
 {% endblock %}

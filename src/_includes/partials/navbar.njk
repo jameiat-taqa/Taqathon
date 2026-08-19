@@ -55,6 +55,7 @@
     <a class="navbar-brand d-flex align-items-center" href="{{ locale.pathPrefix | default('') }}{{ locale.site.brand.href }}"{% if locale.site.brand.ariaLabel %} aria-label="{{ locale.site.brand.ariaLabel }}"{% endif %}>
       <img src="{{ locale.pathPrefix | default('') }}assets/logos/taqathon-logo.png" alt="{{ locale.site.brand.logoAlt }}" class="logo-mark">
     </a>
+    <span class="navbar-divider" aria-hidden="true"></span>
     <a href="{{ locale.site.assoc.href }}" target="_blank" rel="noopener"{% if locale.site.assoc.linkClass %} class="{{ locale.site.assoc.linkClass }}"{% endif %}{% if locale.site.assoc.ariaLabel %} aria-label="{{ locale.site.assoc.ariaLabel }}"{% endif %}>
       <img src="{{ locale.pathPrefix | default('') }}assets/logos/association-logo.png" class="assoc-logo" alt="{{ locale.site.assoc.alt }}">
     </a>

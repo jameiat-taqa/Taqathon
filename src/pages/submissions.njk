@@ -8,13 +8,13 @@ permalink: "{{ locale.permalink }}"
 {#
   TAQATHON - SUBMISSIONS PAGE TEMPLATE (src/pages/submissions.njk)
   --------------------------------------------------------------------
-  Two cards — project submission form, promo video form — that are
-  otherwise identical in structure. Rendered from ONE loop over
+  A "before you submit" checklist card, then one card per submission
+  form. The form cards are rendered from ONE loop over
   locale.content.forms (see submissions.ar.json / submissions.en.json)
-  instead of two hand-typed, copy-pasted card blocks. Same idea for the
+  instead of hand-typed, copy-pasted card blocks. Same idea for the
   copy-to-clipboard button: one shared click handler in pageScript below
-  instead of two nearly-identical <script> blocks, one per card, like
-  the original pages had.
+  instead of a separate <script> block per card, like the original
+  pages had.
 
   REAL functionality, not placeholder — these are the actual Google
   Form links participants use. This redesign changes ONLY the visual
@@ -22,7 +22,22 @@ permalink: "{{ locale.permalink }}"
   token-system rationale); the loop, the copy-button handler, and
   every href are untouched.
 
+  MERGED WITH SUBMISSION GUIDELINES (2026-08-18, user request: "join
+  up submissions and submissions into 1 page" — meaning Submissions
+  and the separate Submission Guidelines page). That page never had
+  much reason to exist on its own: its own comment said outright it
+  was built as a thin checklist + links to THIS page and Rules &
+  Resources, specifically to avoid duplicating either. So the
+  checklist now lives here as the first card (.sb-checklist-card,
+  reusing the exact list styling submission-guidelines.njk had), the
+  self-referential "see Submissions" link is gone (no longer needed —
+  you're already here), and only the Rules & Resources link remains.
+  submission-guidelines.njk/.js and its copy JSON files were deleted;
+  the nav no longer has a separate "Submission Guidelines" entry.
+
   TO CUSTOMIZE:
+    - Checklist items / the Rules link → checklistHeading / checklist /
+      rulesLink in the copy JSON files.
     - Add a third form/card → add one more object to the "forms" array
       in the copy JSON files. The loop below and the shared copy-button
       handler both already scale to however many forms exist.
@@ -65,6 +80,26 @@ permalink: "{{ locale.permalink }}"
 .ed-note .bi{ color:var(--color-terra); flex-shrink:0; margin-top:.15rem; }
 [data-bs-theme="dark"] .ed-note{ background:rgba(232,149,43,.06); border-color:rgba(232,149,43,.2); color:var(--text); }
 [data-bs-theme="dark"] .ed-note .bi{ color:var(--color-amber); }
+
+{#
+  Checklist card (2026-08-18): merged in from the now-deleted
+  Submission Guidelines page — same list styling that page used
+  (.sb-checklist / .bi-check-circle-fill), just renamed with this
+  page's "sb-" prefix instead of that page's "sg-" one.
+#}
+.sb-checklist{ list-style:none; padding:0; margin:0 0 1.25rem; color:var(--brand-dark); }
+[data-bs-theme="dark"] .sb-checklist{ color:var(--text); }
+.sb-checklist li{ display:flex; align-items:flex-start; gap:.6rem; margin-bottom:.75rem; }
+.sb-checklist li:last-child{ margin-bottom:0; }
+.sb-checklist .bi{ color:var(--color-terra); margin-top:.15rem; flex-shrink:0; }
+[data-bs-theme="dark"] .sb-checklist .bi{ color:var(--color-amber); }
+.sb-rules-link{
+  border:1px solid rgba(0,40,76,.2); color:var(--brand-dark); border-radius:999px;
+  font-weight:600; background:transparent;
+}
+.sb-rules-link:hover{ background:rgba(0,40,76,.05); color:var(--brand-dark); }
+[data-bs-theme="dark"] .sb-rules-link{ border-color:rgba(255,255,255,.2); color:var(--text); }
+[data-bs-theme="dark"] .sb-rules-link:hover{ background:rgba(255,255,255,.06); color:var(--text); }
 {% endblock %}
 
 {% block content %}
@@ -77,6 +112,21 @@ permalink: "{{ locale.permalink }}"
 
 <section class="sb-section">
 <div class="container">
+  {% if locale.content.checklist and locale.content.checklist.length %}
+  <div class="sb-card">
+    <h2 class="sb-card-title mb-3">{{ locale.content.checklistHeading }}</h2>
+    <ul class="sb-checklist">
+      {% for item in locale.content.checklist %}
+      <li><i class="bi bi-check-circle-fill"></i> {{ item }}</li>
+      {% endfor %}
+    </ul>
+    {% if locale.content.rulesLink %}
+    <a class="btn sb-rules-link" href="{{ locale.content.rulesLink.href }}">
+      <i class="bi {{ locale.content.rulesLink.icon }} {{ locale.content.iconMarginClass }}"></i>{{ locale.content.rulesLink.label }}
+    </a>
+    {% endif %}
+  </div>
+  {% endif %}
   {% for form in locale.content.forms %}
   <div class="sb-card">
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-3">

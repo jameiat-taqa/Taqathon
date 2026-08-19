@@ -1,20 +1,24 @@
 {
-  "_comment": "JUDGES/MENTORS PAGE COPY (English). REAL CONTENT, partially (2026): individual names are still unknown (not in any of the three given sources), so every person card stays a placeholder — but the COUNT of cards is now real, not arbitrary. The board-approved budget for 'Taqathon 2' (board minutes dated 2026-07-21) itemizes rewards for '5 judges for the final stage' and '3 mentors' covering 3 specialized workshops. Previously this page showed 2 generic judge + 2 generic mentor cards (4 total, an arbitrary placeholder count) — now 5 judge + 3 mentor cards (8 total), matching the sourced numbers. No photo files exist yet, so each profile renders a generic Bootstrap-Icon avatar circle instead of a broken <img> — once real photos exist, add a 'photo' path per person and swap the icon for an <img>.",
+  "_comment": "JUDGES/MENTORS PAGE COPY (English). REAL CONTENT, partially (2026): individual names are still unknown (not in any of the three given sources), so every person card stays a placeholder — but the COUNT of cards is now real, not arbitrary (sourced from the board-approved resolution for 'Taqathon 2', board minutes dated 2026-07-21: 5 judges for the final stage, 3 mentors across 3 specialized workshops). Previously this page showed 2 generic judge + 2 generic mentor cards (4 total, an arbitrary placeholder count) — now 5 + 3 (8 total), matching the sourced numbers. Split into two arrays, 'judges' and 'mentors' (2026-08-18, user request: 'divide up the judges and mentors' — they used to be one flat 'people' array, distinguishable only by each card's own role text) — judges.njk now renders them as two separate grouped sections instead of one mixed grid. hero.intro was also reworded this same round: it used to read 'Taqathon 2's approved budget provides for 5 judges...', which is internal board/budget language that has no business being customer-facing copy — flagged directly by the user ('why are you telling people this?'); see about.en.json, sponsors.en.json, and tracks.en.json for the other pages that had the same board/budget-approval phrasing leak into visible copy and got the same fix. No photo files exist yet, so each profile renders a generic Bootstrap-Icon avatar circle instead of a broken <img> — once real photos exist, add a 'photo' path per person and swap the icon for an <img>.",
   "pageTitle": "Judges & Mentors · Taqathon",
   "hero": {
     "icon": "bi-people",
     "heading": "Judges & Mentors",
     "headingClass": "fw-semibold",
-    "intro": "Taqathon 2's approved budget provides for 5 judges in the final stage and 3 mentors across 3 specialized workshops. Individual names will be announced once confirmed."
+    "intro": "This year's panel includes 5 judges for the final stage and 3 mentors across 3 specialized workshops. Names will be announced soon."
   },
-  "people": [
-    { "name": "Name (pending)", "role": "Judge — final stage, name pending", "bio": "Placeholder bio." },
-    { "name": "Name (pending)", "role": "Judge — final stage, name pending", "bio": "Placeholder bio." },
-    { "name": "Name (pending)", "role": "Judge — final stage, name pending", "bio": "Placeholder bio." },
-    { "name": "Name (pending)", "role": "Judge — final stage, name pending", "bio": "Placeholder bio." },
-    { "name": "Name (pending)", "role": "Judge — final stage, name pending", "bio": "Placeholder bio." },
-    { "name": "Name (pending)", "role": "Mentor — name pending", "bio": "Placeholder bio." },
-    { "name": "Name (pending)", "role": "Mentor — name pending", "bio": "Placeholder bio." },
-    { "name": "Name (pending)", "role": "Mentor — name pending", "bio": "Placeholder bio." }
+  "judgesHeading": "Judges — Final Stage",
+  "judges": [
+    { "name": "Name (pending)", "role": "Final stage, name pending", "bio": "Placeholder bio." },
+    { "name": "Name (pending)", "role": "Final stage, name pending", "bio": "Placeholder bio." },
+    { "name": "Name (pending)", "role": "Final stage, name pending", "bio": "Placeholder bio." },
+    { "name": "Name (pending)", "role": "Final stage, name pending", "bio": "Placeholder bio." },
+    { "name": "Name (pending)", "role": "Final stage, name pending", "bio": "Placeholder bio." }
+  ],
+  "mentorsHeading": "Mentors",
+  "mentors": [
+    { "name": "Name (pending)", "role": "Name pending", "bio": "Placeholder bio." },
+    { "name": "Name (pending)", "role": "Name pending", "bio": "Placeholder bio." },
+    { "name": "Name (pending)", "role": "Name pending", "bio": "Placeholder bio." }
   ]
 }

@@ -35,7 +35,7 @@
     "downloadIconMarginClass": "ms-1",
     "notesHeading": "ملاحظات الرفع",
     "note1Html": "ارفع <strong>ملف PDF فقط</strong>. سيتم حظر أي نوع آخر.",
-    "note2Html": "في حال واجهت مشكلة، يمكنك إرسال الملف إلى البريد: <a href=\"mailto:info@jameiat-taqa.sa\">info@jameiat-taqa.sa</a>."
+    "note2Html": "في حال واجهت مشكلة، يمكنك إرسال الملف إلى البريد: <a href=\"mailto:taqathon@jameiat-taqa.sa\">taqathon@jameiat-taqa.sa</a>."
   },
   "status": {
     "chooseFile": "فضلاً اختر ملف PDF للرفع.",
