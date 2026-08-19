@@ -1,5 +1,5 @@
 {
-  "_comment": "SUBMISSIONS PAGE COPY (English). English mirror of submissions.ar.json.",
+  "_comment": "SUBMISSIONS PAGE COPY (English). English mirror of submissions.ar.json — see that file's note about why 'forms' stays an array even with one entry (the promo video submission card was removed 2026-08-18 per user request).",
   "pageTitle": "Submissions · Taqathon",
   "hero": { "icon": "bi-upload", "heading": "Project Submissions", "headingClass": "fw-semibold" },
   "iconMarginClass": "me-2",
@@ -16,15 +16,6 @@
       "openIcon": "bi-box-arrow-up-right",
       "openAriaLabel": "Open submission form in a new tab",
       "copyAriaLabel": "Copy submission form link",
-      "noscriptText": "JavaScript is disabled. Use this link to submit:"
-    },
-    {
-      "cardTitle": "Promo Video Submission",
-      "openLabel": "Open Promo Video Form",
-      "openHref": "https://forms.gle/ReGU4xrLCxD2Ygvm6",
-      "openIcon": "bi-camera-video",
-      "openAriaLabel": "Open promo video form in a new tab",
-      "copyAriaLabel": "Copy promo video form link",
       "noscriptText": "JavaScript is disabled. Use this link to submit:"
     }
   ]

@@ -1,5 +1,5 @@
 {
-  "_comment": "SUBMISSIONS PAGE COPY (Arabic). The two form cards (project submission + promo video) are near-identical, so they're one 'forms' array rendered by a single loop in submissions.njk instead of two copy-pasted card blocks — and the copy-to-clipboard button now reuses one shared JS function instead of two nearly-identical click handlers (see pageScript in the template). The two original error messages differed slightly in wording for no clear reason; unified to the fuller one.",
+  "_comment": "SUBMISSIONS PAGE COPY (Arabic). 'forms' is an array (not a single hardcoded card) rendered by one loop in submissions.njk, even though there's just one entry now — the promo video submission card was removed (2026-08-18, user request: that submission is no longer being collected), and the array shape was kept as-is so adding a future form type back is just a JSON edit, not a template change.",
   "pageTitle": "التسليمات · طاقَثون",
   "hero": { "icon": "bi-upload", "heading": "التسليمات", "headingClass": "fw-bold" },
   "iconMarginClass": "ms-2",
@@ -17,15 +17,6 @@
       "openAriaLabel": "فتح نموذج التسليم في تبويب جديد",
       "copyAriaLabel": "نسخ رابط نموذج التسليم",
       "noscriptText": "تم تعطيل جافاسكريبت. استخدم هذا الرابط للتسليم:"
-    },
-    {
-      "cardTitle": "برومو الفيديو",
-      "openLabel": "فتح نموذج البرومو فيديو",
-      "openHref": "https://forms.gle/ReGU4xrLCxD2Ygvm6",
-      "openIcon": "bi-camera-video",
-      "openAriaLabel": "فتح نموذج برومو الفيديو",
-      "copyAriaLabel": "نسخ رابط نموذج برومو الفيديو",
-      "noscriptText": "تم تعطيل جافاسكريبت. استخدم هذا الرابط:"
     }
   ]
 }
