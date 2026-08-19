@@ -27,7 +27,7 @@
   nav-link labels. See base.njk's header comment for the full picture.
 #}
 <nav class="navbar navbar-expand-lg navbar-light sticky-top" data-pagefind-ignore>
-<div class="container d-flex align-items-center justify-content-between">
+<div class="container d-flex align-items-center">
 
   {#
     aria-label here is conditional on locale.site.brand.ariaLabel being
@@ -40,11 +40,27 @@
     Arabic aria-label was adopted here for all pages going forward
     (see the "_comment" note at the top of site.ar.json).
   #}
-  <a class="navbar-brand d-flex align-items-center" href="{{ locale.pathPrefix | default('') }}{{ locale.site.brand.href }}"{% if locale.site.brand.ariaLabel %} aria-label="{{ locale.site.brand.ariaLabel }}"{% endif %}>
-    <img src="{{ locale.pathPrefix | default('') }}assets/logos/taqathon-logo.png" alt="{{ locale.site.brand.logoAlt }}" class="logo-mark">
-  </a>
+  {#
+    Both logos, side by side (2026-08-18 navbar revision). Previously
+    the association logo lived all the way at the other end of the
+    bar, in the assoc-fixed cluster with the utility icons — paired
+    with the brand mark here instead, since they're both "who this
+    is" (organizer + partner), not actions. Frees the right-hand
+    cluster to be pure actions/utilities (Register, language, search,
+    theme, menu). The association logo keeps its own external link to
+    taqa.org.sa; it's just adjacent to the brand link now, not merged
+    into one link.
+  #}
+  <div class="navbar-brands d-flex align-items-center">
+    <a class="navbar-brand d-flex align-items-center" href="{{ locale.pathPrefix | default('') }}{{ locale.site.brand.href }}"{% if locale.site.brand.ariaLabel %} aria-label="{{ locale.site.brand.ariaLabel }}"{% endif %}>
+      <img src="{{ locale.pathPrefix | default('') }}assets/logos/taqathon-logo.png" alt="{{ locale.site.brand.logoAlt }}" class="logo-mark">
+    </a>
+    <a href="{{ locale.site.assoc.href }}" target="_blank" rel="noopener"{% if locale.site.assoc.linkClass %} class="{{ locale.site.assoc.linkClass }}"{% endif %}{% if locale.site.assoc.ariaLabel %} aria-label="{{ locale.site.assoc.ariaLabel }}"{% endif %}>
+      <img src="{{ locale.pathPrefix | default('') }}assets/logos/association-logo.png" class="assoc-logo" alt="{{ locale.site.assoc.alt }}">
+    </a>
+  </div>
 
-  <div class="collapse navbar-collapse justify-content-lg-center" id="mainNav">
+  <div class="collapse navbar-collapse" id="mainNav">
     <ul class="navbar-nav mb-2 mb-lg-0 align-items-lg-center">
       {#
         aria-current="page" tells screen readers which nav item matches
@@ -76,8 +92,14 @@
             GROUP — About's own page is one of the items inside it),
             so it's rendered as a <button>-role link with
             data-bs-toggle="dropdown", not an <a href>.
-          - "button": a single highlighted call-to-action (Register),
-            visually distinct from a plain nav-link.
+          - "button": a single highlighted call-to-action (Register).
+            Rendered OUTSIDE this loop now (see the navbar-actions
+            block below) — user feedback (2026-08-18) was that having
+            it inline as just another <li> made it disappear into the
+            packed row of nav links instead of reading as a distinct
+            CTA. Still declared here in site.*.json (so its href/label
+            stay data-driven, not hardcoded), just skipped by this
+            loop and picked out separately afterward.
         A dropdown's toggle gets the "active" treatment too, so
         landing on e.g. Tracks (inside the "About" group) still shows
         SOMETHING highlighted in the top-level bar, not nothing.
@@ -98,56 +120,91 @@
               {% endfor %}
             </ul>
           </li>
-        {% elif item.type == "button" %}
-          <li class="nav-item">
-            <a class="btn btn-brand btn-sm nav-cta{% if item.key == locale.navActive %} active{% endif %}" href="{{ locale.pathPrefix | default('') }}{{ item.href }}"{% if item.key == locale.navActive %} aria-current="page"{% endif %}>{{ item.label | safe }}</a>
-          </li>
-        {% else %}
+        {% elif item.type == "link" %}
           <li class="nav-item"><a class="nav-link{% if item.key == locale.navActive %} active{% endif %}" href="{{ locale.pathPrefix | default('') }}{{ item.href }}"{% if item.key == locale.navActive %} aria-current="page"{% endif %}>{{ item.label | safe }}</a></li>
         {% endif %}
       {% endfor %}
-      {#
-        Nunjucks escapes {{ }} output by default (so a literal "&" in
-        JSON would show up as "&amp;amp;" — double-escaped). The nav
-        labels intentionally contain a real HTML entity, e.g.
-        "Schedule &amp; Workshops", copied from the original markup, so
-        `| safe` tells Nunjucks "trust this string as-is, don't
-        re-escape it" and it renders as "Schedule & Workshops" correctly.
-      #}
-      <li class="nav-item{% if locale.site.langSwitch.liClass %} {{ locale.site.langSwitch.liClass }}{% endif %}"><a class="btn btn-sm btn-lang" href="{{ locale.altHref }}"{% if locale.site.langSwitch.ariaLabel %} aria-label="{{ locale.site.langSwitch.ariaLabel }}"{% endif %}>{{ locale.site.langSwitch.label }}</a></li>
     </ul>
+
+    {#
+      Mobile drawer utilities (2026-08-18 navbar revision, round 3).
+      User feedback: the mobile top bar (2 logos + Register + language
+      switch + search + theme + hamburger, all always visible) made
+      the whole site read as cramped/small — too many small targets
+      competing for a 375px-wide row. Fix: below the lg breakpoint,
+      the persistent top bar now shows only the logos, a compact
+      Register button, and the hamburger (see navbar-mobile-actions
+      below) — language switch, search, and theme toggle move IN HERE,
+      inside the collapsible drawer alongside the nav links, reachable
+      with one tap on the hamburger instead of permanently competing
+      for space in the top bar. d-lg-none hides this block entirely at
+      the lg breakpoint, where the ORIGINAL always-visible copies of
+      these three controls (in .assoc-fixed below) take over instead —
+      see base.njk's theme-toggle script for how having two copies of
+      that particular button is kept in sync.
+    #}
+    <div class="navbar-drawer-utils d-flex d-lg-none align-items-center gap-2">
+      <a class="btn btn-sm btn-lang" href="{{ locale.altHref }}"{% if locale.site.langSwitch.ariaLabel %} aria-label="{{ locale.site.langSwitch.ariaLabel }}"{% endif %}>{{ locale.site.langSwitch.label }}</a>
+      <button type="button" class="btn btn-sm btn-search-trigger" data-bs-toggle="modal" data-bs-target="#searchModal" aria-label="{{ locale.site.search.triggerAriaLabel }}">
+        <i class="bi bi-search"></i>
+      </button>
+      <button type="button" class="btn btn-sm btn-theme-toggle" aria-pressed="false" aria-label="{{ locale.site.darkModeToggleAriaLabel }}">
+        <i class="bi bi-moon-stars"></i>
+      </button>
+    </div>
   </div>
 
-  <div class="assoc-fixed d-flex align-items-center gap-2">
-    <a href="{{ locale.site.assoc.href }}" target="_blank" rel="noopener"{% if locale.site.assoc.linkClass %} class="{{ locale.site.assoc.linkClass }}"{% endif %}{% if locale.site.assoc.ariaLabel %} aria-label="{{ locale.site.assoc.ariaLabel }}"{% endif %}>
-      <img src="{{ locale.pathPrefix | default('') }}assets/logos/association-logo.png" class="assoc-logo" alt="{{ locale.site.assoc.alt }}">
-    </a>
-    {#
-      Site search trigger (Phase 3). Lives here in assoc-fixed rather than
-      inside the collapsible navbar-nav list so it's reachable on mobile
-      without opening the hamburger menu first — same reasoning as the
-      association logo and toggler already being here. Opens the
-      #searchModal defined once in base.njk (shared chrome, not repeated
-      per nav item), which is where the actual Pagefind UI gets mounted.
-    #}
+  {#
+    Desktop action cluster (Register CTA + language switch, divider,
+    utility icons) — lg and up only (d-none d-lg-flex). Below lg, this
+    entire cluster is replaced by navbar-mobile-actions further down
+    and the drawer copies above; see the navbar-drawer-utils comment
+    for the full reasoning.
+
+    Nav-links centering (2026-08-18, round 3): .navbar-collapse gets
+    flex:1 and justify-content:center at the lg breakpoint (see
+    common.css) so the link group sits in the middle of the space
+    between the logos and this cluster, rather than hugging the logos
+    on the left — the standard "logo — centered nav — CTA" layout most
+    marketing/event sites use, and a layout that stays visually
+    balanced at any viewport width instead of depending on a fixed
+    margin value.
+  #}
+  <div class="assoc-fixed d-none d-lg-flex align-items-center">
+    {% for item in locale.site.nav %}
+      {% if item.type == "button" %}
+      <a class="btn nav-register-btn{% if item.key == locale.navActive %} active{% endif %}" href="{{ locale.pathPrefix | default('') }}{{ item.href }}"{% if item.key == locale.navActive %} aria-current="page"{% endif %}>
+        <i class="bi bi-pencil-square"></i> {{ item.label | safe }}
+      </a>
+      {% endif %}
+    {% endfor %}
+    <a class="btn btn-sm btn-lang" href="{{ locale.altHref }}"{% if locale.site.langSwitch.ariaLabel %} aria-label="{{ locale.site.langSwitch.ariaLabel }}"{% endif %}>{{ locale.site.langSwitch.label }}</a>
+    <span class="navbar-divider" aria-hidden="true"></span>
     <button type="button" class="btn btn-sm btn-search-trigger" data-bs-toggle="modal" data-bs-target="#searchModal" aria-label="{{ locale.site.search.triggerAriaLabel }}">
       <i class="bi bi-search"></i>
     </button>
-    {#
-      Dark-mode toggle (Phase 3). No data-bs-* attributes here — unlike
-      the search button, this doesn't open anything, it flips
-      <html data-bs-theme>, so its click handler lives in base.njk
-      instead (next to the inline script that sets the theme in the
-      first place, so both live together). Starts as the moon icon /
-      aria-pressed="false" in the static HTML (i.e. "light mode, click
-      to go dark") since that's the safest default before JS runs; the
-      script in base.njk corrects both immediately on load if the
-      visitor's actual page loaded in dark mode (stored preference or
-      OS setting).
-    #}
     <button type="button" class="btn btn-sm btn-theme-toggle" aria-pressed="false" aria-label="{{ locale.site.darkModeToggleAriaLabel }}">
       <i class="bi bi-moon-stars"></i>
     </button>
+  </div>
+
+  {#
+    Mobile action cluster: below lg, this is the ONLY thing that stays
+    permanently visible next to the logos — a compact Register button
+    (still the primary CTA, so it stays reachable without opening the
+    menu) and the hamburger itself. Everything else lives one tap away
+    in the drawer above. margin-inline-start:auto pushes this flush to
+    the far end on its own, since .assoc-fixed (which normally carries
+    that margin) is display:none at this width and can't push anything.
+  #}
+  <div class="navbar-mobile-actions d-flex d-lg-none align-items-center gap-2">
+    {% for item in locale.site.nav %}
+      {% if item.type == "button" %}
+      <a class="btn nav-register-btn{% if item.key == locale.navActive %} active{% endif %}" href="{{ locale.pathPrefix | default('') }}{{ item.href }}"{% if item.key == locale.navActive %} aria-current="page"{% endif %}>
+        <i class="bi bi-pencil-square"></i> {{ item.label | safe }}
+      </a>
+      {% endif %}
+    {% endfor %}
     {#
       aria-controls / aria-expanded aren't language-specific, so they're
       always included now; only the aria-label TEXT comes from data

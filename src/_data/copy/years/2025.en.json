@@ -1,8 +1,14 @@
 {
-  "_comment": "YEAR ARCHIVE — TAQATHON 2025 (English). English mirror of 2025.ar.json — see that file's note about where this content came from (built retroactively from the final-ranked-winners announcement + schedule.en.json's closing-ceremony keyDate; 'announcements' stays empty since the 'important' flag this archive relies on didn't exist during the 2025 season).",
+  "_comment": "YEAR ARCHIVE — TAQATHON 2025 (English). English mirror of 2025.ar.json — see that file's note about where this content came from (built retroactively from the final-ranked-winners announcement + schedule.en.json's closing-ceremony keyDate; 'announcements' stays empty since the 'important' flag this archive relies on didn't exist during the 2025 season). REAL CONTENT PASS (2026): added 'workshops' below — this is the real Nov 16, 2025 workshop schedule (titles, presenters, date/time) that used to live on the live Schedule page. It was moved here rather than deleted when the Schedule page was updated to show Taqathon 2's real 2026 timeline instead of stale 2025 dates. The original Google Meet join links are dropped here (those meetings already happened; a 'Join now' button on a historical record page would be misleading), keeping just the factual title/presenter/date/time.",
   "lang": "en",
   "pageTitle": "Taqathon 2025 Archive · Taqathon",
   "hero": { "heading": "Taqathon 2025", "subtitle": "Season Archive" },
+  "workshopsHeading": "Advisory & Educational Sessions",
+  "workshops": [
+    { "title": "Energy Session", "presenter": "Prof. Ali Foda", "date": "Nov 16, 2025", "time": "6:30 – 7:15 p.m." },
+    { "title": "Building & Developing Projects", "presenter": "Dr. Sami Ghazali", "date": "Nov 16, 2025", "time": "7:30 – 8:15 p.m." },
+    { "title": "Professional Project Pitching", "presenter": "Dr. Mohannad Bahashwan", "date": "Nov 16, 2025", "time": "8:30 – 9:15 p.m." }
+  ],
   "ceremonyHeading": "Closing Ceremony",
   "ceremony": {
     "date": "Dec 2, 2025",

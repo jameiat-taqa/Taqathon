@@ -1,8 +1,14 @@
 {
-  "_comment": "YEAR ARCHIVE — TAQATHON 2025 (Arabic). Built retroactively in Phase 2 from the only real 2025 data available: the final ranked-winners announcement (announcements.json's first entry before it was cleared) and the closing-ceremony details already in schedule.ar.json's keyDates. 'announcements' is intentionally empty — the 'important' CMS checkbox this archive concept relies on didn't exist yet during the 2025 season, so there's nothing real to carry over beyond the winners already captured below. See src/_lib/years.js for how this file gets discovered and turned into a page.",
+  "_comment": "YEAR ARCHIVE — TAQATHON 2025 (Arabic). Built retroactively in Phase 2 from the only real 2025 data available: the final ranked-winners announcement (announcements.json's first entry before it was cleared) and the closing-ceremony details already in schedule.ar.json's keyDates. 'announcements' is intentionally empty — the 'important' CMS checkbox this archive concept relies on didn't exist yet during the 2025 season, so there's nothing real to carry over beyond the winners already captured below. See src/_lib/years.js for how this file gets discovered and turned into a page. REAL CONTENT PASS (2026): أضيف أدناه 'workshops' — وهو جدول ورش 16 نوفمبر 2025 الحقيقي (العناوين، المقدّمون، التاريخ/الوقت) الذي كان يظهر سابقاً في صفحة الجدول المباشرة. نُقل إلى هنا بدلاً من حذفه عند تحديث صفحة الجدول لتعرض الخط الزمني الحقيقي لطاقتون 2 (2026) عوضاً عن تواريخ 2025 القديمة. رُوابط جوجل ميت الأصلية حُذفت هنا (فالاجتماعات انتهت فعلاً، وزر «انضم الآن» في صفحة أرشيفية سيكون مضللاً)، وأُبقي فقط على العنوان/المقدّم/التاريخ/الوقت كوقائع.",
   "lang": "ar",
   "pageTitle": "أرشيف طاقَثون 2025 · طاقَثون",
   "hero": { "heading": "طاقَثون 2025", "subtitle": "أرشيف الموسم" },
+  "workshopsHeading": "جلسات ارشادية وتثقيفية",
+  "workshops": [
+    { "title": "جلسة في مجال الطاقة", "presenter": "أ.د/ علي فودة", "date": "16 نوفمبر 2025", "time": "6:30 - 7:15 مساءً" },
+    { "title": "جلسة بناء وتطوير المشاريع", "presenter": "د. سامي غزالي", "date": "16 نوفمبر 2025", "time": "7:30 - 8:15 مساءً" },
+    { "title": "جلسة العرض الاحترافي للمشاريع", "presenter": "د. مهند باحشوان", "date": "16 نوفمبر 2025", "time": "8:30 - 9:15 مساءً" }
+  ],
   "ceremonyHeading": "الحفل الختامي",
   "ceremony": {
     "date": "٢ ديسمبر 2025",

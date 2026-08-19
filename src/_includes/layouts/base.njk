@@ -278,25 +278,38 @@
     AND after every click, since the page could have loaded in dark
     mode from a stored preference with the button not yet reflecting
     that).
+
+    querySelectorAll, not querySelector (2026-08-18 navbar revision):
+    the navbar now renders a SECOND copy of this button inside the
+    mobile drawer (see navbar.njk's navbar-drawer-utils) so it's still
+    reachable on small screens without cluttering the always-visible
+    top bar. Both copies need to flip together, so this loops over
+    every match instead of grabbing just the first one.
   #}
   (function () {
-    var toggleBtn = document.querySelector(".btn-theme-toggle");
-    if (!toggleBtn) return;
-    var icon = toggleBtn.querySelector("i");
+    var toggleBtns = document.querySelectorAll(".btn-theme-toggle");
+    if (!toggleBtns.length) return;
 
-    function syncButton(theme) {
+    function syncButton(btn, theme) {
       var isDark = theme === "dark";
+      var icon = btn.querySelector("i");
       if (icon) icon.className = isDark ? "bi bi-sun" : "bi bi-moon-stars";
-      toggleBtn.setAttribute("aria-pressed", isDark ? "true" : "false");
+      btn.setAttribute("aria-pressed", isDark ? "true" : "false");
     }
 
-    syncButton(document.documentElement.getAttribute("data-bs-theme") || "light");
+    function syncAll(theme) {
+      toggleBtns.forEach(function (btn) { syncButton(btn, theme); });
+    }
 
-    toggleBtn.addEventListener("click", function () {
-      var next = document.documentElement.getAttribute("data-bs-theme") === "dark" ? "light" : "dark";
-      document.documentElement.setAttribute("data-bs-theme", next);
-      try { localStorage.setItem("taqathon-theme", next); } catch (e) {}
-      syncButton(next);
+    syncAll(document.documentElement.getAttribute("data-bs-theme") || "light");
+
+    toggleBtns.forEach(function (toggleBtn) {
+      toggleBtn.addEventListener("click", function () {
+        var next = document.documentElement.getAttribute("data-bs-theme") === "dark" ? "light" : "dark";
+        document.documentElement.setAttribute("data-bs-theme", next);
+        try { localStorage.setItem("taqathon-theme", next); } catch (e) {}
+        syncAll(next);
+      });
     });
   })();
   </script>

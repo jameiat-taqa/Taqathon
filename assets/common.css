@@ -259,10 +259,85 @@ footer{ flex-shrink:0; }  /* Footer never shrinks, stays at bottom */
 .navbar-nav .dropdown-item:active{
   background:var(--brand-blue); color:#fff;
 }
-/* Register button: a highlighted call-to-action, not a plain nav-link —
-   margin-inline-start (not margin-left) so the gap lands on the same
-   side in both LTR and RTL without a separate mirrored rule. */
-.nav-cta{ margin-inline-start:.5rem; }
+
+/* Navbar layout revision (2026-08-18, round 3). Two rounds of feedback
+   led here: round 1 fixed cramped nav-link spacing and gave Register
+   its own slot; round 2 paired the logos and grouped the language
+   switch with Register. Round 3's feedback was that the nav STILL
+   read as too dense on mobile (2 logos + Register + language + search
+   + theme + hamburger, all always visible, made the whole site feel
+   "small"), and that nav-links sat too close to the logos on desktop.
+
+   Desktop fix: .navbar-collapse becomes a flex:1 item that CENTERS
+   its content at the lg breakpoint (see the media query below) —
+   logo — centered nav — CTA cluster is the standard three-zone
+   layout most marketing/event sites use, and unlike a fixed margin
+   value it stays visually balanced at any viewport width instead of
+   just adding a gap that can look too tight or too loose depending on
+   screen size.
+
+   Mobile fix: rather than showing every control all the time, the
+   persistent mobile top bar now only shows the logos, a compact
+   Register button, and the hamburger (see .navbar-mobile-actions).
+   Language switch, search, and theme toggle move into the drawer
+   itself (see .navbar-drawer-utils in navbar.njk) — one tap away
+   instead of permanently competing for space in a 375px-wide row.
+   The .assoc-fixed cluster below is what the DESKTOP top bar
+   uses instead (d-none d-lg-flex) — it's the one place these three
+   controls plus Register live outside the collapsible drawer. */
+.navbar-nav{ gap:.4rem 1.6rem; }
+.navbar .assoc-fixed{ margin-inline-start:auto; gap:.85rem; }
+@media (min-width:992px){
+  .navbar .navbar-collapse{ flex:1 1 auto; justify-content:center; }
+}
+
+/* Both logos, paired (2026-08-18): the association logo used to sit
+   at the far end of the bar with the utility icons; moved next to
+   the brand mark instead (see navbar.njk) since they're both
+   identity, not actions — a modest gap between the two marks, then
+   the bigger gap that separates "who this is" from the nav links. */
+.navbar-brands{ gap:.6rem; margin-inline-end:1.75rem; flex-shrink:0; }
+
+/* Register CTA: reused for both the desktop cluster (.assoc-fixed)
+   and the compact mobile copy (.navbar-mobile-actions) — same solid
+   pill/icon treatment in both places so it reads as the same button,
+   not two different ones. Same brand-blue base as .btn-lang right
+   next to it (already-verified-safe white-on-blue combo) so the two
+   "action" buttons in the desktop cluster read as a matched pair. */
+.nav-register-btn{
+  display:inline-flex; align-items:center; gap:.45rem;
+  background:var(--brand-blue); color:#fff !important; font-weight:600;
+  border:none; border-radius:999px; padding:.5rem 1.15rem; font-size:.92rem;
+  transition:.2s;
+}
+.nav-register-btn:hover,
+.nav-register-btn.active{
+  background:var(--brand-blue-deep); color:#fff !important;
+  transform:translateY(-1px); box-shadow:0 4px 14px rgba(0,125,253,.3);
+}
+
+/* Vertical hairline separating the two "action" buttons (Register,
+   language switch) from the utility icon group (search, theme
+   toggle) that follows — desktop cluster only, a quiet visual break
+   so it doesn't read as one undifferentiated row of five things. */
+.navbar-divider{
+  width:1px; height:22px; flex-shrink:0;
+  background:rgba(0,40,76,.15);
+}
+
+/* Mobile-only clusters (2026-08-18, round 3) — see the big comment
+   above for why these exist. margin-inline-start:auto on the actions
+   cluster does the same "push flush to the far end" job .assoc-fixed
+   does on desktop, since .assoc-fixed itself is display:none here and
+   can't push anything while hidden. The drawer utils get a hairline
+   + top spacing so they read as a distinct row under the nav links,
+   not a continuation of the list. */
+.navbar-mobile-actions{ margin-inline-start:auto; flex-shrink:0; }
+.navbar-drawer-utils{
+  margin-top:.75rem; padding-top:.75rem;
+  border-top:1px solid var(--surface-border);
+}
+[data-bs-theme="dark"] .navbar-divider{ background:rgba(255,255,255,.15); }
 
 /* Language toggle button (EN/AR switcher) */
 .btn-lang{
@@ -316,7 +391,7 @@ footer{ flex-shrink:0; }  /* Footer never shrinks, stays at bottom */
 
 /* Mobile menu: makes dropdown full-width under navbar */
 .navbar .container{ position:relative; flex-wrap:nowrap; }
-.navbar .navbar-brand,
+.navbar .navbar-brands,
 .navbar .assoc-fixed{ flex-shrink:0; }
 @media (max-width:991.98px){
   .navbar .navbar-collapse{

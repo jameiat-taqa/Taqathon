@@ -1,30 +1,30 @@
 {
-  "_comment": "TRACKS PAGE COPY (English). PLACEHOLDER CONTENT — built 2026-08-11, same batch and same reason as registration.en.json (user: 'do all remaining pages at once, just put placeholders'). Track names/descriptions here are intentionally IDENTICAL placeholders to registration.en.json's 'forms' card titles ('Track 1 (name pending)' etc.) — keep these two files in sync until the user's real tracks file arrives, then update BOTH together so Registration and this page never disagree about what the tracks are called.",
+  "_comment": "TRACKS PAGE COPY (English). REAL CONTENT (2026): the three tracks, their descriptions, and their example application areas are taken directly from the board-approved resolution for 'Taqathon 2' (board minutes dated 2026-07-21, section 'Third: Scientific Scope and Main Hackathon Tracks') and confirmed again in the association's own 2026 presentation deck ('Targeted Audience' slide). Nothing here is invented — see PROGRESS.md for the full source note.",
   "pageTitle": "Tracks · Taqathon",
   "hero": {
     "icon": "bi-signpost-split",
     "heading": "Competition Tracks",
     "headingClass": "fw-semibold",
-    "intro": "Placeholder track list — names and descriptions below will be replaced once finalized. See the Registration page to register your team for a track."
+    "intro": "Taqathon 2's three official tracks, approved by the Association's board. See the Registration page to register as a researcher, entrepreneur, or judge."
   },
-  "ctaLabel": "Ready to register your team for a track?",
+  "ctaLabel": "Ready to register?",
   "ctaButtonLabel": "Go to Registration",
   "ctaButtonHref": "registration-en.html",
   "tracks": [
     {
-      "icon": "bi-lightning-charge",
-      "name": "Track 1 (name pending)",
-      "description": "Placeholder description of what this track focuses on."
-    },
-    {
-      "icon": "bi-battery-charging",
-      "name": "Track 2 (name pending)",
-      "description": "Placeholder description of what this track focuses on."
-    },
-    {
       "icon": "bi-cpu",
-      "name": "Track 3 (name pending)",
-      "description": "Placeholder description of what this track focuses on."
+      "name": "AI & Renewable Energy",
+      "description": "Applying artificial intelligence to energy management and efficiency, and building practical renewable-energy solutions. Example areas: energy optimization, storage management, load forecasting, solar and hybrid systems, and machine learning."
+    },
+    {
+      "icon": "bi-diagram-3",
+      "name": "Smart Grids & Energy Efficiency",
+      "description": "Reducing consumption and improving efficiency through grid solutions and digital load management. Example areas: smart meters, load management, and peak-time control (peak shaving)."
+    },
+    {
+      "icon": "bi-building",
+      "name": "Hajj & Umrah",
+      "description": "Innovating sustainable technologies to serve pilgrims and improve energy efficiency at the holy sites. Example areas: crowd-sustainability solutions, pedestrian cooling, and smart tents."
     }
   ]
 }
