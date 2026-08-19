@@ -1,8 +1,15 @@
 {
-  "_comment": "SUBMISSIONS PAGE COPY (English). English mirror of submissions.ar.json — see that file's note about why 'forms' stays an array even with one entry (the promo video submission card was removed 2026-08-18 per user request).",
+  "_comment": "SUBMISSIONS PAGE COPY (English). English mirror of submissions.ar.json — see that file's note about why 'forms' stays an array even with one entry (the promo video submission card was removed 2026-08-18 per user request). 'checklistHeading'/'checklist'/'rulesLink' (2026-08-18, user request: 'join up submissions and submissions into 1 page' — the standalone Submission Guidelines page, which only ever existed as a thin checklist + links to this page and Rules & Resources, was merged in here instead of staying separate) — the checklist items are still placeholder text (they always were; the source page never had real requirements, see PROGRESS.md), the self-referential 'see the Submissions page' link is gone since there's no longer a separate page to point to, and only the Rules & Resources link remains.",
   "pageTitle": "Submissions · Taqathon",
   "hero": { "icon": "bi-upload", "heading": "Project Submissions", "headingClass": "fw-semibold" },
   "iconMarginClass": "me-2",
+  "checklistHeading": "Before you submit, make sure you have:",
+  "checklist": [
+    "Placeholder requirement 1 (e.g. project file format).",
+    "Placeholder requirement 2 (e.g. presentation file format).",
+    "Placeholder requirement 3 (e.g. team member list)."
+  ],
+  "rulesLink": { "label": "Rules & Resources (full requirements)", "href": "rules-en.html", "icon": "bi-clipboard-check" },
   "copyButtonLabel": "Copy link",
   "copiedLabel": "Copied!",
   "copyErrorMsg": "Could not copy. Long-press or right-click the link to copy.",

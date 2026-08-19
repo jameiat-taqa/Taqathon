@@ -1,8 +1,15 @@
 {
-  "_comment": "SUBMISSIONS PAGE COPY (Arabic). 'forms' is an array (not a single hardcoded card) rendered by one loop in submissions.njk, even though there's just one entry now — the promo video submission card was removed (2026-08-18, user request: that submission is no longer being collected), and the array shape was kept as-is so adding a future form type back is just a JSON edit, not a template change.",
+  "_comment": "SUBMISSIONS PAGE COPY (Arabic). 'forms' is an array (not a single hardcoded card) rendered by one loop in submissions.njk, even though there's just one entry now — the promo video submission card was removed (2026-08-18, user request: that submission is no longer being collected), and the array shape was kept as-is so adding a future form type back is just a JSON edit, not a template change. 'checklistHeading'/'checklist'/'rulesLink' (2026-08-18, user request: دمج صفحتي التسليمات وإرشادات التسليم في صفحة واحدة) — القائمة لا تزال نصاً مؤقتاً كما كانت دائماً، ورابط 'صفحة التسليمات' الذاتي حُذف لعدم وجود صفحة منفصلة بعد الآن، وأُبقي فقط على رابط القواعد والموارد.",
   "pageTitle": "التسليمات · طاقَثون",
   "hero": { "icon": "bi-upload", "heading": "التسليمات", "headingClass": "fw-bold" },
   "iconMarginClass": "ms-2",
+  "checklistHeading": "قبل التسليم، تأكد من توفر:",
+  "checklist": [
+    "متطلب مؤقت 1 (مثل صيغة ملف المشروع).",
+    "متطلب مؤقت 2 (مثل صيغة ملف العرض التقديمي).",
+    "متطلب مؤقت 3 (مثل قائمة أعضاء الفريق)."
+  ],
+  "rulesLink": { "label": "القواعد والموارد (كامل المتطلبات)", "href": "rules.html", "icon": "bi-clipboard-check" },
   "copyButtonLabel": "نسخ الرابط",
   "copiedLabel": "تم النسخ!",
   "copyErrorMsg": "تعذّر النسخ. استخدم الضغط المطوّل أو النقر بالزر الأيمن لنسخ الرابط.",

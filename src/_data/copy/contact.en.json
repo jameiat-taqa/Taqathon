@@ -1,5 +1,5 @@
 {
-  "_comment": "CONTACT PAGE COPY (English). See contact.ar.json's _comment: Arabic has been brought up to this form's full feature set (honeypot, validation, mailto fallback), and the submit handler in contact.njk is now one shared script instead of two diverging branches. Also fixed here: metaSourceValue used to be the literal string 'contact.html' (the ARABIC page's own filename) even on this English page — a copy-paste bug, since this hidden field actually gets submitted (this form builds its FormData from the whole <form>, hidden fields included, unlike Contract's dead hidden field). Corrected to 'contact-en.html' so English submissions are now tagged correctly. If the Apps Script backend or any spreadsheet/dashboard built on it was matching on the literal string 'contact.html' to mean 'Arabic submission', this change affects that — flagging it explicitly rather than changing it silently.",
+  "_comment": "CONTACT PAGE COPY (English). See contact.ar.json's _comment: Arabic has been brought up to this form's full feature set (honeypot, validation, mailto fallback), and the submit handler in contact.njk is now one shared script instead of two diverging branches. Also fixed here: metaSourceValue used to be the literal string 'contact.html' (the ARABIC page's own filename) even on this English page — a copy-paste bug, since this hidden field actually gets submitted (this form builds its FormData from the whole <form>, hidden fields included, unlike Contract's dead hidden field). Corrected to 'contact-en.html' so English submissions are now tagged correctly. If the Apps Script backend or any spreadsheet/dashboard built on it was matching on the literal string 'contact.html' to mean 'Arabic submission', this change affects that — flagging it explicitly rather than changing it silently. 'supervisors'/'supporters'/'location' fields removed (2026-08-18, user request): the logo panels moved to sponsors.en.json, and the ceremony-location map (2025's venue, not a confirmed 2026 one) was dropped rather than carried forward. This page is now just the message form + contact info.",
   "pageTitle": "Contact · Taqathon",
   "pageHeading": "Contact Us",
   "panelHeaderWeight": 600,
@@ -21,7 +21,7 @@
     "messagePlaceholder": "Your message...",
     "submitLabel": "Send Message",
     "submitIconMarginClass": "ms-1",
-    "submitHelperHtml": "Having trouble? Email us directly at <a href=\"mailto:info@jameiat-taqa.sa\">info@jameiat-taqa.sa</a>."
+    "submitHelperHtml": "Having trouble? Email us directly at <a href=\"mailto:taqathon@jameiat-taqa.sa\">taqathon@jameiat-taqa.sa</a>."
   },
   "status": {
     "requiredFieldsWarning": "Please fill out all fields.",
@@ -34,35 +34,14 @@
     "successMessage": "Thanks! Your message was received.",
     "ticketIdLabelHtml": "<br><small>Ticket ID: <code>",
     "ticketIdCloseHtml": "</code></small>",
-    "networkErrorFallback": "Network/CORS blocked. We opened your email app as a fallback. If nothing opened, email <b>info@jameiat-taqa.sa</b> directly."
+    "networkErrorFallback": "Network/CORS blocked. We opened your email app as a fallback. If nothing opened, email <b>taqathon@jameiat-taqa.sa</b> directly."
   },
   "contactInfo": {
     "heading": "Contact Information",
     "items": [
-      { "icon": "bi-envelope", "label": "Email", "text": "info@jameiat-taqa.sa", "href": "mailto:info@jameiat-taqa.sa", "external": false },
-      { "icon": "bi-telephone", "label": "Phone", "text": "0539336648", "href": "tel:+966539336648", "external": false },
+      { "icon": "bi-envelope", "label": "Email", "text": "taqathon@jameiat-taqa.sa", "href": "mailto:taqathon@jameiat-taqa.sa", "external": false },
+      { "icon": "bi-telephone", "label": "Phone", "text": "0573650399", "href": "tel:+966573650399", "external": false },
       { "icon": "bi-globe", "label": "Website", "text": "https://taqa.org.sa/", "href": "https://taqa.org.sa/", "external": true }
     ]
-  },
-  "supervisors": {
-    "heading": "Supervising Entities",
-    "items": [
-      { "logoSrc": "assets/sponsors/ministry-of-energy-logo.png", "logoAlt": "Ministry of Energy", "badgeText": "Technical Supervision", "orgName": "Ministry of Energy" },
-      { "logoSrc": "assets/sponsors/NCNP-Sector-Logo.png", "logoAlt": "National Center for Non-Profit Sector", "badgeText": "Administrative Supervision", "orgName": "National Center for Non-Profit Sector" }
-    ]
-  },
-  "supporters": {
-    "heading": "Supporting Entities",
-    "items": [
-      { "logoSrc": "assets/sponsors/Associations-Support-Fund-Logo.png", "logoAlt": "Associations Support Fund", "orgName": "Associations Support Fund" },
-      { "logoSrc": "assets/sponsors/university-of-jeddah-logo.png", "logoAlt": "University of Jeddah", "orgName": "University of Jeddah" },
-      { "logoSrc": "assets/sponsors/york-logo.png", "logoAlt": "York", "orgName": "York" },
-      { "logoSrc": "assets/sponsors/Tanmia-logo.png", "logoAlt": "Tanmia Al-Qura Charity", "orgName": "Tanmia Al-Qura Charity" }
-    ]
-  },
-  "location": {
-    "heading": "Ceremony Location",
-    "addressHtml": "University of Jeddah – Al Jawhara Hall<br>Jeddah, Saudi Arabia",
-    "mapSrc": "https://www.google.com/maps?q=21.5821755,39.1851925&z=17&output=embed"
   }
 }

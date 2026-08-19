@@ -8,14 +8,19 @@ permalink: "{{ locale.permalink }}"
 {#
   TAQATHON - JUDGES/MENTORS PAGE TEMPLATE (src/pages/judges.njk)
   -------------------------------------------------------------------
-  A grid of profile cards. No real photos exist yet, so each card
+  Two grids of profile cards — judges, then mentors — each under its
+  own heading. Used to be one flat "people" array/grid with the two
+  roles just interleaved together; split per user request (2026-08-18,
+  "divide up the judges and mentors") into locale.content.judges /
+  locale.content.mentors, rendered by the same card markup twice
+  instead of once, via a reusable {% macro %} so the card layout stays
+  defined in exactly one place. No real photos exist yet, so each card
   shows a generic Bootstrap-Icon avatar circle instead of a broken
   <img> — see judges.ar.json / judges.en.json's "_comment" for the
   same reasoning used on the Sponsors page.
 
   PLACEHOLDER CONTENT (still true after this redesign): every name/
   role/bio is a generic stand-in — see judges.*.json's "_comment".
-  Layout/visual only, no copy changed.
 
   VISUAL SYSTEM (Phase 3, editorial rollout, page 3 — see about.njk
   for the full token-system rationale). Cards reuse the exact
@@ -39,6 +44,12 @@ permalink: "{{ locale.permalink }}"
 [data-bs-theme="dark"] .jg-hero-intro{ color:var(--muted); }
 
 .jg-grid-section{ background:var(--color-sky); padding:3.5rem 0 4rem; }
+.jg-group-heading{
+  font-family:var(--font-display); font-weight:700; color:var(--brand-dark);
+  font-size:1.4rem; margin-bottom:1.25rem;
+}
+[dir="rtl"] .jg-group-heading{ font-family:'Tajawal', var(--font-display); font-weight:800; }
+[data-bs-theme="dark"] .jg-group-heading{ color:var(--text); }
 .jg-card{
   background:#fff; border:1px solid rgba(0,40,76,.08); border-radius:1rem;
   padding:1.5rem; display:flex; gap:1.1rem; align-items:flex-start; height:100%;
@@ -69,10 +80,9 @@ permalink: "{{ locale.permalink }}"
 </div>
 </section>
 
-<section class="jg-grid-section">
-<div class="container" style="max-width:980px;">
+{% macro personGrid(people) %}
   <div class="row g-4">
-    {% for p in locale.content.people %}
+    {% for p in people %}
     <div class="col-md-6">
       <div class="jg-card">
         <div class="jg-avatar"><i class="bi bi-person-fill"></i></div>
@@ -85,6 +95,25 @@ permalink: "{{ locale.permalink }}"
     </div>
     {% endfor %}
   </div>
+{% endmacro %}
+
+<section class="jg-grid-section">
+<div class="container" style="max-width:980px;">
+
+  {% if locale.content.judges and locale.content.judges.length %}
+  <div class="jg-group mb-5">
+    <h2 class="jg-group-heading">{{ locale.content.judgesHeading }}</h2>
+    {{ personGrid(locale.content.judges) }}
+  </div>
+  {% endif %}
+
+  {% if locale.content.mentors and locale.content.mentors.length %}
+  <div class="jg-group">
+    <h2 class="jg-group-heading">{{ locale.content.mentorsHeading }}</h2>
+    {{ personGrid(locale.content.mentors) }}
+  </div>
+  {% endif %}
+
 </div>
 </section>
 

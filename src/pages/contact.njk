@@ -8,13 +8,20 @@ permalink: "{{ locale.permalink }}"
 {#
   TAQATHON - CONTACT PAGE TEMPLATE (src/pages/contact.njk)
   ------------------------------------------------------------
-  A message form + contact info + sponsor/supervisor logo panels + an
-  embedded Google Map. Sponsor/supervisor entries are data-driven loops
-  (see contact.ar.json / contact.en.json), same idea as Schedule's
-  table rows. pageScript (the shared submit handler, honeypot check,
+  A message form + contact info panel. Just those two now — this used
+  to also carry supervisor/supporter logo panels and an embedded map,
+  but per user request (2026-08-18) those were removed: the
+  supervisor/supporter logos moved to the Sponsors page (see
+  sponsors.njk — they're "who backs this event," which fits there
+  better), and the ceremony-location map was dropped entirely rather
+  than moved anywhere (it was 2025's venue, not a confirmed 2026 one;
+  see PROGRESS.md's real-content-2026 entry for why stale-season
+  location data doesn't get carried forward as if current). This page
+  is deliberately just "contact us" now: reach the organizers, see
+  their info. pageScript (the shared submit handler, honeypot check,
   mailto fallback, response-shape tolerance, the misplaced-parenthesis
-  bug fix) is UNCHANGED by this redesign — see git history for the
-  full account of that logic if needed.
+  bug fix) is UNCHANGED by any of this — see git history for the full
+  account of that logic if needed.
 
   DELIBERATE LAYOUT CHOICE, kept from the accessibility pass, NOT
   reverted by this redesign: this page has no visible hero banner —
@@ -65,10 +72,6 @@ permalink: "{{ locale.permalink }}"
 [data-bs-theme="dark"] .info-item i{ color:var(--color-amber); }
 .info-item a{ color:var(--color-terra); }
 [data-bs-theme="dark"] .info-item a{ color:var(--color-amber); }
-
-.sponsor-logo{ max-height:70px; width:auto; object-fit:contain; }
-.sponsor-badge{ background:rgba(196,64,26,.1); color:var(--brand-dark); font-weight:700; }
-[data-bs-theme="dark"] .sponsor-badge{ background:rgba(232,149,43,.14); color:var(--text); }
 {% endblock %}
 
 {% block content %}
@@ -127,9 +130,9 @@ permalink: "{{ locale.permalink }}"
         </div>
       </div>
 
-      <!-- Contact info + sponsors + map -->
+      <!-- Contact info -->
       <div class="col-lg-5">
-        <div class="panel shadow-soft p-3 p-md-4 mb-3">
+        <div class="panel shadow-soft p-3 p-md-4">
           <h2 class="h6 panel-header mb-3">{{ locale.content.contactInfo.heading }}</h2>
           <ul class="info-list">
             {% for item in locale.content.contactInfo.items %}
@@ -139,54 +142,6 @@ permalink: "{{ locale.permalink }}"
             </li>
             {% endfor %}
           </ul>
-        </div>
-
-        <div class="panel shadow-soft p-3 p-md-4 mb-3">
-          <h2 class="h6 panel-header mb-3 text-center">{{ locale.content.supervisors.heading }}</h2>
-          <div class="row g-3 justify-content-between align-items-center text-center">
-            {% for s in locale.content.supervisors.items %}
-            <div class="col-6 col-md-5 d-flex flex-column align-items-center text-center">
-              <div style="height:90px; display:flex; align-items:center; justify-content:center;">
-                <img src="{{ s.logoSrc }}" alt="{{ s.logoAlt }}" class="img-fluid sponsor-logo">
-              </div>
-              <div style="min-height:50px; display:flex; align-items:center; justify-content:center; margin-top:0.75rem;">
-                <div class="badge rounded-pill px-3 py-2 sponsor-badge">
-                  {{ s.badgeText }}
-                </div>
-              </div>
-              <div class="small mt-2" style="color:var(--color-dust); display:flex; align-items:center; justify-content:center; min-height:50px;">
-                {{ s.orgName }}
-              </div>
-            </div>
-            {% endfor %}
-          </div>
-        </div>
-
-        <div class="panel shadow-soft p-3 p-md-4 mb-3">
-          <h2 class="h6 panel-header mb-3 text-center">{{ locale.content.supporters.heading }}</h2>
-          <div class="row g-3 justify-content-evenly align-items-center text-center">
-            {% for s in locale.content.supporters.items %}
-            <div class="col-6 col-md-3 d-flex flex-column align-items-center">
-              <img src="{{ s.logoSrc }}" alt="{{ s.logoAlt }}" class="img-fluid sponsor-logo mb-2">
-              <div class="small text-center" style="color:var(--color-dust);">{{ s.orgName }}</div>
-            </div>
-            {% endfor %}
-          </div>
-        </div>
-
-        <div class="panel shadow-soft p-3 p-md-4">
-          <h2 class="h6 panel-header mb-2">{{ locale.content.location.heading }}</h2>
-          <p class="mb-2" style="color:var(--color-dust);">
-            {{ locale.content.location.addressHtml | safe }}
-          </p>
-          <iframe
-              src="{{ locale.content.location.mapSrc }}"
-              width="100%"
-              height="160"
-              style="border:0; border-radius:8px;"
-              allowfullscreen=""
-              loading="lazy">
-          </iframe>
         </div>
       </div>
     </div>
@@ -262,7 +217,7 @@ form.addEventListener('submit', async (e) => {
     }
   } catch(err){
     console.error(err);
-    const mailto = `mailto:info@jameiat-taqa.sa?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(
+    const mailto = `mailto:taqathon@jameiat-taqa.sa?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(
       `Name: ${name}\nEmail: ${email}\n\n${message}`
     )}`;
     try { window.location.href = mailto; } catch(_) {}
