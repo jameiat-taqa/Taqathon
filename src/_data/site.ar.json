@@ -20,13 +20,12 @@
   },
   "nav": [
     { "type": "link", "key": "home", "href": "index.html", "label": "الرئيسية" },
-    { "type": "dropdown", "key": "about", "label": "حول", "items": [
-        { "key": "about", "href": "about.html", "label": "حول" },
+    { "type": "dropdown", "key": "about", "label": "من نحن", "items": [
+        { "key": "about", "href": "about.html", "label": "نبذة عن طاقثون" },
         { "key": "tracks", "href": "tracks.html", "label": "المسارات" },
         { "key": "judges", "href": "judges.html", "label": "المحكّمون والمرشدون" },
         { "key": "sponsors", "href": "sponsors.html", "label": "الرعاة" },
-        { "key": "pastSeasons", "href": "past-seasons.html", "label": "المواسم السابقة" },
-        { "key": "faq", "href": "faq.html", "label": "الأسئلة الشائعة" }
+        { "key": "pastSeasons", "href": "past-seasons.html", "label": "المواسم السابقة" }
     ] },
     { "type": "dropdown", "key": "participants", "label": "المشاركون", "items": [
         { "key": "contract", "href": "contract.html", "label": "العقد" },
@@ -38,6 +37,7 @@
         { "key": "gallery", "href": "gallery.html", "label": "المرئيات" },
         { "key": "community", "href": "community.html", "label": "المجتمع" }
     ] },
+    { "type": "link", "key": "faq", "href": "faq.html", "label": "الأسئلة الشائعة" },
     { "type": "link", "key": "contact", "href": "contact.html", "label": "تواصل معنا" },
     { "type": "button", "key": "registration", "href": "registration.html", "label": "التسجيل" }
   ],
