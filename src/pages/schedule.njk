@@ -12,11 +12,19 @@ permalink: "{{ locale.permalink }}"
   Workshop + key-dates table. Every row is data (see
   src/_data/copy/schedule.ar.json / schedule.en.json) rendered through
   two {% for %} loops below, rather than 9 hand-typed <tr> blocks.
-  REAL content, not placeholder — this redesign changes only the
-  visual skin (Phase 3, editorial rollout, page 9 — see about.njk for
-  the token-system rationale), not the loops, the data-driven
-  workTitleFontFamily/-Weight logic, or the external-link rel=noopener
-  handling — all untouched from the previous migration.
+
+  REAL CONTENT PASS (2026): the specific day-by-day workshop schedule
+  that used to live here was Taqathon 1's actual November 2025
+  calendar — real for that season, but stale once presented as THIS
+  season's schedule. That real 2025 data was moved to
+  src/_data/copy/years/2025.*.json (see years.njk) rather than
+  deleted, and "workshops" here is now deliberately empty: the three
+  sources available for 2026 (board resolution, 2026 presentation
+  deck, taqa.org.sa) only give month-level phases, not specific
+  workshop dates/topics/presenters yet. The "Workshops" section-row
+  is wrapped in {% if %} so an empty array doesn't render a header
+  with nothing under it — see the .ed-note callout below the hero for
+  where that gap is flagged to visitors, not just in this comment.
 
   TO CUSTOMIZE:
     - Add/remove/reorder a workshop or key date → edit the "workshops"
@@ -84,6 +92,15 @@ permalink: "{{ locale.permalink }}"
   font-family:{{ locale.content.workTitleFontFamily | safe }} !important;
   font-weight:{{ locale.content.workTitleFontWeight }} !important;
 }
+
+.ed-note{
+  background:rgba(196,64,26,.05); border:1px solid rgba(196,64,26,.15); border-radius:.75rem;
+  padding:1rem 1.25rem; display:flex; align-items:flex-start; gap:.75rem; color:var(--brand-dark);
+  margin-bottom:1.5rem;
+}
+.ed-note .bi{ color:var(--color-terra); flex-shrink:0; margin-top:.15rem; }
+[data-bs-theme="dark"] .ed-note{ background:rgba(232,149,43,.06); border-color:rgba(232,149,43,.2); color:var(--text); }
+[data-bs-theme="dark"] .ed-note .bi{ color:var(--color-amber); }
 {% endblock %}
 
 {% block content %}
@@ -96,6 +113,12 @@ permalink: "{{ locale.permalink }}"
 
 <section class="sc-section">
 <div class="container" style="max-width:980px;">
+  {% if locale.content.workshopsNote %}
+  <div class="ed-note">
+    <i class="bi bi-info-circle-fill"></i>
+    <div>{{ locale.content.workshopsNote }}</div>
+  </div>
+  {% endif %}
   <div class="sc-table-card">
     <div class="table-responsive">
       <table class="table align-middle mb-0">
@@ -109,6 +132,7 @@ permalink: "{{ locale.permalink }}"
         </thead>
         <tbody>
 
+          {% if locale.content.workshops.length %}
           <!-- Workshops -->
           <tr class="section-row">
             <td colspan="4">
@@ -133,6 +157,7 @@ permalink: "{{ locale.permalink }}"
             </td>
           </tr>
           {% endfor %}
+          {% endif %}
 
           <!-- Key Dates -->
           <tr class="section-row">

@@ -1,9 +1,9 @@
 {
-  "_comment": "HOME PAGE COPY (English). English mirror of home.ar.json. 'iconMarginClass', 'spaceBeforeRiyalIcon', and 'buttonExtraClass' below look like odd one-off fields — they exist because the original hand-written index-en.html had small CSS-class differences from index.html (icon margin side, a line-break-induced space before the riyal icon, an extra 'btn-md' class) that we chose to preserve exactly during migration rather than silently changing.",
+  "_comment": "HOME PAGE COPY (English). English mirror of home.ar.json. 'iconMarginClass', 'spaceBeforeRiyalIcon', and 'buttonExtraClass' below look like odd one-off fields — they exist because the original hand-written index-en.html had small CSS-class differences from index.html (icon margin side, a line-break-induced space before the riyal icon, an extra 'btn-md' class) that we chose to preserve exactly during migration rather than silently changing. REAL CONTENT PASS (2026): hero.title, about.prize.amounts, and about.body were updated from the board-approved resolution for 'Taqathon 2' (طاقتون ٢, board minutes dated 2026-07-21) and taqa.org.sa — see PROGRESS.md for the full source breakdown. hero.badge is unused dead data (the hero badge pill was removed site-wide in the previous round) — left as-is, harmless.",
   "pageTitle": "Home · Taqathon",
   "hero": {
     "badge": "Participant Portal",
-    "title": "Taqathon 2025",
+    "title": "Taqathon 2",
     "subtitle": "Saudi Arabia’s National Energy Hackathon",
     "body": "This portal is for selected participants. Access workshop links and schedule, read the rules and resources, and submit your projects on time. Organized by the Energy Association for Sustainable Development and aligned with Saudi Vision 2030.",
     "ctas": [
@@ -33,12 +33,12 @@
   "about": {
     "image": { "src": "assets/gallery/1AN07654.jpg", "alt": "Aerial view of solar panels in Saudi Arabia" },
     "heading": "What You’ll Do in Taqathon",
-    "body": "Work in teams to build practical solutions in renewable energy, energy efficiency, and AI for energy—guided by experts and geared toward real-world adoption in line with Vision 2030.",
+    "body": "Work in teams to build practical solutions across AI and renewable energy, smart grids and energy efficiency, or Hajj and Umrah sustainability—guided by experts and geared toward real-world adoption in line with Vision 2030.",
     "listCol1": [
       { "icon": "bi-lightbulb", "text": "Expert-led workshops" },
       { "icon": "bi-person-lines-fill", "text": "Mentorship and technical guidance" }
     ],
-    "prize": { "prefix": "Compete for", "amounts": ["18,000", "12,000", "9,000"], "suffix": "prizes", "riyalAlt": "Saudi Riyal", "riyalIconMarginStyle": "margin-left:.25rem", "spaceBeforeRiyalIcon": true },
+    "prize": { "prefix": "Compete for a total prize pool of", "amounts": ["45,000"], "suffix": "in prizes", "riyalAlt": "Saudi Riyal", "riyalIconMarginStyle": "margin-left:.25rem", "spaceBeforeRiyalIcon": true },
     "listCol2Extra": { "icon": "bi-building-check", "text": "Potential adoption by major companies" },
     "prizeStatLabel": "Prizes",
     "tracksStatValue": "3",

@@ -1,5 +1,5 @@
 {
-  "_comment": "SCHEDULE PAGE COPY (English). English mirror of schedule.ar.json — see that file's note about why the table is data-driven.",
+  "_comment": "SCHEDULE PAGE COPY (English). REAL CONTENT PASS (2026): the four keyDates rows are the month-level program phases from the board-approved resolution for 'Taqathon 2' (board minutes dated 2026-07-21, section 'Timeline') and the association's 2026 presentation deck's own timeline slide, which both agree on the same four phases. No source gives specific day-by-day workshop dates yet, so 'workshops' is deliberately empty and workshopsNote flags that gap on the page itself — see schedule.njk for why an empty array doesn't just silently disappear. The real November 2025 workshop schedule that used to be here (Taqathon 1's actual sessions, presenters, and Google Meet links) was moved to src/_data/copy/years/2025.en.json rather than deleted — it's real, it just belongs to last season's archive, not this season's live page.",
   "pageTitle": "Schedule & Workshops · Taqathon",
   "hero": { "icon": "bi-calendar-event", "heading": "Schedule & Workshops", "headingClass": "fw-semibold" },
   "iconMarginClass": "me-1",
@@ -7,66 +7,33 @@
   "workTitleFontWeight": 600,
   "tableHeaders": { "item": "Item", "date": "Date", "time": "Time", "action": "Action" },
   "workshopsHeading": "Advisory & Educational Sessions",
-  "workshops": [
-    {
-      "title": "Energy Session",
-      "presenter": "Prof. Ali Foda",
-      "date": "Nov 16, 2025",
-      "time": "6:30 – 7:15 p.m.",
-      "action": { "label": "Join now", "href": "https://meet.google.com/wsa-asty-ctp", "icon": "bi-box-arrow-up-right" }
-    },
-    {
-      "title": "Building & Developing Projects",
-      "presenter": "Dr. Sami Ghazali",
-      "date": "Nov 16, 2025",
-      "time": "7:30 – 8:15 p.m.",
-      "action": { "label": "Join now", "href": "https://meet.google.com/pmq-pmvw-dqp", "icon": "bi-box-arrow-up-right" }
-    },
-    {
-      "title": "Professional Project Pitching",
-      "presenter": "Dr. Mohannad Bahashwan",
-      "date": "Nov 16, 2025",
-      "time": "8:30 – 9:15 p.m.",
-      "action": { "label": "Join now", "href": "https://meet.google.com/aka-ibmg-qup", "icon": "bi-box-arrow-up-right" }
-    }
-  ],
-  "keyDatesHeading": "Key Dates",
+  "workshopsNote": "Specific workshop dates, topics, and presenters for Taqathon 2 haven't been announced yet — they'll be added here once confirmed. Last season's full workshop schedule is preserved in the 2025 archive.",
+  "workshops": [],
+  "keyDatesHeading": "2026 Program Timeline",
   "keyDates": [
     {
-      "title": "Clarification Meeting",
-      "date": "Nov 17, 2025",
-      "time": "2:00 - 2:30",
-      "action": { "label": "Join now", "href": "https://meet.google.com/agu-pcqy-khw", "icon": "bi-box-arrow-up-right" }
+      "title": "Application & Registration Period",
+      "date": "September 2026",
+      "time": "",
+      "action": { "label": "Register now", "href": "registration-en.html", "icon": "bi-pencil-square" }
     },
     {
-      "title": "Final Project Submission",
-      "date": "Nov 22, 2025",
-      "time": "2:00 p.m.",
-      "action": { "label": "Submit project", "href": "submissions-en.html", "icon": "bi-upload" }
-    },
-    {
-      "title": "Final Project Presentation",
-      "date": "Nov 23, 2025",
-      "time": "8:00 p.m.",
-      "action": null
-    },
-    {
-      "title": "Winners Announcement",
-      "date": "Nov 25, 2025",
+      "title": "Screening & Nomination Period",
+      "date": "October 2026",
       "time": "",
       "action": null
     },
     {
-      "title": "Promo Video Submission",
-      "date": "Nov 30, 2025",
+      "title": "Work & Mentorship Period",
+      "date": "October – November 2026",
       "time": "",
-      "action": { "label": "Submit video", "href": "submissions-en.html", "icon": "bi-upload" }
+      "action": null
     },
     {
-      "title": "Closing Ceremony",
-      "date": "Dec 2, 2025",
-      "time": "6:30 – 8:30 p.m.",
-      "action": { "label": "Al Jawhara Hall – University of Jeddah", "href": "https://maps.app.goo.gl/3ucTAEBiY8wEivXK7", "icon": "bi-geo-alt-fill", "external": true }
+      "title": "Winners & Prizes Announcement",
+      "date": "December 2026",
+      "time": "",
+      "action": null
     }
   ]
 }
