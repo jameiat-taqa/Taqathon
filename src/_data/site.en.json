@@ -25,8 +25,7 @@
         { "key": "tracks", "href": "tracks-en.html", "label": "Tracks" },
         { "key": "judges", "href": "judges-en.html", "label": "Judges &amp; Mentors" },
         { "key": "sponsors", "href": "sponsors-en.html", "label": "Sponsors" },
-        { "key": "pastSeasons", "href": "past-seasons-en.html", "label": "Past Seasons" },
-        { "key": "faq", "href": "faq-en.html", "label": "FAQ" }
+        { "key": "pastSeasons", "href": "past-seasons-en.html", "label": "Past Seasons" }
     ] },
     { "type": "dropdown", "key": "participants", "label": "Participants", "items": [
         { "key": "contract", "href": "contract-en.html", "label": "Contract" },
@@ -38,6 +37,7 @@
         { "key": "gallery", "href": "gallery-en.html", "label": "Gallery" },
         { "key": "community", "href": "community-en.html", "label": "Community" }
     ] },
+    { "type": "link", "key": "faq", "href": "faq-en.html", "label": "FAQ" },
     { "type": "link", "key": "contact", "href": "contact-en.html", "label": "Contact Us" },
     { "type": "button", "key": "registration", "href": "registration-en.html", "label": "Register" }
   ],
