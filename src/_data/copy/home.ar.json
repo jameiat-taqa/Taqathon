@@ -1,27 +1,22 @@
 {
-  "_comment": "HOME PAGE COPY (Arabic). Every piece of Arabic text on the Home page lives here instead of inside home.njk, so editing the page's wording never means touching template code. Loaded by src/_data/pages/home.js. 'deadline' now reflects Taqathon 2026's registration deadline (set in Phase 1, 2026-08-11) — the user gave Sept 28, 2026 with no exact time, so end-of-day Riyadh time (23:59:59+03:00) was used; correct this if a precise time is confirmed later. See home.en.json for the English mirror (must keep the same keys/shape). REAL CONTENT PASS (2026): hero.title, about.prize.amounts, and about.body updated from the board-approved resolution for 'طاقتون ٢' (board minutes dated 2026-07-21) and taqa.org.sa — see PROGRESS.md. hero.badge is unused dead data (hero badge pill removed site-wide in the previous round).",
+  "_comment": "HOME PAGE COPY (Arabic). انظر ملاحظة home.en.json للتفصيل الكامل لإعادة التموضع (2026-09-16): تأجّل الهاكاثون، ولم يعد قسم البطل/العد التنازلي/قسم 'ماذا ستفعل'/شريط الدعوة يحمل أي إطار تنافسي (بلا مجموع جوائز، بلا عدد مسارات، بلا لغة 'فِرَق'). 'about.body' والعنصرين في 'about.listCol1'/'about.listCol2Extra' مبنية على القائمة الحقيقية للورش الثلاث ووصف الجمعية الرسمي لسلسلة الورش (schedule.ar.json) — لا شيء مُخترَع. 'about.stats' حلّت محل شبكة الخليتين (الجوائز/المسارات) بثلاث حقائق تخص الورش؛ home.njk يكرّر عليها بدل تكرار خليتين ثابتتين. 'countdown' لم يعد يشغّل عداداً تنازلياً حياً — تواريخ الورش المصدرية بلا سنة أو وقت مؤكّدين (لم تُخترَع عمداً، مُدرَجة في PROGRESS.md)، فعداد JS حقيقي إما سيكون خاطئاً أو مُختلَقاً؛ أصبح الآن عرضاً ثابتاً لـ'الورشة القادمة' بدلاً من ذلك (انظر home.njk). شريط إحصاء البطل الخاص بموعد إغلاق التسجيل (metaDeadlineLabel/metaStatusLabel/...) أُزيل لنفس السبب — لا يوجد موعد تسجيل يُعَدّ له تنازلياً بعد الآن — واستُبدل بسطر ثابت واحد 'الورشة القادمة'. hero.badge بيانات ميتة غير مستخدمة (حذفت شارة البطل من كامل الموقع قبل هذه الجولة بوقت طويل) — أُبقيت كما هي، غير ضارة، نفس القرار المتكرر في كل جولة سابقة.",
   "pageTitle": "الرئيسية · طاقَثون",
   "hero": {
     "badge": "بوابة المشاركين",
     "title": "طاقَثون 2026",
-    "subtitle": "هاكاثون الطاقة الوطني في المملكة العربية السعودية",
-    "body": "هذه البوابة مخصّصة للمشاركين المقبولين. هنا تجد روابط الورش والجدول، وتطّلع على القواعد والموارد، وتسلّم مشروعك في الوقت المحدد. ينظّم الحدث جمعية الطاقة للتنمية المستدامة ويدعم مستهدفات رؤية 2030.",
+    "subtitle": "سلسلة وطنية لورش الطاقة",
+    "body": "سلسلة ورش عمل عن بُعد تربط بين الطاقة والذكاء الاصطناعي وإدارة المشاريع — متاحة لطلاب الجامعات. ينظّم الحدث جمعية الطاقة للتنمية المستدامة ويدعم مستهدفات رؤية 2030.",
     "ctas": [
-      { "href": "contract.html", "icon": "bi-file-earmark-text", "label": "توقيع العقد", "btnClass": "btn-success" },
-      { "href": "rules.html", "icon": "bi-journal-text", "label": "عرض القواعد", "btnClass": "btn-outline-secondary" },
-      { "href": "submissions.html", "icon": "bi-rocket-takeoff", "label": "تسليم المشروع", "btnClass": "btn-warning text-white" }
+      { "href": "schedule.html", "icon": "bi-calendar-event", "label": "استعرض ورش العمل", "btnClass": "btn-success" }
     ],
     "image": { "src": "assets/gallery/2AN08242.jpg", "alt": "توربينات رياح لتوليد طاقة نظيفة في المملكة" },
     "iconMarginClass": "ms-1",
-    "metaDeadlineLabel": "التسجيل يُغلق في",
-    "metaStatusLabel": "الحالة",
-    "metaStatusOpen": "مفتوح",
-    "metaStatusClosed": "مغلق"
+    "metaNextLabel": "الورشة القادمة",
+    "metaNextValue": "23 سبتمبر"
   },
   "countdown": {
-    "label": "الموعد النهائي للتسجيل في طاقَثون 2026",
-    "deadline": "2026-09-28T23:59:59+03:00",
-    "units": { "days": "أيام", "hours": "ساعات", "mins": "دقائق", "secs": "ثوانٍ" }
+    "label": "الورشة القادمة",
+    "displayDate": "23 سبتمبر"
   },
   "announcements": {
     "heading": "الإعلانات",
@@ -32,23 +27,24 @@
   },
   "about": {
     "image": { "src": "assets/gallery/2AN08121.jpg", "alt": "مسؤولون وحضور واقفون خلال حفل طاقَثون" },
-    "heading": "ماذا ستفعل في طاقَثون؟",
-    "body": "ستعمل ضمن فرق لتطوير حلول عملية في الذكاء الاصطناعي والطاقة المتجددة، أو الشبكات الذكية وكفاءة الطاقة، أو استدامة الحج والعمرة، بإرشاد خبراء وبهدف التبنّي الواقعي المتوافق مع رؤية 2030.",
+    "heading": "ماذا ستتعلم في ورش العمل؟",
+    "body": "ثلاث جلسات عن بُعد تربط بين الطاقة والذكاء الاصطناعي وإدارة المشاريع: مشهد الطاقة في المملكة، والطاقة المتجددة مقترنة بالذكاء الاصطناعي، وكيفية إدارة مشروع طاقة متجددة من البداية للنهاية.",
     "listCol1": [
       { "icon": "bi-lightbulb", "text": "ورش يقودها خبراء" },
-      { "icon": "bi-person-lines-fill", "text": "إرشاد ومرافقة تقنية" }
+      { "icon": "bi-person-lines-fill", "text": "جلسات تفاعلية تربط النظرية بالتطبيق" }
     ],
-    "prize": { "prefix": "إجمالي الجوائز:", "amounts": ["45,000"], "riyalAlt": "ريال سعودي", "riyalIconMarginStyle": "margin-inline-start:.25rem", "spaceBeforeRiyalIcon": false },
-    "listCol2Extra": { "icon": "bi-building-check", "text": "فرص تبنّي من شركات كبرى" },
-    "prizeStatLabel": "الجوائز",
-    "tracksStatValue": "3",
-    "tracksStatLabel": "المسارات"
+    "listCol2Extra": { "icon": "bi-mic", "text": "متحدثون ومدراء جلسات حقيقيون من قطاع الطاقة" },
+    "stats": [
+      { "value": "٣", "label": "ورش عمل" },
+      { "value": "عن بُعد", "label": "الصيغة" },
+      { "value": "طلاب الجامعات", "label": "الفئة المستهدفة" }
+    ]
   },
   "cta": {
-    "heading": "ابقَ على المسار",
-    "body": "أكمل عقدك، واطّلع على القواعد، وتابع الجدول والإعلانات أولاً بأول.",
-    "buttonLabel": "ابدأ الآن",
-    "buttonHref": "contract.html",
+    "heading": "لا تفوّت أي جلسة",
+    "body": "تابع صفحة ورش العمل للاطلاع على المواعيد والمحاور والمتحدثين، وتابع إعلاناتنا لآخر التحديثات.",
+    "buttonLabel": "استعرض ورش العمل",
+    "buttonHref": "schedule.html",
     "buttonExtraClass": ""
   }
 }
