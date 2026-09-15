@@ -436,8 +436,9 @@ display:grid; place-items:center; font-size:16px;
       deadline). There's no registration deadline anymore, so it's now a
       single static row pointing at the first workshop — see
       home.en.json/home.ar.json's _comment for why this is plain text
-      instead of a JS-computed value (no confirmed year/time to compute
-      from).
+      instead of a JS-computed value (the year is confirmed but the
+      exact start time still isn't, so a real countdown still can't be
+      computed).
     #}
     <div class="dz-stat-bar">
       <div class="dz-stat-row">
@@ -453,13 +454,13 @@ display:grid; place-items:center; font-size:16px;
 {#
   Repositioning (2026-09-16): this used to be a live ticking countdown
   to the registration deadline (data-deadline + a setInterval timer in
-  pageScript). There's no registration deadline anymore, and the real
-  first-workshop date has no confirmed year or time — building a JS
-  Date from a guessed year would either silently show the wrong
-  countdown or require inventing a fact this project's rule says not
-  to invent. So this section is now a plain static "next workshop"
-  line instead of a computed timer; the day/month string comes
-  straight from countdown.displayDate in the copy files.
+  pageScript). There's no registration deadline anymore, and while the
+  first-workshop YEAR is now confirmed (2026), the exact start TIME
+  still isn't — a JS Date still can't be built without guessing a
+  time-of-day, which this project's rule says not to do. So this
+  section is a plain static "next workshop" line instead of a computed
+  timer; the date string comes straight from countdown.displayDate in
+  the copy files.
 #}
 <section class="gb-band py-5">
 {#
@@ -577,10 +578,11 @@ display:grid; place-items:center; font-size:16px;
   setInterval countdown timer, both derived from countdown.deadline (a
   full ISO datetime). Both the hero stat bar and the "next workshop"
   section are now plain static text rendered straight from the copy
-  files (metaNextValue / countdown.displayDate) — there's no real
-  deadline datetime to compute from anymore (no confirmed year/time
-  for the workshop dates, see home.*.json's _comment), so removing the
-  JS instead of feeding it a guessed date. Deleted, not left disabled,
+  files (metaNextValue / countdown.displayDate) — the workshop year is
+  confirmed but the exact start time still isn't (see home.*.json's
+  _comment), so there's still no real datetime to compute a live
+  countdown from; removing the JS instead of feeding it a guessed
+  time. Deleted, not left disabled,
   since dead JS with no matching DOM ids left in the markup would just
   be confusing to a future reader.
 #}

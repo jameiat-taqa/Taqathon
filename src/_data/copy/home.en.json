@@ -1,5 +1,5 @@
 {
-  "_comment": "HOME PAGE COPY (English). English mirror of home.ar.json. REPOSITIONING (2026-09-16): Taqathon 2026's hackathon was postponed in favor of a remote workshop series under the same name — hero/countdown/about/cta below were reworked to drop competition framing (no prize pool, no track count, no team language) per explicit instruction; see PROGRESS.md for the full breakdown. 'about.body' and the two 'about.listCol1'/'about.listCol2Extra' lines are synthesized from the real 3-workshop lineup and the association's own workshop-series description (schedule.en.json), not invented. 'about.stats' replaces the old 2-cell prize/tracks grid with 3 workshop-relevant facts; home.njk loops over it instead of hardcoding 2 cells. 'countdown' no longer drives a live ticking timer — the source workshop dates have no confirmed YEAR or time (deliberately not guessed, flagged in PROGRESS.md), so a JS Date countdown would either be wrong or fabricated; it's now a static 'next workshop' display instead (see home.njk). The old registration-deadline hero stat bar (metaDeadlineLabel/metaStatusLabel/metaStatusOpen/metaStatusClosed) is gone for the same reason — there's no registration deadline to count down to anymore — replaced by a single static 'Next Workshop' line. hero.badge is unused dead data (the hero badge pill was removed site-wide well before this round) — left as-is, harmless, same call made every previous round.",
+  "_comment": "HOME PAGE COPY (English). English mirror of home.ar.json. REPOSITIONING (2026-09-16): Taqathon 2026's hackathon was postponed in favor of a remote workshop series under the same name — hero/countdown/about/cta below were reworked to drop competition framing (no prize pool, no track count, no team language) per explicit instruction; see PROGRESS.md for the full breakdown. 'about.body' and the two 'about.listCol1'/'about.listCol2Extra' lines are synthesized from the real 3-workshop lineup and the association's own workshop-series description (schedule.en.json), not invented. 'about.stats' replaces the old 2-cell prize/tracks grid with 3 workshop-relevant facts; home.njk loops over it instead of hardcoding 2 cells. 'countdown' no longer drives a live ticking timer — the workshop year is now confirmed (2026, per the user's 2026-09-16 follow-up) but the exact start time still isn't, so a real JS Date countdown still isn't buildable; it's a static 'next workshop' display instead (see home.njk). The old registration-deadline hero stat bar (metaDeadlineLabel/metaStatusLabel/metaStatusOpen/metaStatusClosed) is gone for the same reason — there's no registration deadline to count down to anymore — replaced by a single static 'Next Workshop' line. hero.badge is unused dead data (the hero badge pill was removed site-wide well before this round) — left as-is, harmless, same call made every previous round.",
   "pageTitle": "Home · Taqathon",
   "hero": {
     "badge": "Participant Portal",
@@ -12,11 +12,11 @@
     "image": { "src": "assets/gallery/2AN08242.jpg", "alt": "Wind turbines in Saudi Arabia generating clean energy" },
     "iconMarginClass": "me-1",
     "metaNextLabel": "Next Workshop",
-    "metaNextValue": "September 23"
+    "metaNextValue": "September 23, 2026"
   },
   "countdown": {
     "label": "Next Workshop",
-    "displayDate": "September 23"
+    "displayDate": "September 23, 2026"
   },
   "announcements": {
     "heading": "Announcements",

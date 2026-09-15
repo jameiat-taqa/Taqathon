@@ -6,6 +6,17 @@ A running, dated record of what's been done on this project and why. Newest entr
 
 ---
 
+## 2026-09-16 — Workshop year confirmed, FAQ hidden, per-workshop time placeholder
+
+- Follow-up to the repositioning round below, same day. Two pieces of direction from the user: (1) confirm the workshop year is 2026, and (2) hide the FAQ page too (it had just moved into the About dropdown in the round below).
+- **Year added**: all 3 workshop dates (`schedule.ar.json`/`schedule.en.json`) now read "September 23/24/25, **2026**" instead of day/month only — this was the one fact the previous round deliberately left unconfirmed rather than assume from the "Taqathon 2026" branding alone; now it's a direct confirmation, not a guess. The Home page's "Next Workshop" stat and static countdown display (`home.*.json`) got the same year added, for consistency.
+- **Per-workshop time added, as an explicit placeholder**: each workshop card now shows a "Time" row reading "To Be Announced" / "سيُعلن لاحقًا" (the user asked for "Coming soon" initially, then corrected it to whatever reads more appropriately for a schedule — "To Be Announced" was picked as the standard phrasing for an unset event time), not a real time — different from silently omitting the field, and different from guessing an hour. `workshopsNote` (the page-level flag) was narrowed to cover only the remaining unconfirmed fact, the remote session link, since time now has its own visible placeholder.
+- **FAQ hidden from nav**: removed from the About dropdown in both `site.ar.json`/`site.en.json` (was added there just one round earlier). Template and copy files untouched, same "hide not delete" rule as every other page hidden this round — confirmed the page still renders at its direct URL.
+- The countdown is still a static display, not a live ticking timer — the year is now real but the exact start time is still a placeholder, so a computed JS countdown still isn't buildable without guessing an hour.
+- Verified: full clean rebuild (`npm run build`, no errors), both languages show the corrected dates/placeholder times, About dropdown now 4 items (About, Past Seasons, Sponsors, Gallery) with no FAQ, FAQ page itself still reachable directly, no console errors.
+
+---
+
 ## 2026-09-16 — Site repositioned around a remote workshop series (hackathon postponed)
 
 - User's direction: Taqathon 2026's hackathon is postponed; the site now centers on a series of remote workshops held under the Taqathon name. **Nothing was deleted** — hidden pages keep their templates and copy files exactly as they were, they're just no longer reachable from the nav; a direct URL still works (verified — see below).

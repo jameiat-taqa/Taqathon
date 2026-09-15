@@ -16,13 +16,15 @@ permalink: "{{ locale.permalink }}"
   Taqathon 2026's hackathon was postponed in favor of a remote workshop
   series (2026-09-16 repositioning).
 
-  Each workshop is now a card (date, title, topics covered, speakers,
-  session moderator) instead of a table row — see
+  Each workshop is now a card (date, time, title, topics covered,
+  speakers, session moderator) instead of a table row — see
   src/_data/copy/schedule.ar.json / schedule.en.json's "workshops"
   array for the data, and that file's own _comment for exactly which
-  facts are real (the 3 real September sessions the user supplied) vs.
-  still unconfirmed (exact times, the remote-session link, and the
-  YEAR — deliberately not guessed, see the ed-note below).
+  facts are real (the 3 real September 2026 sessions the user
+  supplied, year confirmed 2026-09-16) vs. still unconfirmed (exact
+  start times — each workshop's "time" renders the user's own
+  "Coming soon" placeholder, not a guess — and the remote-session
+  link, flagged via the ed-note below).
 
   The old hackathon-phase "keyDates" timeline (registration/screening/
   mentorship/winners) is NOT rendered below anymore — it described a
@@ -85,10 +87,12 @@ permalink: "{{ locale.permalink }}"
 [data-bs-theme="dark"] .wk-date{ color:var(--color-amber); background:rgba(232,149,43,.12); }
 .wk-title{
   font-family:var(--font-display); font-weight:700; color:var(--brand-dark);
-  font-size:1.3rem; line-height:1.2; margin:0 0 1rem;
+  font-size:1.3rem; line-height:1.2; margin:0 0 .5rem;
 }
 [dir="rtl"] .wk-title{ font-family:'Tajawal', var(--font-display); font-weight:800; }
 [data-bs-theme="dark"] .wk-title{ color:var(--text); }
+.wk-time{ font-size:.85rem; color:var(--color-dust); margin-bottom:1rem; }
+[data-bs-theme="dark"] .wk-time{ color:var(--muted); }
 .wk-label{
   font-family:var(--font-mono-label); text-transform:uppercase; letter-spacing:.05em;
   font-size:.7rem; font-weight:600; color:var(--color-dust); margin-bottom:.5rem; display:block;
@@ -134,6 +138,9 @@ permalink: "{{ locale.permalink }}"
       <div class="wk-card">
         <span class="wk-date">{{ w.date }}</span>
         <h2 class="wk-title">{{ w.title }}</h2>
+        {% if w.time %}
+        <div class="wk-time"><i class="bi bi-clock {{ locale.content.iconMarginClass }}"></i>{{ locale.content.labels.time }}: {{ w.time }}</div>
+        {% endif %}
 
         <span class="wk-label">{{ locale.content.labels.topics }}</span>
         <ul class="wk-topics">

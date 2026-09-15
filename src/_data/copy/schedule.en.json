@@ -1,14 +1,15 @@
 {
-  "_comment": "WORKSHOPS PAGE COPY (English). REPOSITIONING (2026-09-16): Taqathon 2026's hackathon was postponed and this page — file/URL still named 'schedule' to avoid an unnecessary URL change, same reasoning as every other migration in this project — was renamed 'Workshops' and made the primary destination for the new remote-workshop-series direction. 'intro' is adapted from the association's own official description of the series (three interconnected areas, applied/interactive focus). The 3 real workshops below are the exact lineup the user supplied directly (2026-09-16): dates are DAY/MONTH ONLY as given, deliberately with NO YEAR — inventing one (even though 'Taqathon 2026' branding makes 2026 a reasonable guess) would break this project's flag-don't-invent rule, so it's listed in PROGRESS.md as something to confirm. Exact start times and the remote session platform/link are also unconfirmed — flagged via workshopsNote/ed-note below instead of guessed. Workshop 3 genuinely has no separate moderator in the source material (3 speakers only) — 'moderator' is null on purpose, not an oversight; schedule.njk skips rendering that row when null. The old hackathon-phase 'keyDates' timeline (registration/screening/mentorship/winners) no longer reflects the current plan and is NOT rendered anymore (see schedule.njk), but is kept below rather than deleted in case a version of it is needed again once the program's next phase is decided.",
+  "_comment": "WORKSHOPS PAGE COPY (English). REPOSITIONING (2026-09-16): Taqathon 2026's hackathon was postponed and this page — file/URL still named 'schedule' to avoid an unnecessary URL change, same reasoning as every other migration in this project — was renamed 'Workshops' and made the primary destination for the new remote-workshop-series direction. 'intro' is adapted from the association's own official description of the series (three interconnected areas, applied/interactive focus). The 3 real workshops below are the exact lineup the user supplied directly (2026-09-16): dates were originally day/month only; the user confirmed the year is 2026 (2026-09-16 follow-up), so it's now included below rather than flagged as missing. Exact start times are still unconfirmed — each workshop's 'time' field is the user's own explicit placeholder text ('To Be Announced' / 'سيُعلن لاحقًا'), not a guess. The remote session platform/link is also still unconfirmed, flagged via workshopsNote instead of guessed. Workshop 3 genuinely has no separate moderator in the source material (3 speakers only) — 'moderator' is null on purpose, not an oversight; schedule.njk skips rendering that row when null. The old hackathon-phase 'keyDates' timeline (registration/screening/mentorship/winners) no longer reflects the current plan and is NOT rendered anymore (see schedule.njk), but is kept below rather than deleted in case a version of it is needed again once the program's next phase is decided.",
   "pageTitle": "Workshops · Taqathon",
   "hero": { "icon": "bi-calendar-event", "heading": "Workshops", "headingClass": "fw-semibold" },
   "intro": "A remote training series for university students, spanning three interconnected areas — energy, AI, and project management — with an applied, interactive focus that connects theory to real-world challenges.",
   "iconMarginClass": "me-1",
-  "workshopsNote": "Exact start times and the remote session link haven't been confirmed yet — they'll be added here once available.",
-  "labels": { "date": "Date", "topics": "Topics Covered", "speakers": "Speakers", "moderator": "Session Moderator" },
+  "workshopsNote": "The remote session link hasn't been confirmed yet — it will be added here once available.",
+  "labels": { "date": "Date", "time": "Time", "topics": "Topics Covered", "speakers": "Speakers", "moderator": "Session Moderator" },
   "workshops": [
     {
-      "date": "September 23",
+      "date": "September 23, 2026",
+      "time": "To Be Announced",
       "title": "The Future of Energy in the Kingdom",
       "topics": [
         "Where are we now?",
@@ -22,7 +23,8 @@
       "moderator": "Dr. Ohoud"
     },
     {
-      "date": "September 24",
+      "date": "September 24, 2026",
+      "time": "To Be Announced",
       "title": "Renewable Energy and Artificial Intelligence",
       "topics": [
         "Why are we talking about renewable energy?",
@@ -36,7 +38,8 @@
       "moderator": "Eng. Hassan Al-Zahrani"
     },
     {
-      "date": "September 25",
+      "date": "September 25, 2026",
+      "time": "To Be Announced",
       "title": "Renewable Energy Project Management",
       "topics": [
         "Introduction to renewable energy projects",
