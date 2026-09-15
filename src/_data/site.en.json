@@ -1,5 +1,5 @@
 {
-  "_comment": "SHARED SITE CHROME (English). English mirror of site.ar.json — same keys, English values. Used by navbar.njk and footer.njk for every migrated page's nav/footer/social links. 'nav' was restructured in Phase 3 (2026-08-11) from a flat list of 16 links into grouped dropdowns, per the user's exact spec — see navbar.njk for how 'type' (link/dropdown/button) is rendered. Each entry's 'key' (top-level OR nested inside a dropdown's 'items') is what a page's navActive value matches against, same as before.",
+  "_comment": "SHARED SITE CHROME (English). English mirror of site.ar.json — same keys, English values. Used by navbar.njk and footer.njk for every migrated page's nav/footer/social links. 'nav' was restructured in Phase 3 (2026-08-11) from a flat list of 16 links into grouped dropdowns, per the user's exact spec — see navbar.njk for how 'type' (link/dropdown/button) is rendered. Each entry's 'key' (top-level OR nested inside a dropdown's 'items') is what a page's navActive value matches against, same as before. REPOSITIONING (2026-09-16): Taqathon 2026's hackathon was postponed and the site now centers on a remote workshop series under the same name. Per explicit instruction, hidden pages are NOT deleted — their templates and copy files are untouched, they're just no longer reachable from 'nav' below (a direct URL still works). Hidden this round: Tracks, Contract, Submissions, Rules & Resources, Judges & Mentors, Community, and the standalone Registration page/button — Submission Guidelines and Newsletter were already gone before this round. 'schedule' (renamed 'Workshops' from 'Schedule & Workshops') was promoted from the old 'participants' dropdown to a top-level link since it's now the site's primary destination after Home. 'contact' dropped from a 2-item ('Support') dropdown to a plain link once FAQ moved in with About (a dropdown holding only one item doesn't make sense as a dropdown) — then FAQ itself was hidden too, in a same-day follow-up (see below).",
   "brand": { "href": "index-en.html", "logoAlt": "Taqathon logo", "ariaLabel": "Taqathon home" },
   "assoc": { "href": "https://taqa.org.sa", "alt": "Energy Association for Sustainable Development", "ariaLabel": "Energy Association for Sustainable Development", "linkClass": "d-block" },
   "skipLinkLabel": "Skip to main content",
@@ -20,28 +20,14 @@
   },
   "nav": [
     { "type": "link", "key": "home", "href": "index-en.html", "label": "Home" },
+    { "type": "link", "key": "schedule", "href": "schedule-en.html", "label": "Workshops" },
     { "type": "dropdown", "key": "about", "label": "About", "items": [
         { "key": "about", "href": "about-en.html", "label": "About" },
-        { "key": "tracks", "href": "tracks-en.html", "label": "Tracks" },
-        { "key": "judges", "href": "judges-en.html", "label": "Judges &amp; Mentors" },
+        { "key": "pastSeasons", "href": "past-seasons-en.html", "label": "Past Seasons" },
         { "key": "sponsors", "href": "sponsors-en.html", "label": "Sponsors" },
-        { "key": "pastSeasons", "href": "past-seasons-en.html", "label": "Past Seasons" }
+        { "key": "gallery", "href": "gallery-en.html", "label": "Gallery" }
     ] },
-    { "type": "dropdown", "key": "participants", "label": "Participants", "items": [
-        { "key": "contract", "href": "contract-en.html", "label": "Contract" },
-        { "key": "schedule", "href": "schedule-en.html", "label": "Schedule &amp; Workshops" },
-        { "key": "submissions", "href": "submissions-en.html", "label": "Submissions" },
-        { "key": "rules", "href": "rules-en.html", "label": "Rules &amp; Resources" }
-    ] },
-    { "type": "dropdown", "key": "community", "label": "Community", "items": [
-        { "key": "gallery", "href": "gallery-en.html", "label": "Gallery" },
-        { "key": "community", "href": "community-en.html", "label": "Community" }
-    ] },
-    { "type": "dropdown", "key": "contact", "label": "Support", "items": [
-        { "key": "contact", "href": "contact-en.html", "label": "Contact Us" },
-        { "key": "faq", "href": "faq-en.html", "label": "FAQ" }
-    ] },
-    { "type": "button", "key": "registration", "href": "registration-en.html", "label": "Register" }
+    { "type": "link", "key": "contact", "href": "contact-en.html", "label": "Contact Us" }
   ],
   "footer": {
     "rowClass": "row g-4",

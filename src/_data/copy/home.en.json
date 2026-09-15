@@ -1,27 +1,22 @@
 {
-  "_comment": "HOME PAGE COPY (English). English mirror of home.ar.json. 'iconMarginClass', 'spaceBeforeRiyalIcon', and 'buttonExtraClass' below look like odd one-off fields — they exist because the original hand-written index-en.html had small CSS-class differences from index.html (icon margin side, a line-break-induced space before the riyal icon, an extra 'btn-md' class) that we chose to preserve exactly during migration rather than silently changing. REAL CONTENT PASS (2026): hero.title, about.prize.amounts, and about.body were updated from the board-approved resolution for 'Taqathon 2' (طاقتون ٢, board minutes dated 2026-07-21) and taqa.org.sa — see PROGRESS.md for the full source breakdown. hero.badge is unused dead data (the hero badge pill was removed site-wide in the previous round) — left as-is, harmless.",
+  "_comment": "HOME PAGE COPY (English). English mirror of home.ar.json. REPOSITIONING (2026-09-16): Taqathon 2026's hackathon was postponed in favor of a remote workshop series under the same name — hero/countdown/about/cta below were reworked to drop competition framing (no prize pool, no track count, no team language) per explicit instruction; see PROGRESS.md for the full breakdown. 'about.body' and the two 'about.listCol1'/'about.listCol2Extra' lines are synthesized from the real 3-workshop lineup and the association's own workshop-series description (schedule.en.json), not invented. 'about.stats' replaces the old 2-cell prize/tracks grid with 3 workshop-relevant facts; home.njk loops over it instead of hardcoding 2 cells. 'countdown' no longer drives a live ticking timer — the workshop year is now confirmed (2026, per the user's 2026-09-16 follow-up) but the exact start time still isn't, so a real JS Date countdown still isn't buildable; it's a static 'next workshop' display instead (see home.njk). The old registration-deadline hero stat bar (metaDeadlineLabel/metaStatusLabel/metaStatusOpen/metaStatusClosed) is gone for the same reason — there's no registration deadline to count down to anymore — replaced by a single static 'Next Workshop' line. hero.badge is unused dead data (the hero badge pill was removed site-wide well before this round) — left as-is, harmless, same call made every previous round.",
   "pageTitle": "Home · Taqathon",
   "hero": {
     "badge": "Participant Portal",
     "title": "Taqathon 2026",
-    "subtitle": "Saudi Arabia’s National Energy Hackathon",
-    "body": "This portal is for selected participants. Access workshop links and schedule, read the rules and resources, and submit your projects on time. Organized by the Energy Association for Sustainable Development and aligned with Saudi Vision 2030.",
+    "subtitle": "A National Energy Workshop Series",
+    "body": "A series of remote workshops connecting energy, AI, and project management — open to university students. Organized by the Energy Association for Sustainable Development and aligned with Saudi Vision 2030.",
     "ctas": [
-      { "href": "contract-en.html", "icon": "bi-file-earmark-text", "label": "Sign Contract", "btnClass": "btn-success" },
-      { "href": "rules-en.html", "icon": "bi-journal-text", "label": "View Rules", "btnClass": "btn-outline-secondary" },
-      { "href": "submissions-en.html", "icon": "bi-rocket-takeoff", "label": "Submit Project", "btnClass": "btn-warning text-white" }
+      { "href": "schedule-en.html", "icon": "bi-calendar-event", "label": "View Workshops", "btnClass": "btn-success" }
     ],
     "image": { "src": "assets/gallery/2AN08242.jpg", "alt": "Wind turbines in Saudi Arabia generating clean energy" },
     "iconMarginClass": "me-1",
-    "metaDeadlineLabel": "Registration closes",
-    "metaStatusLabel": "Status",
-    "metaStatusOpen": "Open",
-    "metaStatusClosed": "Closed"
+    "metaNextLabel": "Next Workshop",
+    "metaNextValue": "September 23, 2026"
   },
   "countdown": {
-    "label": "Taqathon 2026 Registration Deadline",
-    "deadline": "2026-09-28T23:59:59+03:00",
-    "units": { "days": "Days", "hours": "Hours", "mins": "Mins", "secs": "Secs" }
+    "label": "Next Workshop",
+    "displayDate": "September 23, 2026"
   },
   "announcements": {
     "heading": "Announcements",
@@ -32,23 +27,24 @@
   },
   "about": {
     "image": { "src": "assets/gallery/2AN08121.jpg", "alt": "Officials and attendees standing during a Taqathon ceremony" },
-    "heading": "What You’ll Do in Taqathon",
-    "body": "Work in teams to build practical solutions across AI and renewable energy, smart grids and energy efficiency, or Hajj and Umrah sustainability—guided by experts and geared toward real-world adoption in line with Vision 2030.",
+    "heading": "What the Workshops Cover",
+    "body": "Three remote sessions connecting energy, AI, and project management: the Kingdom's energy landscape, renewable energy paired with artificial intelligence, and how to manage a renewable-energy project end to end.",
     "listCol1": [
       { "icon": "bi-lightbulb", "text": "Expert-led workshops" },
-      { "icon": "bi-person-lines-fill", "text": "Mentorship and technical guidance" }
+      { "icon": "bi-person-lines-fill", "text": "Interactive sessions connecting theory to practice" }
     ],
-    "prize": { "prefix": "Compete for a total prize pool of", "amounts": ["45,000"], "suffix": "in prizes", "riyalAlt": "Saudi Riyal", "riyalIconMarginStyle": "margin-left:.25rem", "spaceBeforeRiyalIcon": true },
-    "listCol2Extra": { "icon": "bi-building-check", "text": "Potential adoption by major companies" },
-    "prizeStatLabel": "Prizes",
-    "tracksStatValue": "3",
-    "tracksStatLabel": "Tracks"
+    "listCol2Extra": { "icon": "bi-mic", "text": "Real speakers and session moderators from the energy sector" },
+    "stats": [
+      { "value": "3", "label": "Workshops" },
+      { "value": "Remote", "label": "Format" },
+      { "value": "University Students", "label": "Open To" }
+    ]
   },
   "cta": {
-    "heading": "Stay on track",
-    "body": "Complete your contract, review the rules, and keep an eye on the schedule and announcements.",
-    "buttonLabel": "Get Started Now",
-    "buttonHref": "contract.html",
+    "heading": "Don't miss a session",
+    "body": "Check the Workshops page for dates, topics, and speakers, and follow our announcements for updates.",
+    "buttonLabel": "View Workshops",
+    "buttonHref": "schedule-en.html",
     "buttonExtraClass": "btn-md "
   }
 }

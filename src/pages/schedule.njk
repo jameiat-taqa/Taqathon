@@ -7,31 +7,37 @@ pagination:
 permalink: "{{ locale.permalink }}"
 ---
 {#
-  TAQATHON - SCHEDULE PAGE TEMPLATE (src/pages/schedule.njk)
+  TAQATHON - WORKSHOPS PAGE TEMPLATE (src/pages/schedule.njk)
   ------------------------------------------------------------
-  Workshop + key-dates table. Every row is data (see
-  src/_data/copy/schedule.ar.json / schedule.en.json) rendered through
-  two {% for %} loops below, rather than 9 hand-typed <tr> blocks.
+  File/URL kept as "schedule" on purpose (this project's standing rule
+  is never break a URL without a real reason — see the Phase 0 Eleventy
+  migration entry in PROGRESS.md); the PAGE ITSELF was renamed
+  "Workshops" and rebuilt as the site's primary destination when
+  Taqathon 2026's hackathon was postponed in favor of a remote workshop
+  series (2026-09-16 repositioning).
 
-  REAL CONTENT PASS (2026): the specific day-by-day workshop schedule
-  that used to live here was Taqathon 1's actual November 2025
-  calendar — real for that season, but stale once presented as THIS
-  season's schedule. That real 2025 data was moved to
-  src/_data/copy/years/2025.*.json (see years.njk) rather than
-  deleted, and "workshops" here is now deliberately empty: the three
-  sources available for 2026 (board resolution, 2026 presentation
-  deck, taqa.org.sa) only give month-level phases, not specific
-  workshop dates/topics/presenters yet. The "Workshops" section-row
-  is wrapped in {% if %} so an empty array doesn't render a header
-  with nothing under it — see the .ed-note callout below the hero for
-  where that gap is flagged to visitors, not just in this comment.
+  Each workshop is now a card (date, time, title, topics covered,
+  speakers, session moderator) instead of a table row — see
+  src/_data/copy/schedule.ar.json / schedule.en.json's "workshops"
+  array for the data, and that file's own _comment for exactly which
+  facts are real (the 3 real September 2026 sessions the user
+  supplied, year confirmed 2026-09-16) vs. still unconfirmed (exact
+  start times — each workshop's "time" renders the user's own
+  "Coming soon" placeholder, not a guess — and the remote-session
+  link, flagged via the ed-note below).
+
+  The old hackathon-phase "keyDates" timeline (registration/screening/
+  mentorship/winners) is NOT rendered below anymore — it described a
+  competition timeline that no longer matches the current plan. Its
+  data is still kept in the copy files rather than deleted, in case a
+  version of it is needed again later.
 
   TO CUSTOMIZE:
-    - Add/remove/reorder a workshop or key date → edit the "workshops"
-      or "keyDates" arrays in the copy JSON files, NOT this file. A row
-      with "action": null renders with an empty action cell (some
-      events just don't have a join link).
-    - Table headers, section headings → same copy JSON files.
+    - Add/remove/reorder a workshop → edit the "workshops" array in the
+      copy JSON files, NOT this file. A workshop with "moderator": null
+      (see workshop 3) renders without a moderator row — some sessions
+      genuinely don't have a separate one.
+    - Headings/labels/intro → same copy JSON files.
 #}
 {% extends "layouts/base.njk" %}
 {% block pageHead %}
@@ -41,57 +47,15 @@ permalink: "{{ locale.permalink }}"
 .sc-hero{ background:var(--color-cream); color:var(--brand-dark); padding:4rem 0 3rem; position:relative; overflow:hidden; border-bottom:1px solid rgba(0,40,76,.08); }
 .sc-hero::before{ content:""; position:absolute; top:-20%; inset-inline-end:-10%; width:420px; height:420px; background:radial-gradient(circle, rgba(196,64,26,.08), transparent 70%); border-radius:50%; pointer-events:none; z-index:0; }
 .sc-hero .container{ position:relative; z-index:1; max-width:760px; text-align:center; }
-.sc-display{ font-family:var(--font-display); font-weight:700; font-size:clamp(2.5rem, 6vw, 4rem); line-height:1; letter-spacing:-.01em; margin:0; }
+.sc-display{ font-family:var(--font-display); font-weight:700; font-size:clamp(2.5rem, 6vw, 4rem); line-height:1; letter-spacing:-.01em; margin:0 0 1rem; }
 [dir="rtl"] .sc-display{ font-family:'Tajawal', var(--font-display); font-weight:800; letter-spacing:0; }
+.sc-intro{ color:var(--color-dust); font-size:1.05rem; margin:0; }
 [data-bs-theme="dark"] .sc-hero{ color:var(--text); border-bottom-color:rgba(255,255,255,.08); }
 [data-bs-theme="dark"] .sc-hero::before{ background:radial-gradient(circle, rgba(232,149,43,.10), transparent 70%); }
+[data-bs-theme="dark"] .sc-intro{ color:var(--muted); }
 
 .sc-section{ background:var(--color-sky); padding:3.5rem 0 4rem; }
-.sc-table-card{
-  background:#fff; border:1px solid rgba(0,40,76,.08); border-radius:1rem;
-  overflow:hidden; box-shadow:0 6px 18px rgba(0,0,0,.04);
-}
-[data-bs-theme="dark"] .sc-table-card{ background:var(--surface); border-color:rgba(255,255,255,.08); box-shadow:0 6px 18px rgba(0,0,0,.35); }
-.sc-table-card .table{ margin-bottom:0; color:var(--brand-dark); }
-[data-bs-theme="dark"] .sc-table-card .table{ color:var(--text); }
-.sc-table-card .table thead th{
-  font-family:var(--font-mono-label); text-transform:uppercase; letter-spacing:.05em; font-size:.7rem;
-  color:var(--color-dust); font-weight:600; border-bottom:1px solid rgba(0,40,76,.1);
-}
-[dir="rtl"] .sc-table-card .table thead th{ font-family:inherit; text-transform:none; letter-spacing:0; }
-[data-bs-theme="dark"] .sc-table-card .table thead th{ color:var(--muted); border-bottom-color:rgba(255,255,255,.1); }
-
-.section-row td{ background:rgba(0,40,76,.04); font-weight:700; color:var(--brand-dark); }
-[data-bs-theme="dark"] .section-row td{ background:rgba(255,255,255,.04); color:var(--text); }
-.section-kicker{ display:inline-flex; align-items:center; gap:.5rem; font-size:.85rem; color:var(--color-terra); text-transform:uppercase; letter-spacing:.03em; }
-[data-bs-theme="dark"] .section-kicker{ color:var(--color-amber); }
-.k-dot{ width:8px; height:8px; border-radius:999px; background:var(--color-terra); }
-[data-bs-theme="dark"] .k-dot{ background:var(--color-amber); }
-
-{#
-  Workshop rows lean amber (this system's "active/energetic" accent),
-  key-date rows lean terra ("attention/marker" accent) — same idea as
-  the original green-vs-blue row-type distinction, just re-expressed
-  in this page's own two accents instead of two colors outside the
-  system. Both keep an explicit text color alongside the tint (same
-  fix the pre-redesign dark-mode pass already made — a tinted
-  background with no fixed text color goes illegible the moment the
-  page's default text color flips).
-#}
-.table tbody tr.workshop-row td{ background:rgba(232,149,43,.06); color:var(--brand-dark); }
-.table tbody tr.keydate-row td{ background:rgba(196,64,26,.05); color:var(--brand-dark); }
-[data-bs-theme="dark"] .table tbody tr.workshop-row td{ background:rgba(232,149,43,.1); color:var(--text); }
-[data-bs-theme="dark"] .table tbody tr.keydate-row td{ background:rgba(196,64,26,.12); color:var(--text); }
-
-.btn-join{ border:1px solid var(--color-terra); color:var(--color-terra); background:transparent; }
-.btn-join:hover{ background:var(--color-amber); color:var(--brand-dark); border-color:var(--color-amber); }
-[data-bs-theme="dark"] .btn-join{ border-color:var(--color-amber); color:var(--color-amber); }
-[data-bs-theme="dark"] .btn-join:hover{ background:var(--color-amber); color:var(--brand-dark); }
-
-.table td .work-title{
-  font-family:{{ locale.content.workTitleFontFamily | safe }} !important;
-  font-weight:{{ locale.content.workTitleFontWeight }} !important;
-}
+.sc-section .container{ max-width:1080px; }
 
 .ed-note{
   background:rgba(196,64,26,.05); border:1px solid rgba(196,64,26,.15); border-radius:.75rem;
@@ -101,6 +65,53 @@ permalink: "{{ locale.permalink }}"
 .ed-note .bi{ color:var(--color-terra); flex-shrink:0; margin-top:.15rem; }
 [data-bs-theme="dark"] .ed-note{ background:rgba(232,149,43,.06); border-color:rgba(232,149,43,.2); color:var(--text); }
 [data-bs-theme="dark"] .ed-note .bi{ color:var(--color-amber); }
+
+{#
+  Workshop cards: same white-card-on-tinted-section pattern as every
+  other page's content cards (registration.njk's .rg-card, the shared
+  .card-lite convention) rather than inventing a new card treatment.
+#}
+.wk-card{
+  background:#fff; border:1px solid rgba(0,40,76,.08); border-radius:1rem;
+  padding:1.75rem; box-shadow:0 6px 18px rgba(0,0,0,.04); height:100%;
+  display:flex; flex-direction:column;
+}
+[data-bs-theme="dark"] .wk-card{ background:var(--surface); border-color:rgba(255,255,255,.08); box-shadow:0 6px 18px rgba(0,0,0,.35); }
+.wk-date{
+  display:inline-block; align-self:flex-start; font-family:var(--font-mono-label);
+  text-transform:uppercase; letter-spacing:.06em; font-size:.7rem; font-weight:600;
+  color:var(--color-terra); background:rgba(196,64,26,.08); border-radius:999px;
+  padding:.3rem .7rem; margin-bottom:.85rem;
+}
+[dir="rtl"] .wk-date{ font-family:inherit; text-transform:none; letter-spacing:0; }
+[data-bs-theme="dark"] .wk-date{ color:var(--color-amber); background:rgba(232,149,43,.12); }
+.wk-title{
+  font-family:var(--font-display); font-weight:700; color:var(--brand-dark);
+  font-size:1.3rem; line-height:1.2; margin:0 0 .5rem;
+}
+[dir="rtl"] .wk-title{ font-family:'Tajawal', var(--font-display); font-weight:800; }
+[data-bs-theme="dark"] .wk-title{ color:var(--text); }
+.wk-time{ font-size:.85rem; color:var(--color-dust); margin-bottom:1rem; }
+[data-bs-theme="dark"] .wk-time{ color:var(--muted); }
+.wk-label{
+  font-family:var(--font-mono-label); text-transform:uppercase; letter-spacing:.05em;
+  font-size:.7rem; font-weight:600; color:var(--color-dust); margin-bottom:.5rem; display:block;
+}
+[dir="rtl"] .wk-label{ font-family:inherit; text-transform:none; letter-spacing:0; }
+[data-bs-theme="dark"] .wk-label{ color:var(--muted); }
+.wk-topics{ list-style:none; padding:0; margin:0 0 1.25rem; color:var(--brand-dark); }
+.wk-topics li{ display:flex; align-items:flex-start; gap:.5rem; margin-bottom:.4rem; font-size:.92rem; }
+.wk-topics li:last-child{ margin-bottom:0; }
+.wk-topics .bi{ color:var(--color-terra); margin-top:.2rem; flex-shrink:0; font-size:.7rem; }
+[data-bs-theme="dark"] .wk-topics{ color:var(--text); }
+[data-bs-theme="dark"] .wk-topics .bi{ color:var(--color-amber); }
+.wk-meta{ margin-top:auto; padding-top:1rem; border-top:1px solid rgba(0,40,76,.08); }
+[data-bs-theme="dark"] .wk-meta{ border-top-color:rgba(255,255,255,.08); }
+.wk-meta-row{ font-size:.88rem; color:var(--brand-dark); margin-bottom:.4rem; display:flex; gap:.4rem; }
+.wk-meta-row:last-child{ margin-bottom:0; }
+.wk-meta-row .bi{ color:var(--color-dust); margin-top:.15rem; }
+[data-bs-theme="dark"] .wk-meta-row{ color:var(--text); }
+[data-bs-theme="dark"] .wk-meta-row .bi{ color:var(--muted); }
 {% endblock %}
 
 {% block content %}
@@ -108,84 +119,51 @@ permalink: "{{ locale.permalink }}"
 <section class="sc-hero">
 <div class="container">
   <h1 class="sc-display">{{ locale.content.hero.heading }}</h1>
+  <p class="sc-intro">{{ locale.content.intro }}</p>
 </div>
 </section>
 
 <section class="sc-section">
-<div class="container" style="max-width:980px;">
+<div class="container">
   {% if locale.content.workshopsNote %}
   <div class="ed-note">
     <i class="bi bi-info-circle-fill"></i>
     <div>{{ locale.content.workshopsNote }}</div>
   </div>
   {% endif %}
-  <div class="sc-table-card">
-    <div class="table-responsive">
-      <table class="table align-middle mb-0">
-        <thead>
-          <tr>
-            <th>{{ locale.content.tableHeaders.item }}</th>
-            <th>{{ locale.content.tableHeaders.date }}</th>
-            <th>{{ locale.content.tableHeaders.time }}</th>
-            <th style="min-width:180px;">{{ locale.content.tableHeaders.action }}</th>
-          </tr>
-        </thead>
-        <tbody>
 
-          {% if locale.content.workshops.length %}
-          <!-- Workshops -->
-          <tr class="section-row">
-            <td colspan="4">
-              <span class="section-kicker">
-                <span class="k-dot"></span> {{ locale.content.workshopsHeading }}
-              </span>
-            </td>
-          </tr>
+  <div class="row g-4">
+    {% for w in locale.content.workshops %}
+    <div class="col-lg-4 col-md-6">
+      <div class="wk-card">
+        <span class="wk-date">{{ w.date }}</span>
+        <h2 class="wk-title">{{ w.title }}</h2>
+        {% if w.time %}
+        <div class="wk-time"><i class="bi bi-clock {{ locale.content.iconMarginClass }}"></i>{{ locale.content.labels.time }}: {{ w.time }}</div>
+        {% endif %}
 
-          {% for w in locale.content.workshops %}
-          <tr class="workshop-row">
-            <td>
-              <div class="work-title">{{ w.title }}</div>
-              <div class="small" style="color:var(--color-dust);">{{ w.presenter }}</div>
-            </td>
-            <td>{{ w.date }}</td>
-            <td>{{ w.time }}</td>
-            <td>
-              <a class="btn btn-sm btn-join" href="{{ w.action.href }}">
-                <i class="bi {{ w.action.icon }} {{ locale.content.iconMarginClass }}"></i> {{ w.action.label }}
-              </a>
-            </td>
-          </tr>
+        <span class="wk-label">{{ locale.content.labels.topics }}</span>
+        <ul class="wk-topics">
+          {% for topic in w.topics %}
+          <li><i class="bi bi-dot"></i> {{ topic }}</li>
           {% endfor %}
+        </ul>
+
+        <div class="wk-meta">
+          <div class="wk-meta-row">
+            <i class="bi bi-mic {{ locale.content.iconMarginClass }}"></i>
+            <span><strong>{{ locale.content.labels.speakers }}:</strong> {{ w.speakers | join(', ') }}</span>
+          </div>
+          {% if w.moderator %}
+          <div class="wk-meta-row">
+            <i class="bi bi-person-check {{ locale.content.iconMarginClass }}"></i>
+            <span><strong>{{ locale.content.labels.moderator }}:</strong> {{ w.moderator }}</span>
+          </div>
           {% endif %}
-
-          <!-- Key Dates -->
-          <tr class="section-row">
-            <td colspan="4">
-              <span class="section-kicker">
-                <span class="k-dot"></span> {{ locale.content.keyDatesHeading }}
-              </span>
-            </td>
-          </tr>
-
-          {% for k in locale.content.keyDates %}
-          <tr class="keydate-row">
-            <td><div class="work-title">{{ k.title }}</div></td>
-            <td>{{ k.date }}</td>
-            <td>{{ k.time }}</td>
-            <td>
-              {% if k.action %}
-              <a class="btn btn-sm btn-join" href="{{ k.action.href }}"{% if k.action.external %} target="_blank" rel="noopener"{% endif %}>
-                <i class="bi {{ k.action.icon }} {{ locale.content.iconMarginClass }}"></i> {{ k.action.label }}
-              </a>
-              {% endif %}
-            </td>
-          </tr>
-          {% endfor %}
-
-        </tbody>
-      </table>
+        </div>
+      </div>
     </div>
+    {% endfor %}
   </div>
 </div>
 </section>

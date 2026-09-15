@@ -171,12 +171,10 @@ permalink: "{{ locale.permalink }}"
 position:relative; background:rgba(232,149,43,.07); border:1px solid rgba(232,149,43,.25);
 border-radius:1rem; max-width:650px; margin-inline:auto; padding:2rem;
 }
-.count-tile{
-background:#fff; border:1px solid rgba(0,40,76,.1);
-color:var(--brand-dark); border-radius:.75rem; width:56px; height:56px;
-display:flex; align-items:center; justify-content:center; font-weight:700;
-}
-.count-label{ font-size:.8rem; color:var(--color-dust); }
+{# count-static replaces the old ticking count-tile row (2026-09-16 repositioning, see the "NEXT WORKSHOP" section comment above) — one plain display-font date instead of 4 numeric tiles, since there's no live countdown to tick anymore. #}
+.count-static{ font-family:var(--font-display); font-weight:700; font-size:clamp(1.75rem, 4vw, 2.5rem); color:var(--brand-dark); }
+[dir="rtl"] .count-static{ font-family:'Tajawal', var(--font-display); font-weight:800; }
+[data-bs-theme="dark"] .count-static{ color:var(--text); }
 
 {#
   Round 5: cream now, not its own linen tone — direct instruction was
@@ -279,7 +277,8 @@ display:grid; place-items:center; font-size:16px;
   border-radius:.75rem; overflow:hidden;
 }
 .dz-stat-cell{ background:var(--brand-dark); padding:1.5rem 1.25rem; }
-.dz-stat-num{ font-family:var(--font-display); font-weight:700; color:var(--color-amber); font-size:1.85rem; line-height:1.1; margin-bottom:.4rem; display:block; }
+{# font-size is a clamp, not a fixed 1.85rem, since stats now hold short words ("Remote", "University Students") as well as numbers — a fixed large size that worked for "3" or "45,000" would overflow/wrap awkwardly for longer text (2026-09-16 repositioning: see the about.stats loop above). #}
+.dz-stat-num{ font-family:var(--font-display); font-weight:700; color:var(--color-amber); font-size:clamp(1.05rem, 2.2vw, 1.85rem); line-height:1.15; margin-bottom:.4rem; display:block; }
 [dir="rtl"] .dz-stat-num{ font-family:inherit; font-weight:800; }
 .dz-stat-cell-label{ font-family:var(--font-mono-label); font-size:.7rem; letter-spacing:.06em; text-transform:uppercase; color:var(--color-mist); }
 [dir="rtl"] .dz-stat-cell-label{ font-family:inherit; text-transform:none; letter-spacing:0; }
@@ -335,7 +334,7 @@ display:grid; place-items:center; font-size:16px;
   to "small LIGHT accent on a dark section" (background flips to a
   fixed, theme-invariant cream — not var(--color-cream), which is
   dark in this mode — same self-contained-regardless-of-theme idea
-  already used by count-tile and every button), and terra is what
+  already used by every button), and terra is what
   passes contrast on THAT light surface (4.83:1, verified) the way
   amber no longer does (2.26:1, fails) once the surface underneath it
   is light again.
@@ -353,7 +352,6 @@ display:grid; place-items:center; font-size:16px;
 [data-bs-theme="dark"] .dz-subtitle,
 [data-bs-theme="dark"] .dz-body,
 [data-bs-theme="dark"] .dz-about-body,
-[data-bs-theme="dark"] .count-label,
 [data-bs-theme="dark"] .dz-muted-on-cream{ color:var(--muted); }
 {#
   Stat bar/cells: the one deliberate structural flip, not just a
@@ -432,21 +430,38 @@ display:grid; place-items:center; font-size:16px;
     <img src="{{ locale.content.hero.image.src }}"
          alt="{{ locale.content.hero.image.alt }}"
          loading="eager" decoding="async" width="1600" height="1000">
+    {#
+      Repositioning (2026-09-16): this used to be a 2-row box (registration
+      deadline + Open/Closed status, computed client-side from that
+      deadline). There's no registration deadline anymore, so it's now a
+      single static row pointing at the first workshop — see
+      home.en.json/home.ar.json's _comment for why this is plain text
+      instead of a JS-computed value (the year is confirmed but the
+      exact start time still isn't, so a real countdown still can't be
+      computed).
+    #}
     <div class="dz-stat-bar">
       <div class="dz-stat-row">
-        <span class="dz-stat-label">{{ locale.content.hero.metaDeadlineLabel }}</span>
-        <span class="dz-stat-value" id="heroDeadlineValue"></span>
-      </div>
-      <div class="dz-stat-row">
-        <span class="dz-stat-label">{{ locale.content.hero.metaStatusLabel }}</span>
-        <span class="dz-stat-value" id="heroStatusValue">{{ locale.content.hero.metaStatusOpen }}</span>
+        <span class="dz-stat-label">{{ locale.content.hero.metaNextLabel }}</span>
+        <span class="dz-stat-value">{{ locale.content.hero.metaNextValue }}</span>
       </div>
     </div>
   </div>
 </div>
 </section>
 
-<!-- COUNTDOWN -->
+<!-- NEXT WORKSHOP -->
+{#
+  Repositioning (2026-09-16): this used to be a live ticking countdown
+  to the registration deadline (data-deadline + a setInterval timer in
+  pageScript). There's no registration deadline anymore, and while the
+  first-workshop YEAR is now confirmed (2026), the exact start TIME
+  still isn't — a JS Date still can't be built without guessing a
+  time-of-day, which this project's rule says not to do. So this
+  section is a plain static "next workshop" line instead of a computed
+  timer; the date string comes straight from countdown.displayDate in
+  the copy files.
+#}
 <section class="gb-band py-5">
 {#
   Decorative wave layer (Phase 3, round 3): purely atmospheric, no
@@ -462,31 +477,7 @@ display:grid; place-items:center; font-size:16px;
 <div class="container text-center">
   <div class="count-box p-4 reveal">
     <div class="mb-2 fw-semibold">{{ locale.content.countdown.label }}</div>
-    {#
-      data-deadline is read by the countdown script down in pageScript.
-      This is still the ORIGINAL (already-past) deadline from the live
-      site — Phase 0's job was to prove the template pipeline works,
-      not to change content. Fixing this date is Phase 1, item 1.
-    #}
-    <div id="deadline" class="d-flex justify-content-center align-items-center gap-3"
-         data-deadline="{{ locale.content.countdown.deadline }}">
-      <div class="text-center">
-        <div class="count-tile"><span id="ddays">00</span></div>
-        <div class="count-label">{{ locale.content.countdown.units.days }}</div>
-      </div>
-      <div class="text-center">
-        <div class="count-tile"><span id="dhours">00</span></div>
-        <div class="count-label">{{ locale.content.countdown.units.hours }}</div>
-      </div>
-      <div class="text-center">
-        <div class="count-tile"><span id="dmins">00</span></div>
-        <div class="count-label">{{ locale.content.countdown.units.mins }}</div>
-      </div>
-      <div class="text-center">
-        <div class="count-tile"><span id="dsecs">00</span></div>
-        <div class="count-label">{{ locale.content.countdown.units.secs }}</div>
-      </div>
-    </div>
+    <div class="count-static">{{ locale.content.countdown.displayDate }}</div>
   </div>
 </div>
 </section>
@@ -506,19 +497,16 @@ display:grid; place-items:center; font-size:16px;
 </section>
 
 {#
-  About (Phase 3, visual system v2): heading/body/list items are all
-  unchanged existing fields. The old inline "trophy icon + prize
-  amounts" line is now its own stat cell below instead of a bullet in
-  the list — same prize.amounts data, just presented as a number
-  instead of a sentence fragment, so it isn't shown twice. Track count
-  (3) is real and already reflected on the Registration page (three
-  track cards, names still placeholder) — see tracksStatValue in
-  home.*.json. Deliberately only 2 stat cells, not the 4 the reference
-  mockup used: duration/participant-count/university-count aren't in
-  any data file, and this project's rule is flag what's missing rather
-  than invent it. No decorative texture layer here (round 3 had a
-  node-network SVG; removed in round 4 along with the extra accent
-  color — see the big comment above .dz-about in pageStyle).
+  About (Phase 3, visual system v2). Repositioning (2026-09-16): the
+  old 2-cell prize-amount/track-count stat grid was hardcoded to those
+  two specific facts — both gone now (no prize pool, no tracks), so
+  "about.stats" is a plain array instead and this loops over however
+  many cells the copy file provides, rather than two hardcoded <div>s.
+  Currently 3 workshop-relevant facts (workshop count, remote format,
+  student audience) — see home.*.json's _comment for why these were
+  chosen. No decorative texture layer here (round 3 had a node-network
+  SVG; removed in round 4 along with the extra accent color — see the
+  big comment above .dz-about in pageStyle).
 #}
 <section class="dz-about py-5">
 <div class="container">
@@ -539,16 +527,12 @@ display:grid; place-items:center; font-size:16px;
         <li><i class="bi {{ locale.content.about.listCol2Extra.icon }}"></i> {{ locale.content.about.listCol2Extra.text }}</li>
       </ul>
       <div class="dz-stats-grid">
+        {% for stat in locale.content.about.stats %}
         <div class="dz-stat-cell">
-          <span class="dz-stat-num">
-            {% for amount in locale.content.about.prize.amounts %}{{ amount }}{% if not loop.last %} / {% endif %}{% endfor %}
-          </span>
-          <span class="dz-stat-cell-label">{{ locale.content.about.prizeStatLabel }}</span>
+          <span class="dz-stat-num">{{ stat.value }}</span>
+          <span class="dz-stat-cell-label">{{ stat.label }}</span>
         </div>
-        <div class="dz-stat-cell">
-          <span class="dz-stat-num">{{ locale.content.about.tracksStatValue }}</span>
-          <span class="dz-stat-cell-label">{{ locale.content.about.tracksStatLabel }}</span>
-        </div>
+        {% endfor %}
       </div>
     </div>
   </div>
@@ -588,50 +572,20 @@ display:grid; place-items:center; font-size:16px;
   so it's fixed here pre-emptively rather than waiting for a future
   content edit to trip over it.
 #}
-(function(){
-  {#
-    Hero stat bar (Phase 3, visual system v2): formats the SAME
-    countdown.deadline value the timer below already uses — not a new
-    fact, just a second, human-readable presentation of it ("Sep 28,
-    2026" instead of a ticking counter) plus a derived Open/Closed
-    status. Computed client-side (not hardcoded "Open" in the copy
-    file) so it keeps being correct after the deadline passes without
-    anyone needing to remember to edit it.
-  #}
-  const heroDeadlineEl = document.getElementById('heroDeadlineValue');
-  const heroStatusEl = document.getElementById('heroStatusValue');
-  if (heroDeadlineEl && heroStatusEl) {
-    const heroDeadline = new Date('{{ locale.content.countdown.deadline | safe }}');
-    heroDeadlineEl.textContent = heroDeadline.toLocaleDateString(
-      {% if locale.content.announcements.locale %}'{{ locale.content.announcements.locale | safe }}'{% else %}undefined{% endif %},
-      { year: 'numeric', month: 'short', day: 'numeric' }
-    );
-    heroStatusEl.textContent = Date.now() < heroDeadline.getTime()
-      ? '{{ locale.content.hero.metaStatusOpen | safe }}'
-      : '{{ locale.content.hero.metaStatusClosed | safe }}';
-  }
-
-  // ----- Countdown timer -----
-  // Reads the data-deadline attribute set above, then recalculates the
-  // remaining days/hours/minutes/seconds every second.
-  const wrap = document.getElementById('deadline');
-  if(!wrap) return;
-  const deadline = new Date(wrap.getAttribute('data-deadline')).getTime();
-  function pad(n){ return (n<10?'0':'') + n; }  // turns 5 into "05"
-  function tick(){
-    const now = Date.now();
-    let diff = Math.max(0, deadline - now);  // never show a negative countdown
-    const days = Math.floor(diff / 86400000); diff -= days*86400000;
-    const hours = Math.floor(diff / 3600000); diff -= hours*3600000;
-    const mins = Math.floor(diff / 60000); diff -= mins*60000;
-    const secs = Math.floor(diff / 1000);
-    document.getElementById('ddays').textContent = pad(days);
-    document.getElementById('dhours').textContent = pad(hours);
-    document.getElementById('dmins').textContent = pad(mins);
-    document.getElementById('dsecs').textContent = pad(secs);
-  }
-  tick(); setInterval(tick, 1000);
-})();
+{#
+  Repositioning (2026-09-16): this block used to be an IIFE that
+  computed the hero stat bar's date/Open-Closed status and ran a
+  setInterval countdown timer, both derived from countdown.deadline (a
+  full ISO datetime). Both the hero stat bar and the "next workshop"
+  section are now plain static text rendered straight from the copy
+  files (metaNextValue / countdown.displayDate) — the workshop year is
+  confirmed but the exact start time still isn't (see home.*.json's
+  _comment), so there's still no real datetime to compute a live
+  countdown from; removing the JS instead of feeding it a guessed
+  time. Deleted, not left disabled,
+  since dead JS with no matching DOM ids left in the markup would just
+  be confusing to a future reader.
+#}
 
 (function(){
   // ----- Announcements loader -----
