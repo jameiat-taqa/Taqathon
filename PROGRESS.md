@@ -6,6 +6,24 @@ A running, dated record of what's been done on this project and why. Newest entr
 
 ---
 
+## 2026-09-16 — Sign-up and meeting-link placeholders added to Workshops cards
+
+- User asked for a place on each workshop card for a future Google Form (sign-up) and Google Meet link (joining the session), without hurting how the page currently looks — no real links exist yet.
+- **Reused this project's existing "pending link" pattern instead of inventing a new one**: `registration.njk` already renders a disabled button when a link's href is `"#"` and a real, live link once a real URL replaces it. `schedule.njk` now does the same per workshop — a "Sign Up" button (`signUpHref`) and a "Join Session" button (`meetingHref`), both `"#"` for all 3 workshops right now, both rendering as disabled buttons in the same visual language as the rest of the page (amber-filled primary / outline secondary, matching `registration.njk`'s own button pair). Swapping a real Google Form or Meet URL into either field is the only change needed later — no template edit.
+- `workshopsNote` (the page-level flag already present) was reworded to cover both gaps ("Sign-up forms and remote session links haven't been confirmed yet...") instead of just the session link, since it's now flagging two things, not one.
+- Verified: full clean rebuild, both languages, both buttons render disabled (confirmed a click does nothing — no navigation), light/dark, mobile (375px, no overflow), no console errors.
+
+---
+
+## 2026-09-16 — Workshop topics/moderator pulled from the public Workshops page
+
+- User flagged (after the repositioning work below was already live) that the detailed content they'd supplied for each workshop wasn't all meant for public consumption — some of it was working/internal context for building the page, not copy meant to go out to visitors.
+- Asked which specific pieces to pull rather than guessing: confirmed **detailed topic/agenda bullets** (the slide-by-slide breakdown per workshop, e.g. "Where are we now?", "Hydrogen: the new fuel?") and **session moderator names** should come off the public page. Speaker names/titles stay public. PROGRESS.md/commit history was explicitly confirmed fine to leave as-is — engineering log content, not live-site content, even in this public repo.
+- **`schedule.njk` no longer renders `w.topics` or `w.moderator`** — each workshop card now shows only date, time, title, and speakers. The underlying data (topics array, moderator name, their labels) is untouched in `schedule.ar.json`/`schedule.en.json`, same "hide, don't delete" rule as every other hidden thing on this site — restoring the display later just means adding the render loop back, not re-typing the content.
+- Verified: full clean rebuild, both languages, cards show exactly date/time/title/speakers with no leftover topics list or moderator line, no console errors.
+
+---
+
 ## 2026-09-16 — Workshop year confirmed, FAQ hidden, per-workshop time placeholder
 
 - Follow-up to the repositioning round below, same day. Two pieces of direction from the user: (1) confirm the workshop year is 2026, and (2) hide the FAQ page too (it had just moved into the About dropdown in the round below).

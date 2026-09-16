@@ -16,15 +16,33 @@ permalink: "{{ locale.permalink }}"
   Taqathon 2026's hackathon was postponed in favor of a remote workshop
   series (2026-09-16 repositioning).
 
-  Each workshop is now a card (date, time, title, topics covered,
-  speakers, session moderator) instead of a table row — see
+  Each workshop is now a card (date, time, title, speakers, a Sign Up
+  button, a Join Session button) instead of a table row — see
   src/_data/copy/schedule.ar.json / schedule.en.json's "workshops"
   array for the data, and that file's own _comment for exactly which
   facts are real (the 3 real September 2026 sessions the user
   supplied, year confirmed 2026-09-16) vs. still unconfirmed (exact
-  start times — each workshop's "time" renders the user's own
-  "Coming soon" placeholder, not a guess — and the remote-session
-  link, flagged via the ed-note below).
+  start times — each workshop's "time" renders the user's own "To Be
+  Announced" placeholder, not a guess). Sign Up (signUpHref, a Google
+  Form) and Join Session (meetingHref, a Google Meet link) render as
+  disabled "pending" buttons for as long as their href is "#" — the
+  exact same pattern registration.njk already uses for its own
+  not-yet-real links — and become live buttons the moment a real URL
+  replaces "#" in the copy files; the page-level ed-note below flags
+  the same gap in prose for anyone who missed the disabled buttons.
+
+  PUBLIC-VS-INTERNAL PASS (2026-09-16, same-day follow-up): the
+  per-workshop "topics" list and "moderator" name are still present in
+  the copy JSON (not deleted — same "hide, don't delete" rule as every
+  other hidden thing on this site) but deliberately NOT rendered below
+  anymore. The user clarified that level of detail (a slide-by-slide
+  agenda outline, and who's running each session internally) was
+  shared with this project as working/internal context, not copy meant
+  to go out to the public — only date/title/time/speakers are meant to
+  be public-facing. If a future round needs the topics or moderator
+  back on the page, the data is still there; this file just needs its
+  render loop restored (see the git history of this file for the
+  original markup).
 
   The old hackathon-phase "keyDates" timeline (registration/screening/
   mentorship/winners) is NOT rendered below anymore — it described a
@@ -34,9 +52,7 @@ permalink: "{{ locale.permalink }}"
 
   TO CUSTOMIZE:
     - Add/remove/reorder a workshop → edit the "workshops" array in the
-      copy JSON files, NOT this file. A workshop with "moderator": null
-      (see workshop 3) renders without a moderator row — some sessions
-      genuinely don't have a separate one.
+      copy JSON files, NOT this file.
     - Headings/labels/intro → same copy JSON files.
 #}
 {% extends "layouts/base.njk" %}
@@ -112,6 +128,20 @@ permalink: "{{ locale.permalink }}"
 .wk-meta-row .bi{ color:var(--color-dust); margin-top:.15rem; }
 [data-bs-theme="dark"] .wk-meta-row{ color:var(--text); }
 [data-bs-theme="dark"] .wk-meta-row .bi{ color:var(--muted); }
+
+{#
+  Sign-up/join buttons: same filled/outline pair already established
+  by registration.njk (.rg-open-btn/.rg-copy-btn) and this page's own
+  original .btn-join, reused here under this page's own "wk-" prefix
+  rather than a third near-duplicate button style.
+#}
+.wk-actions{ margin-top:.6rem; }
+.wk-btn-primary{ background:var(--color-amber); border:0; color:var(--brand-dark); font-weight:700; }
+.wk-btn-primary:hover{ filter:brightness(1.05); color:var(--brand-dark); }
+.wk-btn-outline{ border:1px solid rgba(0,40,76,.2); color:var(--brand-dark); background:transparent; }
+.wk-btn-outline:hover{ background:rgba(0,40,76,.05); color:var(--brand-dark); }
+[data-bs-theme="dark"] .wk-btn-outline{ border-color:rgba(255,255,255,.2); color:var(--text); }
+[data-bs-theme="dark"] .wk-btn-outline:hover{ background:rgba(255,255,255,.06); color:var(--text); }
 {% endblock %}
 
 {% block content %}
@@ -142,24 +172,47 @@ permalink: "{{ locale.permalink }}"
         <div class="wk-time"><i class="bi bi-clock {{ locale.content.iconMarginClass }}"></i>{{ locale.content.labels.time }}: {{ w.time }}</div>
         {% endif %}
 
-        <span class="wk-label">{{ locale.content.labels.topics }}</span>
-        <ul class="wk-topics">
-          {% for topic in w.topics %}
-          <li><i class="bi bi-dot"></i> {{ topic }}</li>
-          {% endfor %}
-        </ul>
-
+        {#
+          "topics" (a detailed session outline) and "moderator" are
+          intentionally not rendered here — see this file's header
+          comment (2026-09-16 public-vs-internal pass). Only speakers
+          are shown.
+        #}
         <div class="wk-meta">
           <div class="wk-meta-row">
             <i class="bi bi-mic {{ locale.content.iconMarginClass }}"></i>
             <span><strong>{{ locale.content.labels.speakers }}:</strong> {{ w.speakers | join(', ') }}</span>
           </div>
-          {% if w.moderator %}
-          <div class="wk-meta-row">
-            <i class="bi bi-person-check {{ locale.content.iconMarginClass }}"></i>
-            <span><strong>{{ locale.content.labels.moderator }}:</strong> {{ w.moderator }}</span>
+
+          {#
+            Sign-up form + meeting link (2026-09-16 follow-up request):
+            same "pending" pattern registration.njk already uses for its
+            own not-yet-real links — href of "#" means no real URL
+            exists yet, so it renders as a disabled button instead of a
+            live one. Swap "#" for a real Google Form/Meet URL in the
+            copy files and it becomes a live link automatically, no
+            template change needed.
+          #}
+          <div class="wk-actions d-flex flex-wrap gap-2">
+            {% if w.signUpHref and w.signUpHref != "#" %}
+            <a class="btn btn-sm wk-btn-primary" href="{{ w.signUpHref }}" target="_blank" rel="noopener">
+              <i class="bi bi-pencil-square {{ locale.content.iconMarginClass }}"></i>{{ locale.content.labels.signUp }}
+            </a>
+            {% else %}
+            <button type="button" class="btn btn-sm wk-btn-primary" disabled aria-label="{{ locale.content.labels.signUpPendingAriaLabel }}">
+              <i class="bi bi-pencil-square {{ locale.content.iconMarginClass }}"></i>{{ locale.content.labels.signUp }}
+            </button>
+            {% endif %}
+            {% if w.meetingHref and w.meetingHref != "#" %}
+            <a class="btn btn-sm wk-btn-outline" href="{{ w.meetingHref }}" target="_blank" rel="noopener">
+              <i class="bi bi-camera-video {{ locale.content.iconMarginClass }}"></i>{{ locale.content.labels.join }}
+            </a>
+            {% else %}
+            <button type="button" class="btn btn-sm wk-btn-outline" disabled aria-label="{{ locale.content.labels.joinPendingAriaLabel }}">
+              <i class="bi bi-camera-video {{ locale.content.iconMarginClass }}"></i>{{ locale.content.labels.join }}
+            </button>
+            {% endif %}
           </div>
-          {% endif %}
         </div>
       </div>
     </div>

@@ -1,11 +1,15 @@
 {
-  "_comment": "WORKSHOPS PAGE COPY (English). REPOSITIONING (2026-09-16): Taqathon 2026's hackathon was postponed and this page — file/URL still named 'schedule' to avoid an unnecessary URL change, same reasoning as every other migration in this project — was renamed 'Workshops' and made the primary destination for the new remote-workshop-series direction. 'intro' is adapted from the association's own official description of the series (three interconnected areas, applied/interactive focus). The 3 real workshops below are the exact lineup the user supplied directly (2026-09-16): dates were originally day/month only; the user confirmed the year is 2026 (2026-09-16 follow-up), so it's now included below rather than flagged as missing. Exact start times are still unconfirmed — each workshop's 'time' field is the user's own explicit placeholder text ('To Be Announced' / 'سيُعلن لاحقًا'), not a guess. The remote session platform/link is also still unconfirmed, flagged via workshopsNote instead of guessed. Workshop 3 genuinely has no separate moderator in the source material (3 speakers only) — 'moderator' is null on purpose, not an oversight; schedule.njk skips rendering that row when null. The old hackathon-phase 'keyDates' timeline (registration/screening/mentorship/winners) no longer reflects the current plan and is NOT rendered anymore (see schedule.njk), but is kept below rather than deleted in case a version of it is needed again once the program's next phase is decided.",
+  "_comment": "WORKSHOPS PAGE COPY (English). REPOSITIONING (2026-09-16): Taqathon 2026's hackathon was postponed and this page — file/URL still named 'schedule' to avoid an unnecessary URL change, same reasoning as every other migration in this project — was renamed 'Workshops' and made the primary destination for the new remote-workshop-series direction. 'intro' is adapted from the association's own official description of the series (three interconnected areas, applied/interactive focus). The 3 real workshops below are the exact lineup the user supplied directly (2026-09-16): dates were originally day/month only; the user confirmed the year is 2026 (2026-09-16 follow-up), so it's now included below rather than flagged as missing. Exact start times are still unconfirmed — each workshop's 'time' field is the user's own explicit placeholder text ('To Be Announced' / 'سيُعلن لاحقًا'), not a guess. 'topics' and 'moderator' are kept per workshop but deliberately NOT rendered by schedule.njk anymore (2026-09-16 public-vs-internal pass — the user clarified that level of detail was internal working context, not public copy); left in the data rather than deleted so a future round can restore them without re-typing. The old hackathon-phase 'keyDates' timeline (registration/screening/mentorship/winners) no longer reflects the current plan and is NOT rendered anymore either (see schedule.njk), same 'kept, not deleted' treatment. 'meetingHref'/'formHref' (2026-09-16 follow-up request) are placeholder '#' values — no real Google Meet or Google Form links exist yet — schedule.njk renders a disabled pending button for either field left as '#', the exact same pattern registration.njk already uses for its own not-yet-real links; swap in a real URL and it becomes a live button automatically, no template change needed.",
   "pageTitle": "Workshops · Taqathon",
   "hero": { "icon": "bi-calendar-event", "heading": "Workshops", "headingClass": "fw-semibold" },
   "intro": "A remote training series for university students, spanning three interconnected areas — energy, AI, and project management — with an applied, interactive focus that connects theory to real-world challenges.",
   "iconMarginClass": "me-1",
-  "workshopsNote": "The remote session link hasn't been confirmed yet — it will be added here once available.",
-  "labels": { "date": "Date", "time": "Time", "topics": "Topics Covered", "speakers": "Speakers", "moderator": "Session Moderator" },
+  "workshopsNote": "Sign-up forms and remote session links haven't been confirmed yet — they'll be added here once available.",
+  "labels": {
+    "date": "Date", "time": "Time", "topics": "Topics Covered", "speakers": "Speakers", "moderator": "Session Moderator",
+    "signUp": "Sign Up", "join": "Join Session",
+    "signUpPendingAriaLabel": "Sign-up form is not yet available", "joinPendingAriaLabel": "Meeting link is not yet available"
+  },
   "workshops": [
     {
       "date": "September 23, 2026",
@@ -20,7 +24,9 @@
         "Energy + AI"
       ],
       "speakers": ["Eng. Fouad Al-Shuraibi", "Dr. Haitham Radhwi"],
-      "moderator": "Dr. Ohoud"
+      "moderator": "Dr. Ohoud",
+      "signUpHref": "#",
+      "meetingHref": "#"
     },
     {
       "date": "September 24, 2026",
@@ -35,7 +41,9 @@
         "Smart grids"
       ],
       "speakers": ["Dr. Hassan Juman Al-Zahrani", "Eng. Farid Zeroual"],
-      "moderator": "Eng. Hassan Al-Zahrani"
+      "moderator": "Eng. Hassan Al-Zahrani",
+      "signUpHref": "#",
+      "meetingHref": "#"
     },
     {
       "date": "September 25, 2026",
@@ -51,7 +59,9 @@
         "Sustainability and measuring project success"
       ],
       "speakers": ["Eng. Maher Mousa", "Eng. Hassan Al-Zahrani", "Majed Al-Suraihi"],
-      "moderator": null
+      "moderator": null,
+      "signUpHref": "#",
+      "meetingHref": "#"
     }
   ],
   "keyDatesHeading": "2026 Program Timeline",
